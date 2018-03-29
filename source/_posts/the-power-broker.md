@@ -1,0 +1,17 @@
+---
+title: The Power Broker
+date: 2018-03-28 21:15:27
+tags: books
+---
+
+5/5 Stars - [Link](https://amzn.to/2pOsAHK)
+
+Robert Caro is one of very few authors who can entertain a reader for over 1000 long pages about a mundane topic like urban politics.  The Power Broker covers the life of Robert Moses, a burly character in both form and business.  In the 1166 long pages, the reader is taken through the life of one of the meanest, most powerful figures of New York politics.  Although at the peak of his career, Moses had billions of dollars of capital available for whatever public works he chose to build, he also was a bit of a sad story.  His wife Mary took care of him like many mothers would a child, he never learned to drive, he never had a personal fortune, he was loaned thousands of dollars by his wealthy mother to bail him out of his own mistakes, and he had no close friends (at least as portrayed in the book).
+
+One may wonder based on the above description how Robert Moses once held 14 public government positions simultaneously, built nearly every public work in New York City, drove thousands of low-income residents on to the streets to build projects for wealthier residents, and even had an office on an island restricted to the general public.  How did a man without a touch of kindness in his heart manage to convince the residents of New York City for decades that he was a benevolent builder of public works and parks who had their best interests in mind?  How does one go from an idealistic young man with dreams of building beautiful parks to a mogul so powerful and terrifying that the Mayor and the Governor abide by his every request in fear of their own reputation?
+
+The story of Robert Moses is one of those stories that nobody wants to hear but everyone needs to.  Although Moses was seemingly a terrible man who resembled some of the most notorious figures in history, The Power Broker tells the truth behind the facade we call the press.  Moses not only had unlimited funding to do what he wanted but also the newspapers at the will of his word.  If he thought a journalist was taking it too far, he made sure they knew the consequences of publishing derogatory words about him.  Moses knew how to crush people.  He knew how to crush reputations ranging from the up and coming journalist all the way to the Governor.  Not only did he know how, but he had the audacity to do so.   Moses was not afraid to ruin someone's life for the sake of his own goals.
+
+The Power Broker is not a story on how to live, how to do business, or how to build parks.  It is a cautionary tale for future generations.  It conveys many of the tactics Robert Moses used to "Get Things Done" in a city full of red tape and bureaucracy despite their brutal consequences to many innocent families.  It also conveys the sad ending to Moses's long legacy.  After losing power to a new era of leaders, Moses withered away in complete anxiety.  He went from a man who got whatever he wanted at whatever cost to a man who begged his former victims for a chance to work again.  At the end of his life, despite having accomplished more than any single leader in New York City's history, Robert Moses had no friends, no family, no money, and nothing to live for.
+
+Despite the length of this 4 lb book, it is well worth the weeks it will take you to read.  For anyone willing to hear the truth behind politics, there is no better place to start than this.
