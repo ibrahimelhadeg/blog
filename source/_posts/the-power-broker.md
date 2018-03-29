@@ -1,5 +1,5 @@
 ---
-title: The Power Broker
+title: The Power Broker - Robert A. Caro
 date: 2018-03-28 21:15:27
 tags: books
 ---

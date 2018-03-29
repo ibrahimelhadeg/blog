@@ -12,7 +12,7 @@ projects_url: http://zachgoll.github.io
 # navigation menu. Optionally, you can add translations for the 'Key' in
 # languages/*.yml
 nav:
-  home: http://zachgoll.github.io
+  home: /
   articles: /archives/
   projects: http://zachgoll.github.io
 
@@ -22,7 +22,7 @@ nav:
 # (see https://fontawesome.com/icons?d=gallery&s=brands);
 # only 'mail' is an exception.
 social_links:
-  github: http://github.com/probberechts/cactus-dark
+  github: http://github.com/zachgoll
   linkedin: http://linkedin.com/in/zachgollwitzer
 
 
