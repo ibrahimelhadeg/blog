@@ -1,0 +1,144 @@
+---
+title: Scraping Images from EarthPorn Subreddit with Python 3
+date: 2018-07-04 13:38:22
+tags: web-scraping
+---
+
+*Disclaimer: This script is intended for personal use and I am not liable for copyright infringement as a result of using this script*
+
+A few days ago, I decided that I wanted to add a slideshow to my Macbook, but I did not have photos to do it with.  That is when I decided it was time to write a script that would scrape the beautiful, crowd-curated photos from [r/earthporn](https://www.reddit.com/r/EarthPorn/).  For those who are not aware of this awesome subreddit, I highly suggest browsing through the community contributions of images depicting the earth from afar.
+
+Although the code is not the cleanest, I created a quick web scraper that retrieves and filters images from this subreddit based on the pixel quality and aspect ratio.  All images downloaded should maintain a 16:9 aspect ratio (roughly) and have a resolution in the 1000s.  The script will then download and save the photos to your desired location.
+
+# The Code 
+
+```python
+import requests, time, shutil, re, os
+from selenium.webdriver.common.keys import Keys
+from selenium import webdriver
+
+driver = webdriver.Chrome()
+driver.get("https://www.reddit.com/r/EarthPorn/")
+
+download_folder = os.environ['DOWNLOAD_PATH']
+
+time.sleep(1)
+
+num_pics_saved = 0
+num_pics_to_save = os.environ['NUM_PHOTOS']
+
+elem = driver.find_element_by_tag_name("body")
+
+def parseLink(link, regex):
+    if (re.search(regex, link) is not None):
+        return True
+    else:
+        return False
+
+def checkDimensions(dimensions):
+    width = int(dimensions.split('x')[0].strip())
+    height = int(dimensions.split('x')[1].strip())
+    if (width / height > 1.1 and width / height < 1.7):
+        print ('Writing image file with dimensions: ', width, ' x ', height)
+        return True
+
+def parseAspectRatio(title):
+    # Only match images with large dimensions
+    regex = re.search(r'\d{4}\s*x\s*\d{4}', title)
+    if (regex is not None):
+        dimensions = regex.group(0)
+        if (checkDimensions(dimensions)):
+            return True
+    else:
+        return False
+
+no_of_pagedowns = num_pics_to_save * 1.5
+
+while no_of_pagedowns:
+    elem.send_keys(Keys.PAGE_DOWN)
+    time.sleep(1)
+    no_of_pagedowns-=1
+
+pic_elems = driver.find_elements_by_class_name("scrollerItem")
+pic_links = []
+
+# Get individual user comment links where images are hosted
+for pic in pic_elems:
+    pic_link_tag = pic.find_elements_by_tag_name("a")
+    if (len(pic_link_tag) > 3):
+        pic_link = pic_link_tag[3].get_attribute('href')
+    if (pic_link):
+        pic_links.append(pic_link)
+
+pic_links.pop(0)
+
+# Get individual picture links and download each to a specified folder
+for link in pic_links:
+    if (num_pics_saved < num_pics_to_save):
+        print ('\n')
+        print ('Checking - ', link)
+        if (parseLink(link, r'https:\/\/www.reddit.com\/r\/EarthPorn\/comments\/')):
+            driver.get(link)
+            time.sleep(1)
+            #elem = driver.find_element_by_tag_name("img").get_attribute('src')
+            elem = driver.find_elements_by_tag_name("img")
+            elem = elem[1].get_attribute("src")
+            print ('first elem:', elem)
+            title = driver.find_element_by_tag_name("h2").text
+            print ('got link, checking aspect ratio')
+            if (parseAspectRatio(title) and elem):
+                # Download the image
+                print ('second elem: ', elem)
+                if (parseLink(elem, r'https:\/\/i.redditmedia.com\/') or parseLink(elem, r'https:\/\/i.redd.it\/')):
+                    print ('valid image link')
+                    response = requests.get(elem, stream=True)
+                    with open (download_folder + 'reddit-img-' + str(num_pics_saved) + '.jpg', 'wb') as out_file:
+                        print ('saving image as' + download_folder + 'reddit-img-' + str(num_pics_saved) + '.jpg' + 'from address: ', elem)
+                        shutil.copyfileobj(response.raw, out_file)
+                        num_pics_saved+=1
+                    del response
+                else:
+                    print ('image link not valid')
+            else:
+                print ('invalid aspect ratio')
+        else:
+            print ('invalid link')
+
+driver.close()
+```
+
+# How to Use the Script 
+
+First, note that this is a Python3 script and has not been tested with Python2.
+
+To setup your environment, navigate to the directory you are running the script from and run the following commands.
+
+```bash
+virtualenv venv --python=python3.6
+source venv/bin/activate 
+pip3 install requests selenium 
+```
+
+There are two setup variables that we need to assign values to.  First, we need to tell Python what folder to store our downloaded pictures in. 
+
+```bash
+# Make sure you have the slash at the end of the path 
+# For example - /Users/Zach/Desktop/Reddit-Pics/
+export DOWNLOAD_PATH=<insert-absolute-path-where-pictures-should-download-to>
+```
+
+Finally, we need to tell Python how many photos we would like to download.
+
+```bash
+export NUM_PHOTOS=<100>
+```
+
+To run the script, just execute it normally.
+
+```bash
+python3 my-script.py 
+```
+
+This should initiate a process that will take several minutes, but will download the photos to your desired path.  
+
+Hope this helps, and enjoy your awesome Screensaver photos!!!
