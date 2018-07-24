@@ -1,5 +1,5 @@
 ---
-title: Scraping Images from EarthPorn Subreddit with Python 3
+title: Scraping Images from Subreddit with Python 3
 date: 2018-07-04 13:38:22
 tags: web-scraping
 ---
