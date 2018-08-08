@@ -308,3 +308,4 @@ You now have a basic setup for developing your Wordpress site.  Remember, the de
 3. Commit and push your finalized changes to Bitbucket 
 4. Test your site at `staging.my-site.com`.
 5. When all tests complete, manually merge your staging site into production.
+

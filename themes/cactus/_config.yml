@@ -12,9 +12,9 @@ projects_url: http://zachgoll.github.io
 # navigation menu. Optionally, you can add translations for the 'Key' in
 # languages/*.yml
 nav:
-  home: /
+  home: http://zachgoll.github.io
   articles: /archives/
-  projects: http://zachgoll.github.io
+  projects: http://zachgoll.github.io/portfolio
 
 
 # Links to your social media accounts.
@@ -75,12 +75,12 @@ favicon:
 
 # The color scheme that should be used to highlight codeblocks.
 # See source/css/_highlight for a list of all available color schemes.
-# highlight: rainbow
+highlight: monokai-sublime
 
 # Set the color scheme.
 # Available color schemes are 'dark', 'light', 'classic' and 'white'.
 # Alternatively, add your own custom color scheme to source/css/_colors.
-colorscheme: dark
+colorscheme: white
 
 # Maximal width of the page in rem units.
 page_width: 48
