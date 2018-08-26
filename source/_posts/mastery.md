@@ -1,0 +1,26 @@
+---
+title: Mastery by Robert Greene
+date: 2018-08-26 13:33:59
+tags: books
+---
+
+<span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star"></span>
+
+<a href="https://amzn.to/2MPMS0U" target="_blank">See on Amazon</a>
+
+<p class="amazon-picture-container"><a class="amazon-book-picture" href="https://www.amazon.com/Mastery-Robert-Greene-ebook/dp/B007V65PBK/ref=as_li_ss_il?ie=UTF8&qid=1535308486&sr=8-1&keywords=mastery+robert+greene&linkCode=li2&tag=thdigo-20&linkId=b323174b688f44bac7cf7da97e2ddb60&language=en_US" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B007V65PBK&Format=_SL160_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=thdigo-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=thdigo-20&language=en_US&l=li2&o=1&a=B007V65PBK" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></p>
+
+This is my second Robert Greene book, and like his other works, he presents “keys to mastery” in an anecdotal fashion.  Throughout the text, Greene portrays the lives of several “masters” in their fields and dissects the methods that they used to achieve mastery.  The book is split into sections on how to find your calling, the dynamic of an apprenticeship, social dynamics, and a deep dive into the intuitive mind.
+
+The highlight of the book for me was the underlying theme carried throughout the book called PATIENCE.  In today’s fast-paced digital society, it is easy to become impatient with our work, and the timelines to success have become artificially shorter thanks to many internet tools.  Despite this, the road to mastery is a long and painful process that doesn’t happen in two weeks, two months, or even two years.  The road to mastery takes decades to achieve, and this book does a great job of painting the picture of what a single human faces in their quest to achieve something noteworthy.  
+
+Even further, I think this book is a refreshing perspective on the dynamic between the master and the student.  It is quite easy today to overlook the value of mentorship as we have so much available information at our fingertips.  Why seek a mentor when you can learn it on the internet?  This book provides a compelling argument for the mentorship phase of one’s career and reminds us that “self empowerment” isn’t always the way forward.  The billion dollar self help industry encourages us to speak our voice and promote ourselves in many ways, while Robert Greene argues that in many cases, this is the worst thing to do.  Greene argues that when you enter a new career, job, or culture in general, it is your utmost responsibility to stay quiet and observe your environment before voicing your opinions and cautions one from trying to change a pre-existing culture when not in a position of power.
+
+This book is not a sugar coated self help book but rather a reminder that you’re not quite as special as you may think nor are the people we consider “geniuses” or “artists”.  Instead, the book argues that anyone who intelligently and persistently approaches a field of study can come out on the other side as a “genius”.
+
+I have two main criticisms of the book, hence my four star rating. 
+
+1.  Greene powerfully tells the stories of many “masters” throughout the book, but at many points, it feels as if he is molding their personal stories to what he wants the reader to hear.  It feels to the reader that the stories portrayed in the book may not align perfectly with the stories as told by their original subjects.  It is as if Greene assumes that these people had a specific sequence of thoughts that linearly led to a breakthrough moment that changed their lives forever.  Although Greene is well researched on the subjects and probably didn’t intend to evoke such a feeling in the reader, it was a downside to the book for me and made some of the success stories seem more like fantasies than real life.
+2. The subjects chosen for anecdotes throughout the book were diverse, but it felt like Greene had an affinity for those in the sciences and academia.  I would have liked to hear more examples of mastery from the lives of athletes and social leaders.  To me, it became a bit repetitive to hear the stories of people who thought long and hard about something and eventually discovered a new scientific breakthrough.  It would have been refreshing to hear about the life of sociopolitical leaders like Mahatma Gandhi or Nelson Mandela and the greatest athletes of our time.  What kind of apprenticeships did experts in these fields partake in?  Is their path to mastery the same?
+
+Overall, this book is required reading even for self proclaimed “masters” because it provides a plethora of ideas and strategies for improving one’s life and work.  It doesn’t aim to “empower” the reader as many self help texts do and it certainly doesn’t claim to have the formula for mastery. 

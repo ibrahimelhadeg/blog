@@ -4,7 +4,11 @@ date: 2018-08-24 06:42:51
 tags: investing
 ---
 
-**Rating: 3/5 stars**
+<span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star"></span><span class="fa fa-star"></span>
+
+[See on Amazon](https://amzn.to/2wl3Hqn)
+
+<p class="amazon-picture-container"><a href="https://www.amazon.com/Common-Sense-Mutual-Funds-Bogle-ebook/dp/B00338060K/ref=as_li_ss_il?ie=UTF8&qid=1535313422&sr=8-1&keywords=common+sense+mutual+funds&linkCode=li2&tag=thdigo-20&linkId=744a4d55605f4483e960b5d7f2fa0355&language=en_US" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B00338060K&Format=_SL160_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=thdigo-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=thdigo-20&language=en_US&l=li2&o=1&a=B00338060K" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></p>
 
 Before digging into the book itself, it is important to recognize the work of John C. Bogle in the financial services industry.  As briefly highlighted in the book, Bogle started the Vanguard investment fund to test a thesis put out by a prominent researcher on the merits of "indexing".  He created the fund on the idea that investors shouldn't have to pay exorbitant management fees or transaction fees when putting their money away in a fund.  The work he has done cannot be matched, and the 500+ pages of this book prove it page after page.
 

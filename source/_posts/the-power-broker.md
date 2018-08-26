@@ -4,7 +4,9 @@ date: 2018-03-28 21:15:27
 tags: books
 ---
 
-5/5 Stars - [Link](https://amzn.to/2pOsAHK)
+<span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span>
+
+[See on Amazon](https://amzn.to/2pOsAHK)
 
 Robert Caro is one of very few authors who can entertain a reader for over 1000 long pages about a mundane topic like urban politics.  The Power Broker covers the life of Robert Moses, a burly character in both form and business.  In the 1166 long pages, the reader is taken through the life of one of the meanest, most powerful figures of New York politics.  Although at the peak of his career, Moses had billions of dollars of capital available for whatever public works he chose to build, he also was a bit of a sad story.  His wife Mary took care of him like many mothers would a child, he never learned to drive, he never had a personal fortune, he was loaned thousands of dollars by his wealthy mother to bail him out of his own mistakes, and he had no close friends (at least as portrayed in the book).
 

@@ -4,6 +4,12 @@ date: 2018-07-14 13:47:31
 tags: finance
 ---
 
+<span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star"></span>
+
+[See on Amazon](https://amzn.to/2MXl5eS)
+
+<p class="amazon-picture-container"><a href="https://www.amazon.com/Security-Analysis-Foreword-Buffett-Editions/dp/0071592539/ref=as_li_ss_il?ie=UTF8&qid=1535313367&sr=8-2&keywords=security+analysis&linkCode=li2&tag=thdigo-20&linkId=8b68669886c9fb38586e0eceb1c786f5&language=en_US" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=0071592539&Format=_SL160_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=thdigo-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=thdigo-20&language=en_US&l=li2&o=1&a=0071592539" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></p>
+
 # The Scope and Limits of Security Analysis
 
 Graham starts the first chapter off with the definition of analysis, and defines it as "the careful study of available facts with the attempt to draw conclusions therefrom based on established principles and sound logic."  He then goes into the three parts of analysis, which include:

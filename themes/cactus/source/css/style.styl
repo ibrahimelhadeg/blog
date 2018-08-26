@@ -181,3 +181,24 @@ code
 
   .line
     height: 22px
+
+.checked
+  color: orange !important
+
+.content
+  position: relative
+.amazon-picture-container
+  position: absolute
+  right: 0
+  top: -80px
+  width: 90px
+.amazon-picture-container img:hover
+  cursor: pointer !important
+  transform: none !important
+.amazon-picture-container img 
+  box-shadow: 1px 1px 10px 1px rgba(0,0,0,0.4)
+  border-radius: 2px
+  
+@media (max-width: 500px)
+  .amazon-picture-container
+    display: none
