@@ -11,14 +11,14 @@ One of the hardest topics to grasp in coding is that of testing.  Despite what m
 In this tutorial, I will go through the following topics.
 
 1. A Brief Introduction to SinonJS
-2. Getting your Express App ready for testing (requires small restructuring)
+2. Getting your Express App ready for testing (requires small refactor)
 3. Writing Unit Tests for basic functions 
 4. Writing Unit Tests for Express routes
 5. Debugging Unit Tests (often overlooked, but extremely useful!)
 
 # Brief Introduction to SinonJS
 
-Recreating the wheel is not my intention for this post, so I will not cover the basics of using SinonJS but rather refer readers to [Jani Hartikainen's guide on SinonJS](Jani Hartikainen) (I have no relationship with Jani nor receive affiliate revenue for promoting this guide--it's just really good and worth recommending.).  It is ever so slightly outtdated, but it covers 99% of the things that you might need to know about using SinonJS for javascript unit testing.
+Recreating the wheel is not my intention for this post, so I will not cover the basics of using SinonJS but rather refer readers to [Jani Hartikainen's guide on SinonJS](Jani Hartikainen) (I have no relationship with Jani nor receive affiliate revenue for promoting this guide.).  It is slightly outtdated but covers 99% of the things that you might need to know about using SinonJS for javascript unit testing.
 
 In a nutshell, SinonJS allows you to test the code written below easily.
 
