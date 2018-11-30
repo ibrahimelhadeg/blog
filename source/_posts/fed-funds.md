@@ -54,13 +54,9 @@ As mentioned above, the government runs the fed, but this often just confuses pe
 To make things more realistic, let's take a look at the Federal Reserve vs. a prominent U.S. Bank, JP Morgan.
 
 |            | JP Morgan | Federal Reserve |
-
 | ---------- | --------- | --------------- |
-
 | Assets     | $2.5 T    | $4.4 T          |
-
 | Revenue    | $94 B     | $117 B          |
-
 | Net Income | $24 B     | $81 B           |
 
 Yes, JP Morgan is the largest U.S. Bank, and yes, the Federal Reserve bank (this combines all 12 regional banks) makes JP Morgan look small, but the point of showing this is to illustrate that the Fed is just another bank that makes revenue, manages expenses, and controls the size of its balance sheet.  Furthermore, the Fed is audited by KPMG, while JP Morgan is audited by PWC, which shows that there is private sector oversight into the Fed.
@@ -113,13 +109,9 @@ Why would the Fed require banks to keep a percentage of their deposits in the "v
 The banks need to be able to hand their depositors physical cash at any time.  But just how much does each bank have to keep as "vault cash"?  This amount depends on the size of the institution (by number of deposits).  The table below shows how much different banks must hold in vault cash and/or reserves at the federal reserve.
 
 |                     |  % of Liabilities (deposits) |
-
 | ------------------- | ---------------------------- |
-
 | 0 - $16.3 M         | 0%                           |
-
 | $16.3 M - $124.2 M  | 3%                           |
-
 | $124.2 M +          | 10%                          |
 
 These figures are updated and maintained at [this link on the Fed's website] (https://www.federalreserve.gov/monetarypolicy/reservereq.htm).
@@ -147,13 +139,9 @@ In the above section we discussed the definition of the monetary base, but econo
 Yes, you read that right--M1 excludes the reserves or "vault cash" that we spoke about above.  In other words, MB and M1 overlap in some areas, and not in others.
 
 | Type of Money | MB | M1 |
-
 | ------------- | --- | --- |
-
 | Physical Cash | X  | X  |
-
 | "Vault Cash"/Reserves held at Fed  | X | |
-
 | Checking Deposits |  | X |
 
 Above shows where MB and M1 overlap and where they deviate.  In summary, we can call MB "Central Bank Money" and M1 "Commercial Bank Money".  At the time of writing, MB is $3.6 T while M1 is $3.7 T.  If you split these into their component parts, that leaves us with $1.7 in physical cash, $2 T in checking deposits, and $1.9T in reserves/vault cash.  For the sake of our discussion, we will be referring to the MB (monetary base) metric as it represents the money supply that the Fed will manipulate to set the fed funds rate.

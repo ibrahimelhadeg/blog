@@ -83,8 +83,7 @@ highlight: monokai-sublime
 colorscheme: white
 
 # Maximal width of the page in rem units.
-page_width: 80
-
+page_width: 60
 
 ##############################################################################
 # Miscellaneous
