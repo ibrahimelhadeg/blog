@@ -13,6 +13,16 @@ if (!!$.prototype.justifiedGallery) {
 
 $(document).ready(function() {
 
+  /*
+    When a tooltip is hovered, shows a box with the text
+  */
+  $(".tooltip").click((event) => {
+    const target = event.currentTarget.children[1];
+    console.log(target);
+    console.log(event);
+    $(target).toggleClass('display-none');
+  });
+
   /**
    * Shows the responsive navigation menu on mobile.
    */
