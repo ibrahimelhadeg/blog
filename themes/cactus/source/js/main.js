@@ -12,18 +12,6 @@ if (!!$.prototype.justifiedGallery) {
 
 
 $(document).ready(function() {
-
-  /*
-  Add google analytics
-  */
-  var script = document.createElement('script');
-  script.type = 'text/javascript';
-  script.src = 'https://www.googletagmanager.com/gtag/js?id=UA-62489908-6';
-  $('head').append(script);
-  var script2 = document.createElement('script');
-  script2.type = 'text/javascript';
-  script2.innerHTML = "window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'UA-62489908-6');";
-  $('head').append(script2);
   
   /*
     When a tooltip is hovered, shows a box with the text
