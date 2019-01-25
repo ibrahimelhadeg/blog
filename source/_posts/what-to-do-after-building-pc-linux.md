@@ -4,6 +4,10 @@ date: 2019-01-23 06:13:50
 tags: hardware
 ---
 
+If you are coming from YouTube, be sure to [check out my channel!](https://www.youtube.com/channel/UCDwIw3MiPJXu5SavbZ3_a2A/videos)  I recommend starting with my [operating systems video](https://www.youtube.com/watch?v=09puF-VKWeI).
+
+_Note: This tutorial is specifically created for [How To Build A Video Editing Computer | $850 Ryzen PC Beginners Build Guide | 2017](https://www.youtube.com/watch?v=7-s04b5zel8&t=3s) video, but also has information on how to run the Linux driver for the [ANEWKODI wireless adapter](https://amzn.to/2Mpn9Kb)._
+
 ## Step 1: Create Bootable Linux USB Stick
 
 1. First, go to the [Ubuntu website and download the latest Long Term Support Version](https://www.ubuntu.com/download/desktop) (18.04 at time of writing).  
