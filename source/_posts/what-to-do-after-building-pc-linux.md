@@ -177,5 +177,16 @@ To create our virtual machine, we will be using an Oracle product called Virtual
 10. Select "Windows 10 Home" edition 
 11. IMPORTANT!!! - You will want to select the CUSTOM option for the Windows install which will use the virtual hard disk you created in step 6.  Since we are running Linux on our main machine, the first option is not going to work.
 12. Be patient as Microsoft installs and follow the instructions.
+13. When loaded, we need to setup a file share so that we can access files from Linux on Windows 10 and vice-versa.  First, we need to install Windows Guest Additions.  This is surprisingly hard to find, so [here is the link](download.virtualbox.org/virtualbox/5.2.24/) to the latest long term support version.  On this page, you will need to download the "ISO" version.
+14. Click on the "Devices" tab at the top of your Virtual Box window, click "Optical Drives", and then click "Choose disk image".  Now find the ISO file you just downloaded and select it.
+15. Click on the Devices tab again, and click "Insert Guest Additions CD image".
+16. Now click into the Virtual Box window and open the file system.  Click "This PC", and double click on the Guest Additions.  You should see a bunch of files.  Double click the one without any extension to start the Guest Additions installer.
+17. After a quick reboot, Guest Additions will be turned on.  The last step is to create a shared folder on your linux machine.  Get out of the Virtual Box window and open your host machine's (Linux) terminal.  Create a share directory.
+
+```bash 
+mkdir ~/vmshare 
+```
+
+18. Now, open your Windows VM settings, click "Shared folders", and create a new shared folder.  Select "Auto-mount" and for the folder path select the `vmshare` directory we just created.  Finally, select "make permanent".  Now, when you open your Windows file explorer, you should see a new drive (mine is the E: drive) where you can save files.  Save a file to this folder, and then check to see if you can find it on your Linux host machine at the directory path `~/vmshare`.
 
 And that's it!  You are up and running with your newly built custom PC.  Customize it however you like!
