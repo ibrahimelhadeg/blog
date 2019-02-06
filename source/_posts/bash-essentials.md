@@ -109,3 +109,32 @@ You can now run your simple script from the command line by typing the name of i
 my-simple-script  
 # I am a useless script for tutorial purposes only
 ```
+
+## Common Commands 
+
+Aside from basic commands such as `cd`, `ls`, `mkdir`, `touch`, etc., there is a short list of commands that I think every bash user should know about and attempt to use on a regular basis.
+
+* grep
+* less
+* find
+* awk/sed
+* exec
+* gunzip
+* tar
+
+### grep
+
+Grep is a tool that will find certain patterns or words in one or more files.  It comes in two versions--BSD and GNU.  Mac computers will come with the BSD version while linux computers will come with the GNU version.  For our intent, these versions are identical, but if you ever run into issues cross-platform, be sure to check that the grep command you are executing is supported in your grep version (certain types of regular expressions not supported in BSD grep).
+
+You can think of grep as the "search" tool built-in to the command line.  In today's computing environments, there are plenty of search tools and in most cases, I would opt to use the search tools provided to me.  For example, in the Visual Studio Code Editor, I can use the search
+
+## Advanced Bash 
+
+Not all of the following topics are solely bash concepts, but they are important to be aware of even if you are not going to be using them on a daily basis.  The breadth of concepts go to show the true power of the bash shell.  The topics are as follows.
+
+* Bash Scripting
+* Regular expressions (used with scripting)
+* Virtual Machines and SSH 
+* Networking on the command line
+* Process management
+* System Management
