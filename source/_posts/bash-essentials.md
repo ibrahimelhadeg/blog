@@ -571,3 +571,51 @@ Not all of the following topics are solely bash concepts, but they are important
 * Networking on the command line
 * Process management
 * System Management
+
+### Regular Expressions
+### Bash Scripting
+### Virtual Machines and SSH Protocol
+### Networking on Command Line
+### Process Management
+
+Process management sounds like an intimidating concept, but for the average bash user, there are only a few things that you will ever have to deal with regarding processes.  I could list out a bunch of commands here for you, but they will not make any sense unless you understand the sequence that the bash shell (and kernel) takes when a new process is started.  When your computer starts up, the kernel will call a process called "init", which on a UNIX-based operating system is usually the script called `init` located at `/sbin/init`.  Once this process has started, all other processes will be started by other processes.  This does not make a lot of sense starting out, but once you know how a process starts, you will gain clarity into what goes on behind the scenes on your computer.  A process can start another process (usually the terminal starting a new process as a result of a command typed into it) by first creating a copy of itself, and then executing the new command within that copied process.  Here is a visual to better explain: 
+
+{% asset_img processes-linux.png %}
+
+We can also simulate this process in a terminal ourselves using the `strace()` command.
+
+```bash 
+strace ls
+```
+
+When you run this command, you will see all of the system calls that were made when you ran the `ls` command.  Although `ls` is considered a "command" in many people's minds, it is really just another process.  I have cut out parts of the `strace ls` output below and highlighted some of the most important parts.
+
+```bash 
+execve("/bin/ls", ["ls"], [/* 69 vars */]) = 0
+
+.... omitted for brevity ....
+
+write(1, "_config.yml  awk-example.sh  db."..., 107_config.yml  awk-example.sh  db.json      node_modules    package.json  scaffolds  test-permission  yarn.lock
+) = 107
+write(1, "aapl.csv     data-file.txt   lar"..., 91aapl.csv     data-file.txt   large-data.csv  package-lock.json public       source    themes
+) = 91
+close(1)                                = 0
+munmap(0x7f1578100000, 4096)            = 0
+close(2)                                = 0
+exit_group(0)                           = ?
++++ exited with 0 +++
+```
+
+If you are truly curious about each of the system calls in the `strace` command output, [here is a great StackOverflow post](https://stackoverflow.com/a/6334557).  If you have ever programmed in the C programming language, you might find a few of these commands familiar.  
+
+In the output that I have shown, you can see the `execve` command starts off the process.  This actually does the fork and exec all in one.  Later in the command, you will see file and directory names.  These represent the output of the ls command that you would see if you just ran `ls` in the current directory of my machine.  
+
+In the end, the output is not important to you as a bash user, but is important in trying to understand how the computer starts and ends processes.  What we care more about is how to _manage_ processes.  There are only a few commands that we need to look at here because these few commands will take care of essentially anything we would ever need to do relating to processes.
+
+#### ps and top commands
+
+There are two commands that give us output relating to the processes that are currently running on our computer.  We will start with `ps` because it is 
+
+
+### System Management
+
