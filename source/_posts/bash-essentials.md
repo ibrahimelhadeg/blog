@@ -541,10 +541,64 @@ These utilities are fairly simple and used to compress and decompress files.  Ma
 
 ```bash
 # Create a .tar format archive
-# c is create mode, v is verbose output, f is tar format
-tar cvf archive.tar file1 file2 file3 ... filen
+# c is create mode, v is verbo#!/bin/bash 
 
-# List what is in .tar archive
+todays_date=$(date +%Y-%m-%d)
+
+# First check if the archives folder exists
+if [ ! -d '/home/zach/archives/' ]; then
+	mkdir /home/zach/archives/
+fi
+
+# Check if today's folder is already created
+if [ ! -d "/home/zach/archives/$todays_date" ]; then
+	mkdir /home/zach/archives/$todays_date
+fi
+
+find /home/zach/folder-to-clean -type f -mtime -7 | 
+while read filename
+do 
+	mv $filename /home/zach/archives/$todays_date/
+done output, f is tar format
+tar cvf archive.tar file1 file#!/bin/bash 
+
+todays_date=$(date +%Y-%m-%d)
+
+# First check if the archives folder exists
+if [ ! -d '/home/zach/archives/' ]; then
+	mkdir /home/zach/archives/
+fi
+
+# Check if today's folder is already created
+if [ ! -d "/home/zach/archives/$todays_date" ]; then
+	mkdir /home/zach/archives/$todays_date
+fi
+
+find /home/zach/folder-to-clean -type f -mtime -7 | 
+while read filename
+do 
+	mv $filename /home/zach/archives/$todays_date/
+donefile3 ... filen
+
+# List what is in .tar archive#!/bin/bash 
+
+todays_date=$(date +%Y-%m-%d)
+
+# First check if the archives folder exists
+if [ ! -d '/home/zach/archives/' ]; then
+	mkdir /home/zach/archives/
+fi
+
+# Check if today's folder is already created
+if [ ! -d "/home/zach/archives/$todays_date" ]; then
+	mkdir /home/zach/archives/$todays_date
+fi
+
+find /home/zach/folder-to-clean -type f -mtime -7 | 
+while read filename
+do 
+	mv $filename /home/zach/archives/$todays_date/
+done
 # t is list mode
 tar tvf archive.tar
 
@@ -573,8 +627,494 @@ Not all of the following topics are solely bash concepts, but they are important
 * System Management
 
 ### Regular Expressions
+
+To me, regular expressions are often made far more complicated than they need to be. Sure, there are a lot of options and little details to learn regarding regular expressions, and on top of that, there are many different flavors of regular expressions (python, extended, rust, etc.).  Despite this, there are only a few core concepts that one must understand about regular expressions that will then translate in the ability to use any flavor of regular expressions effectively.
+
+Regular expressions exist because a literal text searching program is sometimes not good enough.  Let me give you an extremely practical example from my own work to explain.
+
+I recently wrote a script in Microsoft Excel VBA that executed commands from an external library.  The code of this external library was not available for me to see, and therefore, I had to use it with limited control.  As a result of this, the library would open up a new Excel workbook for every function call I made.  In each workbook, there was data that I needed to copy and paste into my main workbook, but in the code, I had no way of determining what the name of this new workbook was.  Luckily, Excel opens new workbooks and names them "Book1", "Book2", "Book3", "Book4", etc.  Knowing that these new workbooks would always contain the word "Book" at the beginning, I was able to use a regular expression to identify them.  My regular expression was quite simple, and looked like this: `^Book[1-9]+`.  I have not yet explained what this syntax means, but essentially, we are searching for text that starts with "Book" and ends with 1 or more numbers.  
+
+A more common example for regular expressions is searching large documents for email addresses or phone numbers or even validating user input in a web application.  Chances are, you will not need to use regular expressions on a daily basis, so I am not going to teach you all the nitty gritty details that you will forget within a day.  Instead, I am going to teach you the methodology behind regular expressions that will give you a foundation to work with.  You may have to Google for help regarding specific use cases, but you will never have any confusion about regular expressions.
+
+Let me first start by addressing the fact that there are many different versions of regular expressions.  Here are three different ways to use the same regular expression:
+
+```javascript
+// This is how we use a javascript regular expression to match a string with 3 or more digits in it
+let myRegExp = /[0-9]{3,}/
+let myStringToMatch = '345'
+
+myRegExp.exec(myStringToMatch);  // ["345", index: 0, input: "345", groups: undefined]
+```
+
+```python
+# This is the same regexp, but in Python
+
+import re
+
+result = re.search('[0-9]{3,}', '345')
+
+print(result.group(0)) # '345'
+```
+
+```bash 
+# And finally, the same expression written in the bash shell using the grep command
+
+echo "345" | grep -E '[0-9]{3,}' # 345
+```
+
+As you can see, all three languages utilize regular expressions a bit differently, but the actual expression that we are writing in each is exactly the same.  Regular expressions are easily translatable from one language to the next.  
+
+There are only 4 concepts that you must learn with regular expressions:
+
+1. Character sets
+2. Sub-expressions
+3. Quantifiers
+4. Literals
+
+Of course, we will be learning regular expressions through the lens of the bash shell, and therefore we will need to use the `grep` command using the `-P` flag, which stands for "perl regular expressions".  This is the same flavor of regular expression that Python uses, so I thought it would be convenient to teach it.  If you are running a Mac, you may have to install the GNU version of the `grep` utility with Homebrew to enable the `-P` flag.  Below is a regular expression with each of the 3 concepts displayed.
+
+```bash 
+echo "The 1st phone number is: 111-222-3333" | grep -P "(The 1st phone number is: ){1}[0-9]{3}-[0-9]{3}-[0-9]{4}"
+```
+
+Let's break this down.  The `(The 1st phone number is: )` is an expression, and when we have an expression like this, we can use it to match an entire group of words.  The `{1}` immediately after it means that we want to match this entire phrase exactly 1 time.  It is what we call a "quantifier".  The rest of the regular expression is `[0-9]` followed by `{3}` and a literal `-` character.  The `[0-9]` is a character set and it means that we are looking for any number in a quantity of exactly 3 `{3}` or exactly 4 `{4}`.  So to review:
+
+* A character set is anything in brackets.  We can put 
+* A sub-expression is anything in parenthesis
+* A quantifier is anything in braces (i.e. `{}`)
+* A literal character is anything that is not in brackets, parentheses, or braces
+
+It would be overly tedious for me to list out all the possible things you can put in each of these, so I will go through an example of each.
+
+#### Character Set
+
+A character set is where we can define a "range" of characters that we want to match.  If we wanted to match any number, we could use the character set `[0-9]`.  If we wanted to match any letter, we could use the character set `[a-zA-Z]`.  If we wanted to match letters and numbers, we could use `[0-9a-zA-Z]`.
+
+#### Sub-expressions
+
+A sub-expression is how we can "chunk" characters together into a single phrase.  Maybe we wanted to match a bunch of emails that are going to be either "gmail.com" or "yahoo.com".  We could do this using a sub-expression: `(gmail.com|yahoo.com)`.  The `|` means "or". 
+
+#### Quantifier
+
+A quantifier can be added to the end of a specific letter, character set, or sub-expression.  Here are three examples.
+
+```bash 
+[a-z]{3,}  # Match 3 or more lowercase letters
+(some phrase){1} # Match "some phrase" exactly once
+a{6} # Match the letter a exactly 6 times (i.e. aaaaaa)
+```
+
+#### Literal Matching
+
+A literal match is exactly what it says.  It is an exact match for a given text.  If I had the following group of text: 
+
+```
+Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+```
+
+I could match the phrase "unknown printer" with a literal regex.
+
+```bash 
+echo "... text to match ..." | grep -P "unknown printer"
+```
+
+A literal match is another way of doing a standard search on text.  A sub-expression is very similar to a literal matching, but with literal matching, you do not have the ability to add a quantifier, an "or" condition, or select a sub-expression as a variable.  We can add a quantifier at the end of a sub-expression, so if we wanted to match the "gmail.com" or "yahoo.com" phrase exactly 1 time, we could add the quantifier to the end `(gmail.com|yahoo.com){1}`.
+
+#### Example Regex
+
+Let's say we had the following file called `email-addresses.txt`: 
+
+```bash 
+jon23@gmail.com
+bob879@yahoo.com
+not an email
+sally2@customsite.com
+fred.jones@hotmail.com
+not an email address
+```
+
+Learning how to match all four of the emails with a single regular expression will demonstrate a lot of the concepts that we have covered.  We start by matching all characters ([here is a regex cheatsheet](https://www.rexegg.com/regex-quickstart.html) to refer to during this process).
+
+```bash 
+cat email-addresses.txt | grep -P "^.+"
+```
+
+The expression we just wrote means that we are starting at the beginning of each line and looking for _any_ character except line breaks in a quantity of 1 or more characters.  The `^` means we are starting at the beginning of the line, the `.` means we are matching all characters except line breaks, and the `+` is a quantifier that means 1 or more matches.  We could easily have written the same expression differently like so: 
+
+```bash
+cat email-addresses.txt | grep -P "^[^\r\n]{1,}"
+```
+
+As you can see, regular expressions can be used in a multitude of ways.  In this version, we are doing the _same_ thing we did above with different syntax.  The `^` still indicates that we are looking at the beginning of each line.  The `[^\r\n]` means that we are matching _any_ character that is _not_ (`^`) a carriage return or new line (`\r`, `\n`).  Notice how when we place the `^` inside the character set it now acts as a negation rather than "search from the beginning of the line".  Symbols behave differently when placed inside a character set, so be careful!  Finally, we want to match these characters 1 or more times, so we use the `{1,}` syntax.  The comma after the 1 indicates that we want 1 or _more_ matches.  Anyways, if we run this, we will again match all six lines of the text file.  Since we only want to match the email addresses, we will need to tweak the expression.  Moving forward, I will be writing two regular expressions with different syntax that both do the same things.
+
+```bash 
+cat email-addresses.txt | grep -P "^[^\r\n]{1,}@.{1,}"
+cat email-addresses.txt | grep -P "^.+@.+"
+```
+
+The two expressions above both match the four email addresses while excluding the other two lines.  All we had to do was add an "@" symbol followed by the same thing we had before the symbol.  This is great, but what if we modified the text file so it looked like this: 
+
+```
+jon23@gmail.com
+bob879@yahoo.com
+not an email
+sally2@customsite.com
+this line has an @ symbol in it so it will mess with our regex
+fred.jones@hotmail.com
+not an email address
+```
+
+Now when we run our regular expressions, we will match all the email addresses and the new line that I added.  As you can see, depending on the complexity of the text you are searching, you may have to go through some trial/error before you get the right regular expression for the job.  In this case, we are going to need to modify the back half of the regular expression to the following.
+
+```bash
+cat email-addresses.txt | grep -P "^[^\r\n]{1,}@.{1,}\.com"
+cat email-addresses.txt | grep -P "^.+@.+\.com"
+```
+
+We are now matching just the email addresses again.  All I did was add `\.com` at the end of our regular expression for a _literal_ match (we had to "escape" the period here because otherwise it refers to all characters as it did earlier in the expression.  To escape a special character, we use the backslash right before it).  But what if I modified the text file one more time like so?
+
+```
+jon23@gmail.com
+bob879@yahoo.com.yahoo.com
+not an email
+sally2@customsite.net
+this line has an @ symbol in it so it will mess with our regex
+fred.jones@hotmail.com
+not an email address
+```
+
+I made two changes here.  First, I made one of the email addresses invalid.  "bob879@yahoo.com.yahoo.com" is obviously an invalid email and we do not want to match it.  Second, "sally2@customsite.net" no longer has ".com" at the end, so this will not match our regexp.  Here is how we would modify the regular expressions to match only the valid email addresses.
+
+```bash 
+cat email-addresses.txt | grep -P "^[^\r\n]{1,}@[a-zA-Z0-9]{1,}(.com|.net){1}"
+cat email-addresses.txt | grep -P "^.+@\w+(.com|.net){1}"
+```
+
+The above regular expressions will get us a lot closer.  In both expressions, we replaced `\.com` with `(.com|.net){1}` to match _either_ ".com" or ".net" email addresses exactly once.  Then, in the first regex, we replaced `.{1,}` with `[a-zA-Z0-9]{1,}` which will now not match the "yahoo.com.yahoo.com" because the periods do not match the character set.  Likewise, we changed the second regular expression from `.+` to `\w+`, which does the same thing.  The only problem we face now is that the regular expressions are still matching the first part of the "bob879@yahoo.com.yahoo.com".  We do not want to match this line _at all_.  To fix this, we modify the regular expressions one more time.
+
+```bash 
+cat email-addresses.txt | grep -P "^[^\r\n]{1,}@[a-zA-Z0-9]{1,}(.com|.net){1}$"
+cat email-addresses.txt | grep -P "^.+@\w+(.com|.net){1}$"
+```
+
+All I did was add the `$` character at the end of each expression.  Just like we have the `^` at the beginning of each expression, we can place the `$` at the end of the expressions to indicate we have reached the end of our line.  This will eliminate that invalid email address!
+
 ### Bash Scripting
+
+Throughout this tutorial, we have covered many commands and concepts.  Most of the commands we have learned (with the exception of the `awk`) command are for usage on the command line, but what if you wanted to put some of these in a script to run?  You could always write out a long and elaborate command and execute it, but it will not get saved and is difficult to write.  Bash scripting solves this problem by allowing you to write common bash commands within a script file and then execute that script file.  You may find this useful if you need to do something on a periodic basis.  For example, maybe you need to clean out a specific folder on your computer every day and place the contents of it in an archived folder with today's date on it.  You can do this through bash scripting, and in this brief introduction, I will teach you how to do just that.  First, we need to understand the basics of a scripting file.
+
+The most basic form of a scripting file is shown below.  This file is called `simple-script.sh` where the `.sh` is the file extension for the script (not necessary, but good practice).  The permissions on this file are `744`, which means that only we (the owner of the script) can modify or execute it.
+
+```bash 
+#!/bin/bash
+
+echo "I am a useless, basic script"
+```
+
+To run this, we can do so in two ways.
+
+```bash 
+bash simple-script.sh 
+
+./simple-script.sh
+```
+
+Notice that the top of the file has something called a "shebang" (`#!/bin/bash`), which tells the interpreter which executable to run the script against.  In this case, we are telling it to run with the bash shell which is stored in `/bin` on our machine.
+
+This is the most basic form of a script, but obviously not all that useful.  Throughout this section, we will learn the most important components of a bash script, which includes: 
+
+* Variable declarations
+* Built-in variables
+* Command line arguments
+* Reading user input
+* for loops
+* if-then statements
+
+With these concepts, you should be able to accomplish 95% of your tasks.  Sure, there will be times where the above concepts are not enough, but again, this is an introduction to scripting rather than a deep dive.  For the rest of this section, I will be using a file called `shell-scripting-basics.sh` unless otherwise noted.  
+
+#### Variable declarations
+
+```bash 
+MY_VARIABLE="some value"
+
+echo $MY_VARIABLE
+echo "Variables can also be added within double-quoted strings: $MY_VARIABLE"
+echo 'But not single-quoted strings. This will not read the variable: $MY_VARIABLE'
+```
+
+Declaring and using variables is rather simple in bash scripting, so I will not spend a lot of time here.
+
+#### Built-In Variables
+
+There are several built in variables that you can use in a bash script.  They are listed below.
+
+```bash 
+echo $0  # Prints the name of the script - shell-scripting-basics.sh
+echo $1  # Prints the first argument given to a script
+echo $2  # Prints the second argument given to a script 
+echo $3  # Prints the third... do I need to continue here??? 
+echo $#  # Prints the number of arguments passed to the script
+echo $@  # Prints all arguments passed to the script
+echo $$  # Prints the process ID
+echo $?  # Prints the exit code of the previous process run
+```
+
+#### Command Line Arguments
+
+A shell script can take arguments on the command line.  For example, if I ran the following script: 
+
+```bash 
+./shell-scripting-basics.sh 3 9
+```
+
+and then here is the code in the script: 
+
+```bash 
+#!/bin/bash
+
+echo "The script $0 evaluates to: " $(($1+$2))
+```
+
+This script will evaluate to - "The script ./shell-scripting-basics.sh evaluates to:  12"
+
+As you can see, we can use the built-in variables inside our scripts.
+
+#### Reading user input
+
+We can also read user input from a script.  This is similar to reading arguments, but instead of the user typing their input in before execution time, they type it in during execution.
+
+```bash
+#!/bin/bash
+
+read user_input
+
+echo "The user entered: $user_input"
+```
+
+```bash
+./shell-scripting basics
+some input
+The user entered: some input
+```
+
+If you want to protect the user input (ex: password entry), just add an `-s` at the beginning of the command like so: 
+
+```bash 
+read -s user_input
+```
+
+#### for loops 
+
+The syntax for looping in bash is: 
+
+```bash 
+#!/bin/bash
+
+for item in $@; do 
+        echo $item
+done
+```
+
+In this script, we are looping through all of the user arguments provided to the script.  Remember, `$@` is a built-in variable containing all of the user arguments.  We can also define an array of variables in bash and loop through them.
+
+```bash 
+#!/bin/bash
+
+declare -a my_array=('string 1', 'string 2', 'string 3')
+
+for item in "${my_array[@]}"; do
+        echo $item 
+done
+```
+
+The syntax for an array is a bit weird in bash as you can see.  We can also use the for loop syntax to loop through a bunch of files.  This is a common type of script that you might have to write.
+
+```bash 
+#!/bin/bash
+
+# Navigate to the home directory
+cd ~/
+
+# The * refers to all the files and directories in the current directory
+for item in *; do
+        echo $item
+done
+```
+
+#### if-then statements
+
+I saved if-then statements for last because they can get a bit complicated.  The testing syntax that we use for an if-then statement comes from the `test` command, and you can find all of the possibilities on the man page by typing `man test`.  For most commands in bash, the man pages are difficult to digest and are generally unhelpful for finding quick answers, but the man page for the `test` command is super straightforward and simple.  Therefore, I will not be listing out all of the available testing options and will assume you have read through the man page for `test`.  Below is a simple use of `test` on the command line (outside of a script).
+
+```bash 
+test 2 -eq 2; echo $?
+# 0
+
+test 2 -eq 3; echo $?
+# 1
+```
+
+If you run these two commands, you will get output of 0 and 1.  As we talked about, these numbers are the exit codes of the test commands and are stored in the built-in variable `$?`.  Each line shown above is actually two commands.  First, we test a condition, and second, we print the exit code of the previous command (which was test).  If we want to place a test in a script for an if-then statement, we can write it like so: 
+
+```bash 
+#!/bin/bash 
+
+if [ 2 -eq 2 ]; then
+        echo "2 does equal 2!"
+fi
+```
+
+This will print "2 does equal 2" because the expression evaluates to true (a 0 exit code).  We can also test other conditions.  For example, we can loop through all the files in our home directory and if they are directories, we will print "$name is a directory" and if not, "$name is a file".
+
+```bash 
+#!/bin/bash 
+
+cd ~/
+
+for name in *; do
+        if [ -d $name ]; then
+                echo "$name is a directory!"
+        else
+                echo "$name is a file!"
+        fi
+done
+```
+
+The `-d` flag will test whether a given name is a directory.  If it is, it returns true (0 exit code).
+
+Now that you know the basics of bash scripting, we can get to the practical example of checking a specific folder for files and moving them to an archive.  In this case, I will be checking a directory for files that have not been modified for 7 days or more and placing them in an archive folder named with today's date.  This will incorporate the `find` command that we learned earlier!
+
+```bash
+#!/bin/bash 
+
+todays_date=$(date +%Y-%m-%d)
+
+# First check if the archives folder exists
+if [ ! -d '/home/zach/archives/' ]; then
+	mkdir /home/zach/archives/
+fi
+
+# Check if today's folder is already created
+if [ ! -d "/home/zach/archives/$todays_date" ]; then
+	mkdir /home/zach/archives/$todays_date
+fi
+
+# A bit of a tricky expression here.  I looked up on StackOverflow how to pipe the output of the find command
+# into a do-while loop because the find exec command gets a permission denied error when running it as a script
+find /home/zach/folder-to-clean -type f -mtime -7 | 
+while read filename
+do 
+	mv $filename /home/zach/archives/$todays_date/
+done
+```
+
+There are endless possibilities to writing bash scripts.  Play around a bit and you will be on your way!
+
 ### Virtual Machines and SSH Protocol
+
+This topic can get quite loaded, and therefore I am not going to dig too deep into it.  We will cover the following: 
+
+* How to setup a public and private keypair for ssh access
+* How to use SSH to connect to a remote machine
+* How to transfer files between your local machine and remote machine using `scp`
+* How to download files from the internet
+* How to use VSCode with your VPS
+
+I primarily use Digital Ocean for my hosting needs, so I will be going through a tutorial on how to setup and connect to a virtual private server on Digital Ocean.  That said, the concepts apply across the board whether you are using AWS, Azure, etc.  When you first create a VPS in Digital Ocean (also called a "Droplet"), it will ask you whether you want to connect to the machine using a password or SSH key.  I almost always connect via an SSH key, so let's first learn how to create that key on our local computer.  The process of connecting to a VPS works in the following steps.
+
+1. User creates a private/public SSH keypair on their local computer
+2. User inputs the _public_ key into the SSH field of their hosting provider while setting up the host
+3. When user tries to connect to the host via SSH, the SSH tool will validate the private/public keypair stored on the local computer in the `~/.ssh` directory with the public key stored on the VPS.
+4. If the keys validate, the user now gets remote access to the VPS.
+
+So the first step requires us to create a public/private keypair.  We can do this on Mac/Linux using the OpenSSH tool.  In your terminal, type the following command.
+
+```bash 
+ssh-keygen
+```
+
+This will ask you what directory to store the key in.  For this to work, you need to put it in the `~/.ssh` folder, but you can give it any custom name.  When the command asks you for a password, just press enter twice without entering anything because we do not need to password protect the key since we are using our personal computer.  My new key is stored as `/home/zach/.ssh/id_digitalocean_rsa`.
+
+You now need to print out and copy the public version of this key.  In my case, I type the command: 
+
+```bash 
+cat ~/.ssh/id_digitalocean_rsa.pub
+```
+
+Notice how I added `.pub` at the end.  When you create a keypair, there will be a `.pub` version always.  Once you have copied the contents of this file, paste it into the SSH key box on your hosting provider.  On Digital Ocean, I will paste it here.
+
+{% asset_img digital-ocean-key.png %}
+
+Once you have done that, you can create your virtual machine.  Now, find the IP address of your new virtual machine and type the following command into your terminal.
+
+```bash 
+ssh -p 22 root@157.230.167.2
+```
+
+This should successfully log you into your VPS.  The last thing I want to show you is how to transfer files to and from your remote machine and local computer.  To do this, we use the `scp` utility.
+
+#### From local computer to remote machine
+
+If I had `sample-file.txt`, the way I would upload this to my remote machine is like so: 
+
+```bash 
+scp -r sample-file.txt root@157.230.167.2:~/
+```
+
+This will upload the `sample-file.txt` file using the `root` user and place that file in the home directory `~/` on my remote machine.  You can specify any path to place it on your remote machine so long as you put a colon `:` after the IP address.
+
+#### From remote machine to local computer
+
+To download that same file from your remote machine to your local computer, you would just run the following.
+
+```bash 
+scp -r root@157.230.167.2:~/sample-file.txt ~/Downloads
+```
+
+This will place that same sample file into my local computer's `~/Downloads` folder.
+
+#### Downloading packages to your remote machine with wget
+
+Sometimes, you will need to download software packages from the internet to your VPS.  Since you do not have a GUI to work with, you must do this with the command line.  Let's say I wanted to download a Google image to my VPS for whatever reason.
+
+Here is a nice picture of a Husky - https://cdn.orvis.com/images/DBS_SibHusky.jpg
+
+We could download this to our VPS using the following command.
+
+```bash 
+wget -O my-custom-picture.jpg https://cdn.orvis.com/images/DBS_SibHusky.jpg
+```
+
+This will download the photo and save it as `my-custom-picture.jpg` in whatever directory I execute the command from.
+
+#### Using VSCode with your remote machine
+
+Sure, you could use the Vim text editor for all of your development needs on a VPS, but it is nice to have a feature-rich text editor like VSCode.  We can use VSCode with files on our VPS with the help of the `rmate` command.  To do this, open VSCode, and download the extension called "Remote VSCode".  Once downloaded, open your Settings by typing ctrl-shift + P, and typing ">Preferences:Open User Settings".  Scroll down and find the "Extensions" dropdown and select "Remote VSCode".  In the settings, you will want the following: 
+
+```
+Remote Host: 127.0.0.1
+Remote Port: 52698
+Remote Onstartup: True (will be a checkbox)
+```
+
+Now, type ctrl-shift P again, and type ">Remote: Start Server".  This will start the Remote server.  Now, in your terminal, enter the following command to connect to your VPS.
+
+```bash 
+ssh -R 52698:127.0.0.1:52698 root@157.230.167.2
+```
+
+Obviously, you will replace the IP address with your own.  Next, install the `rmate` utility on your VPS.
+
+```bash 
+sudo wget -O /usr/local/bin/rmate https://raw.github.com/aurora/rmate/master/rmate
+sudo chmod a+x /usr/local/bin/rmate
+```
+
+You can now edit any file using VSCode by running the following command from your VPS!
+
+```bash 
+rmate sample-file.txt
+```
+
 ### Networking on Command Line
 ### Process Management
 
@@ -614,7 +1154,7 @@ In the end, the output is not important to you as a bash user, but is important 
 
 #### ps and top commands
 
-There are two commands that give us output relating to the processes that are currently running on our computer.  We will start with `ps` because it is 
+There are two commands that give us output relating to the processes that are currently running on our computer.  We will start with `ps` because it has more of the 
 
 
 ### System Management
