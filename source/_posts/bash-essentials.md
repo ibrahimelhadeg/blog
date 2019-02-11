@@ -6,7 +6,7 @@ tags: linux
 
 When starting out with the bash shell, there are a few essential concepts beyond the basic commands that one must be aware of.  Beyond [the basics]() and [user permissions](https://zachgoll.github.io/blog/2019/user-permissions/), one must learn about environment variables, aliases, and some more advanced commands relating to topics of networking, process management, ssh, and scripting.
 
-## Environment variables
+# Environment variables
 
 An environment variable can come in two sizes--global or local.  A global environment variable is one that is set upon initialization of a shell and can be used across all your shells.  A local environment variable is one that is set during a shell session and is erased when the shell is closed.  To create a local environment variable, just export it in your shell.
 
@@ -110,7 +110,7 @@ my-simple-script
 # I am a useless script for tutorial purposes only
 ```
 
-## Common Commands 
+# Common Commands 
 
 Aside from basic commands such as `cd`, `ls`, `mkdir`, `touch`, etc., there is a short list of commands that I think every bash user should know about and attempt to use on a regular basis.
 
@@ -121,7 +121,7 @@ Aside from basic commands such as `cd`, `ls`, `mkdir`, `touch`, etc., there is a
 * gunzip
 * tar
 
-### grep
+## grep
 
 Grep is a tool that will find certain patterns or words in one or more files.  It comes in two versions--BSD and GNU.  Mac computers will come with the BSD version while linux computers will come with the GNU version.  For our intent, these versions are identical, but if you ever run into issues cross-platform, be sure to check that the grep command you are executing is supported in your grep version (certain types of regular expressions not supported in BSD grep).
 
@@ -168,7 +168,7 @@ sudo cat /etc/passwd | grep --color -E "^[a-z]{3}:"
 
 Again, the `grep` utility is useful for quick searches when you do not have access to your normal text editor like VSCode.
 
-### awk and sed
+## awk and sed
 
 Nowadays, `awk` and `sed` are contentious topics, and in this section, I hope to clarify _why_ this is the case and introduce the two commands' basic usages.  The reason these two commands are contested frequently is due to the better alternatives that we have today.  Both of these tools are considered text editors because they can find _and_ replace parts of a file or files.  
 
@@ -191,62 +191,9 @@ Date,Open,High,Low,Close,Adj Close,Volume
 2018-11-06,201.919998,204.720001,201.690002,203.770004,203.061493,31882900
 2018-11-07,205.970001,210.059998,204.130005,209.949997,209.219986,33424400
 2018-11-08,209.979996,210.119995,206.750000,208.490005,208.490005,25362600
-2018-11-09,205.550003,206.009995,202.250000,204.470001,204.470001,34365800
-2018-11-12,199.000000,199.850006,193.789993,194.169998,194.169998,51135500
-2018-11-13,191.630005,197.179993,191.449997,192.229996,192.229996,46882900
-2018-11-14,193.899994,194.479996,185.929993,186.800003,186.800003,60801000
-2018-11-15,188.389999,191.970001,186.899994,191.410004,191.410004,46478800
-2018-11-16,190.500000,194.970001,189.460007,193.529999,193.529999,36928300
-2018-11-19,190.000000,190.699997,184.990005,185.860001,185.860001,41925300
-2018-11-20,178.369995,181.470001,175.509995,176.979996,176.979996,67825200
-2018-11-21,179.729996,180.270004,176.550003,176.779999,176.779999,31124200
-2018-11-23,174.940002,176.600006,172.100006,172.289993,172.289993,23624000
-2018-11-26,174.240005,174.949997,170.259995,174.619995,174.619995,44998500
-2018-11-27,171.509995,174.770004,170.880005,174.240005,174.240005,41387400
-2018-11-28,176.729996,181.289993,174.929993,180.940002,180.940002,46062500
-2018-11-29,182.660004,182.800003,177.699997,179.550003,179.550003,41770000
-2018-11-30,180.289993,180.330002,177.029999,178.580002,178.580002,39531500
-2018-12-03,184.460007,184.940002,181.210007,184.820007,184.820007,40802500
-2018-12-04,180.949997,182.389999,176.270004,176.690002,176.690002,41344300
-2018-12-06,171.759995,174.779999,170.419998,174.720001,174.720001,43098400
-2018-12-07,173.490005,174.490005,168.300003,168.490005,168.490005,42281600
-2018-12-10,165.000000,170.089996,163.330002,169.600006,169.600006,62026000
-2018-12-11,171.660004,171.789993,167.000000,168.630005,168.630005,47281700
-2018-12-12,170.399994,171.919998,169.020004,169.100006,169.100006,35627700
-2018-12-13,170.490005,172.570007,169.550003,170.949997,170.949997,31898600
-2018-12-14,169.000000,169.080002,165.279999,165.479996,165.479996,40703700
-2018-12-17,165.449997,168.350006,162.729996,163.940002,163.940002,44287900
-2018-12-18,165.380005,167.529999,164.389999,166.070007,166.070007,33841500
-2018-12-19,166.000000,167.449997,159.089996,160.889999,160.889999,49047300
-2018-12-20,160.399994,162.110001,155.300003,156.830002,156.830002,64773000
-2018-12-21,156.860001,158.160004,149.630005,150.729996,150.729996,95744600
-2018-12-24,148.149994,151.550003,146.589996,146.830002,146.830002,37169200
-2018-12-26,148.300003,157.229996,146.720001,157.169998,157.169998,58582500
-2018-12-27,155.839996,156.770004,150.070007,156.149994,156.149994,53117100
-2018-12-28,157.500000,158.520004,154.550003,156.229996,156.229996,42291400
-2018-12-31,158.529999,159.360001,156.479996,157.740005,157.740005,35003500
-2019-01-02,154.889999,158.850006,154.229996,157.919998,157.919998,37039700
-2019-01-03,143.979996,145.720001,142.000000,142.190002,142.190002,91312200
-2019-01-04,144.529999,148.550003,143.800003,148.259995,148.259995,58607100
-2019-01-07,148.699997,148.830002,145.899994,147.929993,147.929993,54777800
-2019-01-08,149.559998,151.820007,148.520004,150.750000,150.750000,41025300
-2019-01-09,151.289993,154.529999,149.630005,153.309998,153.309998,45099100
-2019-01-10,152.500000,153.970001,150.860001,153.800003,153.800003,35780700
-2019-01-11,152.880005,153.699997,151.509995,152.289993,152.289993,27023200
-2019-01-14,150.850006,151.270004,149.220001,150.000000,150.000000,32439200
-2019-01-15,150.270004,153.389999,150.050003,153.070007,153.070007,28710900
-2019-01-16,153.080002,155.880005,153.000000,154.940002,154.940002,30569700
-2019-01-17,154.199997,157.660004,153.259995,155.860001,155.860001,29821200
-2019-01-18,157.500000,157.880005,155.979996,156.820007,156.820007,33751000
-2019-01-22,156.410004,156.729996,152.619995,153.300003,153.300003,30394000
-2019-01-23,154.149994,155.139999,151.699997,153.919998,153.919998,23130600
-2019-01-24,154.110001,154.479996,151.740005,152.699997,152.699997,25441500
-2019-01-25,155.479996,158.130005,154.320007,157.759995,157.759995,33535500
-2019-01-28,155.789993,156.330002,153.660004,156.300003,156.300003,26192100
-2019-01-29,156.250000,158.130005,154.110001,154.679993,154.679993,41587200
-2019-01-30,163.250000,166.149994,160.229996,165.250000,165.250000,61109800
-2019-01-31,166.110001,169.000000,164.559998,166.440002,166.440002,40739600
-2019-02-01,166.960007,168.979996,165.929993,166.520004,166.520004,32668100
+
+... omitted for brevity ...
+
 2019-02-04,167.410004,171.660004,167.279999,171.250000,171.250000,31495500
 2019-02-05,172.860001,175.080002,172.350006,174.179993,174.179993,36066500
 ```
@@ -262,62 +209,9 @@ Date Open High Low Close Adj Close Volume
 2018-11-06 201.919998 204.720001 201.690002 203.770004 203.061493 31882900
 2018-11-07 205.970001 210.059998 204.130005 209.949997 209.219986 33424400
 2018-11-08 209.979996 210.119995 206.750000 208.490005 208.490005 25362600
-2018-11-09 205.550003 206.009995 202.250000 204.470001 204.470001 34365800
-2018-11-12 199.000000 199.850006 193.789993 194.169998 194.169998 51135500
-2018-11-13 191.630005 197.179993 191.449997 192.229996 192.229996 46882900
-2018-11-14 193.899994 194.479996 185.929993 186.800003 186.800003 60801000
-2018-11-15 188.389999 191.970001 186.899994 191.410004 191.410004 46478800
-2018-11-16 190.500000 194.970001 189.460007 193.529999 193.529999 36928300
-2018-11-19 190.000000 190.699997 184.990005 185.860001 185.860001 41925300
-2018-11-20 178.369995 181.470001 175.509995 176.979996 176.979996 67825200
-2018-11-21 179.729996 180.270004 176.550003 176.779999 176.779999 31124200
-2018-11-23 174.940002 176.600006 172.100006 172.289993 172.289993 23624000
-2018-11-26 174.240005 174.949997 170.259995 174.619995 174.619995 44998500
-2018-11-27 171.509995 174.770004 170.880005 174.240005 174.240005 41387400
-2018-11-28 176.729996 181.289993 174.929993 180.940002 180.940002 46062500
-2018-11-29 182.660004 182.800003 177.699997 179.550003 179.550003 41770000
-2018-11-30 180.289993 180.330002 177.029999 178.580002 178.580002 39531500
-2018-12-03 184.460007 184.940002 181.210007 184.820007 184.820007 40802500
-2018-12-04 180.949997 182.389999 176.270004 176.690002 176.690002 41344300
-2018-12-06 171.759995 174.779999 170.419998 174.720001 174.720001 43098400
-2018-12-07 173.490005 174.490005 168.300003 168.490005 168.490005 42281600
-2018-12-10 165.000000 170.089996 163.330002 169.600006 169.600006 62026000
-2018-12-11 171.660004 171.789993 167.000000 168.630005 168.630005 47281700
-2018-12-12 170.399994 171.919998 169.020004 169.100006 169.100006 35627700
-2018-12-13 170.490005 172.570007 169.550003 170.949997 170.949997 31898600
-2018-12-14 169.000000 169.080002 165.279999 165.479996 165.479996 40703700
-2018-12-17 165.449997 168.350006 162.729996 163.940002 163.940002 44287900
-2018-12-18 165.380005 167.529999 164.389999 166.070007 166.070007 33841500
-2018-12-19 166.000000 167.449997 159.089996 160.889999 160.889999 49047300
-2018-12-20 160.399994 162.110001 155.300003 156.830002 156.830002 64773000
-2018-12-21 156.860001 158.160004 149.630005 150.729996 150.729996 95744600
-2018-12-24 148.149994 151.550003 146.589996 146.830002 146.830002 37169200
-2018-12-26 148.300003 157.229996 146.720001 157.169998 157.169998 58582500
-2018-12-27 155.839996 156.770004 150.070007 156.149994 156.149994 53117100
-2018-12-28 157.500000 158.520004 154.550003 156.229996 156.229996 42291400
-2018-12-31 158.529999 159.360001 156.479996 157.740005 157.740005 35003500
-2019-01-02 154.889999 158.850006 154.229996 157.919998 157.919998 37039700
-2019-01-03 143.979996 145.720001 142.000000 142.190002 142.190002 91312200
-2019-01-04 144.529999 148.550003 143.800003 148.259995 148.259995 58607100
-2019-01-07 148.699997 148.830002 145.899994 147.929993 147.929993 54777800
-2019-01-08 149.559998 151.820007 148.520004 150.750000 150.750000 41025300
-2019-01-09 151.289993 154.529999 149.630005 153.309998 153.309998 45099100
-2019-01-10 152.500000 153.970001 150.860001 153.800003 153.800003 35780700
-2019-01-11 152.880005 153.699997 151.509995 152.289993 152.289993 27023200
-2019-01-14 150.850006 151.270004 149.220001 150.000000 150.000000 32439200
-2019-01-15 150.270004 153.389999 150.050003 153.070007 153.070007 28710900
-2019-01-16 153.080002 155.880005 153.000000 154.940002 154.940002 30569700
-2019-01-17 154.199997 157.660004 153.259995 155.860001 155.860001 29821200
-2019-01-18 157.500000 157.880005 155.979996 156.820007 156.820007 33751000
-2019-01-22 156.410004 156.729996 152.619995 153.300003 153.300003 30394000
-2019-01-23 154.149994 155.139999 151.699997 153.919998 153.919998 23130600
-2019-01-24 154.110001 154.479996 151.740005 152.699997 152.699997 25441500
-2019-01-25 155.479996 158.130005 154.320007 157.759995 157.759995 33535500
-2019-01-28 155.789993 156.330002 153.660004 156.300003 156.300003 26192100
-2019-01-29 156.250000 158.130005 154.110001 154.679993 154.679993 41587200
-2019-01-30 163.250000 166.149994 160.229996 165.250000 165.250000 61109800
-2019-01-31 166.110001 169.000000 164.559998 166.440002 166.440002 40739600
-2019-02-01 166.960007 168.979996 165.929993 166.520004 166.520004 32668100
+
+... omitted for brevity ...
+
 2019-02-04 167.410004 171.660004 167.279999 171.250000 171.250000 31495500
 2019-02-05 172.860001 175.080002 172.350006 174.179993 174.179993 36066500
 ```
@@ -339,62 +233,9 @@ Date            Price           Volume
 2018-11-06      201.919998      31882900
 2018-11-07      205.970001      33424400
 2018-11-08      209.979996      25362600
-2018-11-09      205.550003      34365800
-2018-11-12      199.000000      51135500
-2018-11-13      191.630005      46882900
-2018-11-14      193.899994      60801000
-2018-11-15      188.389999      46478800
-2018-11-16      190.500000      36928300
-2018-11-19      190.000000      41925300
-2018-11-20      178.369995      67825200
-2018-11-21      179.729996      31124200
-2018-11-23      174.940002      23624000
-2018-11-26      174.240005      44998500
-2018-11-27      171.509995      41387400
-2018-11-28      176.729996      46062500
-2018-11-29      182.660004      41770000
-2018-11-30      180.289993      39531500
-2018-12-03      184.460007      40802500
-2018-12-04      180.949997      41344300
-2018-12-06      171.759995      43098400
-2018-12-07      173.490005      42281600
-2018-12-10      165.000000      62026000
-2018-12-11      171.660004      47281700
-2018-12-12      170.399994      35627700
-2018-12-13      170.490005      31898600
-2018-12-14      169.000000      40703700
-2018-12-17      165.449997      44287900
-2018-12-18      165.380005      33841500
-2018-12-19      166.000000      49047300
-2018-12-20      160.399994      64773000
-2018-12-21      156.860001      95744600
-2018-12-24      148.149994      37169200
-2018-12-26      148.300003      58582500
-2018-12-27      155.839996      53117100
-2018-12-28      157.500000      42291400
-2018-12-31      158.529999      35003500
-2019-01-02      154.889999      37039700
-2019-01-03      143.979996      91312200
-2019-01-04      144.529999      58607100
-2019-01-07      148.699997      54777800
-2019-01-08      149.559998      41025300
-2019-01-09      151.289993      45099100
-2019-01-10      152.500000      35780700
-2019-01-11      152.880005      27023200
-2019-01-14      150.850006      32439200
-2019-01-15      150.270004      28710900
-2019-01-16      153.080002      30569700
-2019-01-17      154.199997      29821200
-2019-01-18      157.500000      33751000
-2019-01-22      156.410004      30394000
-2019-01-23      154.149994      23130600
-2019-01-24      154.110001      25441500
-2019-01-25      155.479996      33535500
-2019-01-28      155.789993      26192100
-2019-01-29      156.250000      41587200
-2019-01-30      163.250000      61109800
-2019-01-31      166.110001      40739600
-2019-02-01      166.960007      32668100
+
+... omitted for brevity ...
+
 2019-02-04      167.410004      31495500
 2019-02-05      172.860001      36066500
 ```
@@ -444,7 +285,7 @@ Awk can do much more than what has been shown including editing files.  A great 
 
 When push comes to shove, you generally do not need to be proficient in sed nor awk.  Perl/Python can do the same exact things with simpler syntax.  That said, knowing the basic usage of each can significantly speed up your workflow during those few moments where they do become necessary.  They can also become useful when you are writing a bash script and need a built-in text editor.  It would be inconvenient to break out of a bash script, run a python script, and then start your script again, so sed and awk provide nice alternatives to this workflow.
 
-### Less
+## Less
 
 Less is one of those command line utilities that you are probably not using and should be.  I find myself scrolling through large output all the time and forget that there is a command line utility that makes this a lot easier.  Less is simple to use, and works very similar to vim.  You can run less in two ways: 
 
@@ -468,7 +309,7 @@ Once you are in less, your biggest asset is the `h` option.  Type `h` and you wi
 
 Just like grep, awk, and sed, scrolling and searching through output can be done in advanced text editors like VSCode fairly easily and if you have the opportunity to use these more advanced tools, go ahead and do so.  Using the `less` command is simply for those moments when those tools are not available to you.
 
-### find and exec
+## find and exec
 
 The find command is eerily similar to grep at first glance, but covers an entirely different use case.  You would need to use the find command when you want to search for certain files within the entire filesystem.  While grep searches for text in a file or a specified output, find searches explicitly for files in the filesystem.  Why is this useful?  Many times this command could be used to find the path where a specific executable is stored on the filesystem so you can edit, move, or remove it.  Maybe you installed a version of Python a long time ago and cannot remember where you downloaded it.  It is a common problem to have conflicting installations of Python on your machine.  It is also common to struggle to entirely remove Python from your machine.  Other uses for find could include: 
 
@@ -535,70 +376,16 @@ In these man pages, you can see that the `'{}'` is where the files that were fou
 
 After running this command, you now have all the jpg pictures in your entire home directory copied to a centralized backup repository!  You can begin to see how powerful this new command is!
 
-### tar, gzip, gunzip
+## tar, gzip, gunzip
 
 These utilities are fairly simple and used to compress and decompress files.  Many times when we download a software release or series of large files or images, we will get them in the `.tar`, `.gz`, or even `.tar.gz` formats.  `tar` and `gz` are slightly different.  `tar` is an archive format while `gz` is a compressed format.  Most of the time, we an rely on our computer's file explorer to be able to handle these formats, but sometimes, we need to unzip or decompress them on the command line (think remote server).  Here are the most common commands.
 
 ```bash
 # Create a .tar format archive
-# c is create mode, v is verbo#!/bin/bash 
+# c is create mode, v is verbose output, f is tar format
+tar cvf archive.tar file1 file2 file3 ... filen
 
-todays_date=$(date +%Y-%m-%d)
-
-# First check if the archives folder exists
-if [ ! -d '/home/zach/archives/' ]; then
-	mkdir /home/zach/archives/
-fi
-
-# Check if today's folder is already created
-if [ ! -d "/home/zach/archives/$todays_date" ]; then
-	mkdir /home/zach/archives/$todays_date
-fi
-
-find /home/zach/folder-to-clean -type f -mtime -7 | 
-while read filename
-do 
-	mv $filename /home/zach/archives/$todays_date/
-done output, f is tar format
-tar cvf archive.tar file1 file#!/bin/bash 
-
-todays_date=$(date +%Y-%m-%d)
-
-# First check if the archives folder exists
-if [ ! -d '/home/zach/archives/' ]; then
-	mkdir /home/zach/archives/
-fi
-
-# Check if today's folder is already created
-if [ ! -d "/home/zach/archives/$todays_date" ]; then
-	mkdir /home/zach/archives/$todays_date
-fi
-
-find /home/zach/folder-to-clean -type f -mtime -7 | 
-while read filename
-do 
-	mv $filename /home/zach/archives/$todays_date/
-donefile3 ... filen
-
-# List what is in .tar archive#!/bin/bash 
-
-todays_date=$(date +%Y-%m-%d)
-
-# First check if the archives folder exists
-if [ ! -d '/home/zach/archives/' ]; then
-	mkdir /home/zach/archives/
-fi
-
-# Check if today's folder is already created
-if [ ! -d "/home/zach/archives/$todays_date" ]; then
-	mkdir /home/zach/archives/$todays_date
-fi
-
-find /home/zach/folder-to-clean -type f -mtime -7 | 
-while read filename
-do 
-	mv $filename /home/zach/archives/$todays_date/
-done
+# List what is in .tar archive
 # t is list mode
 tar tvf archive.tar
 
@@ -615,7 +402,7 @@ gunzip archive.tar.gz
 
 There a several more options you can explore, but these commands should get you started with compression/archive utilities.
 
-## Advanced Bash 
+# Advanced Bash 
 
 Not all of the following topics are solely bash concepts, but they are important to be aware of even if you are not going to be using them on a daily basis.  The breadth of concepts go to show the true power of the bash shell.  The topics are as follows.
 
@@ -626,7 +413,7 @@ Not all of the following topics are solely bash concepts, but they are important
 * Process management
 * System Management
 
-### Regular Expressions
+## Regular Expressions
 
 To me, regular expressions are often made far more complicated than they need to be. Sure, there are a lot of options and little details to learn regarding regular expressions, and on top of that, there are many different flavors of regular expressions (python, extended, rust, etc.).  Despite this, there are only a few core concepts that one must understand about regular expressions that will then translate in the ability to use any flavor of regular expressions effectively.
 
@@ -664,63 +451,48 @@ echo "345" | grep -E '[0-9]{3,}' # 345
 
 As you can see, all three languages utilize regular expressions a bit differently, but the actual expression that we are writing in each is exactly the same.  Regular expressions are easily translatable from one language to the next.  
 
-There are only 4 concepts that you must learn with regular expressions:
+The easiest way to explain regular expressions is through practical examples and derivations of _why_ we might need a regular expression for a given scenario.  For our purposes of learning, we will be utilizing a file called `sample-data.txt` with the following information in it (the Wikipedia introduction to regular expressions).  I have purposefully split this into multiple lines so we can see exactly what our regular expressions are reading.
 
-1. Character sets
-2. Sub-expressions
-3. Quantifiers
-4. Literals
+```
+Regular expression
+-------------------
 
-Of course, we will be learning regular expressions through the lens of the bash shell, and therefore we will need to use the `grep` command using the `-P` flag, which stands for "perl regular expressions".  This is the same flavor of regular expression that Python uses, so I thought it would be convenient to teach it.  If you are running a Mac, you may have to install the GNU version of the `grep` utility with Homebrew to enable the `-P` flag.  Below is a regular expression with each of the 3 concepts displayed.
+From Wikipedia, the free encyclopedia
+
+A regular expression, regex or regexp[1] (sometimes called a rational expression)[2][3] 
+
+is a sequence of characters that define a search pattern. 
+
+Usually this pattern is used by string searching algorithms for "find" or "find and replace"
+
+operations on strings, or for input validation. 
+
+It is a technique that developed in theoretical computer science and 
+
+formal language theory.
+```
+
+### Literal Matching
+
+Given the above text, let's say that we wanted to search it for the word "expression".  Quickly scanning the text, it appears that there are three instances of this word.  We can certainly match this word without a fancy regular expression using grep.
 
 ```bash 
-echo "The 1st phone number is: 111-222-3333" | grep -P "(The 1st phone number is: ){1}[0-9]{3}-[0-9]{3}-[0-9]{4}"
+grep "expression" sample-data.txt
 ```
 
-Let's break this down.  The `(The 1st phone number is: )` is an expression, and when we have an expression like this, we can use it to match an entire group of words.  The `{1}` immediately after it means that we want to match this entire phrase exactly 1 time.  It is what we call a "quantifier".  The rest of the regular expression is `[0-9]` followed by `{3}` and a literal `-` character.  The `[0-9]` is a character set and it means that we are looking for any number in a quantity of exactly 3 `{3}` or exactly 4 `{4}`.  So to review:
-
-* A character set is anything in brackets.  We can put 
-* A sub-expression is anything in parenthesis
-* A quantifier is anything in braces (i.e. `{}`)
-* A literal character is anything that is not in brackets, parentheses, or braces
-
-It would be overly tedious for me to list out all the possible things you can put in each of these, so I will go through an example of each.
-
-#### Character Set
-
-A character set is where we can define a "range" of characters that we want to match.  If we wanted to match any number, we could use the character set `[0-9]`.  If we wanted to match any letter, we could use the character set `[a-zA-Z]`.  If we wanted to match letters and numbers, we could use `[0-9a-zA-Z]`.
-
-#### Sub-expressions
-
-A sub-expression is how we can "chunk" characters together into a single phrase.  Maybe we wanted to match a bunch of emails that are going to be either "gmail.com" or "yahoo.com".  We could do this using a sub-expression: `(gmail.com|yahoo.com)`.  The `|` means "or". 
-
-#### Quantifier
-
-A quantifier can be added to the end of a specific letter, character set, or sub-expression.  Here are three examples.
+If we run this command on our sample file, we will successfully match the word "expression" three separate times on two separate lines.  Even though we don't need to, we could also locate these three matches with a regular expression.
 
 ```bash 
-[a-z]{3,}  # Match 3 or more lowercase letters
-(some phrase){1} # Match "some phrase" exactly once
-a{6} # Match the letter a exactly 6 times (i.e. aaaaaa)
+grep -P "expression" sample-data.txt
 ```
 
-#### Literal Matching
+The only difference in this command is that I now put `-P` in the command to indicate to the `grep` utility that we are using a Perl flavored regular expression to search the file.  I wanted to demonstrate this because oftentimes we forget that a regular expression can be as simple or complex as we want to make it.  In this case, we are doing what we call a "literal" text search.
 
-A literal match is exactly what it says.  It is an exact match for a given text.  If I had the following group of text: 
+### Sub-Expression Matching
 
-```
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-```
 
-I could match the phrase "unknown printer" with a literal regex.
 
-```bash 
-echo "... text to match ..." | grep -P "unknown printer"
-```
-
-A literal match is another way of doing a standard search on text.  A sub-expression is very similar to a literal matching, but with literal matching, you do not have the ability to add a quantifier, an "or" condition, or select a sub-expression as a variable.  We can add a quantifier at the end of a sub-expression, so if we wanted to match the "gmail.com" or "yahoo.com" phrase exactly 1 time, we could add the quantifier to the end `(gmail.com|yahoo.com){1}`.
-
-#### Example Regex
+### Detailed Example Regular Expression
 
 Let's say we had the following file called `email-addresses.txt`: 
 
@@ -799,7 +571,7 @@ cat email-addresses.txt | grep -P "^.+@\w+(.com|.net){1}$"
 
 All I did was add the `$` character at the end of each expression.  Just like we have the `^` at the beginning of each expression, we can place the `$` at the end of the expressions to indicate we have reached the end of our line.  This will eliminate that invalid email address!
 
-### Bash Scripting
+## Bash Scripting
 
 Throughout this tutorial, we have covered many commands and concepts.  Most of the commands we have learned (with the exception of the `awk`) command are for usage on the command line, but what if you wanted to put some of these in a script to run?  You could always write out a long and elaborate command and execute it, but it will not get saved and is difficult to write.  Bash scripting solves this problem by allowing you to write common bash commands within a script file and then execute that script file.  You may find this useful if you need to do something on a periodic basis.  For example, maybe you need to clean out a specific folder on your computer every day and place the contents of it in an archived folder with today's date on it.  You can do this through bash scripting, and in this brief introduction, I will teach you how to do just that.  First, we need to understand the basics of a scripting file.
 
@@ -832,7 +604,7 @@ This is the most basic form of a script, but obviously not all that useful.  Thr
 
 With these concepts, you should be able to accomplish 95% of your tasks.  Sure, there will be times where the above concepts are not enough, but again, this is an introduction to scripting rather than a deep dive.  For the rest of this section, I will be using a file called `shell-scripting-basics.sh` unless otherwise noted.  
 
-#### Variable declarations
+### Variable declarations
 
 ```bash 
 MY_VARIABLE="some value"
@@ -844,7 +616,7 @@ echo 'But not single-quoted strings. This will not read the variable: $MY_VARIAB
 
 Declaring and using variables is rather simple in bash scripting, so I will not spend a lot of time here.
 
-#### Built-In Variables
+### Built-In Variables
 
 There are several built in variables that you can use in a bash script.  They are listed below.
 
@@ -859,7 +631,7 @@ echo $$  # Prints the process ID
 echo $?  # Prints the exit code of the previous process run
 ```
 
-#### Command Line Arguments
+### Command Line Arguments
 
 A shell script can take arguments on the command line.  For example, if I ran the following script: 
 
@@ -879,7 +651,7 @@ This script will evaluate to - "The script ./shell-scripting-basics.sh evaluates
 
 As you can see, we can use the built-in variables inside our scripts.
 
-#### Reading user input
+### Reading user input
 
 We can also read user input from a script.  This is similar to reading arguments, but instead of the user typing their input in before execution time, they type it in during execution.
 
@@ -903,7 +675,7 @@ If you want to protect the user input (ex: password entry), just add an `-s` at 
 read -s user_input
 ```
 
-#### for loops 
+### for loops 
 
 The syntax for looping in bash is: 
 
@@ -941,7 +713,7 @@ for item in *; do
 done
 ```
 
-#### if-then statements
+### if-then statements
 
 I saved if-then statements for last because they can get a bit complicated.  The testing syntax that we use for an if-then statement comes from the `test` command, and you can find all of the possibilities on the man page by typing `man test`.  For most commands in bash, the man pages are difficult to digest and are generally unhelpful for finding quick answers, but the man page for the `test` command is super straightforward and simple.  Therefore, I will not be listing out all of the available testing options and will assume you have read through the man page for `test`.  Below is a simple use of `test` on the command line (outside of a script).
 
@@ -1009,7 +781,7 @@ done
 
 There are endless possibilities to writing bash scripts.  Play around a bit and you will be on your way!
 
-### Virtual Machines and SSH Protocol
+## Virtual Machines and SSH Protocol
 
 This topic can get quite loaded, and therefore I am not going to dig too deep into it.  We will cover the following: 
 
@@ -1052,7 +824,7 @@ ssh -p 22 root@157.230.167.2
 
 This should successfully log you into your VPS.  The last thing I want to show you is how to transfer files to and from your remote machine and local computer.  To do this, we use the `scp` utility.
 
-#### From local computer to remote machine
+### From local computer to remote machine
 
 If I had `sample-file.txt`, the way I would upload this to my remote machine is like so: 
 
@@ -1062,7 +834,7 @@ scp -r sample-file.txt root@157.230.167.2:~/
 
 This will upload the `sample-file.txt` file using the `root` user and place that file in the home directory `~/` on my remote machine.  You can specify any path to place it on your remote machine so long as you put a colon `:` after the IP address.
 
-#### From remote machine to local computer
+### From remote machine to local computer
 
 To download that same file from your remote machine to your local computer, you would just run the following.
 
@@ -1072,7 +844,7 @@ scp -r root@157.230.167.2:~/sample-file.txt ~/Downloads
 
 This will place that same sample file into my local computer's `~/Downloads` folder.
 
-#### Downloading packages to your remote machine with wget
+### Downloading packages to your remote machine with wget
 
 Sometimes, you will need to download software packages from the internet to your VPS.  Since you do not have a GUI to work with, you must do this with the command line.  Let's say I wanted to download a Google image to my VPS for whatever reason.
 
@@ -1086,7 +858,7 @@ wget -O my-custom-picture.jpg https://cdn.orvis.com/images/DBS_SibHusky.jpg
 
 This will download the photo and save it as `my-custom-picture.jpg` in whatever directory I execute the command from.
 
-#### Using VSCode with your remote machine
+### Using VSCode with your remote machine
 
 Sure, you could use the Vim text editor for all of your development needs on a VPS, but it is nice to have a feature-rich text editor like VSCode.  We can use VSCode with files on our VPS with the help of the `rmate` command.  To do this, open VSCode, and download the extension called "Remote VSCode".  Once downloaded, open your Settings by typing ctrl-shift + P, and typing ">Preferences:Open User Settings".  Scroll down and find the "Extensions" dropdown and select "Remote VSCode".  In the settings, you will want the following: 
 
@@ -1115,8 +887,8 @@ You can now edit any file using VSCode by running the following command from you
 rmate sample-file.txt
 ```
 
-### Networking on Command Line
-### Process Management
+## Networking on Command Line
+## Process Management
 
 Process management sounds like an intimidating concept, but for the average bash user, there are only a few things that you will ever have to deal with regarding processes.  I could list out a bunch of commands here for you, but they will not make any sense unless you understand the sequence that the bash shell (and kernel) takes when a new process is started.  When your computer starts up, the kernel will call a process called "init", which on a UNIX-based operating system is usually the script called `init` located at `/sbin/init`.  Once this process has started, all other processes will be started by other processes.  This does not make a lot of sense starting out, but once you know how a process starts, you will gain clarity into what goes on behind the scenes on your computer.  A process can start another process (usually the terminal starting a new process as a result of a command typed into it) by first creating a copy of itself, and then executing the new command within that copied process.  Here is a visual to better explain: 
 
@@ -1152,10 +924,10 @@ In the output that I have shown, you can see the `execve` command starts off the
 
 In the end, the output is not important to you as a bash user, but is important in trying to understand how the computer starts and ends processes.  What we care more about is how to _manage_ processes.  There are only a few commands that we need to look at here because these few commands will take care of essentially anything we would ever need to do relating to processes.
 
-#### ps and top commands
+### ps and top commands
 
 There are two commands that give us output relating to the processes that are currently running on our computer.  We will start with `ps` because it has more of the 
 
 
-### System Management
+## System Management
 
