@@ -451,45 +451,95 @@ echo "345" | grep -E '[0-9]{3,}' # 345
 
 As you can see, all three languages utilize regular expressions a bit differently, but the actual expression that we are writing in each is exactly the same.  Regular expressions are easily translatable from one language to the next.  
 
-The easiest way to explain regular expressions is through practical examples and derivations of _why_ we might need a regular expression for a given scenario.  For our purposes of learning, we will be utilizing a file called `sample-data.txt` with the following information in it (the Wikipedia introduction to regular expressions).  I have purposefully split this into multiple lines so we can see exactly what our regular expressions are reading.
+The easiest way to explain regular expressions is through practical examples and derivations of _why_ we might need a regular expression for a given scenario.  Let us start with the following text.
 
 ```
-Regular expression
--------------------
-
-From Wikipedia, the free encyclopedia
-
-A regular expression, regex or regexp[1] (sometimes called a rational expression)[2][3] 
-
-is a sequence of characters that define a search pattern. 
-
-Usually this pattern is used by string searching algorithms for "find" or "find and replace"
-
-operations on strings, or for input validation. 
-
-It is a technique that developed in theoretical computer science and 
-
-formal language theory.
+I am some random text
 ```
 
-### Literal Matching
-
-Given the above text, let's say that we wanted to search it for the word "expression".  Quickly scanning the text, it appears that there are three instances of this word.  We can certainly match this word without a fancy regular expression using grep.
+If I wanted to match the word "random" in this text, I could do this with a regular text searching tool.  For example, I could use grep in the following manner.
 
 ```bash 
-grep "expression" sample-data.txt
+echo "I am some random text" | grep "random"
 ```
 
-If we run this command on our sample file, we will successfully match the word "expression" three separate times on two separate lines.  Even though we don't need to, we could also locate these three matches with a regular expression.
+This is trivial and unexciting.  We all understand the basic concept of text matching, but sometimes don't take a moment to think about what it really is.  If we were to write a text matching program, it would roughly follow these steps:
+
+1. Store our search string in a variable 
+2. Open our file to search
+3. Read each character in the file one by one, seeing if that character matches the first character in our search string
+4. If there is a match, advance to the next letter in the search string and check to see if that matches the next character in the file
+5. If we reach the end of our search string without any errors, then we have matched the text
+
+This is an overly simplified explanation, but you can [read more here](https://stackoverflow.com/a/1627904/7437737) if you're curious.  What I just explained is called "literal text matching" and can be done using any text searching utility.  It can also be done by a regular expression utility.  If we activate the Perl regular expressions feature of `grep`, we can find this same word.
 
 ```bash 
-grep -P "expression" sample-data.txt
+echo "I am some random text" | grep -P "random"
 ```
 
-The only difference in this command is that I now put `-P` in the command to indicate to the `grep` utility that we are using a Perl flavored regular expression to search the file.  I wanted to demonstrate this because oftentimes we forget that a regular expression can be as simple or complex as we want to make it.  In this case, we are doing what we call a "literal" text search.
+If you're wondering how this is any different from my original search, that's good because there is no difference other than the `-P` flag which tells grep to interpret this as a regular expression.  At this point, we have concluded in the most anti-climactic way possible that regular expressions can carry out the basic function of literal text matching.  But this is exactly where regular expressions start to get interesting, because not only can they match literal strings of characters, but also _patterns_ of characters in specified _quantities_.  I will elaborate on this as we move forward, but let's start simple.  Let's say that I had the following file of text called `http-request.txt`.
 
-### Sub-Expression Matching
+```
+Alt-Svc: quic=":443"; ma=2592000; v="44,43,39"
+Cache-Control: private, max-age=0
+Content-Encoding: br
+Content-Length: 72493
+Content-Type: text/html; charset=UTF-8
+Date: Mon, 11 Feb 2019 21:40:25 GMT
+Expires: -1
+Server: gws
+Set-Cookie: 1P_JAR=2019-02-11-21; expires=Wed, 13-Mar-2019 21:40:25 GMT; path=/; domain=.google.com
+Set-Cookie: SIDCC=AN0-TYtZ7bElYEE0wy8nAaXHUK_GRAsuZzNu7r5OhKVGKwr7a-m7ctz5IIHoZcvmh2s9xuDt0gc; expires=Sun, 12-May-2019 21:40:25 GMT; path=/; domain=.google.com; priority=high
+Strict-Transport-Security: max-age=31536000
+X-Frame-Options: SAMEORIGIN
+X-XSS-Protection: 1; mode=block
 
+Alt-Svc: quic=":443"; ma=2592000; v="44,43,39"
+Cache-Control: private, max-age=0
+Content-Encoding: br
+Content-Length: 72470
+Content-Type: text/html; charset=UTF-8
+Date: Mon, 11 Feb 2019 21:44:38 GMT
+Expires: -1
+Server: gws
+Set-Cookie: 1P_JAR=2019-02-11-21; expires=Wed, 13-Mar-2019 21:44:38 GMT; path=/; domain=.google.com
+Set-Cookie: SIDCC=AN0-TYsHoOeMCDEAZfNd9umwLDXDEHqyGfAImuc08v4h2e1B1hSKxGQAq7iVt0xFlQKLzVlgSTM; expires=Sun, 12-May-2019 21:44:38 GMT; path=/; domain=.google.com; priority=high
+Strict-Transport-Security: max-age=31536000
+X-Frame-Options: SAMEORIGIN
+X-XSS-Protection: 1; mode=block
+
+Alt-Svc: quic=":443"; ma=2592000; v="44,43,39"
+Cache-Control: private, max-age=0
+Content-Encoding: br
+Content-Length: 72464
+Content-Type: text/html; charset=UTF-8
+Date: Mon, 11 Feb 2019 21:46:36 GMT
+Expires: -1
+Server: gws
+Set-Cookie: 1P_JAR=2019-02-11-21; expires=Wed, 13-Mar-2019 21:46:36 GMT; path=/; domain=.google.com
+Set-Cookie: SIDCC=AN0-TYuz2RnQRkvCL-vKi53aZ9wq43igGogt5iPF1aveuchWK1_5cZsxzom9-PWiJjy8Sk7bvgY; expires=Sun, 12-May-2019 21:46:36 GMT; path=/; domain=.google.com; priority=high
+Strict-Transport-Security: max-age=31536000
+X-Frame-Options: SAMEORIGIN
+X-XSS-Protection: 1; mode=block
+```
+
+Above are three _separate_ HTTP response headers from three separate requests I made to www.google.com.  As you can see, they all follow a similar data structure, but are not considered "structured" data of any kind.  This is a perfect set of text for us to use to learn regular expressions.  Let's say I wanted to get the date and time of each request in this file.  I could easily find these 3 lines (each request has a date) using a regular expression.
+
+```bash 
+cat http-request.txt | grep -P "^Date.+"
+```
+
+When executed, this command will find and print out the three date lines.  The "Date" part of the regex makes sense, but what does the ".+" mean?  What is the `^` at the beginning?  If we omit these two characters, we will match the word "Date" 3 times, but we won't get the actual date information that we really want.  This is a perfect opportunity to introduce the "metacharacters".  In regular expressions, the following characters will behave a bit oddly.
+
+```
+. ^ $ * + ? { } [ ] \ | ( )
+```
+
+If you understand what each of these characters do, you understand how to use regular expressions.  We will start with the `^` and `$` characters and come back to our HTTP request example.  The reason we start with these two characters is because they will help us understand how a regular expression reads through a file.  
+
+When reading through a file, a regular expression will go line by line (each line indicated by the `\n` character).  When you write a regex, it will be tested against every line of the file.  Knowing this, we can conclude that the "boundary" for a regular expression is just a single line.  In some cases, it may be useful if we had a way of matching text at the beginning or end of a line.  Say you had a text file of phone numbers.
+
+```
 
 
 ### Detailed Example Regular Expression
