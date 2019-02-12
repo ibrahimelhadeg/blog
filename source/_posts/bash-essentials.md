@@ -419,7 +419,7 @@ To me, regular expressions are often made far more complicated than they need to
 
 Regular expressions exist because a literal text searching program is sometimes not good enough.  Let me give you an extremely practical example from my own work to explain.
 
-I recently wrote a script in Microsoft Excel VBA that executed commands from an external library.  The code of this external library was not available for me to see, and therefore, I had to use it with limited control.  As a result of this, the library would open up a new Excel workbook for every function call I made.  In each workbook, there was data that I needed to copy and paste into my main workbook, but in the code, I had no way of determining what the name of this new workbook was.  Luckily, Excel opens new workbooks and names them "Book1", "Book2", "Book3", "Book4", etc.  Knowing that these new workbooks would always contain the word "Book" at the beginning, I was able to use a regular expression to identify them.  My regular expression was quite simple, and looked like this: `^Book[1-9]+`.  I have not yet explained what this syntax means, but essentially, we are searching for text that starts with "Book" and ends with 1 or more numbers.  
+I recently wrote a script in Microsoft Excel VBA that executed commands from an external library.  The code of this external library was not available for me to see, and therefore, I had to use it with limited control.  As a result of this, the library would open up a new Excel workbook for every function call I made.  In each workbook, there was data that I needed to copy and paste into my main workbook, but in the code, I had no way of determining what the name of this new workbook was.  Luckily, Excel opens new workbooks and names them "Book1", "Book2", "Book3", "Book4", etc.  Knowing that these new workbooks would always contain the word "Book" at the beginning, I was able to use a regular expression to identify them.  My regular expression was quite simple, and looked like this: `^Book[0-9]+`.  I have not yet explained what this syntax means, but essentially, we are searching for text that starts with "Book" and ends with 1 or more numbers.  
 
 A more common example for regular expressions is searching large documents for email addresses or phone numbers or even validating user input in a web application.  Chances are, you will not need to use regular expressions on a daily basis, so I am not going to teach you all the nitty gritty details that you will forget within a day.  Instead, I am going to teach you the methodology behind regular expressions that will give you a foundation to work with.  You may have to Google for help regarding specific use cases, but you will never have any confusion about regular expressions.
 
@@ -529,18 +529,170 @@ Above are three _separate_ HTTP response headers from three separate requests I 
 cat http-request.txt | grep -P "^Date.+"
 ```
 
-When executed, this command will find and print out the three date lines.  The "Date" part of the regex makes sense, but what does the ".+" mean?  What is the `^` at the beginning?  If we omit these two characters, we will match the word "Date" 3 times, but we won't get the actual date information that we really want.  This is a perfect opportunity to introduce the "metacharacters".  In regular expressions, the following characters will behave a bit oddly.
+When executed, this command will find and print out the three date lines.  The "Date" part of the regex makes sense, but what does the ".+" mean?  What is the `^` at the beginning?  If we omit these two characters, we will match the word "Date" 3 times, but we won't get the actual date information that we really want.  This is a perfect opportunity to introduce the "metacharacters".  In regular expressions, the following characters will behave a bit oddly: `. ^ $ * + ? { } [ ] \ | ( )`
+
+If you understand what each of these characters do, you understand how to use regular expressions.  When reading through a file, a regular expression will go line by line (each line indicated by the `\n` character).  When you write a regex, it will be tested against every line of the file.  Knowing this, we can conclude that the "boundary" for a regular expression is just a single line.  In some cases, it may be useful if we had a way of matching text at the beginning or end of a line.  For example, with a list of phone numbers, we might look for a specific area code.
 
 ```
-. ^ $ * + ? { } [ ] \ | ( )
+234-234-1920
+121-726-1382
 ```
 
-If you understand what each of these characters do, you understand how to use regular expressions.  We will start with the `^` and `$` characters and come back to our HTTP request example.  The reason we start with these two characters is because they will help us understand how a regular expression reads through a file.  
+In line 1, the area code is the same as the middle three numbers.  By using the `^` character in our regular expression, we can isolate just the first three characters.
 
-When reading through a file, a regular expression will go line by line (each line indicated by the `\n` character).  When you write a regex, it will be tested against every line of the file.  Knowing this, we can conclude that the "boundary" for a regular expression is just a single line.  In some cases, it may be useful if we had a way of matching text at the beginning or end of a line.  Say you had a text file of phone numbers.
-
+```bash 
+cat phone-numbers.txt | grep -P "^234"
 ```
 
+This regular expression will match just the area code of the first phone number.  Now, let's say that we want to match all the lines of text that end in a question mark.
+
+```
+sentences.txt
+
+The regex will not match me.
+The regex will not match me either.
+But wouldn't it make sense that the regex matched me?
+```
+
+Remember, the `?` is a special character, so we must "escape it" using the backslash.
+
+```bash 
+cat sentences.txt | grep -P ".+\?$" 
+```
+
+This regex will match the entire line that ends in a question mark because we are using the `$` symbol, which represents the end of the line.  This is opposite of the `^` character that we just learned about.
+
+At this point, you've probably already looked up what that period `.` character does in a regex.  When used in a regex, the `.` matches all characters except the newline character (remember, regular expressions use that to determine where the end of a line is?). There are also three other "special" characters that we can use to match certain types of characters.
+
+* `.` - matches any character
+* `\d` - matches any digit (0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+* `\s` - matches any whitespace character (including newlines)
+* `\w` - matches any alphanumeric character (letters and numbers)
+
+If you capitalize `\D`, `\S`, and `\W`, it negates the expression.  Using this new knowledge, let's try to match the following line of text.
+
+```
+You cannot match me because you don't know what a quantifier is!
+```
+
+If we tried to match this line using just the skills we know now, we might try something like so: 
+
+```bash
+echo "You cannot match me because you don't know what a quantifier is" | grep -P "^Youis$"
+```
+
+Shouldn't this work?  We are matching "You" at the beginning of the line (`^`) and "is" at the end of the line (`$`).  The problem is... We failed to match all those words and letters in the middle.  So maybe if we add the `.` in the middle it will match all of them!  Let's try it.
+
+```bash 
+echo "You cannot match me because you don't know what a quantifier is" | grep -P "^You.is$"
+```
+
+Unfortunately, this isn't going to work either.  The reason this isn't working is because we have not specified _how many_ characters we want to match between the literal word "You" and the literal word "is!".  To do this, we can use either `*`, `+`, `?`, or `{}`.
+
+* `*` - Matches 0 or more of the preceding character
+* `+` - Matches 1 or more of the preceding character
+* `?` - Matches 0 or 1 of the preceding character
+* `{1}` - Matches exactly 1 of the preceding character
+* `{1,}` - Matches 1 or more of the preceding character (identical to `+`)
+* `{2,6}` - Matches between 2 and 6 of the preceding character
+
+These are what we call "quantifiers", and they are extremely important.  As you might have noticed, you can write _any_ quantifier using the `{}` brackets alone, but sometimes, the `*`, `+`, and `?` are quicker and cleaner to write.  With these quantifiers, we can complete our expression.
+
+```bash 
+echo "You can match me now because you know what a quantifier is" | grep -P "^You.+is$"
+```
+
+To recap, we are matching "You" at the beginning of the line (`^`), then we are matching 1 or more of _any_ character after that (`.+`), and finally we are matching "is" at the end of the line (`$`).  Below are a few examples that demonstrate the use of quantifiers.
+
+```bash
+# Single letter
+echo "a" | grep -P "^a" # matches!
+echo "a" | grep -P "^a+" # matches!
+echo "a" | grep -P "^a*" # matches!
+echo "a" | grep -P "^a?" # matches!
+echo "a" | grep -P "^a{1}" # matches!
+echo "a" | grep -P "^a{1,}" # matches!
+echo "a" | grep -P "^a{0,1}" # matches!
+
+# Double letter
+echo "aa" | grep -P "^a" # Only matches first letter
+echo "aa" | grep -P "^a+" # matches!
+echo "aa" | grep -P "^a*" # matches!
+echo "aa" | grep -P "^a?" # Only matches the first letter
+echo "aa" | grep -P "^a{1}" # Only matches the first letter
+echo "aa" | grep -P "^a{1,}" # matches!
+echo "aa" | grep -P "^a{0,1}" # Only matches the first letter
+echo "aa" | grep -P "^a{0,1}$" # Does not match at all!
+
+# Using metacharacters
+echo "a" | grep -P "^\w" # matches!
+echo "a" | grep -P "^\w+" # matches!
+echo "a" | grep -P "^\w*" # matches!
+echo "a" | grep -P "^\w?" # matches!
+echo "a" | grep -P "^\w{1}" # matches!
+echo "a" | grep -P "^\w{1,}" # matches!
+echo "a" | grep -P "^\w{0,1}" # matches!
+
+# Another use of metacharacters (matching anything that is not a digit)
+echo "a" | grep -P "^\D" # matches!
+echo "a" | grep -P "^\D+" # matches!
+echo "a" | grep -P "^\D*" # matches!
+echo "a" | grep -P "^\D?" # matches!
+echo "a" | grep -P "^\D{1}" # matches!
+echo "a" | grep -P "^\D{1,}" # matches!
+echo "a" | grep -P "^\D{0,1}" # matches!
+
+# 10 different ways to match the same word
+echo "regexp" | grep -P "regexp" # matches!
+echo "regexp" | grep -P "^regexp" # matches!
+echo "regexp" | grep -P "^reg\w*" # matches!
+echo "regexp" | grep -P "^reg\w*$" # matches!
+echo "regexp" | grep -P "^\w*$" # matches!
+echo "regexp" | grep -P "\w*" # matches!
+echo "regexp" | grep -P "^\w+" # matches!
+echo "regexp" | grep -P "^regex\w?$" # matches!
+echo "regexp" | grep -P "\D{1,}" # matches!
+echo "regexp" | grep -P "^\S{1}\w+$" # matches!
+```
+
+As you can see in the last couple lines, there are many ways to match the same text.  We could probably find 40 different regular expressions that all match the line "regexp".  And that is not even considering the last metacharacter that we are going to cover!  This entire time, I have not even mentioned "character classes", which are expressions contained within `[]`.  The reason I skipped over these is because when we use them, all the rules change.  The metacharacters (`. ^ $ * + ? { } [ ] \ | ( )`) will all behave differently when placed inside brackets, and furthermore, you can write an adequate regular expression without them 99% of the time!  That said, character classes make your life easier in many cases, so we need to cover them at least briefly.  
+
+You can think of a character class as a single character, but with multiple possibilities.  For example, the following character class represents every lowercase letter in the alphabet, but only 1 of them since we added a quantifier - `[a-z]{1}`.  We could also define only the first 13 letters of the alphabet like so - `[a-m]`.  This extends to digits too.  `[0-9]` represents every possible digit, and is exactly equivalent to `\d`.  `[0-9a-zA-Z_]` represents all alphanumeric characters and is exactly equivalent to `\w`.
+
+You might be wondering why you would ever need something like `[0-9]` when you could just use `\d`, and you are wondering for good reason!  These character classes are not necessary in most cases and I would encourage you to use `\d` rather than `[0-9]` whenever possibly for utmost brevity.  That said, there are certain situations where this could be useful.  Maybe you want to only match numbers 1-5.  There is no abbreviation for the character class `[1-5]` and therefore we must utilize it.
+
+When using character classes, there are a few "gotchas" that we need to cover.  They all relate to the use of metacharacters and how those metacharacters behave in a character class.  In general, I would not recommend trying to use any metacharacter inside a character class (`[]`), but if you do, here are the rules.
+
+* The `^` character does not mean the beginning of a line.  It is a negation symbol.  
+
+```bash
+# This expression will match. The first ^ means "beginning of line" while the 
+# second ^ (inside the brackets) means "not".  Therefore, this expression
+# will match 1 or more characters starting at the beginning of the line that 
+# are not digits. 
+echo "regexp" | grep -P "^[^0-9]+"
+```
+
+* The `.` character matches literally inside brackets
+
+```bash 
+# You might think that this will match, but it does not.  This expression matches
+# 1 or more period characters starting at the beginning of the line.
+echo "regexp" | grep -P "^[.]+"
+
+# This expression does match!
+echo "regexp..." | grep -P "^regexp[.]+"
+```
+
+Finally, I want to briefly mention why I never talked about the metacharacters `|` and `()`.  These both relate to the topic of "groups", which allows you to group different parts of your regular expression.  If your regular expression is a really long one, it is often helpful to group off different sections of it.  The reason I did not cover this topic is because this topic is far more useful if you are using a programming language like Python for regular expressions because with such a language, you can refer to different groups of your regular expression later in your code.  Since we are learning regular expressions in bash, we generally don't need or have this functionality.
+
+So...
+
+The ultimate conclusion about regular expressions?? 
+
+_There are MANY ways to write them_.
+
+The remainder of this section will walk through a practical example using our newfound regexp skills.  I have attempted to solve the problem two different ways using two different types of regexp syntax to demonstrate that there is more than one way to do things.
 
 ### Detailed Example Regular Expression
 
@@ -555,19 +707,19 @@ fred.jones@hotmail.com
 not an email address
 ```
 
-Learning how to match all four of the emails with a single regular expression will demonstrate a lot of the concepts that we have covered.  We start by matching all characters ([here is a regex cheatsheet](https://www.rexegg.com/regex-quickstart.html) to refer to during this process).
+Learning how to match all four of the emails with a single regular expression will demonstrate a lot of the concepts that we have covered.  We start by matching all characters with the `.` metacharacter starting at the beginning of each line (`^`). 
 
 ```bash 
 cat email-addresses.txt | grep -P "^.+"
 ```
 
-The expression we just wrote means that we are starting at the beginning of each line and looking for _any_ character except line breaks in a quantity of 1 or more characters.  The `^` means we are starting at the beginning of the line, the `.` means we are matching all characters except line breaks, and the `+` is a quantifier that means 1 or more matches.  We could easily have written the same expression differently like so: 
+The expression we just wrote means that we are starting at the beginning of each line and looking for _any_ character except line breaks in a quantity of 1 or more characters.  We could easily have written the same expression differently like so: 
 
 ```bash
 cat email-addresses.txt | grep -P "^[^\r\n]{1,}"
 ```
 
-As you can see, regular expressions can be used in a multitude of ways.  In this version, we are doing the _same_ thing we did above with different syntax.  The `^` still indicates that we are looking at the beginning of each line.  The `[^\r\n]` means that we are matching _any_ character that is _not_ (`^`) a carriage return or new line (`\r`, `\n`).  Notice how when we place the `^` inside the character set it now acts as a negation rather than "search from the beginning of the line".  Symbols behave differently when placed inside a character set, so be careful!  Finally, we want to match these characters 1 or more times, so we use the `{1,}` syntax.  The comma after the 1 indicates that we want 1 or _more_ matches.  Anyways, if we run this, we will again match all six lines of the text file.  Since we only want to match the email addresses, we will need to tweak the expression.  Moving forward, I will be writing two regular expressions with different syntax that both do the same things.
+As you can see, regular expressions can be used in a multitude of ways.  In this version, we are doing the _same_ thing we did above with different syntax.  The `^` still indicates that we are looking at the beginning of each line.  The `[^\r\n]` means that we are matching _any_ character that is _not_ (`^`) a carriage return or new line (`\r`, `\n`).  Notice how when we place the `^` inside the character set it now acts as a negation rather than "search from the beginning of the line".  Remember, symbols behave differently when placed inside a character set, so be careful!  Finally, we want to match these characters 1 or more times, so we use the `{1,}` syntax.  The comma after the 1 indicates that we want 1 or _more_ matches.  Anyways, if we run this, we will again match all six lines of the text file.  Since we only want to match the email addresses, we will need to tweak the expression.  Moving forward, I will be writing two regular expressions with different syntax that **both do the same things**.
 
 ```bash 
 cat email-addresses.txt | grep -P "^[^\r\n]{1,}@.{1,}"
@@ -641,7 +793,7 @@ bash simple-script.sh
 ./simple-script.sh
 ```
 
-Notice that the top of the file has something called a "shebang" (`#!/bin/bash`), which tells the interpreter which executable to run the script against.  In this case, we are telling it to run with the bash shell which is stored in `/bin` on our machine.
+Notice that the top of the file has something called a "shebang" (`#!/bin/bash`), which tells the interpreter which executable to run the script against.  In this case, we are telling it to run with the bash shell which is stored in `/bin` on our machine.  As a note, you generally do not need this shebang as in most cases, your bash shell will execute the scripts by default with bash, but it is good practice and increases portability if you add it.
 
 This is the most basic form of a script, but obviously not all that useful.  Throughout this section, we will learn the most important components of a bash script, which includes: 
 
@@ -652,7 +804,7 @@ This is the most basic form of a script, but obviously not all that useful.  Thr
 * for loops
 * if-then statements
 
-With these concepts, you should be able to accomplish 95% of your tasks.  Sure, there will be times where the above concepts are not enough, but again, this is an introduction to scripting rather than a deep dive.  For the rest of this section, I will be using a file called `shell-scripting-basics.sh` unless otherwise noted.  
+With these concepts, you should be able to accomplish 95% of your tasks.  Sure, there will be times where the above concepts are not enough, but again, this is an introduction to scripting rather than a deep dive.  For the rest of this section, you can assume that I have replaced the contents of a file called `shell-scripting-basics.sh` every time I run a script unless otherwise noted.
 
 ### Variable declarations
 
@@ -686,15 +838,15 @@ echo $?  # Prints the exit code of the previous process run
 A shell script can take arguments on the command line.  For example, if I ran the following script: 
 
 ```bash 
-./shell-scripting-basics.sh 3 9
-```
-
-and then here is the code in the script: 
-
-```bash 
 #!/bin/bash
 
 echo "The script $0 evaluates to: " $(($1+$2))
+```
+
+```bash 
+./shell-scripting-basics.sh 3 9
+
+# The script ./shell-scripting-basics.sh evaluates to:  12
 ```
 
 This script will evaluate to - "The script ./shell-scripting-basics.sh evaluates to:  12"
@@ -708,6 +860,7 @@ We can also read user input from a script.  This is similar to reading arguments
 ```bash
 #!/bin/bash
 
+# Reading the user's input into the user_input variable
 read user_input
 
 echo "The user entered: $user_input"
@@ -758,6 +911,7 @@ The syntax for an array is a bit weird in bash as you can see.  We can also use 
 cd ~/
 
 # The * refers to all the files and directories in the current directory
+# This script is basically the `ls` command
 for item in *; do
         echo $item
 done
@@ -846,7 +1000,7 @@ I primarily use Digital Ocean for my hosting needs, so I will be going through a
 1. User creates a private/public SSH keypair on their local computer
 2. User inputs the _public_ key into the SSH field of their hosting provider while setting up the host
 3. When user tries to connect to the host via SSH, the SSH tool will validate the private/public keypair stored on the local computer in the `~/.ssh` directory with the public key stored on the VPS.
-4. If the keys validate, the user now gets remote access to the VPS.
+4. If the keys validate, the user now gets remote access to the VPS, and your IP address is stored as a "known host" on the VPS.
 
 So the first step requires us to create a public/private keypair.  We can do this on Mac/Linux using the OpenSSH tool.  In your terminal, type the following command.
 
@@ -872,7 +1026,7 @@ Once you have done that, you can create your virtual machine.  Now, find the IP 
 ssh -p 22 root@157.230.167.2
 ```
 
-This should successfully log you into your VPS.  The last thing I want to show you is how to transfer files to and from your remote machine and local computer.  To do this, we use the `scp` utility.
+This should successfully log you into your VPS.  Next, I want to show how to transfer files to and from your remote machine and local computer.  To do this, we use the `scp` utility.
 
 ### From local computer to remote machine
 
@@ -946,13 +1100,13 @@ Process management sounds like an intimidating concept, but for the average bash
 
 We can also simulate this process in a terminal ourselves using the `strace()` command.
 
-```bash 
+```bash
 strace ls
 ```
 
 When you run this command, you will see all of the system calls that were made when you ran the `ls` command.  Although `ls` is considered a "command" in many people's minds, it is really just another process.  I have cut out parts of the `strace ls` output below and highlighted some of the most important parts.
 
-```bash 
+``` 
 execve("/bin/ls", ["ls"], [/* 69 vars */]) = 0
 
 .... omitted for brevity ....
