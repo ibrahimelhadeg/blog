@@ -775,7 +775,7 @@ All I did was add the `$` character at the end of each expression.  Just like we
 
 ## Bash Scripting
 
-Throughout this tutorial, we have covered many commands and concepts.  Most of the commands we have learned (with the exception of the `awk`) command are for usage on the command line, but what if you wanted to put some of these in a script to run?  You could always write out a long and elaborate command and execute it, but it will not get saved and is difficult to write.  Bash scripting solves this problem by allowing you to write common bash commands within a script file and then execute that script file.  You may find this useful if you need to do something on a periodic basis.  For example, maybe you need to clean out a specific folder on your computer every day and place the contents of it in an archived folder with today's date on it.  You can do this through bash scripting, and in this brief introduction, I will teach you how to do just that.  First, we need to understand the basics of a scripting file.
+Throughout this tutorial, we have covered many commands and concepts.  Most of the commands we have learned (with the exception of the `awk`) command are for strict usage on the command line, but what if you wanted to put some of these in a script to run?  You could always write out a long and elaborate command and execute it, but it will not get saved and is difficult to write.  Bash scripting solves this problem by allowing you to write common bash commands within a script file and then execute that script file.  You may find this useful if you need to do something on a periodic basis.  For example, maybe you need to clean out a specific folder on your computer every day and place the contents of it in an archived folder with today's date on it.  You can do this through bash scripting, and in this brief introduction, I will teach you how to do just that.  First, we need to understand the basics of a scripting file.
 
 The most basic form of a scripting file is shown below.  This file is called `simple-script.sh` where the `.sh` is the file extension for the script (not necessary, but good practice).  The permissions on this file are `744`, which means that only we (the owner of the script) can modify or execute it.
 
@@ -981,6 +981,37 @@ while read filename
 do 
 	mv $filename /home/zach/archives/$todays_date/
 done
+```
+
+### Functions
+
+A programming language is not a language without functions, so here is the basic syntax for writing and then later calling a function in your bash script.
+
+```bash
+some_function () {
+        
+        # If you pass arguments to me, I can print them
+        if [ $# -eq 0 ]; then
+                # No arguments were passed to function
+                echo "I am a function and no arguments were passed to me"
+        else
+                # At least 1 argument was passed to me, so i will print all of them
+                echo "here"
+                echo $@
+        fi
+
+        # I can return a value that can be retrieved later with the $? built-in variable
+        return 20
+}
+
+# calling our function
+some_function
+
+# calling our function with arguments
+some_function "argument 1" "argument 2"
+
+# Printing the return value of 20
+echo $?
 ```
 
 There are endless possibilities to writing bash scripts.  Play around a bit and you will be on your way!
