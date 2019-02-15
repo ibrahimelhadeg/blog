@@ -1123,7 +1123,7 @@ rmate sample-file.txt
 ```
 
 ## Networking on Command Line
-## Process Management
+## Process Management and System Management
 
 Process management sounds like an intimidating concept, but for the average bash user, there are only a few things that you will ever have to deal with regarding processes.  I could list out a bunch of commands here for you, but they will not make any sense unless you understand the sequence that the bash shell (and kernel) takes when a new process is started.  When your computer starts up, the kernel will call a process called "init", which on a UNIX-based operating system is usually the script called `init` located at `/sbin/init`.  Once this process has started, all other processes will be started by other processes.  This does not make a lot of sense starting out, but once you know how a process starts, you will gain clarity into what goes on behind the scenes on your computer.  A process can start another process (usually the terminal starting a new process as a result of a command typed into it) by first creating a copy of itself, and then executing the new command within that copied process.  Here is a visual to better explain: 
 
@@ -1159,10 +1159,39 @@ In the output that I have shown, you can see the `execve` command starts off the
 
 In the end, the output is not important to you as a bash user, but is important in trying to understand how the computer starts and ends processes.  What we care more about is how to _manage_ processes.  There are only a few commands that we need to look at here because these few commands will take care of essentially anything we would ever need to do relating to processes.
 
-### ps and top commands
+### What is a Process?
 
-There are two commands that give us output relating to the processes that are currently running on our computer.  We will start with `ps` because it has more of the 
+We looked at how a process starts, but what is a process anyways?  The non-technical answer to that question is "anything that consumes I/O, Memory, and/or CPU".  Your computer is composed of many hardware components that are there for the purpose of running processes.  When you open your Google Chrome browser, that is a single process.
 
+A process can also have _threads_, which are like little "sub-processes" running within the parent process.  We won't be getting into the details of process threads, but you might see them throughout this walkthrough and is important that you know what they are.
 
-## System Management
+### Foreground vs. Background Processes
+
+One of the most important concepts to understand regarding processes is the background vs. the foreground process and how to switch between the two.  When you run a process in your bash shell, while that process is running, you will not have access to the terminal.  If you want to stop that process, you can always hit the CTRL-C command.  But there are multiple processes that are running at any given time, so where are they running?  Why don't they prevent you from working in the terminal?  The reason is because they are _background processes_.  We can send a process to the background in one of two ways:
+
+1. Send it to the background at start time
+2. Stop it, send it to the background, and start it again
+
+The first method is simple.  We can start a process in the background by adding the `&` character at the end of the command.  For example, I can run the `sleep` command for 20 seconds in the background.
+
+```bash 
+sleep 20 &
+```
+
+The second method is a bit more complicated and requires us to understand the concept of _process signals_.  We can send process signals using the `kill` command.  You can see all the signals by typing `kill -l`, but here are the most common signals that you might send to a process:
+
+* SIGTERM - `kill` (gracefully sends shutdown signal to process)
+* SIGKILL - `kill -9` or `kill -s SIGKILL` (brute force shutdown)
+* SIGSTOP - `kill -19` or `kill -s SIGSTOP` (stops running process)
+* SIGCONT - `kill -18` or `kill -s SIGCONT` (continues stopped process)
+* SIGINT (CTRL-C) - `kill -2` or `kill -s SIGINT` (interrupt process)
+* SIGTSTP (CTRL-Z) - `kill -20` or `kill -s SIGTSTP` (stop and put process in background)
+
+In our case, we want to send the SIGTSTP signal to our running process to throw it in the background and stop it.  We will need the process ID, 
+
+### ps and top commands (system performance management)
+
+There are two commands that give us output relating to the processes that are currently running on our computer.  In 99% of the cases, these commands can be run interchangeably for the same type of data.  The difference between the commands is the level of interactivity and therefore the situations you would be likely to use them both in.  For example, when you run the `top` command, you will see a bunch of processes listed out.  Not only will this command list processes, but it will also update the status of each process in real time.  Since it is interactive, other scripts cannot use it to get information about processes.  That is where the `ps` command enters the picture.  This command can be run inside bash scripts to obtain necessary information.  Since we are not looking to write complex process utilization scripts, we will be primarily focusing on the `top` command because it is more user-friendly.  If you want, you can read the man pages for the `ps` command to learn the equivalent commands that we talk about.
+
+Our first priority is to learn the interface of the `top` command and what we need to look for in the output.  This is not just a bash command but an entire program that has extensive capabilities.  As a normal bash user you will not use most of the capabilities, but we will look at some useful and common ones.
 
