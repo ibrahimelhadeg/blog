@@ -1129,7 +1129,7 @@ Process management sounds like an intimidating concept, but for the average bash
 
 {% asset_img processes-linux.png %}
 
-We can also simulate this process in a terminal ourselves using the `strace()` command.
+We can also simulate this process in a terminal ourselves using the `strace()` command.  Please note this command is only available on Linux.  The equivalent command on Mac is the `dtruss` command, but it does not work exactly the same.
 
 ```bash
 strace ls
@@ -1185,9 +1185,16 @@ The second method is a bit more complicated and requires us to understand the co
 * SIGSTOP - `kill -19` or `kill -s SIGSTOP` (stops running process)
 * SIGCONT - `kill -18` or `kill -s SIGCONT` (continues stopped process)
 * SIGINT (CTRL-C) - `kill -2` or `kill -s SIGINT` (interrupt process)
-* SIGTSTP (CTRL-Z) - `kill -20` or `kill -s SIGTSTP` (stop and put process in background)
+* SIGTSTP (CTRL-Z) - `kill -20` or `kill -s SIGTSTP` (stops the running process)
 
-In our case, we want to send the SIGTSTP signal to our running process to throw it in the background and stop it.  We will need the process ID, 
+In our case, we want to send the SIGTSTP signal to our running process to throw it in the background and stop it.  We will need the process ID to do this.  To get that process ID, we can run the `ps` command (more on this later).  In my case, I am running the `sleep` command as a sample process that we can work with, and its process ID is 30087.  In a separate terminal application, I will run the following command.
+
+```bash 
+# In my case, kill -s SIGSTOP 30087
+kill -s SIGSTOP <pid>
+```
+
+I could have also typed CTRL-Z in the terminal where the process was active.  At this point, our process is stopped and no longer occupying the terminal window.  
 
 ### ps and top commands (system performance management)
 
