@@ -1126,11 +1126,141 @@ rmate sample-file.txt
 
 Networking is a huge concept.  There are textbooks written on the topic, and therefore, I have no chance of covering everything you need to know relating to networking.  That said, this section will get into the most common Bash networking utilities that you can use to diagnose network issues on your computer.  If you are completely new to network concepts, that is completely fine.  I recommend that you take 12 minutes to watch [this video](https://www.youtube.com/watch?v=PBWhzz_Gn10) which will give you a refresher course on how the internet works.  It certainly will not make you a networking expert, but will get you familiar enough to understand what these commands in Bash aim to assist us with.
 
+### Your home network and the internet
 
+To make sense of the commands were are about to run, we need to have at least a foundational understanding of the following.
+
+1. Your Computer's Wireless Card
+2. Router
+3. Modem
+4. What your Internet Service Provider (ISP) is
+5. Domain name system (DNS), nameservers, registrars
+
+Sometimes the modem and the router are one and the same, but for our purposes, we will be splitting them into two for a better conceptualization of the topic.  By the end of this section, _you will fully understand (at a high level) what happens when you type "www.thediygolfer.com" in your browser_.  I chose this particular website because I own it.  This will allow us to understand the components that go into it.  It is often difficult to explain these concepts with complex websites like www.google.com because their infrastructure is so complex.  The same concepts apply no matter what website you visit, but keeping things as simple as possible is key to understanding.
+
+_Note: I will be modifying some of the IP addresses and server addresses throughout the tutorial to protect my own privacy, but will not be changing them materially enough to affect the concepts explained herein._
+
+We will start with a diagram to guide us through the process of searching for a website.
+
+{% asset_img basic-web-search.jpg %}
+
+Each piece of the puzzle is labeled by number and illustrates the general flow of information when you make an internet search.  Although in most cases starting at #1 would make sense, we need to understand what an internet service provider (ISP) is and what service it provides.  ISPs are confusing in many cases because they offer more than one service, but in the scope of this post, let's consider an ISP that offers only internet as a service.  An ISP is simply a company that owns hardware (wires) and makes that hardware available to customers in the form of internet service.  What are these wires we speak of?  Many ISPs own a variety of hardware that all are capable of carrying the analog signals we know as the "internet".
+
+* Coaxial cables (what you have in your house)
+* Unshielded twisted pair (UTP) cables (100 Mhz)
+* Shielded twisted pair (STP) cables
+* Fiber optic cables (fastest type - many are in the ocean)
+
+There are multiple ways that internet can reach your home, but the most common is through telephone wires (UTP cables).  Other methods include underground cables and dish satellites.  The method of telephone wires often confuses people because given the name, you would assume that only telephone signals can be sent through telephone wires.  This is not the case.  The internet bootstrapped off of the phone system, and nowadays, there are multiple channels of communication running through each telephone wire.  We call this "broadband" and it is the reason we can talk on the phone, watch Netflix, and search the web all at the same time.  Previously, you had to use "dial up" where you would literally "call in" through the phone line to access the internet.
+
+Regardless the method your ISP uses to get internet to your home, you will always be faced with the same problem.  The signals traveling through the telephone wires your ISP owns are _analog_ signals (wave frequencies), while your computer runs on _digital_ signals (1s and 0s).  This is where the modem comes in.
+
+The modem takes that analog signal, converts it to a digital signal, and sends it over to the router.  We do not yet understand what the router does, but you now have the background information needed to understand my picture diagram.  We know that our internet service provider owns tons of wires and infrastructure that millions of people connect to, and each ISP connects to each other.  This makes up the internet, and is ported into your home through telephone wires, underground cables, or satellite.  When it reaches your home, it is converted to digital signals by your modem and is sent to the router.  Our question now is what does the router do with the signal?
+
+Well, this is a bit of a trick question, because we now must reverse the flow of information and start at the first link in the chain--your computer.  All that "internet connectivity" that your ISP is providing is useless unless you use it, so we first need to make an internet request to see it in action.  As mentioned, we are going to perform a basic search for the homepage of my website, www.thediygolfer.com.
+
+I open my computer, open my browser (in this case, Google Chrome), and type "www.thediygolfer.com" into the search bar.  I press Enter.  At this point, given only one piece of information, my browser application must embark on a journey across the world wide web to find this website.  Remember, a website is simply a bunch of files sitting on a server application that is running on some computer somewhere in the world.  In our case, the website we are searching for is located in New York somewhere, but our browser does not yet know this!
+
+The first step my computer will take is forming a basic HTTP GET request.  It is not important to understand what this means, but understand that it is a structured way that a browser communicates.  Here is my GET request.
+
+```
+GET / HTTP/1.1
+Host: www.thediygolfer.com
+Connection: keep-alive
+Cache-Control: max-age=0
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.96 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.9
+```
+
+I won't explain every line here, but you can reasonably infer what each line means.  The one we will look at is the "Host: www.thediygolfer.com" line.  This information along with the rest is put into a "packet", which is then sent to the router over the connection between the router and your computer's wireless card.  Once it reaches the router, the router will act as a "sorting machine" and route the request where it needs to go.  The real question is... How does the router know where this request needs to go?
+
+This is where the Domain Name System (DNS) comes in.  Across the world, there are thousands of servers that are running for a single purpose.  That purpose is to convert human readable domain names into IP addresses.  In other words, my router knows where to direct my request because it has access to a domain name server somewhere.  Every router will have a default DNS server that it uses.  My router uses the domain name server sitting at `208.67.222.123`.  If you type this IP address into a lookup site like https://whatismyipaddress.com/ip, you will find the following "DNS" information about it.
+
+```
+IP:	208.67.222.123
+Decimal:	3494108795
+Hostname:	resolver1-fs.opendns.com
+ASN:	36692
+ISP:	OpenDNS, LLC
+Organization:	OpenDNS, LLC
+Services:	None detected
+Type:	Corporate
+Assignment:	Static IP
+Blacklist:	
+Continent:	North America
+Country:	United States us flag
+Latitude:	37.751  (37° 45′ 3.60″ N)
+Longitude:	-97.822  (97° 49′ 19.20″ W)
+```
+
+Immediately we can see that this server is run by OpenDNS LLC, which makes sense because this is a well known DNS server.  Another well known DNS server is Google, which runs at the IP address 8.8.8.8.
+
+```
+IP:	8.8.8.8
+Decimal:	134744072
+Hostname:	google-public-dns-a.google.com
+ASN:	15169
+ISP:	Google
+Organization:	Google
+Services:	None detected
+Type:	Corporate
+Assignment:	Static IP
+Blacklist:	
+Continent:	North America
+Country:	United States us flag
+Latitude:	37.751  (37° 45′ 3.60″ N)
+Longitude:	-97.822  (97° 49′ 19.20″ W)
+```
+
+My router will contact its default DNS server, which will then search for the address "www.thediygolfer.com".  Assuming it does not find it right away in its cache, it will start at the root domain database for the `.com` top-level-domain, which is hosted by the company VeriSign.  I know this because [I looked it up on IANA.org](https://www.iana.org/domains/root/db/com.html).  This root database will know where `thediygolfer.com` is because I registered it with an official registrar called [NameSilo](https://www.namesilo.com/register.php?rid=21c9e40dd).  When I registered it, the domain was placed in the `.com` top-level-domain database hosted by Verisign.  I then told NameSilo where I want to point the domain name to.  Since my site is hosted on DigitalOcean, I told NameSilo to point `thediygolfer.com` to DigitalOcean's DNS servers, which are:
+
+```
+173.245.58.51
+173.245.59.41
+198.41.222.173
+```
+
+Any of these three servers will know what IP address `thediygolfer.com` maps to.  At this point, my router has started with the default OpenDNS server to look for `thediygolfer.com`, but failing to find it, OpenDNS redirected the router to the root domain database, which then found the domain and redirected the router to Digital Ocean nameservers, which know exactly where the physical machine that my site is running on is.  The router will now figure out the quickest path to this location and send off the request packet.
+
+On the other end, the server which is running my website will find the HTML document that was requested (the home page), package it up, and send it back to the requesting IP address (my computer).  The packets will be delivered to my router, but how does my router know where my computer is?  This brings us to the topic of local area networks, or LANs.  The router represents a "local network", and actually has a dynamic IP address (DHCP) that will change from time to time.  This is okay because my request I sent has the current IP address for my home network and therefore the server sending back the information will find my network.  Once it finds the network, the router is in charge of routing that information to the correct device in my local network.
+
+A home has multiple devices (laptop, desktop, Chromecast, printer, etc.), and therefore each home network will need multiple IP addresses.  It would be difficult to manage a new IP address for each device out in the wild, but with our local area network, it is simple.  The network itself has an IP address which is called the "broadcast" address, and it is the same for every device.  This IP address is the one that incoming traffic is sent to.  Within the local network, each device has a "subnet mask" which will create a unique IP address for each device within the bounds of the local area network address space.  This topic is impossible to understand without an understanding of subnetting, but due to the scope of the article, I will not be covering it.  All you need to understand now is that the router gets the incoming traffic and figures out which device on the network asked for it in the first place.
+
+The device is found by the router, the website data is delivered, and we see the homepage of www.thediygolfer.com.  Although a complex process, it all happens in seconds (or even milliseconds).  With this background knowledge, we can now look at some bash commands to help us diagnose network issues.
+
+### ifconfig
+
+The ifconfig command will give us the information that we just discussed about our LAN (local area network).  This command can also be used to set new configurations, but for our use, we will just look at the output.  Type `ifconfig` in your terminal, and you should get the following output.
+
+{% asset_img ifconfig-command.png %}
+
+There are three entries in my configuration.  The bottom one called "lo" is a loopback configuration which redirects the address 127.0.0.1 to "localhost", and is commonly used for developing web applications.  The first entry "enp37s0" seems to be an empty configuration.  The middle entry "enx000f00de66da" is what we are interested in, because it displays the IP address of this device, the subnet mask, and the broadcast address of my LAN.  If I typed ifconfig into another computer on my network, the broadcast address will change while the subnet mask and the IP address of the device will not change.  There is also data like the maximum transmission units (MTU) which is the maximum size of a packet on this device, and RX/TX packets which indicate how many packets have been transmitted to and from this network.  These values will generally always increase.
 
 ## Process Management and System Management
 
-Process management sounds like an intimidating concept, but for the average bash user, there are only a few things that you will ever have to deal with regarding processes.  I could list out a bunch of commands here for you, but they will not make any sense unless you understand the sequence that the bash shell (and kernel) takes when a new process is started.  When your computer starts up, the kernel will call a process called "init", which on a UNIX-based operating system is usually the script called `init` located at `/sbin/init`.  Once this process has started, all other processes will be started by other processes.  This does not make a lot of sense starting out, but once you know how a process starts, you will gain clarity into what goes on behind the scenes on your computer.  A process can start another process (usually the terminal starting a new process as a result of a command typed into it) by first creating a copy of itself, and then executing the new command within that copied process.  Here is a visual to better explain: 
+Process and system management sounds like an intimidating concept, but for the average bash user, there are only a few commands and programs that you will need to learn to get a holistic understanding of how your computer runs.
+
+* What is a process?
+* How is a process created?
+* How to manage processes with kill, bg, and fg commands
+* How to manage processes and monitor system resources with top command
+
+### What is a Process?
+
+Without getting super technical, a process is anything on your computer that is owned by a single user and that consumes one of three system resources.
+
+1. CPU
+2. Memory
+3. I/O (input/output)
+
+While your computer is on and running, the kernel is constantly working.  The kernel is constantly monitoring all the processes on your computer and allocating one or more of the three system resources to them in intervals.  All the processes are constantly fighting for the resources and will take turns using them.  Believe it or not, when you run a program like Google Chrome, the kernel will give it resources for a few seconds and then do a "context switch" where it hands those same resources off to another process for a few seconds.  If Google Chrome got 100% of the computer's resources 100% of the time, the computer would become dysfunctional because there are many processes that are running at the kernel level to keep everything in order.
+
+### Processes Behind the Scenes
+
+I could list out a bunch of commands here for you, but they will not make any sense unless you understand the sequence that the bash shell (and kernel) takes when a new process is started.  When your computer starts up, the kernel will call a process called "init", which on a UNIX-based operating system is usually the script called `init` located at `/sbin/init`.  This is the [systemd](https://en.wikipedia.org/wiki/Systemd) init script.  This does not make a lot of sense starting out, but once you know how a process starts, you will gain clarity into what goes on behind the scenes on your computer.  A process can start another process (usually the terminal starting a new process as a result of a command typed into it) by first creating a copy of itself, and then executing the new command within that copied process.  Here is a visual to better explain: 
 
 {% asset_img processes-linux.png %}
 
@@ -1163,12 +1293,6 @@ If you are truly curious about each of the system calls in the `strace` command 
 In the output that I have shown, you can see the `execve` command starts off the process.  This actually does the fork and exec all in one.  Later in the command, you will see file and directory names.  These represent the output of the ls command that you would see if you just ran `ls` in the current directory of my machine.  
 
 In the end, the output is not important to you as a bash user, but is important in trying to understand how the computer starts and ends processes.  What we care more about is how to _manage_ processes.  There are only a few commands that we need to look at here because these few commands will take care of essentially anything we would ever need to do relating to processes.
-
-### What is a Process?
-
-We looked at how a process starts, but what is a process anyways?  The non-technical answer to that question is "anything that consumes I/O, Memory, and/or CPU".  Your computer is composed of many hardware components that are there for the purpose of running processes.  When you open your Google Chrome browser, that is a single process.
-
-A process can also have _threads_, which are like little "sub-processes" running within the parent process.  We won't be getting into the details of process threads, but you might see them throughout this walkthrough and is important that you know what they are.
 
 ### Foreground vs. Background Processes
 
