@@ -113,3 +113,5 @@ So next time you visit a friend and use their wifi network, you can be relieved 
 ## Your Router's IP Address is not static after all
 
 To this point, I have explained that your ISP assigns your home network a single IP address which we call the "default gateway" or "network IP address".  This is entirely true, but now that we understand DHCP, I can reveal the fact that your router's IP address is dynamic too.  Most ISPs run DHCP servers and dynamically assign their customers IP addresses just like your router does on the home network.  This makes sense because as customers unsubscribe from internet service, the ISP wants to get that IP address back to assign to a new customer!
+
+The topic of networking and the internet has many layers (literally... Check out the OSI Model), but most people will never need to think about or troubleshoot outside of their local area network (LAN), hence the brevity of the post.  
