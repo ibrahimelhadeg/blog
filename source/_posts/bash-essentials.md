@@ -1225,11 +1225,19 @@ My router will contact its default DNS server, which will then search for the ad
 
 Any of these three servers will know what IP address `thediygolfer.com` maps to.  At this point, my router has started with the default OpenDNS server to look for `thediygolfer.com`, but failing to find it, OpenDNS redirected the router to the root domain database, which then found the domain and redirected the router to Digital Ocean nameservers, which know exactly where the physical machine that my site is running on is.  The router will now figure out the quickest path to this location and send off the request packet.
 
-On the other end, the server which is running my website will find the HTML document that was requested (the home page), package it up, and send it back to the requesting IP address (my computer).  The packets will be delivered to my router, but how does my router know where my computer is?  This brings us to the topic of local area networks, or LANs.  The router represents a "local network", and actually has a dynamic IP address (DHCP) that will change from time to time.  This is okay because my request I sent has the current IP address for my home network and therefore the server sending back the information will find my network.  Once it finds the network, the router is in charge of routing that information to the correct device in my local network.
+On the other end, the server which is running my website will find the HTML document that was requested (the home page), package it up, and send it back to the requesting IP address (my computer).  The packets will be delivered to my router, but how does my router know where my computer is?  This brings us to the topic of local area networks, or LANs.  
 
-A home has multiple devices (laptop, desktop, Chromecast, printer, etc.), and therefore each home network will need multiple IP addresses.  It would be difficult to manage a new IP address for each device out in the wild, but with our local area network, it is simple.  The network itself has an IP address which is called the "broadcast" address, and it is the same for every device.  This IP address is the one that incoming traffic is sent to.  Within the local network, each device has a "subnet mask" which will create a unique IP address for each device within the bounds of the local area network address space.  This topic is impossible to understand without an understanding of subnetting, but due to the scope of the article, I will not be covering it.  All you need to understand now is that the router gets the incoming traffic and figures out which device on the network asked for it in the first place.
+The router represents a "local network", and actually has a dynamic IP address (DHCP) that will change from time to time.  This is okay because my request I sent has the current IP address for my home network and therefore the server sending back the information will find my network.  Once it finds the network, the router is in charge of routing that information to the correct device in my local network.
 
-The device is found by the router, the website data is delivered, and we see the homepage of www.thediygolfer.com.  Although a complex process, it all happens in seconds (or even milliseconds).  With this background knowledge, we can now look at some bash commands to help us diagnose network issues.
+A home has multiple devices (laptop, desktop, Chromecast, printer, etc.), and therefore each home network will need multiple IP addresses.  It would be difficult to manage a new IP address for each device out in the wild, but with our local area network, it is simple.  The network itself has an IP address which is called the "default gateway".  This IP address represents all the devices on the network and is where traffic leaves and enters.  Within the local network, each device has a "subnet mask" which will create a unique IP address for each device within the bounds of the local area network address space.  This topic is impossible to understand without an understanding of subnetting, so [I have written a separate post](https://zachgoll.github.io/blog/2019/ip-addresses-netmasks) to explain it for anyone looking to more deeply understand what is going on.  If you choose not to read it, here are the cliffnotes (and a diagram):
+
+{% asset_img ipaddresses.PNG %}
+
+* Your ISP assigns your network an IP address and a subnet mask.  Adding the two together gives you the "network" or "default gateway" address.  In other words, an IP address is made of two parts--the network identifier and the host "address space" identifier.
+* The reason we have subnet masks is to conserve the address space used by a single network.  An address space is the range of IP addresses available for devices in a network (i.e. 192.0.168.1, 192.0.168.2, 192.0.168.3, 192.0.168.4, ..., 192.0.168.254)
+* DHCP is a server (usually running on a router) that assigns a new device an IP address when it enters a network.  This IP will always be within the address space as defined by the subnet mask.
+
+Anyways, back to our discussion... We have a bunch of data packets coming from the website server and being delivered to our router.  The device you searched from is found by the router, the website data is delivered, and we see the homepage of www.thediygolfer.com.  Although a complex process, it all happens in seconds (or even milliseconds).  With this background knowledge, we can now look at some bash commands to help us diagnose network issues.
 
 ### ifconfig
 
@@ -1237,7 +1245,184 @@ The ifconfig command will give us the information that we just discussed about o
 
 {% asset_img ifconfig-command.png %}
 
-There are three entries in my configuration.  The bottom one called "lo" is a loopback configuration which redirects the address 127.0.0.1 to "localhost", and is commonly used for developing web applications.  The first entry "enp37s0" seems to be an empty configuration.  The middle entry "enx000f00de66da" is what we are interested in, because it displays the IP address of this device, the subnet mask, and the broadcast address of my LAN.  If I typed ifconfig into another computer on my network, the broadcast address will change while the subnet mask and the IP address of the device will not change.  There is also data like the maximum transmission units (MTU) which is the maximum size of a packet on this device, and RX/TX packets which indicate how many packets have been transmitted to and from this network.  These values will generally always increase.
+There are three entries in my configuration.  The bottom one called "lo" is a loopback configuration which redirects the address 127.0.0.1 to "localhost", and is commonly used for developing web applications.  The first entry "enp37s0" seems to be an empty configuration.  The middle entry "enx000f00de66da" is what we are interested in, because it displays the IP address of this device, the subnet mask, and the broadcast address of my LAN.  
+
+This is where an understanding of IP addresses and subnetting on a LAN is helpful, because the INET address listed is not actually the public IP address recognized by the broader internet.  This IP address is the _local_ identifier which can be translated into the public IP for the network by combining it with the subnet mask which is also listed.  The broadcast address is also listed, but we could easily have derived that from the IP address and the subnet mask as well.
+
+If I typed ifconfig into another computer on my network, the broadcast address and subnet mask will not change, but the IP address will.  There is also data like the maximum transmission units (MTU) which is the maximum size of a packet on this device, and RX/TX packets which indicate how many packets have been transmitted to and from this network.  These values will generally always increase.
+
+### ping
+
+The `ping` command is a basic utility you can use to check connectivity between devices on your LAN or even between devices outside your LAN.  This command is useful in cases where you do not have a browser to test internet connectivity.  There are configuration options for the command, but the only one that you need to know is the `-c` option, which will allow you to specify the number of packets to request from a given source.
+
+```bash 
+ping -c 5 google.com
+
+PING google.com (108.177.112.100) 56(84) bytes of data.
+64 bytes from 108.177.112.100: icmp_seq=1 ttl=51 time=2.00 ms
+64 bytes from 108.177.112.100: icmp_seq=2 ttl=51 time=0.743 ms
+64 bytes from 108.177.112.100: icmp_seq=3 ttl=51 time=0.556 ms
+64 bytes from 108.177.112.100: icmp_seq=4 ttl=51 time=0.521 ms
+64 bytes from 108.177.112.100: icmp_seq=5 ttl=51 time=0.511 ms
+
+--- google.com ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 4059ms
+rtt min/avg/max/mdev = 0.511/0.867/2.008/0.577 ms
+```
+
+The command above sends Google's homepage 5 separate requests, and we receive data about each request.  Based on the data, we know our computer is online and able to connect to Google.
+
+### traceroute
+
+The traceroute command is a great way to understand how your computer locates and routes your request to www.thediygolfer.com.  I had mentioned earlier that the server for my site is somewhere in New York, and the traceroute command will validate that by showing you the path we take to get there.
+
+This command may not be installed by default on your machine, so if it is not available, you will need to install it.
+
+```bash
+# Linux
+ sudo apt-get update && sudo apt-get install traceroute
+```
+
+On Mac, you can access this with the Network Utility.  When we run traceroute, we get the following output.
+
+```bash 
+traceroute thediygolfer.com
+```
+
+### netstat
+
+This command gives information about the various networking protocols (TCP/IP, UDP, ICMP, etc.) that your machine is using.  Most of what this tool prints is out of the scope of what we discussed above, but I'll mention it nevertheless because it is a crucial tool for understanding how your computer is communicating with the outside world.  For example, we can type the following command to see the activity that is happening on various networking protocols.
+
+```bash 
+netstat -s
+```
+
+The output of this is below.  Please note that the output has been trimmed for brevity and only the IP, TCP, and UDP protocols have been included.
+
+
+```bash 
+Ip:
+    400933 total packets received
+    0 forwarded
+    0 incoming packets discarded
+    400933 incoming packets delivered
+    296285 requests sent out
+    3 outgoing packets dropped
+Tcp:
+    32175 active connections openings
+    28 passive connection openings
+    0 failed connection attempts
+    4 connection resets received
+    1 connections established
+    400885 segments received
+    300195 segments send out
+    41 segments retransmited
+    0 bad segments received.
+    7 resets sent
+Udp:
+    28 packets received
+    0 packets to unknown port received.
+    0 packet receive errors
+    43 packets sent
+```
+
+Another useful application of the netstat utility is to see what processes on your computer are using what ports.  We have not discussed processes yet, but keep this in mind for later.
+
+```bash 
+netstat -tp
+```
+
+### dig/host/whois
+
+The `dig`, `host`, and `whois` utilities help find information about domain names, IP addresses, and the mapping between them.  `dig` and `host` should be installed on your machine already, but you may have to install the `whois` utility to use it.  On linux, you can install it by typing `sudo apt-get install whois` in your terminal.
+
+We will start with the `dig` utility which helps us query DNS records for either IP addresses (using a reverse lookup) or a domain name.  Using this utility, we can query my site.
+
+```bash 
+dig thediygolfer.com
+```
+
+```
+; <<>> DiG 9.9.5-3ubuntu0.15-Ubuntu <<>> thediygolfer.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 51716
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;thediygolfer.com.              IN      A
+
+;; ANSWER SECTION:
+thediygolfer.com.       600     IN      A       104.248.115.234
+
+;; Query time: 0 msec
+;; SERVER: 172.17.0.1#53(172.17.0.1)
+;; WHEN: Wed Feb 27 18:41:22 UTC 2019
+;; MSG SIZE  rcvd: 61
+```
+
+Notice there is a lot of information here, and most of it is comments (indicated by ;;).  To reduce the output that we see, we can add the `+noall` flag and `+answer` flag to reduce all output and only see the answer section. 
+
+```bash 
+dig thediygolfer.com +noall +answer
+```
+
+```
+; <<>> DiG 9.9.5-3ubuntu0.15-Ubuntu <<>> thediygolfer.com +noall +answer
+;; global options: +cmd
+thediygolfer.com.       600     IN      A       104.248.115.234
+```
+
+This will just print the A record for my site in a short format.  We could have also run `dig thediygolfer.com +short` to get a similar output.  But what if we wanted all the DNS records for a domain?  To do this, we can add the `ANY` option.
+
+```bash 
+dig thediygolfer.com ANY +noall +answer
+```
+
+```
+; <<>> DiG 9.9.5-3ubuntu0.15-Ubuntu <<>> thediygolfer.com ANY +noall +answer
+;; global options: +cmd
+thediygolfer.com.       3599    IN      A       104.248.115.234
+thediygolfer.com.       1799    IN      NS      ns1.digitalocean.com.
+thediygolfer.com.       1799    IN      NS      ns2.digitalocean.com.
+thediygolfer.com.       1799    IN      NS      ns3.digitalocean.com.
+thediygolfer.com.       1799    IN      SOA     ns1.digitalocean.com. hostmaster.thediygolfer.com. 1545305910 10800 3600 604800 1800
+```
+
+In this response, you can see that I have one A record (the mapping between IP and domain name), three nameserver records, and one "Start of Authority" (SOA) record that indicates Digital Ocean is the authoritative source for the DNS record.
+
+We can also type the following command to find the IP address for a given domain.
+
+```bash 
+host thediygolfer.com
+
+# thediygolfer.com has address 104.248.115.234
+```
+
+If you use this command with a larger company like Google, you will get more verbose results due to the fact that they operate many servers and many mail servers.
+
+```bash 
+host google.com
+```
+
+```
+google.com has address 108.177.112.139
+google.com has address 108.177.112.101
+google.com has address 108.177.112.102
+google.com has address 108.177.112.100
+google.com has address 108.177.112.113
+google.com has address 108.177.112.138
+google.com has IPv6 address 2607:f8b0:4001:c12::64
+google.com mail is handled by 30 alt2.aspmx.l.google.com.
+google.com mail is handled by 50 alt4.aspmx.l.google.com.
+google.com mail is handled by 40 alt3.aspmx.l.google.com.
+google.com mail is handled by 10 aspmx.l.google.com.
+google.com mail is handled by 20 alt1.aspmx.l.google.com.
+```
+
+There are other bash tools like `nslookup`, `route`, etc., but the ones I have reviewed will take care of most user needs.  Unless you are an admin configuring networks on a daily basis, you will never need to use these tools to edit settings.  These commands are useful for quick info relating to your network and external networks.
 
 ## Process Management and System Management
 
