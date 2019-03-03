@@ -25,7 +25,7 @@ You will soon understand what this means in full, but for now, just know that yo
 
 I am assuming that most people reading have an idea what an IP address is, but as a refresher, an IP address is a 32 bit number that identifies a specific network or computer.  Today, most IP addresses are IPV4 addresses, which means that they are 32 bit rather than 64 bit IPV6 addresses.  The reason we need IPV6 addresses is because we are running out of the former.  If you calculate how many combinations you can have with 32 bits, it is 4.2 billion (2^32).  This seems like a large number, but with a world population between 7 and 8 billion, you can see how this could be constraining.  With IPV6, we have 1.8x10^19 addresses (2^64), which will never pose a capacity issue.
 
-To find your computer's IP address, you can type `ipconfig` into a Windows terminal or `ifconfig` into a Mac/Linux terminal.  You will want to look for the entry that shows a "broadcast" address.  Our goal in this post is to understand how each device on your network receives a broadcast address despite the fact that your ISP only provided you 1 IP address to start with.
+To find your computer's IP address, you can type `ipconfig` into a Windows terminal or `ifconfig` into a Mac/Linux terminal.  You will want to look for the entry that shows a "inet" address.  Our goal in this post is to understand how each device on your network receives a unique address despite the fact that your ISP only provided you 1 IP address to start with.
 
 ## Subnetting
 

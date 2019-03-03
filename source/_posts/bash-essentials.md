@@ -110,7 +110,7 @@ my-simple-script
 # I am a useless script for tutorial purposes only
 ```
 
-# Common Commands 
+## Common Commands 
 
 Aside from basic commands such as `cd`, `ls`, `mkdir`, `touch`, etc., there is a short list of commands that I think every bash user should know about and attempt to use on a regular basis.
 
@@ -121,7 +121,7 @@ Aside from basic commands such as `cd`, `ls`, `mkdir`, `touch`, etc., there is a
 * gunzip
 * tar
 
-## grep
+### grep
 
 Grep is a tool that will find certain patterns or words in one or more files.  It comes in two versions--BSD and GNU.  Mac computers will come with the BSD version while linux computers will come with the GNU version.  For our intent, these versions are identical, but if you ever run into issues cross-platform, be sure to check that the grep command you are executing is supported in your grep version (certain types of regular expressions not supported in BSD grep).
 
@@ -168,7 +168,7 @@ sudo cat /etc/passwd | grep --color -E "^[a-z]{3}:"
 
 Again, the `grep` utility is useful for quick searches when you do not have access to your normal text editor like VSCode.
 
-## awk and sed
+### awk and sed
 
 Nowadays, `awk` and `sed` are contentious topics, and in this section, I hope to clarify _why_ this is the case and introduce the two commands' basic usages.  The reason these two commands are contested frequently is due to the better alternatives that we have today.  Both of these tools are considered text editors because they can find _and_ replace parts of a file or files.  
 
@@ -285,7 +285,7 @@ Awk can do much more than what has been shown including editing files.  A great 
 
 When push comes to shove, you generally do not need to be proficient in sed nor awk.  Perl/Python can do the same exact things with simpler syntax.  That said, knowing the basic usage of each can significantly speed up your workflow during those few moments where they do become necessary.  They can also become useful when you are writing a bash script and need a built-in text editor.  It would be inconvenient to break out of a bash script, run a python script, and then start your script again, so sed and awk provide nice alternatives to this workflow.
 
-## Less
+### Less
 
 Less is one of those command line utilities that you are probably not using and should be.  I find myself scrolling through large output all the time and forget that there is a command line utility that makes this a lot easier.  Less is simple to use, and works very similar to vim.  You can run less in two ways: 
 
@@ -309,7 +309,7 @@ Once you are in less, your biggest asset is the `h` option.  Type `h` and you wi
 
 Just like grep, awk, and sed, scrolling and searching through output can be done in advanced text editors like VSCode fairly easily and if you have the opportunity to use these more advanced tools, go ahead and do so.  Using the `less` command is simply for those moments when those tools are not available to you.
 
-## find and exec
+### find and exec
 
 The find command is eerily similar to grep at first glance, but covers an entirely different use case.  You would need to use the find command when you want to search for certain files within the entire filesystem.  While grep searches for text in a file or a specified output, find searches explicitly for files in the filesystem.  Why is this useful?  Many times this command could be used to find the path where a specific executable is stored on the filesystem so you can edit, move, or remove it.  Maybe you installed a version of Python a long time ago and cannot remember where you downloaded it.  It is a common problem to have conflicting installations of Python on your machine.  It is also common to struggle to entirely remove Python from your machine.  Other uses for find could include: 
 
@@ -376,7 +376,7 @@ In these man pages, you can see that the `'{}'` is where the files that were fou
 
 After running this command, you now have all the jpg pictures in your entire home directory copied to a centralized backup repository!  You can begin to see how powerful this new command is!
 
-## tar, gzip, gunzip
+### tar, gzip, gunzip
 
 These utilities are fairly simple and used to compress and decompress files.  Many times when we download a software release or series of large files or images, we will get them in the `.tar`, `.gz`, or even `.tar.gz` formats.  `tar` and `gz` are slightly different.  `tar` is an archive format while `gz` is a compressed format.  Most of the time, we an rely on our computer's file explorer to be able to handle these formats, but sometimes, we need to unzip or decompress them on the command line (think remote server).  Here are the most common commands.
 
@@ -1124,7 +1124,7 @@ rmate sample-file.txt
 
 ## Networking on Command Line
 
-Networking is a huge concept.  There are textbooks written on the topic, and therefore, I have no chance of covering everything you need to know relating to networking.  That said, this section will get into the most common Bash networking utilities that you can use to diagnose network issues on your computer.  If you are completely new to network concepts, that is completely fine.  I recommend that you take 12 minutes to watch [this video](https://www.youtube.com/watch?v=PBWhzz_Gn10) which will give you a refresher course on how the internet works.  It certainly will not make you a networking expert, but will get you familiar enough to understand what these commands in Bash aim to assist us with.
+Networking is a huge concept.  There are textbooks written on the topic, and therefore, I have no chance of covering everything you need to know relating to networking.  That said, this section will get into the most common Bash networking utilities that you can use to diagnose network issues on your computer.  If you are completely new to network concepts, that is completely fine as I will be explaining the basics of the internet in the next section.
 
 ### Your home network and the internet
 
@@ -1243,34 +1243,61 @@ Anyways, back to our discussion... We have a bunch of data packets coming from t
 
 The ifconfig command will give us the information that we just discussed about our LAN (local area network).  This command can also be used to set new configurations, but for our use, we will just look at the output.  Type `ifconfig` in your terminal, and you should get the following output.
 
-{% asset_img ifconfig-command.png %}
+```
+enp37s0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        ether 70:85:c2:7c:ff:f2  txqueuelen 1000  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+enx000f00de66da: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet <hidden for privacy>  netmask 255.255.255.0  broadcast <hidden for privacy>
+        inet6 <hidden for privacy>  prefixlen 64  scopeid 0x20<link>
+        ether 00:0f:00:de:66:da  txqueuelen 1000  (Ethernet)
+        RX packets 265073  bytes 821138812 (821.1 MB)
+        RX errors 0  dropped 1451  overruns 0  frame 0
+        TX packets 44132  bytes 102041651 (102.0 MB)
+        TX errors 0  dropped 2100 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 752935  bytes 54372769 (54.3 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 752935  bytes 54372769 (54.3 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+```
 
 There are three entries in my configuration.  The bottom one called "lo" is a loopback configuration which redirects the address 127.0.0.1 to "localhost", and is commonly used for developing web applications.  The first entry "enp37s0" seems to be an empty configuration.  The middle entry "enx000f00de66da" is what we are interested in, because it displays the IP address of this device, the subnet mask, and the broadcast address of my LAN.  
 
-This is where an understanding of IP addresses and subnetting on a LAN is helpful, because the INET address listed is not actually the public IP address recognized by the broader internet.  This IP address is the _local_ identifier which can be translated into the public IP for the network by combining it with the subnet mask which is also listed.  The broadcast address is also listed, but we could easily have derived that from the IP address and the subnet mask as well.
+This is where an [understanding of IP addresses and subnetting on a LAN](https://zachgoll.github.io/blog/2019/ip-addresses-netmasks) is helpful, because the INET address listed is not actually the public IP address recognized by the broader internet.  This IP address is the _local_ identifier which can be translated into the public IP for the network by combining it with the subnet mask which is also listed.  The broadcast address is also listed, but we could easily have derived that from the IP address and the subnet mask as well.
 
-If I typed ifconfig into another computer on my network, the broadcast address and subnet mask will not change, but the IP address will.  There is also data like the maximum transmission units (MTU) which is the maximum size of a packet on this device, and RX/TX packets which indicate how many packets have been transmitted to and from this network.  These values will generally always increase.
+If I typed ifconfig into another computer on my network, the broadcast address and subnet mask will not change, but the IP address will.  There is also data like the maximum transmission units (MTU) which is the maximum size of a packet on this device, and RX/TX packets which indicate how many packets have been transmitted to and from this network.  These values will be constantly increasing.
 
 ### ping
 
 The `ping` command is a basic utility you can use to check connectivity between devices on your LAN or even between devices outside your LAN.  This command is useful in cases where you do not have a browser to test internet connectivity.  There are configuration options for the command, but the only one that you need to know is the `-c` option, which will allow you to specify the number of packets to request from a given source.
 
 ```bash 
-ping -c 5 google.com
-
-PING google.com (108.177.112.100) 56(84) bytes of data.
-64 bytes from 108.177.112.100: icmp_seq=1 ttl=51 time=2.00 ms
-64 bytes from 108.177.112.100: icmp_seq=2 ttl=51 time=0.743 ms
-64 bytes from 108.177.112.100: icmp_seq=3 ttl=51 time=0.556 ms
-64 bytes from 108.177.112.100: icmp_seq=4 ttl=51 time=0.521 ms
-64 bytes from 108.177.112.100: icmp_seq=5 ttl=51 time=0.511 ms
-
---- google.com ping statistics ---
-5 packets transmitted, 5 received, 0% packet loss, time 4059ms
-rtt min/avg/max/mdev = 0.511/0.867/2.008/0.577 ms
+ping -c 5 thediygolfer.com
 ```
 
-The command above sends Google's homepage 5 separate requests, and we receive data about each request.  Based on the data, we know our computer is online and able to connect to Google.
+```
+PING thediygolfer.com (104.248.115.234) 56(84) bytes of data.
+64 bytes from 104.248.115.234 (104.248.115.234): icmp_seq=1 ttl=48 time=36.0 ms
+64 bytes from 104.248.115.234 (104.248.115.234): icmp_seq=2 ttl=48 time=49.9 ms
+64 bytes from 104.248.115.234 (104.248.115.234): icmp_seq=3 ttl=48 time=35.2 ms
+64 bytes from 104.248.115.234 (104.248.115.234): icmp_seq=4 ttl=48 time=34.4 ms
+64 bytes from 104.248.115.234 (104.248.115.234): icmp_seq=5 ttl=48 time=35.3 ms
+
+--- thediygolfer.com ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 4005ms
+rtt min/avg/max/mdev = 34.427/38.183/49.912/5.885 ms
+```
+
+The command above sends my site's homepage 5 separate requests, and we receive data about each request.  Based on the data, we know our computer is online and able to connect to thediygolfer.com.
 
 ### traceroute
 
@@ -1280,14 +1307,37 @@ This command may not be installed by default on your machine, so if it is not av
 
 ```bash
 # Linux
- sudo apt-get update && sudo apt-get install traceroute
+sudo apt-get update && sudo apt install inetutils-traceroute
 ```
 
 On Mac, you can access this with the Network Utility.  When we run traceroute, we get the following output.
 
 ```bash 
-traceroute thediygolfer.com
+traceroute --resolve-hostnames -q 1 -w 5 -I thediygolfer.com
 ```
+
+```
+traceroute to thediygolfer.com (104.248.115.234), 64 hops max
+  1   192.168.0.1 (_gateway)  53.296ms 
+  2   142.254.145.21 (142.254.145.21)  10.502ms 
+  3   24.164.117.37 (24.164.117.37)  15.953ms 
+  4   65.189.128.164 (65.189.128.164)  11.035ms 
+  5   65.29.1.87 (be14.pltsohae01r.midwest.rr.com)  18.102ms 
+  6   65.29.1.28 (be25.clmkohpe01r.midwest.rr.com)  23.729ms 
+  7   66.109.6.68 (bu-ether15.chctilwc00w-bcr00.tbone.rr.com)  31.967ms 
+  8   66.109.5.136 (66.109.5.136)  34.155ms 
+  9   66.109.5.225 (66.109.5.225)  26.993ms 
+ 10   64.86.79.97 (ix-ae-27-0.tcore2.ct8-chicago.as6453.net)  25.094ms 
+ 11   64.86.79.2 (if-ae-22-2.tcore1.ct8-chicago.as6453.net)  33.455ms 
+ 12   216.6.81.28 (if-ae-26-2.tcore2.nto-new-york.as6453.net)  35.629ms 
+ 13   66.110.96.5 (if-ae-12-2.tcore1.n75-new-york.as6453.net)  33.047ms 
+ 14   66.110.96.26 (66.110.96.26)  34.565ms 
+ 15   * 
+ 16   * 
+ 17   104.248.115.234 (104.248.115.234)  35.916ms
+ ```
+
+ In the command above, I have indicated to the traceroute utility that I want to resolve IP addresses into their hostnames with the `--resolve-hostnames` command, I want to send only one packet per host `-q 1`, I want to set the timeout for each request to 5 seconds with `-w 5`, and finally, I want to use ICMP protocol rather than UDP with the `-I` flag.  As you can see, the request starts at my computer's gateway, jumps over to a Spectrum server in Kansas, connects to a server in Chicago, connects to Digital Ocean's servers in New York, and finally gets to my website server in New Jersey.  I know the locations because I typed a few of them into [this online tool](https://whatismyipaddress.com/ip-lookup).   
 
 ### netstat
 
@@ -1331,6 +1381,16 @@ Another useful application of the netstat utility is to see what processes on yo
 ```bash 
 netstat -tp
 ```
+
+```
+(Not all processes could be identified, non-owned process info
+ will not be shown, you would have to be root to see it all.)
+Active Internet connections (w/o servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+tcp        0      0 zubuntu:35098           stackoverflow.com:https ESTABLISHED 26679/chrome --type 
+```
+
+I have cut off most of the output of this command, but with the single example that I did provide, you can see that I have a Google Chrome window open (with process ID 26679) and one of my tabs is opened to stackoverflow.com.  The local address means that my local host (zubuntu - the fully qualified name for 127.0.0.1) has a socket with ID 35098 open for the given tab in my Google Chrome window.  Each tab will have its own socket.
 
 ### dig/host/whois
 
@@ -1421,6 +1481,34 @@ google.com mail is handled by 40 alt3.aspmx.l.google.com.
 google.com mail is handled by 10 aspmx.l.google.com.
 google.com mail is handled by 20 alt1.aspmx.l.google.com.
 ```
+
+Finally, we can use the `whois` command to find more information about a given domain name or IP address.  You may not have this installed by default, so you can type `sudo apt-get install whois` to install it.  Here is an example of how it works.
+
+```bash 
+whois thediygolfer
+```
+
+```
+Domain Name: THEDIYGOLFER.COM
+Registry Domain ID: 1896554473_DOMAIN_COM-VRSN
+Registrar WHOIS Server: whois.namesilo.com
+Registrar URL: http://www.namesilo.com
+Updated Date: 2018-12-15T15:30:57Z
+Creation Date: 2015-01-18T02:22:03Z
+Registry Expiry Date: 2020-01-18T02:22:03Z
+Registrar: NameSilo, LLC
+Registrar IANA ID: 1479
+Registrar Abuse Contact Email: abuse@namesilo.com
+Registrar Abuse Contact Phone: +1.4805240066
+Domain Status: clientTransferProhibited https://icann.org/epp#clientTransferProhibited
+Name Server: NS1.DIGITALOCEAN.COM
+Name Server: NS2.DIGITALOCEAN.COM
+Name Server: NS3.DIGITALOCEAN.COM
+DNSSEC: unsigned
+URL of the ICANN Whois Inaccuracy Complaint Form: https://www.icann.org/wicf/
+```
+
+You can see the public information about a given domain.
 
 There are other bash tools like `nslookup`, `route`, etc., but the ones I have reviewed will take care of most user needs.  Unless you are an admin configuring networks on a daily basis, you will never need to use these tools to edit settings.  These commands are useful for quick info relating to your network and external networks.
 
