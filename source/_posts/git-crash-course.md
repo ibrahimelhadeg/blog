@@ -140,3 +140,5 @@ Git is an open source software, so you could also setup your own Git host on an 
 
 The purpose of this tutorial is to provide a simple, systematic workflow that a single developer (or small team) can use to develop production-ready software.  If you are working on a larger project with a complex codebase, this method will provide you with a general understanding of how to contribute, but will not be entirely sufficient.  Some repositories will utilize 5+ different branches to develop software including branches for features, hotfixes, a main development branch, release branches, and even Git submodules within the project.  We do not have the time or reason to get that complex, and therefore the method I will show you includes a workflow with only 3 branches.  You can see it below: 
 
+<a href="localhost:4000/blog/2019/git-crash-course/github-workflow-diagram.jpg"><div class="click-pic">{% asset_img github-workflow-diagram.jpg %}<div class="overlay-pic">Click to Expand</div></div></a>
+
