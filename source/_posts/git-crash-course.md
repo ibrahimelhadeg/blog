@@ -166,12 +166,7 @@ This will make more sense if we actually go through the steps of creating a repo
 * Switching between branches
 * Merging two branches
 * Understanding upstream vs. downstream
-* Resolving merge conflicts with VSCode
-* Using VSCode's other Git features
 * Tagging commits (for releases on master branch)
-* Reverting a branch to a previous commit
-
-Git is a powerful software, and you _could_ get everything done within the terminal.  That said, I have tried to combine the best of both worlds and show you how to use the Visual Studio Code Editor to help with your source control needs.  That said, I want you to be self sufficient with Git in the terminal, so for every VSCode feature I introduce, I will also show the equivalent command line instructions so that you never have to leave the terminal if you do not want to.
 
 ### Setting up the Repo
 
@@ -624,3 +619,53 @@ You should see the following:
 
 You can now see that `HEAD` is pointing at the `develop` branch, and we have eliminated the divergence!  Here is our updated diagram.
 
+{% asset_img git-branching-8.png %}
+
+The `feat1` branch is gone, and `HEAD` is now pointed at the most recent commit on the `develop` branch.  I think at this point, we are ready to do our second release!
+
+Let's merge our `develop` branch into `master`, and then tag the latest commit on `master`.  If you are developing a complex project, this is the point where you would want to "bump" your version to the next version.
+
+```bash
+# Switch to master branch
+git checkout master
+
+# Merge develop into master
+git merge develop
+```
+
+Here is the output I got after the merge command:
+
+```
+Updating ccb5d8e..2f7765d
+Fast-forward
+ .gitignore |  1 +
+ index.html | 13 ++++++++++++-
+ script.js  | 11 +++++++++++
+ style.css  | 13 +++++++++++++
+ 4 files changed, 37 insertions(+), 1 deletion(-)
+ create mode 100644 .gitignore
+ create mode 100644 script.js
+ create mode 100644 style.css
+```
+
+Notice how it says "Fast-forward" at the top and says that it is updating `ccb5d8e` to `2f7765d`.  This just means that Git has taken the `master` branch pointer and "fast forwarded" it from commit `ccb5d8e` to commit `2f7765d`, which is our latest commit.  Let's now tag the release.
+
+```bash
+git tag -a v1.1 -m "Added second release tag"
+```
+
+Since `HEAD` is pointed at `master` which is pointed at our latest commit, the tag will go on the latest commit on the master branch.  And finally, our diagram looks like this: 
+
+{% asset_img git-branching-9.png %}
+
+You are now ready to start working on the `develop` branch again for your next software release!
+
+```bash
+git checkout develop
+
+# Do lots of work!
+```
+
+## Common Git Problems and Advanced Git
+
+In this section, I will be walking through some of the most common problems you might run into with this workflow and other advanced topics.  Since doing everything in the terminal can get tedious at times, I will also be introducing some of Visual Studio Code's source control features that might help you with tricky problems.  That said, I will show the terminal version of each feature that VSCode covers so that you can be fully sufficient just in the terminal!
