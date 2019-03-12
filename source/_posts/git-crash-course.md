@@ -115,7 +115,7 @@ To avoid typing in your password for every push/pull to and from the repo, you w
 
 ## Barebones Basics
 
-There are a few terms that you just have to memorize when it comes to Git for any of this post to make sense.  We will dive into each of them later, but for now, just know the following: 
+If you already know the basic Git terms and how to commit, push, and pull, then you can skip down to the section named [A Simple, Effective Git Workflow](#A Simple, Effective Git Workflow).  If you are completely new to Git, this section will teach you everything you need to know to successfully use Git.
 
 1. Source Code - this is a fancy term for "all the code that belongs to a project in its original state"
 2. Repository - A "repo" is another word for a bunch of source code.
@@ -128,7 +128,118 @@ There are a few terms that you just have to memorize when it comes to Git for an
 9. Clone - This means you are creating a "copy" of an entire repository.  There can be an unlimited number of repo copies stored on an unlimited number of local machines that all push their changes up to the remote repo (i.e. Github).
 10. Origin - This refers to the HTTP URL or SSH identifier for a specific remote repository and is how we push/pull to and from our local/remote repos.
 
-Of course there are more terms to learn, but if you can make yourself familiar with these 10, the rest of the tutorial will make a bit more sense.
+To better understand all of these terms, we are going to create a brand new repository on Github.  Be sure to refer to the definitions above throughout.
+
+To do this, either sign in to your account or create a new account (it's free forever).  Once you have created an account, click on the + icon in the top right corner of your screen and select "New repository".  You will be taken to the following screen: 
+
+{% asset_img create-repo.PNG %}
+
+For the purposes of our tutorial, do not click the "Initialize this repository with a README".  We will manually do this.  Click "Create Repository".  You will be taken to the setup screen.
+
+{% asset_img setup-repo.PNG %}
+
+When you first create a repo, you are shown four different options for setting it up, but really, there are only two methods to setup your repo.
+
+1. Clone it
+2. Manually add the remote origin URL (or SSH in our case)
+
+We will go through both processes.  Remember, you can have _multiple copies_ of a single remote repository.  Open your terminal, navigate to whatever directory you want to put this example repository in, and type the following command (replacing the appropriate information).  Make sure you select the SSH version of the link to take advantage of what we setup earlier in this tutorial:
+
+```bash 
+git clone git@github.com:zachgoll/basic-git-tutorial.git
+cd basic-git-tutorial
+```
+
+This will create a new folder on your computer called `basic-git-tutorial`.  This folder has no files in it yet, but it does have a folder called `.git` which you can see by typing `ls -la`.  This folder will keep track of all your commits, branches, etc. as we add them.  Since we cloned the repo, the remote origin will already be setup, and we can check this by typing the following command.
+
+```bash 
+git remote -v
+
+# origin	git@github.com:zachgoll/basic-git-tutorial.git (fetch)
+# origin	git@github.com:zachgoll/basic-git-tutorial.git (push)
+```
+
+You should see two URLs or SSH URLs which represent the path to your remote repo.  We can also set this up manually with the second method.
+
+```bash 
+# Create a new directory for your repo 
+mkdir git-tutorial-manual 
+
+# Enter the new directory
+cd git-tutorial-manual 
+
+# Initialize your Git repository
+git init
+
+# Setup the remote origin 
+git remote add origin git@github.com:zachgoll/basic-git-tutorial.git
+```
+
+Following the above steps will get you to the same spot as after cloning the repository.  You can confirm by running the `git remote -v` command and making sure you have this setup correctly.  Now that we have the repository setup, we will create a couple folders and files to work with.
+
+```touch 
+mkdir source-code
+touch source-code/index.html 
+touch README.md 
+```
+
+In the `index.html` file, put a simple HTML document.
+
+```html 
+<!-- index.html -->
+<html>
+    <head>
+        <title>Basic Webpage</title>
+    </head>
+    <body>
+        <h1>Hello World</h1>
+    </body>
+</html>
+```
+
+In the `README.md`, add any text you want.  Now, we are going to "stage" these files for a commit.  You can either add them individually, or all at once.
+
+```bash 
+# Method 1: Add each file individually 
+git add source-code/index.html 
+git add README.md
+
+# Method 2: Add all files in current directory 
+git add .
+```
+
+Now, run the following command: 
+
+```bash
+git status 
+```
+
+This should output the following: 
+
+```
+On branch master
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+
+	new file:   README.md
+	new file:   source-code/index.html
+```
+
+Now, we will "commit" the files.  Once we commit the files, the current state of them will forever be stored in this Git repository.
+
+```bash 
+git commit -m "Add files"
+```
+
+```
+[master (root-commit) 7c076fa] Add files
+ 2 files changed, 10 insertions(+)
+ create mode 100644 README.md
+ create mode 100644 source-code/index.html
+```
 
 ## Github vs. Gitlab vs. Bitbucket vs. Local
 
