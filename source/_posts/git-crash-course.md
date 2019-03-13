@@ -833,11 +833,199 @@ While working with Git, you _will_ run into problems, and half the battle is kno
 
 This section should really be called "Git damage control" because it is your troubleshooting guide for the Git workflow I introduced above.  In each sub-section, I will introduce a new problematic scenario based on the repository we already created, and then show the solution how to fix it.
 
-### Merge Conflicts 
+### Merge Conflicts between Local and Remote Repos
 
-When this can happen: 
+A merge conflict happens when you try to _combine_ two or more snapshots of code into a single commit, but there exists a point in each snapshot that conflicts.
 
-1. When you run `git pull` to sync your local repository with your remote repository
-2. When merging one branch into another
+One of the most common ways that conflicts are created is when the upstream repository (i.e. the remote repository that lives on Github) has been updated by one or more team members and you try to pull down changes to your local repository.  
 
-### 
+I am now going to create a merge conflict by editing the `README.md` with a test Github user and as my user locally.  
+
+First, my test user "testuser-for-git-tutorial" will make a change to the `README`.
+
+{% asset_img create-merge-conflict.jpg %}
+
+{% asset_img create-merge-conflict-2.jpg %}
+
+Now, I will edit the `README.md` file on my local repository.
+
+At this point, my local repository has the following contents in `README.md`.
+
+```
+This repository will show you a basic git workflow for individuals or small teams
+
+A local edit that will conflict with the upstream repository.
+```
+
+And the remote repository has the following contents.
+
+```
+This repository will show you a basic git workflow for individuals or small teams
+
+This line was added by another contributor to the project and will create a merge conflict.
+```
+
+Clearly, these two versions of the same file do not match, and when we try to run the command `git pull` in our local repository, there will be a conflict.  Let's give it a try and see what happens.
+
+```bash 
+git pull origin master
+```
+
+The output says: 
+
+```
+remote: Enumerating objects: 5, done.
+remote: Counting objects: 100% (5/5), done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 3 (delta 2), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (3/3), done.
+From https://github.com/zachgoll/basic-git-workflow
+ * branch            master     -> FETCH_HEAD
+   2bb9989..a589f47  master     -> origin/master
+Updating 2bb9989..a589f47
+error: Your local changes to the following files would be overwritten by merge:
+        README.md
+Please commit your changes or stash them before you merge.
+Aborting
+```
+
+It says that our local changes will be overwritten by the merge.  We have three options here: 
+
+1. We could commit your local changes, and then the `git pull` will just overwrite them in a new commit.  In this case, the most recent version will be the one that my test user has edited.
+2. If we do not care about our local changes and just want to get the most recent version from the remote repository, we can run the `git stash` command and then the `git pull` command again.  This will "stash" the conflicting local changes for later retrieval (run `git stash list` and `git stash apply` to get those files back).
+3. We could completely reset the local repository to its previous state with the command `git reset HEAD --hard`
+
+I will use the second option because it is usually the safest and most practical.  In my local repository, I will run the following.
+
+```bash 
+git stash 
+git pull origin master 
+```
+
+After running this, you will see contents edited by the test user: 
+
+```
+This repository will show you a basic git workflow for individuals or small teams
+
+This line was added by another contributor to the project and will create a merge conflict. 
+```
+
+But what if we don't want this?  What if we want to replace this with our local changes?  Well, we can get the contents from our `git stash` command back.  Run the following command.
+
+```bash 
+git stash list 
+
+# stash@{0}: WIP on master: 2bb9989 Create intentional merge conflict
+```
+
+You will see that `stash@{0}` contains the local changes that we want to restore.  To restore those changes, run the following command.
+
+```bash 
+git stash apply stash@{0}
+```
+
+### Merge Conflicts in local repo
+
+It now tells us that there is a local merge conflict.  This is the same message you might receive if you are trying to merge one branch into another that have conflicting snapshots.  When Git detects a merge conflict among your local repository, it will place some additional lines in the conflicting file.  At this moment, `README.md` has the following contents as the result of our merge conflict.
+
+```
+This repository will show you a basic git workflow for individuals or small teams
+
+<<<<<<< Updated upstream
+This line was added by another contributor to the project and will create a merge conflict.
+=======
+A local edit that will conflict with the upstream repository.
+>>>>>>> Stashed changes
+```
+
+I know it looks intimidating, but all this is doing is telling us what the _incoming_ change is (the stashed file), and what the existing file looks like.  Since we want to replace the current contents with the stashed changes, we can just open the file and delete everything but the stashed changes (i.e. lines 3, 4, 5, and 7).
+
+Finally, we must stage and commit the local changes.
+
+```bash 
+git add README.md
+git commit -m "Merge stashed changes back into README"
+git push origin master
+```
+
+Okay, okay.  I know this example might have seemed pointless.  We could have easily just copy and pasted the line we wanted back into `README.md` without going through the merge conflict resolution.  But through this simple example, we learned how to fix remote/local conflicts with stashing, how to restore a stash, and how to fix a local merge conflict all in one!
+
+### Fixing Merge Conflicts with VSCode
+
+Let's create a new branch, make some edits that conflict with the master branch, and try to merge this new branch into the master branch.
+
+```bash 
+git branch merge-conflict-branch
+git checkout merge-conflict-branch 
+```
+
+Now that you are on the new branch, edit `README.md` again to say: 
+
+```
+This repository will show you a basic git workflow for individuals or small teams
+
+I made this change from the `merge-conflict-branch`.
+```
+
+Notice how line 3 is once again conflicting with what is on our `master` branch.  Go ahead and commit those changes on the `merge-conflict-branch`, and switch back to the `master` branch.
+
+```bash 
+git add README.md
+git commit -m "Created another merge conflict from merge-conflict-branch"
+
+# Switch back to master 
+git checkout master 
+
+# Merge merge-conflict-branch into master branch 
+git merge merge-conflict-branch
+```
+
+Before merging, lets make a small edit to `README.md` from our `master` branch to make the conflict.  Edit the file to say: 
+
+```
+This repository will show you a basic git workflow for individuals or small teams
+
+Some new text that will create a merge conflict.
+```
+
+Stage and commit these changes, and then try to merge the new branch into `master`.
+
+```bash 
+git add README.md
+git commit -m "create merge conflict"
+
+# Merge into master 
+git merge merge-conflict-branch
+```
+
+Again, we will get an error.
+
+```
+Auto-merging README.md
+CONFLICT (content): Merge conflict in README.md
+Automatic merge failed; fix conflicts and then commit the result.
+```
+
+But this time, we will fix it using VSCode's built in source control tools.  Open up your repository in VSCode and click on the source control tab in the sidebar. 
+
+{% asset_img merge-vscode-1.jpg %}
+
+Open the merge conflict file (README.md).
+
+{% asset_img merge-vscode-2.jpg %}
+
+Accept the incoming change.
+
+{% asset_img merge-vscode-3.jpg %}
+
+Save the file and click the plus icon on the file to stage the changes (i.e. the `git add README.md` command).
+
+{% asset_img merge-vscode-4.jpg %}
+
+Click the checkmark to commit the staged changes and add a commit message.  
+
+{% asset_img merge-vscode-5.jpg %}
+
+You have now fixed your merge conflict and committed your changes all within VSCode!  This may not seem any easier than what we did before, but wait until you have tens, if not hundreds of merge conflicts to fix on a single merge!  This tool will come in handy then!
+
+### Reverting a Commit  
