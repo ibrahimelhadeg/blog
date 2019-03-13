@@ -128,7 +128,7 @@ If you already know the basic Git terms and how to commit, push, and pull, then 
 9. Clone - This means you are creating a "copy" of an entire repository.  There can be an unlimited number of repo copies stored on an unlimited number of local machines that all push their changes up to the remote repo (i.e. Github).
 10. Origin - This refers to the HTTP URL or SSH identifier for a specific remote repository and is how we push/pull to and from our local/remote repos.
 
-To better understand all of these terms, we are going to create a brand new repository on Github.  Be sure to refer to the definitions above throughout.
+To better understand all of these terms, we are going to create a brand-new repository on Github.  Be sure to refer to the definitions above throughout.
 
 To do this, either sign in to your account or create a new account (it's free forever).  Once you have created an account, click on the + icon in the top right corner of your screen and select "New repository".  You will be taken to the following screen: 
 
@@ -240,6 +240,52 @@ git commit -m "Add files"
  create mode 100644 README.md
  create mode 100644 source-code/index.html
 ```
+
+The last thing that we must do is push the committed changes "upstream" to the remote repository.  We specify that we want to push the changes to the `master` branch (more on branching later).
+
+```bash 
+git push origin master
+```
+
+Now let's say that you make some changes to your repository on Github (i.e. you are making changes to your remote repository, not your local repository).  Below are screenshots of editing the `README.md` file and committing the changes.
+
+{% asset_img edit-remote.png %}
+
+{% asset_img edit-remote-2.png %}
+
+Once I make this commit, the remote repository (Github) is going to be _ahead_ of my local repository.  To avoid conflicts, before I do any more work on my local repository, I need to "pull down", or "push downstream" the changes.
+
+```bash
+git pull origin master
+```
+
+```
+remote: Enumerating objects: 5, done.
+remote: Counting objects: 100% (5/5), done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (3/3), done.
+From github.com:zachgoll/basic-git-tutorial
+ * branch            master     -> FETCH_HEAD
+   29d0b59..91b8897  master     -> origin/master
+Updating 29d0b59..91b8897
+Fast-forward
+ README.md | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
+```
+
+The output of the `git pull` command shows that 1 file called `README.md` was change, and we made 14 line insertions and 1 line deletion.  Now, our local and remote repos are perfectly synced up!
+
+From here, you will continue to go through this process indefinitely.
+
+1. Make changes
+2. Stage changes (`git add`)
+3. Commit changes (`git commit`)
+4. Push changes (`git push`)
+5. Pull changes if necessary (`git pull`)
+6. Repeat
+
+For a more advanced and realistic workflow, continue reading.
 
 ## Github vs. Gitlab vs. Bitbucket vs. Local
 
@@ -780,3 +826,18 @@ git checkout develop
 ## Common Git Problems and Advanced Git
 
 In this section, I will be walking through some of the most common problems you might run into with this workflow and other advanced topics.  Since doing everything in the terminal can get tedious at times, I will also be introducing some of Visual Studio Code's source control features that might help you with tricky problems.  That said, I will show the terminal version of each feature that VSCode covers so that you can be fully sufficient just in the terminal!
+
+Everything that we covered so far will get you started assuming _perfect conditions_.  Everything I have covered assumes that you and/or your team have perfectly coordinated, kept your branches clean, kept track of the state of the repository, etc.  This is far from realistic.  
+
+While working with Git, you _will_ run into problems, and half the battle is knowing how to solve them without either losing your work or completely screwing up your repository to the point where you just have to re-clone it on your computer and start over.  Sometimes, a clean slate is the only option, but usually, you get to the point of no return _because_ your understanding of Git is lacking and you end up trying a bunch of things that cause more damage.
+
+This section should really be called "Git damage control" because it is your troubleshooting guide for the Git workflow I introduced above.  In each sub-section, I will introduce a new problematic scenario based on the repository we already created, and then show the solution how to fix it.
+
+### Merge Conflicts 
+
+When this can happen: 
+
+1. When you run `git pull` to sync your local repository with your remote repository
+2. When merging one branch into another
+
+### 
