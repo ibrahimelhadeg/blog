@@ -1028,4 +1028,482 @@ Click the checkmark to commit the staged changes and add a commit message.
 
 You have now fixed your merge conflict and committed your changes all within VSCode!  This may not seem any easier than what we did before, but wait until you have tens, if not hundreds of merge conflicts to fix on a single merge!  This tool will come in handy then!
 
-### Reverting a Commit  
+### Reverting, Resetting, and Checking Out
+
+The `git reset`, `git revert`, and `git checkout` commands are similar and therefore confuse lots of users (including myself for the longest time).  I really like the comment in [this stackoverflow post on the differences](https://stackoverflow.com/a/8358039/7437737): 
+
+"Candlesticks, lead pipes, daggers, and rope can all be used to murder people, but that doesn't mean any of those things are particularly similar."
+
+If you try to learn ALL the capabilities of these commands, it will take a long time and probably create lots of confusion.  In this section, we will try and cover the _essentials_ of each.  Once you have mastered these essentials, you can start using them for more complex operations.
+
+#### The 3 Trees
+
+To understand any of these commands, we need a basic knowledge of what Git documentation calls the "3 Trees".  These include: 
+
+1. HEAD
+2. Index
+3. Working
+
+I do not find these three names easy to remember, so we will go with the following: 
+
+1. Repo
+2. Staged
+3. Unstaged
+
+In other words, the `HEAD` tree effectively refers to the current state of the repository, the Index tree refers to anything in the staging area (from using the `git add` command), and the Working tree refers to anything that you have changed on your computer but have not yet added (`git add`) to the staging area.  There are effectively 4 states that your workflow can be in at any given moment (yes, there are more combinations, but far too unlikely for me to cover): 
+
+1. Repo = Staged = Unstaged
+2. Repo = Staged, but unstaged does not equal either
+3. Staged = Unstaged, but repo does not equal either 
+4. All three are different
+
+Let's create each scenario in our repo.  First, make sure you are in state #1 by typing `git status`.  If you are, you will see a message that says
+
+```
+On branch master
+nothing to commit, working tree clean
+```
+
+Let's make a new file called `three-trees.txt`.
+
+```bash
+touch three-trees.txt
+echo "The three trees of Git are simpler than you think!" > three-trees.txt 
+```
+
+You are now in state #2, and should see the following when typing `git status`.
+
+```
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        three-trees.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+```
+
+Let's add this to the staging area.
+
+```bash 
+git add three-trees.txt
+```
+
+You are now in state #3, and your `git status` should show: 
+
+```
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        new file:   three-trees.txt
+```
+
+If you were to commit the file right now, you would be taken back to state #1 where all three trees are equal (repo=staged=unstaged).  Let's create one more file to enter state #4.
+
+```bash 
+touch additional-file.txt
+echo "Random text contents" > additional-file.txt
+```
+
+Your `git status` will now show: 
+
+```
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        new file:   three-trees.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        additional-file.txt
+```
+
+You are in state #4, which means that the repo does not equal the staged which does not equal the unstaged.  Here is what is in each tree: 
+
+Repo - No files
+Staged - three-trees.txt
+Unstaged - three-trees.txt and additional-file.txt 
+
+Let's get back to state #1 by adding and committing.
+
+```bash 
+git add additional-file.txt
+git commit -m "Create three trees tutorial section"
+```
+
+You are now back to a clean, state #1.  As we move through these three commands, always be aware of which of the four states you are in because the commands will react differently to different states.  When running any of these three commands, you want to be in state #1 to avoid conflicts and errors.
+
+#### Git Checkout 
+
+We will start with `git checkout` because it is something that we have looked at previously.  This command serves the function of modifying the view of your _unstaged_ files.  With it, you can checkout an entire branch or even just a single commit.  We will try both and see the implications of each.
+
+Let's first take a look at our entire repository with the following command.
+
+```bash
+git log --oneline --decorate --graph --all
+```
+
+```
+* 09dda7b (HEAD -> master) Create three trees tutorial section
+*   fa61317 (origin/master) Resolved merge conflict from VSCode
+|\  
+| * d13ee52 Create merge conflict
+* | 6598c74 Add new text to README to create merge conflict
+|/  
+* e9d7818 Created another merge conflict from merge-conflict-branch
+* 01bc44a Merge stashed changes back into README
+* a589f47 Create intentional merge conflict
+* 2bb9989 Create intentional merge conflict
+*   2f7765d (tag: v1.1, develop) Merge branch 'feat1' into develop
+|\  
+| * 69bdc19 (origin/feat1) Add javascript to code
+* | 547a448 (origin/develop) Add .gitignore file
+|/  
+* a4879ce Split HTML and CSS into two files
+* 682f2aa Add CSS to HTML
+* ccb5d8e (tag: v1.0) Add license to project
+* 7087a7e First commit
+```
+
+This represents the entire history of what I have done in my repository.  For simplicity, we have been committing to our `master` branch, and therefore, the `develop` branch is going to be a few commits behind.  You are already familiar with how we checkout this branch.  Remember, you need to be in state #1 to do this without errors!
+
+```bash 
+git checkout develop
+```
+
+At this point, we are still in state #1, but all three of our trees have changed!  Go back and look at the log of our repository.  With this `git checkout develop` command, we have switched the `HEAD` pointer (repo) to point at the `develop` branch, which points at commit `2f7765d`.  In other words, we are still in state #1, but the contents of each tree does not include any of the latest files we have added to the `master` branch.  If you run the following command, you will see the output is far shorter than when we printed it before.  Notice that in this command, I have removed the `--all` flag so we are only printing the history of the `develop` branch (which refers to commits from `master` which is why the first couple commits match).
+
+```bash
+git log --oneline --decorate --graph
+```
+
+```
+*   2f7765d (HEAD -> develop, tag: v1.1) Merge branch 'feat1' into develop
+|\  
+| * 69bdc19 (origin/feat1) Add javascript to code
+* | 547a448 (origin/develop) Add .gitignore file
+|/  
+* a4879ce Split HTML and CSS into two files
+* 682f2aa Add CSS to HTML
+* ccb5d8e (tag: v1.0) Add license to project
+* 7087a7e First commit
+```
+
+You can see that `HEAD` (repo) is pointed at the `develop` branch on commit `2f7765d` which is the most recent commit in this branch.  We could even checkout the very first commit of our repository: 
+
+```bash 
+git checkout 7087a7e
+```
+
+You will get the following message: 
+
+```
+Note: checking out '7087a7e'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b <new-branch-name>
+
+HEAD is now at 7087a7e... First commit
+```
+
+It says that we are in a "detached HEAD state" because `HEAD` no longer points at _any_ of our branches.  We are still in state #1 and our position looks like this: 
+
+{% asset_img git-checkout-1.png %}
+
+We could now create a new branch and start working from the beginning of our repository at the same time other team members are continuing their efforts at the latest commit.  We have no reason to do so, so let's get back to our original place and state.
+
+```bash 
+git checkout master
+```
+
+We are back where we started in state #1.
+
+#### Git Revert
+
+Take another look at our repository.
+
+```bash 
+git log --oneline --decorate --graph --all
+```
+
+```
+* 09dda7b (HEAD -> master) Create three trees tutorial section
+*   fa61317 (origin/master) Resolved merge conflict from VSCode
+|\  
+| * d13ee52 Create merge conflict
+* | 6598c74 Add new text to README to create merge conflict
+|/  
+* e9d7818 Created another merge conflict from merge-conflict-branch
+* 01bc44a Merge stashed changes back into README
+* a589f47 Create intentional merge conflict
+* 2bb9989 Create intentional merge conflict
+*   2f7765d (tag: v1.1, develop) Merge branch 'feat1' into develop
+|\  
+| * 69bdc19 (origin/feat1) Add javascript to code
+* | 547a448 (origin/develop) Add .gitignore file
+|/  
+* a4879ce Split HTML and CSS into two files
+* 682f2aa Add CSS to HTML
+* ccb5d8e (tag: v1.0) Add license to project
+* 7087a7e First commit
+```
+
+We are going to do two reversions.
+
+1. Revert to the previous commit
+2. Revert our merge commit `2f7765d`
+
+The first example is the simplest version of a revert, and all it does is takes the content modified by our most recent commit (`09dda7b`), removes it, and makes a new commit to represent the repository without this commit.  _This is different_ than deleting a commit because it creates a _new_ commit to represent the change.  In other words, it documents the "undo" in our source control and allows us to effectively undo our undo if we want.  Before we run the reversion, let's take a look at what our most recent commit did.  We can do this by using the `git show <commit-id>` command.
+
+```bash 
+git show 09dda7b
+```
+
+```
+commit 09dda7b75a1bc5d40fe6daa77fc859147d02cf03 (HEAD -> master)
+Author: Zach Gollwitzer <email protected for privacy>
+Date:   Wed Mar 13 14:36:00 2019 +0000
+
+    Create three trees tutorial section
+
+diff --git a/additional-file.txt b/additional-file.txt
+new file mode 100644
+index 0000000..f7c8b7d
+--- /dev/null
++++ b/additional-file.txt
+@@ -0,0 +1 @@
++Random text contents
+diff --git a/three-trees.txt b/three-trees.txt
+new file mode 100644
+index 0000000..e048800
+--- /dev/null
++++ b/three-trees.txt
+@@ -0,0 +1 @@
++The three trees of Git are simpler than you think!
+```
+
+Remember, we created `three-trees.txt` and `additional-file.txt`.  After our reversion, we expect those files to be gone from the repo, staged, and unstaged trees.  To run this reversion, type the following command.
+
+```bash 
+git revert HEAD
+```
+
+The `HEAD` represents the "most recent commit".  You could say `HEAD~` for "The second most recent commit" and `HEAD~~` (etc.) for the "The third most recent commit".  When you run this command, you will see the following output: 
+
+```
+[master 76ba921] Revert "Create three trees tutorial section"
+ 2 files changed, 2 deletions(-)
+ delete mode 100644 additional-file.txt
+ delete mode 100644 three-trees.txt
+``` 
+
+You can see that both of these files created by the most recent commit was deleted.  You can run `ls` to see that they no longer exist in the non-staged area either.  Now run the log command again to see where you are at.
+
+```bash
+git log --oneline --decorate --graph --all
+```
+
+```
+* 76ba921 (HEAD -> master) Revert "Create three trees tutorial section"
+* 09dda7b Create three trees tutorial section
+*   fa61317 (origin/master) Resolved merge conflict from VSCode
+|\  
+| * d13ee52 Create merge conflict
+* | 6598c74 Add new text to README to create merge conflict
+|/  
+* e9d7818 Created another merge conflict from merge-conflict-branch
+* 01bc44a Merge stashed changes back into README
+* a589f47 Create intentional merge conflict
+* 2bb9989 Create intentional merge conflict
+*   2f7765d (tag: v1.1, develop) Merge branch 'feat1' into develop
+|\  
+| * 69bdc19 (origin/feat1) Add javascript to code
+* | 547a448 (origin/develop) Add .gitignore file
+|/  
+* a4879ce Split HTML and CSS into two files
+* 682f2aa Add CSS to HTML
+* ccb5d8e (tag: v1.0) Add license to project
+* 7087a7e First commit
+```
+
+You'll see that an _additional_ commit has been created with the reversion.  Now, run the following command.
+
+```
+git reset --hard HEAD~
+```
+
+This will DELETE everything we just did.  I will explain how this command works later, but for now, just imagine that we never made the reversion in the first place.
+
+Now that we are back where we started, we can make the second type of reversion.  Let's say that for some reason, we do not like the new feature we introduced from the `feat1` branch.  We do not want to delete our most recent changes, but we want to remove the commit that merged our feature into the `develop` branch.  If we look at the repo history, we can see that the merge commit was `2f7765d`.  Let's take a look at the two commits that were combined to create the merge commit: 
+
+```bash 
+git show --format="%nHash: %h%nCommit Message: %s%nParent Hashes: %P" --stat-name-width=50 69bdc19 547a448
+```
+
+This command will give us nice and clean output: 
+
+```
+Hash: 69bdc19
+Commit Message: Add javascript to code
+Parent Hashes: a4879ceb44e09e386f6c145cc6b0bbd81fe8d8e0
+
+ index.html |  3 ++-
+ script.js  | 11 +++++++++++
+ style.css  |  4 ++++
+ 3 files changed, 17 insertions(+), 1 deletion(-)
+
+Hash: 547a448
+Commit Message: Add .gitignore file
+Parent Hashes: a4879ceb44e09e386f6c145cc6b0bbd81fe8d8e0
+
+ .gitignore | 1 +
+ 1 file changed, 1 insertion(+)
+```
+
+What this tells us is that the commit `69bdc19` added three files (index.html, script.js, and style.css) while commit `547a448` created the `.gitignore` file.  When the two commits were merged into one, we were left with a single merge commit `2f7765d` that has all four files in it.
+
+Before we do the reversion, we need to figure out what "parent" we want to revert back to.  Before you freak out and run, give me a moment to explain this rather complicated process.  First, let's remember what was going on back at commit `2f7765d`.  When we created this commit, we were merging the `feat1` branch _into_ the `develop` branch.
+
+For our revert command, we need to specify _which_ of these two divergent branches we want to use as the "parent".  In other words, if we choose `feat1` as the parent (commit `69bdc19`), our new commit will incorporate the three files (html, css, js) but lack the `.gitignore` file.  If we choose `develop` as the parent (commit `547a448`), our new revert commit will have the `.gitignore` file, but not the three other files.
+
+But how do we know which parent is which?  To find out, we can run the same `git show` command as above.
+
+```
+Hash: 2f7765d
+Commit Message: Merge branch 'feat1' into develop
+Parent Hashes: 547a4488bf61da4af4e5b728310ff5694ce381dc 69bdc19075a4f96db92118478255a638f0ce6214
+
+ index.html |  3 ++-
+ script.js  | 11 +++++++++++
+ style.css  |  4 ++++
+ 3 files changed, 17 insertions(+), 1 deletion(-)
+```
+
+But what about the `gitignore` file?  Wasn't that supposed to be in the merge commit?  Well, it _is_, but since we are merging _into_ `develop`, this merge commit only will show the incoming changes and not the existing ones.  Anyways, what we are interested in here are the two parent hashes.  
+
+Parent #1 is the `547a448` commit and parent #2 is the `69bdc19` commit.  Since we want to remove `feat1` from our repository, we must select parent #1, which has the `.gitignore` file but not the other three files.
+
+```bash 
+git revert --edit --mainline 1 2f7765d
+```
+
+You will see the following message: 
+
+```
+[master 8e2abf9] Revert "Merge branch 'feat1' into develop"
+ 3 files changed, 1 insertion(+), 17 deletions(-)
+ delete mode 100644 script.js
+```
+
+The `script.js` file will be deleted, and any modifications made to `index.html` and `style.css` on the `feat1` branch will be removed (but not necessarily delete the files).
+
+I know this section on `git revert` was a strenous one, but hopefully it clears up a few things!
+
+#### Git Reset
+
+The `git reset` command is similar to `git revert`, but instead of _adding_ a new commit with the removed changes, the command will just "delete" the unwanted changes completely.  I say "delete" in quotations because depending on the options you give this command, you will get a slightly different result.  We will start with the _least potentially harmful_ version and move towards the _most potentially harmful_ command.  The commands in this section build on each other, so `git reset --soft` is a part of `git reset --mixed` which is a part of `git reset --hard`.  Said another way, `git reset --hard` is the combination of all three versions of the command.
+
+Before we start this section, let's recall the four possible states you can be in: 
+
+1. Repo = Staged = Unstaged
+2. Repo = Staged, but unstaged does not equal either
+3. Staged = Unstaged, but repo does not equal either 
+4. All three are different
+
+We are currently in state #1 according to our `git status` command.
+
+```
+zachgoll:~/workspace/git-workflow (master) $ git status
+On branch master
+nothing to commit, working tree clean
+```
+
+**git reset --soft**
+
+All `git reset --soft` does is move the pointer that `HEAD` points to. 
+
+```bash 
+git reset --soft 2f7765d
+```
+
+The previous command will move the branch that `HEAD` points to from commit `76ba921` to commit `2f7765d`. This makes more sense with a visual: 
+
+{% asset_img git-reset-1.png %}
+
+Unlike the `git checkout` command where we literally move the `HEAD` pointer, with `git reset --soft`, we are moving the `HEAD` pointer _and_ the branch it points to, which is `master` in this case.
+
+This command will change the repo, but it will _not change_ the staged changes or the unstaged changes.  If you run `git status`, you will see that all of the files that we created _after_ the `v1.1` release are now in the staged and unstaged area, but not the repo, hence we would be in state #
+
+Let's commit all the files again.
+
+```bash 
+git commit -m "Add all files since v1.1 release"
+```
+
+When we do this, we will have the following history: 
+
+```
+* dc8e366 (HEAD -> master) Add all files since v1.1 release
+| *   fa61317 (origin/master) Resolved merge conflict from VSCode
+| |\  
+| | * d13ee52 Create merge conflict
+| * | 6598c74 Add new text to README to create merge conflict
+| |/  
+| * e9d7818 Created another merge conflict from merge-conflict-branch
+| * 01bc44a Merge stashed changes back into README
+| * a589f47 Create intentional merge conflict
+| * 2bb9989 Create intentional merge conflict
+|/  
+*   2f7765d (tag: v1.1, develop) Merge branch 'feat1' into develop
+|\  
+| * 69bdc19 (origin/feat1) Add javascript to code
+* | 547a448 (origin/develop) Add .gitignore file
+|/  
+* a4879ce Split HTML and CSS into two files
+* 682f2aa Add CSS to HTML
+* ccb5d8e (tag: v1.0) Add license to project
+* 7087a7e First commit
+```
+
+Notice how the reversion is no longer there and it looks like we just added all these files directly after the release.
+
+**git reset --mixed** 
+
+Let's do the same exact thing again, but instead of `--soft`, we will use `--mixed`.
+
+```bash 
+git reset --mixed 2f7765d
+```
+
+When we run `git status`, we get a slightly different output.
+
+```
+On branch master
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   README.md
+        modified:   index.html
+        deleted:    script.js
+        modified:   style.css
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        additional-file.txt
+        three-trees.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+
+We are now in state #
