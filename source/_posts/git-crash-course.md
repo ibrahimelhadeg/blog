@@ -1506,4 +1506,174 @@ Untracked files:
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
 
-We are now in state #
+We are now in state #4.  The repo now reflects the files that were present back in `v1.1`, the staged area has nothing in it at all, and the unstaged area has all the modifications that we have made since release `v1.1`.  Let's add the files back to the staging area and commit them.
+
+```bash 
+git add .
+git commit -m "Add all files since v1.1 release"
+```
+
+**git reset --hard**
+
+This last version of `git reset` is the _most dangerous_, because it will permanently undo parts of your repository.  For example, if you ran this command and specified the first commit in the repository, all your work would be lost.  That said, Git is a decentralized source control tool, and chances are you will still have those changes on your remote repository or maybe even on one of your teammate's computers.  Nevertheless, be careful with this one and only use it if you know the implications of what it will do.
+
+Our repository currently looks like this: 
+
+```
+* 942fac1 (HEAD -> master) Add all files since v1.1 release
+| *   fa61317 (origin/master) Resolved merge conflict from VSCode
+| |\  
+| | * d13ee52 Create merge conflict
+| * | 6598c74 Add new text to README to create merge conflict
+| |/  
+| * e9d7818 Created another merge conflict from merge-conflict-branch
+| * 01bc44a Merge stashed changes back into README
+| * a589f47 Create intentional merge conflict
+| * 2bb9989 Create intentional merge conflict
+|/  
+*   2f7765d (tag: v1.1, develop) Merge branch 'feat1' into develop
+|\  
+| * 69bdc19 (origin/feat1) Add javascript to code
+* | 547a448 (origin/develop) Add .gitignore file
+|/  
+* a4879ce Split HTML and CSS into two files
+* 682f2aa Add CSS to HTML
+* ccb5d8e (tag: v1.0) Add license to project
+* 7087a7e First commit
+```
+
+We could certainly reset the entire repository to `v1.1`, but I want to keep all the changes there for your reference when going through this tutorial.  Therefore, we need to make a bunch of useless commits for the sole purpose of deleting them.  Run all the commands below.
+
+```bash 
+touch useless-file.txt
+echo "useless data" > useless-file.txt
+git add useless-file.txt
+git commit -m "Make useless commit #1"
+
+echo "more useless data" >> useless-file.txt
+git add useless-file.txt
+git commit -m "Make useless commit #2"
+
+echo "and some more" >> useless-file.txt
+git add useless-file.txt
+git commit -m "Make useless commit #3"
+
+echo "one more time" >> useless-file.txt
+git add useless-file.txt
+git commit -m "Make useless commit #4"
+```
+
+Here is our new repository.
+
+```
+* b3a997c (HEAD -> master) Make useless commit #4
+* 38e7d0d Make useless commit #3
+* b7748e3 Make useless commit #2
+* e6752da Make useless commit #1
+* 942fac1 Add all files since v1.1 release
+| *   fa61317 (origin/master) Resolved merge conflict from VSCode
+| |\  
+| | * d13ee52 Create merge conflict
+| * | 6598c74 Add new text to README to create merge conflict
+| |/  
+| * e9d7818 Created another merge conflict from merge-conflict-branch
+| * 01bc44a Merge stashed changes back into README
+| * a589f47 Create intentional merge conflict
+| * 2bb9989 Create intentional merge conflict
+|/  
+*   2f7765d (tag: v1.1, develop) Merge branch 'feat1' into develop
+|\  
+| * 69bdc19 (origin/feat1) Add javascript to code
+* | 547a448 (origin/develop) Add .gitignore file
+|/  
+* a4879ce Split HTML and CSS into two files
+* 682f2aa Add CSS to HTML
+* ccb5d8e (tag: v1.0) Add license to project
+* 7087a7e First commit
+```
+
+Clearly, we do not want the last four commits in our repository, and quite frankly, we probably do not even want anyone to know that they were there in the first place.  To completely delete the commits and return to commit `942fac1`, we can run the following command.
+
+```bash 
+git reset --hard 942fac1
+```
+
+This will move the `master` branch pointer back to commit `942fac1` (git reset --soft), remove all the files we just created from the staged area (git reset --mixed), and finally delete all these files from the unstaged area (git reset --hard).  No matter where you look, you will not find the `useless-file.txt`.  Not in the Git history, not in your working directory.  This command also has the effect of putting you back in state #1 with a completely clean workspace.
+
+The `git reset` command is most often used in the default state, which is `--mixed`.  In state #3 (after running `git add` but before `git commit`), you will often see a message like so: 
+
+```
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        modified:   index.html
+```
+
+It recommends to run `git reset HEAD`.  But what does this mean?  Let's first look at our repo: 
+
+```bash
+git log --oneline
+```
+
+```
+942fac1 (HEAD -> master) Add all files since v1.1 release
+2f7765d (tag: v1.1, develop) Merge branch 'feat1' into develop
+547a448 (origin/develop) Add .gitignore file
+69bdc19 (origin/feat1) Add javascript to code
+a4879ce Split HTML and CSS into two files
+682f2aa Add CSS to HTML
+ccb5d8e (tag: v1.0) Add license to project
+7087a7e First commit
+```
+
+The `HEAD` pointer is pointing at the `master` branch which is pointing at commit `942fac1`.  Running `git reset HEAD` is exactly equivalent to the following command.
+
+```bash 
+git reset --mixed 942fac1
+```
+
+In effect, your changes will be moved out of the staged area and you will go from state #3 to state #2 where the repo and staged area match up, but we have some changes in our unstaged area still.  If you want to delete all your changes that have not yet been committed, just throw in the `--hard` flag.
+
+```bash 
+git reset --hard HEAD
+
+# Or...
+git reset --hard 942fac1
+```
+
+### Upstream and Downstream Conflicts
+
+Throughout the last few sections, you might have noticed that we were not running the `git push` command.  We were adding commits to the repository, but they were not getting pushed "upstream" to the remote repository.  This is going to create a conflict because of the reversions and resets that we performed.  Go ahead and try to push your changes upstream.
+
+```bash 
+git push origin master
+```
+
+You will probably get something like this: 
+
+```
+To github.com:zachgoll/basic-git-workflow.git
+ ! [rejected]        master -> master (non-fast-forward)
+error: failed to push some refs to 'git@github.com:zachgoll/basic-git-workflow.git'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. Integrate the remote changes (e.g.
+hint: 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+```
+
+We are already aware that our remote repository is ahead of our local one because we reverted and reset the local backwards in time.  The hint in the Git message says that we should `git pull` and then incorporate the new changes into our local repo, but we do not want to do this.  We want the remote repository to reflect what is in the local one.
+
+If we were working on a team, the proper way to handle this would be to run a `git fetch` followed by a `git merge` (same thing as `git pull` but broken into steps).  This will allow you to sync up your local repo to the remote repo without deleting anything. 
+
+Since we are not working on a team here and we really don't care if things get deleted off the remote repository, we can just force the push.
+
+```bash 
+git push --force origin master
+```
+
+Your local and remote repos are now exactly the same and you can continue your work.  Again, this is a dangerous command if you are working on a team because it could end up deleting a team member's work on the remote repo!
+
+## Conclusion
+
+Git can be a frustrating tool at times, and you might find yourself in situations where you feel like there is no other solution than to start over completely.  Maybe you've run `git reset` too many times and now you have no idea where your files are.  Just remember, Git is all about _calculated actions_.  Never run a Git command before you are certain what the effects of it are.  I know there is a lot to learn here, but if you take the time to learn it, you will spend far less time freaking out where your work went or why you can't get your local repo to sync with your remote repo.
