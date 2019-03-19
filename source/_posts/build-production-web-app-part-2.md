@@ -43,9 +43,30 @@ In reality, cost estimates are more complex and involve multiple meetings with t
 
 A cost estimate is helpful, but in order to start the project, we need a Statement of Work (SoW) and approval of funding.  The SoW can be as simple or as complex as you want it to be.  The ultimate goal with an SoW is to _protect yourself_ as a contractor against the client.  As the software company offering your development services, if there is any items that may become points of contention in the future, **put them in the SoW**.
 
-Lucky for me, I am my own client, and although I have been known to be my own worst critic at times, it does not warrant an entire SoW.  That said, writing an SoW can be a good step to take 
+Lucky for me, I am my own client, and although I have been known to be my own worst critic at times, it does not warrant an entire SoW.  That said, this project would be incomplete without introducing the basics of an SoW.
 
 ### Proposal and Statement of Work
+
+_Before starting, I will give credit where credit is due and thank Ben from [The Digital Project Manager](https://thedigitalprojectmanager.com/) for the SoW template (and tons of other advice on project management!).  If you would like the full template, please navigate to Ben's site for a free download._
+
+**An SoW should be as short and concise as possible while protecting the contractor from unfair business practice**
+
+In other words, the SoW is a **contractor's legal protection** against an unfair client.  In an ideal situation, the client will respect the contractor's time and resources and not demand extra work for an unfair cost.  That said, you may find yourself with a client who wants "just one more feature" for free.
+
+Below is a sample SoW that I created for this project.  Please note that this SoW would only be suitable for small development projects.  For larger projects (i.e. > $50k), you would need additional sections which define things like project governance, copyright guarantees, intellectual property definitions, point of contact information, contingency resolution, change request processes, and more.
+
+<div id="sow">
+
+# Build a Production Web App Statement of Work
+## Zach Gollwitzer
+
+**Version: 1.0**
+**Date: 03/18/19**
+
+
+
+</div>
+
 ### Design Document
 
 ## Phase 4: Development/Delivery
