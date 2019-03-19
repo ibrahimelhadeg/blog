@@ -1,7 +1,0 @@
-jon23@gmail.com
-bob879@yahoo.com.yahoo.com
-not an email
-sally2@customsite.net
-this line has an @ symbol in it so it will mess with our regex
-fred.jones@hotmail.com
-not an email address
