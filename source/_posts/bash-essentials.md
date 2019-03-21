@@ -4,9 +4,15 @@ date: 2019-02-03 15:50:19
 tags: linux
 ---
 
+_This is the full video.  Individual video parts posted at beginning of each section._
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/o6kks8109Vg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 When starting out with the bash shell, there are a few essential concepts beyond the basic commands that one must be aware of.  Beyond [the basics]() and [user permissions](https://zachgoll.github.io/blog/2019/user-permissions/), one must learn about environment variables, aliases, and some more advanced commands relating to topics of networking, process management, ssh, and scripting.
 
 # Environment variables
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/5e-kS5LkByc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 An environment variable can come in two sizes--global or local.  A global environment variable is one that is set upon initialization of a shell and can be used across all your shells.  A local environment variable is one that is set during a shell session and is erased when the shell is closed.  To create a local environment variable, just export it in your shell.
 
@@ -111,6 +117,8 @@ my-simple-script
 ```
 
 ## Common Commands 
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/yCTnihfbPCo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 Aside from basic commands such as `cd`, `ls`, `mkdir`, `touch`, etc., there is a short list of commands that I think every bash user should know about and attempt to use on a regular basis.
 
@@ -414,6 +422,8 @@ Not all of the following topics are solely bash concepts, but they are important
 * System Management
 
 ## Regular Expressions
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/NhcaKdt3NdM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 To me, regular expressions are often made far more complicated than they need to be. Sure, there are a lot of options and little details to learn regarding regular expressions, and on top of that, there are many different flavors of regular expressions (python, extended, rust, etc.).  Despite this, there are only a few core concepts that one must understand about regular expressions that will then translate in the ability to use any flavor of regular expressions effectively.
 
@@ -775,6 +785,8 @@ All I did was add the `$` character at the end of each expression.  Just like we
 
 ## Bash Scripting
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/JdvG_H07CNc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 Throughout this tutorial, we have covered many commands and concepts.  Most of the commands we have learned (with the exception of the `awk`) command are for strict usage on the command line, but what if you wanted to put some of these in a script to run?  You could always write out a long and elaborate command and execute it, but it will not get saved and is difficult to write.  Bash scripting solves this problem by allowing you to write common bash commands within a script file and then execute that script file.  You may find this useful if you need to do something on a periodic basis.  For example, maybe you need to clean out a specific folder on your computer every day and place the contents of it in an archived folder with today's date on it.  You can do this through bash scripting, and in this brief introduction, I will teach you how to do just that.  First, we need to understand the basics of a scripting file.
 
 The most basic form of a scripting file is shown below.  This file is called `simple-script.sh` where the `.sh` is the file extension for the script (not necessary, but good practice).  The permissions on this file are `744`, which means that only we (the owner of the script) can modify or execute it.
@@ -1018,6 +1030,8 @@ There are endless possibilities to writing bash scripts.  Play around a bit and 
 
 ## Virtual Machines and SSH Protocol
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/wWrQdkoBZEI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 This topic can get quite loaded, and therefore I am not going to dig too deep into it.  We will cover the following: 
 
 * How to setup a public and private keypair for ssh access
@@ -1123,6 +1137,8 @@ rmate sample-file.txt
 ```
 
 ## Networking on Command Line
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/hGjF90P1Hr0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 Networking is a huge concept.  There are textbooks written on the topic, and therefore, I have no chance of covering everything you need to know relating to networking.  That said, this section will get into the most common Bash networking utilities that you can use to diagnose network issues on your computer.  If you are completely new to network concepts, that is completely fine as I will be explaining the basics of the internet in the next section.
 
@@ -1513,6 +1529,8 @@ You can see the public information about a given domain.
 There are other bash tools like `nslookup`, `route`, etc., but the ones I have reviewed will take care of most user needs.  Unless you are an admin configuring networks on a daily basis, you will never need to use these tools to edit settings.  These commands are useful for quick info relating to your network and external networks.
 
 ## Process Management and System Management
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/lfN2RE8720E" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 Process and system management sounds like an intimidating concept, but for the average bash user, there are only a few commands and programs that you will need to learn to get a holistic understanding of how your computer runs.
 

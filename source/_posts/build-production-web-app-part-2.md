@@ -1,5 +1,5 @@
 ---
-title: Build a Production Web App Part 2: Ideating and Defining the Project
+title: Build a Production Web App Part 2 - Ideating and Defining the Project
 date: 2019-03-15 14:26:06
 tags:
 ---

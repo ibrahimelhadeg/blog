@@ -1,5 +1,5 @@
 ---
-title: Build a Production Web App (MEAN Stack) - Part 1
+title: Build a Production Part 1 - Introduction
 date: 2019-03-10 07:38:32
 tags:
 ---
