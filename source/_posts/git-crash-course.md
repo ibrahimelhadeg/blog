@@ -975,9 +975,6 @@ git commit -m "Created another merge conflict from merge-conflict-branch"
 
 # Switch back to master 
 git checkout master 
-
-# Merge merge-conflict-branch into master branch 
-git merge merge-conflict-branch
 ```
 
 Before merging, lets make a small edit to `README.md` from our `master` branch to make the conflict.  Edit the file to say: 
@@ -1262,7 +1259,13 @@ We are going to do two reversions.
 1. Revert to the previous commit
 2. Revert our merge commit `2f7765d`
 
-The first example is the simplest version of a revert, and all it does is takes the content modified by our most recent commit (`09dda7b`), removes it, and makes a new commit to represent the repository without this commit.  _This is different_ than deleting a commit because it creates a _new_ commit to represent the change.  In other words, it documents the "undo" in our source control and allows us to effectively undo our undo if we want.  Before we run the reversion, let's take a look at what our most recent commit did.  We can do this by using the `git show <commit-id>` command.
+The first example is the simplest version of a revert, and all it does is takes the content modified by our most recent commit (`09dda7b`), removes it, and makes a new commit to represent the repository without this commit.  _This is different_ than deleting a commit because it creates a _new_ commit to represent the change.  In other words, it documents the "undo" in our source control and allows us to effectively undo our undo if we want.  
+
+Below is a visual (disregard the actual commit hashes as they are made up):
+
+{% asset_img git-revert-1.png %}
+
+Before we run the reversion, let's take a look at what our most recent commit did.  We can do this by using the `git show <commit-id>` command.
 
 ```bash 
 git show 09dda7b
@@ -1304,7 +1307,7 @@ The `HEAD` represents the "most recent commit".  You could say `HEAD~` for "The 
  2 files changed, 2 deletions(-)
  delete mode 100644 additional-file.txt
  delete mode 100644 three-trees.txt
-``` 
+```
 
 You can see that both of these files created by the most recent commit was deleted.  You can run `ls` to see that they no longer exist in the non-staged area either.  Now run the log command again to see where you are at.
 
@@ -1412,6 +1415,14 @@ I know this section on `git revert` was a strenous one, but hopefully it clears 
 
 The `git reset` command is similar to `git revert`, but instead of _adding_ a new commit with the removed changes, the command will just "delete" the unwanted changes completely.  I say "delete" in quotations because depending on the options you give this command, you will get a slightly different result.  We will start with the _least potentially harmful_ version and move towards the _most potentially harmful_ command.  The commands in this section build on each other, so `git reset --soft` is a part of `git reset --mixed` which is a part of `git reset --hard`.  Said another way, `git reset --hard` is the combination of all three versions of the command.
 
+Below is a diagram (the commit hashes are not in line with the repository we have been following, but will demonstrate the concept) that illustrates what the git reset command does.
+
+{% asset_img git-reset-2.png %}
+
+We are moving `HEAD` _and_ whatever `HEAD` points to (`master`) backwards to another commit.  In effect, the commits that we have moved back from will be floating around in space and we have no way of locating them.  Depending on the version of the git reset command that you run, you may or may not be able to recover the changes from those floating commits.
+
+{% asset_img git-reset-3.png %}
+
 Before we start this section, let's recall the four possible states you can be in: 
 
 1. Repo = Staged = Unstaged
@@ -1435,13 +1446,13 @@ All `git reset --soft` does is move the pointer that `HEAD` points to.
 git reset --soft 2f7765d
 ```
 
-The previous command will move the branch that `HEAD` points to from commit `76ba921` to commit `2f7765d`. This makes more sense with a visual: 
+The previous command will move the branch that `HEAD` points to from commit `76ba921` to commit `2f7765d`. This makes more sense with a visual (commit hashes are accurate in this one!): 
 
 {% asset_img git-reset-1.png %}
 
 Unlike the `git checkout` command where we literally move the `HEAD` pointer, with `git reset --soft`, we are moving the `HEAD` pointer _and_ the branch it points to, which is `master` in this case.
 
-This command will change the repo, but it will _not change_ the staged changes or the unstaged changes.  If you run `git status`, you will see that all of the files that we created _after_ the `v1.1` release are now in the staged and unstaged area, but not the repo, hence we would be in state #
+This command will change the repo, but it will _not change_ the staged changes or the unstaged changes.  If you run `git status`, you will see that all of the files that we created _after_ the `v1.1` release are now in the staged and unstaged area, but not the repo, hence we would be in state #3.
 
 Let's commit all the files again.
 
