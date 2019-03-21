@@ -8,6 +8,8 @@ _Note: This tutorial applies to the BASH shell and UNIX based operating systems.
 
 Many tutorials cover the topic of permissioning within a UNIX based operating system, but often overlooked is the topic of users and groups.  For individual users, it is difficult to understand what the usefulness of this architecture is.  In this short tutorial, I will be walking through the reason why we have permissions, how to set permissions, and how to manage your users and groups that these permissions apply to.
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/9HT16EIQHRQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## What is a User?
 
 A user _profile_ can be defined as an entity that can own processes, run files, and who is associated with a username and home directory.  On a fresh install of any UNIX based operating system, there is a default `root` user setup with no password.  This user is far too important to gloss over, so let's dig in and get a better idea of what `root` is and why it is useful.
@@ -127,6 +129,8 @@ sudo
 
 ## Setting permissions
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/YWoI8FjvNn0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 There truly aren't a whole lot of permission commands to remember if you understand what it means to permission something and the three permission modes.  For starters, the reason we would permission a file or directory is to isolate different spaces in your filesystem for different users and groups.  For example, most of the files at the path `/sbin` are considered system call scripts or binaries and therefore only the root user should be able to modify them.  Therefore, they have a permission set of `-rwxr-xr-x`.  What does this mean??
 
 There are four parts to a permission set: 
@@ -186,6 +190,8 @@ chown -R ubuntu:ubuntu parent-dir/
 ```
 
 ## .bashrc, .bash_profile, .bash_login, .profile
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/yIuPu4iLcY4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 We have covered many concepts in the bash shell and UNIX based operating system, but what about the configuration file that controls how your bash shell runs?  There are actually several configuration files and they do not have an intuitive hierarchy in terms of which one takes precedence over another.  To make things more complicated, some of the config files run for "login shells" while others run in "non-login, interactive shells".  What is a login shell?  What is an interactive shell?  In this section, we will clarify what all these files do and when they should be used. 
 

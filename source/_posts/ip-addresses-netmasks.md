@@ -4,6 +4,8 @@ date: 2019-02-25 15:24:42
 tags: networking
 ---
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/fXJqetmLPo0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 For most home users, trying to understand a home network is not of interest due to the perceived complexity of the issue.  In this post, whether you are a seasoned engineer or simply a Dad trying to figure out why the router isn't working again, I will explain the basics of how your home network works.
 
 The first thing we need to understand is what an internet service provider actually does.  ISPs are confusing in many cases because they offer more than one service, but in the scope of this post, let's consider an ISP that offers only internet as a service.  An ISP is simply a company that owns hardware (wires) and makes that hardware available to customers in the form of internet service.  What are these wires we speak of?  Many ISPs own a variety of hardware that all are capable of carrying the analog signals we know as the "internet".
