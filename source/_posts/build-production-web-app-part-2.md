@@ -4,6 +4,8 @@ date: 2019-03-15 14:26:06
 tags:
 ---
 
+<link href="https://fonts.googleapis.com/css?family=Tangerine" rel="stylesheet">
+
 ## Teams Involved in this 
 
 Given the fact that we will be developing the app start to finish without hiring any contractors, it begs the question whether a project plan is even necessary.  Why plan when you can just get started and figure it out along the way?
@@ -43,7 +45,7 @@ In reality, cost estimates are more complex and involve multiple meetings with t
 
 A cost estimate is helpful, but in order to start the project, we need a Statement of Work (SoW) and approval of funding.  The SoW can be as simple or as complex as you want it to be.  The ultimate goal with an SoW is to _protect yourself_ as a contractor against the client.  As the software company offering your development services, if there are any items that may become points of contention in the future, **put them in the SoW**.
 
-### Proposal and Statement of Work
+## Proposal and Statement of Work
 
 _Before starting, I will give credit where credit is due and thank Ben from [The Digital Project Manager](https://thedigitalprojectmanager.com/) for the SoW template (and tons of other advice on project management!).  If you would like the full template, please hop over to Ben's site for a free download._
 
@@ -53,38 +55,41 @@ In other words, the SoW is a **contractor's legal protection** against an unfair
 
 Below is a sample SoW that I created for this project.  Please note that this SoW would only be suitable for small development projects.  For larger projects, you may need additional information filled out for the sections relating to project governance, copyright guarantees, intellectual property definitions, point of contact information, contingency resolution, change request processes, financial budgets, and more.
 
-<div id="sow">
+<div class="document">
 
-# Build a Production Web App Statement of Work
-**Zach Gollwitzer**
+<span style="font-size: 1.2rem;">**Statement of Work**</span>
 
 **Version: 1.0**
 **Date: 03/18/19**
 
-**Contents Summary**
+### Contents Summary
 
 This document has 2 distinct parts. The first section outlines over-arching project information; the second part defines the detail of each phase and will be extended through the course of the project as each phase ends.
 
-<div class="sow-comment">This is a comment.  You will see these throughout the SoW, but please note these comments _are not part of the SoW_.  They are here for explanation only.</div>
-
-**Part 1**
-
-[Project Summary](## Project Summary)
-[Project Process](## Project Process)
-[Project Budget](## Project Budget)
-[Project Milestones](## Project Milestones)
-[Project Governance](## Project Governance)
-[Project Terms and Conditions](## Terms and Conditions)
+<div class="sow-comment">This is a comment.  You will see these throughout the SoW, but please note these comments _are not part of the SoW_.  Thh3
+    font-size: 1.0rem !important;ey are here for explanation only.</div>
+h3
+    font-size: 1.0rem !important;
+**Part 1**h3
+    font-size: 1.0rem !important;
+h3
+    font-size: 1.0rem !important;
+[Project Summary](#Project-Summary)
+[Project Process](#Project-Process)
+[Project Budget](#Project-Budget)
+[Project Milestones](#Project-Milestones)
+[Project Governance](#Project-Governance)
+[Project Terms and Conditions](#Terms-and-Conditions)
 
 **Part 2**
 
-[Phase 1: Ideation and Definition](## Phase 1: Ideation and Definition)
-[Phase 2: Development / Delivery](## Phase 2: Development / Delivery)
-[Phase 2: Review and Support](## Phase 3: Review and Support)
+[Phase 1: Ideation and Definition](#Phase-1-Ideation-and-Definition)
+[Phase 2: Development / Delivery](#Phase-2-Development-Delivery)
+[Phase 2: Review and Support](#Phase-3-Review-and-Support)
 
-[Appendix](## Appendix)
+[Appendix](#Appendix)
 
-## Project Summary
+### Project Summary
 
 Project Number:                 1
 Project Name:                   Build Production Web App YouTube Series
@@ -120,7 +125,7 @@ The expected outcomes of the project are:
 1. Educate a large technical audience the basics of building a production web application using the MEAN stack (MongoDB, Express, Angular, NodeJS)
 2. Gain 1000 new users within 1 year of first production release
 
-## Project Process
+### Project Process
 
 **Delivery Approach**
 
@@ -162,11 +167,11 @@ The final phase necessary to transition between delivery and ongoing support.  A
 
 <div class="sow-comment">In a real-life scenario, the AGENCY may specify an hourly support rate.</div>
 
-## Project Budget
+### Project Budget
 
 <div class="sow-comment">Yes, I do have hosting costs and domain name costs, but they are so negligible that I will not include them.  In this section, you would generally see a budget broken out over X number of years for both _labor_ and _non-labor_ project expenses.</div>
 
-## Project Milestones
+### Project Milestones
 
 | Milestone Description                 |      Date      |
 |---------------------------------------|:--------------:|
@@ -176,15 +181,22 @@ The final phase necessary to transition between delivery and ongoing support.  A
 | v1.0 QA Testing Complete              |     6/30/19    |
 | v1.0 User Acceptance Testing Complete |     7/10/19    |
 | v1.0 Final Testing and Deployment     |     8/31/19    |
-| v2.0 Deployment                       | Client Pending |
+| v1.1 Release (small update to demonstrate how to push updates) | 9/5/19 |
+| v1.1 Mobile App (IOS) release         |     9/30/19    |
+| v1.2 Release (web and mobile update)  |     10/5/19    |
+| Future Releases                          | Not part of series |
 
-<div class="sow-comment">Considering I have a day job and need to release videos for each stage of the project, my timeline will look a bit different than you would usually see for such a small project.  A team of 5 could complete this project in just a couple months (or even weeks).  I have also included a v2.0 release placeholder to indicate that the project that I will be releasing as part of the series is only the first iteration.  It would be unreasonable to try and create a video series for a large production application!</div>
+<div class="sow-comment">Considering I have a day job and need to release videos for each stage of the project, my timeline will look a bit different than you would usually see for such a small project.  A team of 5 could complete this project in just a couple months (or even weeks).</div>
 
-## Project Governance
+In the milestone schedule, you will notice that I will be showing you how to push updates to your deployed application (bug fixes, features, etc.) because one of the questions I always had was what to do once you've deployed your app?
+
+I will also be creating a series on how to take the app that we have built and convert it to an IOS compatible application.  We will go through the process of releasing it to the app store and even pushing an update to the app store.  This mobile application will look similar to the mobile version of the web app, but we will need to use NativeScript to make it compatible.
+
+### Project Governance
 
 <div class="sow-comment">As you would have guessed, there is not much governance on this project.  Usually, this section would contain the names of people responsible for initiating/approving various stages in the development lifecycle.  This might include the names of people on the working group, steering committee, finance committee, etc.  It also would include procedures for things like change management (how do we fund a change?), escalation (what if something goes wrong?), and reporting (what weekly reports do we need to stay updated on the status of this project?  And who looks at them?).</div>
 
-## Terms and Conditions
+### Terms and Conditions
 
 <div class="sow-comment">Everything above this section is at the AGENCY's discretion, but this section is pretty standard.  Many SoWs have a similar "Terms and Conditions" section because it is _legal protection_ for you as the AGENCY.  In my case, I have removed some of the clauses due to the fact that I am both AGENCY and CLIENT, but there are tons of these legal sections posted online that you can copy from if you need a full one.</div>
 
@@ -219,7 +231,7 @@ General assumptions:
 
 <div class="sow-comment">Yes, all of this is boring, but it is your only protection as the AGENCY from a bad client!</div>
 
-## Phase 1: Ideation and Definition
+### Phase 1: Ideation and Definition
 
 <div class="sow-comment">The remaining parts of the SoW define the actual work to be done.</div>
 
@@ -243,27 +255,26 @@ General assumptions:
 
 This section is to verify the acceptance of the work stated above.
 
-AGENCY Signature: 
-
-CLIENT Signature: 
+AGENCY Signature: <span class="signature">Zach Gollwitzer</span>
+CLIENT Signature: <span class="signature">Zach Gollwitzer</span>
 
 <div class="sow-comment">Since this SoW is an iterative document where each phase is approved after the previous is completed, there should be an approvals section where AGENCY and CLIENT agree to the deliverables listed above and the funding listed above (if there is any).</div>
 
-## Phase 2: Development / Delivery
+### Phase 2: Development / Delivery
 
 This phase has not been approved at the time of writing and will be updated at a future date.
 
-## Phase 3: Review and Support
+### Phase 3: Review and Support
 
 This phase has not been approved at the time of writing and will be updated at a future date.
 
-## Appendix
+### Appendix
 
 <div class="sow-comment">This section is for anything that would be too detailed for the main part of the SoW.  You may want to write an extended description for each deliverable in a given phase, add some definitions of terminology, etc.</div>
 
 </div>
 
-### Design Document
+## Design Document
 
 Alright, so the Statement of Work is complete, and we will assume it has been signed.  Now, the AGENCY and CLIENT will work together to produce a design document that will be the "guidebook" for the development of the project.
 
@@ -277,7 +288,47 @@ You might ask--who is this information for?   Given the fact that I am building 
 
 The design document below has several parts, and many of the parts are separate blog posts altogether.  I suggest first skimming through the entire document, and then returning to the individual pieces you are either unclear on or interested in.
 
-<div id="design-doc">
+<div class="document">
+<span style="font-size: 1.2rem;">**Design Document**</span>
+
+**Version: 1.0**
+**Date: 03/24/19**
+<div></div>
+
+### Contents Summary
+
+The contents of the design document are largely made up of the deliverables in the "Design Phase" of the SoW.  Just like stated in the SoW, the design document will expand in size to accomodate new versions of the application as they are released.  The design document below represents v1.0 of the application.  Subsequent versions and new features will require amendments to the SoW, additional funding, etc.
+
+<div class="sow-comment">This is a comment.  You will see these throughout the design document, but please note these comments _are not part of the design document_.  They are here for explanation only.</div>
+
+[User Stories and Wireframes](#User-Stories-and-Wireframes)
+[Brand Style Sheet](#Branding-Guide)
+[Data Design](#Data-Design)
+[API Design](#API-Design)
+[Architectural Design](#Architectural-Design)
+
+### User Stories and Wireframes
+
+<div class="sow-comment">Below are the wireframes and user stories based on those wireframes.  These took me about 2-3 hours to fully complete, although I had been brainstorming this application for weeks.  If you are truly starting from scratch, expect this first part of the design document to be _painfully slow_.  You will be tempted to speed through this part, but having a complete set of wireframes to reference is going to be very important moving forward.
+
+Also, these wireframes do not need to be as neat as I have made them.  You can simply draw them out on sheets of printer paper and throw those into the design document (assuming your handwriting is not atrocious).  Click the link below to see my initial wireframes on paper.  I always start with a pen and paper as it helps me visualize and focus!
+
+<span style="font-size: 1.0rem; color: #00b7c8 !important;">{% asset_link prod-web-app-wireframes.pdf "PDF Link: Wireframes Rough Draft on Paper" %}</span>
+
+I created the below wireframes using [The Pencil Project](http://pencil.evolus.vn/Downloads.html).  This tool is completely free forever and is available on all operating systems.  There are **plenty** of paid options (including the Adobe product suite), but unless you are a full time designer, they are rarely worth the expensive monthly subscriptions.
+</div>
+
+The wireframes below are for v1.0 of the application.  Additional features will be added via a change request, amendment to the SoW, and additional funding request (if applicable).
+
+{% asset_img  %}
+
+<div class="sow-comment">If the graphic design of your application is highly important to you, you may create or hire someone to create "mockups" based on the wireframes.  These can be created in Photoshop, Illustrator, or another mockup tool and should represent the actual end state of the application.  This includes correct colors, logos, animations, etc.  For this project, I am not concerned with creating a stunning visual experience.  I intend to make the app look **clean and minimal**, but not overly creative.</div>
+
+### Branding Guide
+### Data Design
+### API Design
+### Architectural Design
+
 </div>
 
 [Next Post in Series: Development Part 1]()
