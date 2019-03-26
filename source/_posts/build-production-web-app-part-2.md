@@ -62,18 +62,13 @@ Below is a sample SoW that I created for this project.  Please note that this So
 **Version: 1.0**
 **Date: 03/18/19**
 
-### Contents Summary
-
+<h3>Contents Summary</h3>
 This document has 2 distinct parts. The first section outlines over-arching project information; the second part defines the detail of each phase and will be extended through the course of the project as each phase ends.
 
-<div class="sow-comment">This is a comment.  You will see these throughout the SoW, but please note these comments _are not part of the SoW_.  Thh3
-    font-size: 1.0rem !important;ey are here for explanation only.</div>
-h3
-    font-size: 1.0rem !important;
-**Part 1**h3
-    font-size: 1.0rem !important;
-h3
-    font-size: 1.0rem !important;
+<div class="sow-comment">This is a comment.  You will see these throughout the SoW, but please note these comments _are not part of the SoW_.  They are here for explanation only.</div>
+
+**Part 1**
+
 [Project Summary](#Project-Summary)
 [Project Process](#Project-Process)
 [Project Budget](#Project-Budget)
@@ -288,6 +283,21 @@ You might ask--who is this information for?   Given the fact that I am building 
 
 The design document below has several parts, and many of the parts are separate blog posts altogether.  I suggest first skimming through the entire document, and then returning to the individual pieces you are either unclear on or interested in.
 
+### Slow and Steady Wins the Race
+
+If you are starting a project from scratch, expect this section to be _painfully slow_.  You will be tempted to speed through this part, but having a complete design document will save your butt in a big way down the road.  You will be tempted to speed through this part, but having a complete design document will save your butt in a big way down the road.  You will be tempted to speed through this part, but having a complete design document will save your butt in a big way down the road.  You will be tempted to speed through this part, but having a complete design document will save your butt in a big way down the road.
+
+Maybe you should read that section again :)
+
+Anyways, this part of the project does not need to be boring!  Some ideas for this stage: 
+
+* Preliminary research (if you didn't do this with your client prior to this phase)
+    * Competitive analysis
+    * [Design inspiration](https://www.calltoidea.com/)
+    * Customer feedback/wishlist (I did this with my email list on my golf site.  {% asset_link survey-results.pdf "Check out the results here" %})
+* Testing out features
+    * Sometimes, there is a tricky technical feature that you are not sure will work.  It is better to find that out before you have half your application built!  In my case, I made sure that I could connect to the GHIN (golf handicap organization) scoring system before planning out my app.  Although archaic, I found this little [widget feature](http://widgets.ghin.com/) that I will be able to re-style in my application.  The USGA (United States Golf Association) does not make GHIN APIs, so I had to find an alternative route!
+
 <div class="document">
 <span style="font-size: 1.2rem;">**Design Document**</span>
 
@@ -309,18 +319,30 @@ The contents of the design document are largely made up of the deliverables in t
 
 ### User Stories and Wireframes
 
-<div class="sow-comment">Below are the wireframes and user stories based on those wireframes.  These took me about 2-3 hours to fully complete, although I had been brainstorming this application for weeks.  If you are truly starting from scratch, expect this first part of the design document to be _painfully slow_.  You will be tempted to speed through this part, but having a complete set of wireframes to reference is going to be very important moving forward.
+<div class="sow-comment">Below are the wireframes and user stories based on those wireframes.  These took me about 2-3 hours to fully complete (although I of course had done market research, brainstorming, etc. beforehand).  Many of the wireframe ideas were inspired by the survey that I gave to my golf site's email list.  You can see the survey results below (long form responses are abbreviated):
+
+<span style="font-size: 1.0rem; color: #00b7c8 !important;">{% asset_link survey-results.pdf "Market Research Survey" %}</span>
 
 Also, these wireframes do not need to be as neat as I have made them.  You can simply draw them out on sheets of printer paper and throw those into the design document (assuming your handwriting is not atrocious).  Click the link below to see my initial wireframes on paper.  I always start with a pen and paper as it helps me visualize and focus!
 
 <span style="font-size: 1.0rem; color: #00b7c8 !important;">{% asset_link prod-web-app-wireframes.pdf "PDF Link: Wireframes Rough Draft on Paper" %}</span>
 
-I created the below wireframes using [The Pencil Project](http://pencil.evolus.vn/Downloads.html).  This tool is completely free forever and is available on all operating systems.  There are **plenty** of paid options (including the Adobe product suite), but unless you are a full time designer, they are rarely worth the expensive monthly subscriptions.
+I created the below wireframes using [The Pencil Project](http://pencil.evolus.vn/Downloads.html).  This tool is completely free forever and is available on all operating systems.  There are **plenty** of paid options (including the Adobe product suite), but unless you are a full time designer, they are rarely worth the expensive monthly subscriptions.  I absolutely loved my experience using Pencil, and I think you will too!  {% asset_link prod-web-app-wireframes.epgz "Here is the source file" %} for my wireframes that you could use as a template.  You can only open this file in the Pencil program itself.
 </div>
 
 The wireframes below are for v1.0 of the application.  Additional features will be added via a change request, amendment to the SoW, and additional funding request (if applicable).
 
-{% asset_img  %}
+{% asset_img home_page.png %}
+
+{% asset_img score_entry.png %}
+
+{% asset_img video_upload.png %}
+
+{% asset_img analytics_dashboard.png %}
+
+{% asset_img profile_and_settings.png %}
+
+{% asset_img link_ghin_account.png %}
 
 <div class="sow-comment">If the graphic design of your application is highly important to you, you may create or hire someone to create "mockups" based on the wireframes.  These can be created in Photoshop, Illustrator, or another mockup tool and should represent the actual end state of the application.  This includes correct colors, logos, animations, etc.  For this project, I am not concerned with creating a stunning visual experience.  I intend to make the app look **clean and minimal**, but not overly creative.</div>
 
