@@ -1,0 +1,5 @@
+004248 - rgb(0,66,72) - dark
+3FC5D1 - rgb(63,197,209) - light
+00B7C8 - rgb(0,183,200) - Main
+164448 - rgb(22,68,72) - semi dark
+008895 - rgb(0,136,149) - faded

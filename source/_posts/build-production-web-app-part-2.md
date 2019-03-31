@@ -309,7 +309,7 @@ Anyways, this part of the project does not need to be boring!  Some ideas for th
 
 The contents of the design document are largely made up of the deliverables in the "Design Phase" of the SoW.  Just like stated in the SoW, the design document will expand in size to accomodate new versions of the application as they are released.  The design document below represents v1.0 of the application.  Subsequent versions and new features will require amendments to the SoW, additional funding, etc.
 
-<div class="sow-comment">This is a comment.  You will see these throughout the design document, but please note these comments _are not part of the design document_.  They are here for explanation only.</div>
+<div class="sow-comment">This is a comment.  You will see these throughout the design document, but please note these comments _are not part of the design document_.  They are here for explanation only, and will include links to the extended descriptions of how each section was created.</div>
 
 [User Stories and Wireframes](#User-Stories-and-Wireframes)
 [Brand Style Sheet](#Branding-Guide)
@@ -319,15 +319,12 @@ The contents of the design document are largely made up of the deliverables in t
 
 ### User Stories and Wireframes
 
-<div class="sow-comment">Below are the wireframes and user stories based on those wireframes.  These took me about 2-3 hours to fully complete (although I of course had done market research, brainstorming, etc. beforehand).  Many of the wireframe ideas were inspired by the survey that I gave to my golf site's email list.  You can see the survey results below (long form responses are abbreviated):
+<div class="sow-comment">
+For a longer explanation of how these wireframes were created, go to the [wireframes extended description](#wireframes-extended-description).
 
-<span style="font-size: 1.0rem; color: #00b7c8 !important;">{% asset_link survey-results.pdf "Market Research Survey" %}</span>
-
-Also, these wireframes do not need to be as neat as I have made them.  You can simply draw them out on sheets of printer paper and throw those into the design document (assuming your handwriting is not atrocious).  Click the link below to see my initial wireframes on paper.  I always start with a pen and paper as it helps me visualize and focus!
+These wireframes do not need to be as neat as I have made them.  You can simply draw them out on sheets of printer paper and throw those into the design document (assuming your handwriting is not atrocious).  Click the link below to see my initial wireframes on paper.  I always start with a pen and paper as it helps me visualize and focus!
 
 <span style="font-size: 1.0rem; color: #00b7c8 !important;">{% asset_link prod-web-app-wireframes.pdf "PDF Link: Wireframes Rough Draft on Paper" %}</span>
-
-I created the below wireframes using [The Pencil Project](http://pencil.evolus.vn/Downloads.html).  This tool is completely free forever and is available on all operating systems.  There are **plenty** of paid options (including the Adobe product suite), but unless you are a full time designer, they are rarely worth the expensive monthly subscriptions.  I absolutely loved my experience using Pencil, and I think you will too!  {% asset_link prod-web-app-wireframes.epgz "Here is the source file" %} for my wireframes that you could use as a template.  You can only open this file in the Pencil program itself.
 </div>
 
 The wireframes below are for v1.0 of the application.  Additional features will be added via a change request, amendment to the SoW, and additional funding request (if applicable).
@@ -347,10 +344,60 @@ The wireframes below are for v1.0 of the application.  Additional features will 
 <div class="sow-comment">If the graphic design of your application is highly important to you, you may create or hire someone to create "mockups" based on the wireframes.  These can be created in Photoshop, Illustrator, or another mockup tool and should represent the actual end state of the application.  This includes correct colors, logos, animations, etc.  For this project, I am not concerned with creating a stunning visual experience.  I intend to make the app look **clean and minimal**, but not overly creative.</div>
 
 ### Branding Guide
+
+<div class="sow-comment">For an explanation on how the document below was created, go to the [Style Guide Extended Description Section.](#Style-Guide-Extended-Description).  For a PDF copy of the style guide shown below, {% asset_link prod-web-app-style-guide.pdf "click here" %}.
+</div>
+
+
+{% asset_img prod-web-app-style-guide.png %}
+
 ### Data Design
+
+<div class="sow-comment">For an explanation on how the document below was created, go to the [Data Design Extended Description Section.](#Data-Design-Extended-Description).
+</div>
+
 ### API Design
+
+<div class="sow-comment">For an explanation on how the document below was created, go to the [API Design Extended Description Section.](#API-Design-Extended-Description).
+</div>
+
 ### Architectural Design
 
+<div class="sow-comment">For an explanation on how the document below was created, go to the [Architecture Design Extended Description Section.](#Architecture-Design-Extended-Description).
 </div>
+
+</div>
+
+### Wireframes Extended Description 
+
+The wireframes in the design document took me about 2-3 hours to fully complete (although I of course had done market research, brainstorming, etc. beforehand).  Many of the wireframe ideas were inspired by the survey that I gave to my golf site's email list.  You can see the survey results below (long form responses are abbreviated):
+
+<span style="font-size: 1.0rem; color: #00b7c8 !important;">{% asset_link survey-results.pdf "Market Research Survey" %}</span>
+
+I created wireframes using [The Pencil Project](http://pencil.evolus.vn/Downloads.html).  This tool is completely free forever and is available on all operating systems.  There are **plenty** of paid options (including the Adobe product suite), but unless you are a full time designer, they are rarely worth the expensive monthly subscriptions.  I absolutely loved my experience using Pencil, and I think you will too!  {% asset_link prod-web-app-wireframes.epgz "Here is the source file" %} for my wireframes that you could use as a template.  You can only open this file in the Pencil program itself.
+
+### Style Guide Extended Description
+
+For an application like the one we are building here, the branding style guide does not need to be as complex as you would see for a company website.  Nevertheless, we still need to create one to guide front-end development.  This is primarily to avoid that moment when you login to an application and see four shades of red on one page (cringe).
+
+Within a style guide, I consider three main sections: 
+
+1. Colors - staying consistent with your colors will save you headaches down the road.  Decide early which color will be used for headings, main text, hyperlinks, buttons, etc.
+2. Fonts - I almost always use Google Fonts.  Google Fonts not only has hundreds of free fonts; they also provide recommendations of which fonts pair well together.  Although some fonts might sound like a good idea, it is usually good to go with a serif or sans serif.
+3. Logo Variations - I recommend having two logos.  The large logo will be the main one, and the small logo will be used for social profiles and other small spaces.  You will also need light and dark variations so that your logo can be put on both dark and light backgrounds.
+
+Since I will be using Bootstrap CSS framework for this app, the style guide will be simple using two tools (I even created this logo in Canva): 
+
+1. [Bootswatch](https://bootswatch.com/flatly/) - A variety of custom Bootstrap color themes ready out of the box
+2. [Canva](https://www.canva.com/) - Creating the Style Guide Document
+
+Of course you can get far more creative with this section of the design document.  You could even hire an entire design department.  If you are a startup with funding, this might be a route to take.  In my case, I don't care to spend money nor does the application I am making warrant such an elaborate design process.
+
+### Data Design Extended Description
+
+
+
+### API Design Extended Description
+### Architecture Design Extended Description
 
 [Next Post in Series: Development Part 1]()
