@@ -1,8 +1,10 @@
 ---
-title: Ephemeral vs. File System vs. Object vs. Block Storage
+title: File (NAS) vs. Block (SAN) vs. Object Cloud Storage
 date: 2019-03-28 13:23:45
-tags: data storage
+tags: data storage, cloud computing
 ---
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/3r9RGJ0_Bls" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 When designing your application's architecture, one of the most important considerations from both a cost and performance standpoint is what type of data storage to use.  Unfortunately for startups and lone developers, most of the descriptions around data storage are highly _generalized_ and highly _technical_ without much in between.  It is no surprise considering the cloud storage and computing platforms are the ones explaining the topics.  Just type "file vs. block vs. object storage" into Google and you'll find several platforms explaining/advertising their products.
 
