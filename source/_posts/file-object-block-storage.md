@@ -125,6 +125,8 @@ Every time you need to make a change to an object, you must change the _entire_ 
 
 Below is a chart which shows the product names of various storage types.
 
+<div id="before-table"></div>
+
 | Service         | File Storage | Block Storage     | Object Storage  |
 |:---------------:|:------------:|:-----------------:|:---------------:|
 | Amazon          |   "EFS"      | "EBS"             | "S3"            |
