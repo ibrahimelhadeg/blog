@@ -351,6 +351,11 @@ The wireframes below are for v1.0 of the application.  Additional features will 
 
 {% asset_img prod-web-app-style-guide.png %}
 
+### Architectural Design
+
+<div class="sow-comment">For an explanation on how the document below was created, go to the [Architecture Design Extended Description Section.](#Architecture-Design-Extended-Description).
+</div>
+
 ### Data Design
 
 <div class="sow-comment">For an explanation on how the document below was created, go to the [Data Design Extended Description Section.](#Data-Design-Extended-Description).
@@ -359,11 +364,6 @@ The wireframes below are for v1.0 of the application.  Additional features will 
 ### API Design
 
 <div class="sow-comment">For an explanation on how the document below was created, go to the [API Design Extended Description Section.](#API-Design-Extended-Description).
-</div>
-
-### Architectural Design
-
-<div class="sow-comment">For an explanation on how the document below was created, go to the [Architecture Design Extended Description Section.](#Architecture-Design-Extended-Description).
 </div>
 
 </div>
@@ -393,11 +393,13 @@ Since I will be using Bootstrap CSS framework for this app, the style guide will
 
 Of course you can get far more creative with this section of the design document.  You could even hire an entire design department.  If you are a startup with funding, this might be a route to take.  In my case, I don't care to spend money nor does the application I am making warrant such an elaborate design process.
 
+### Architecture Design Extended Description
+
+
+
 ### Data Design Extended Description
 
-
-
 ### API Design Extended Description
-### Architecture Design Extended Description
+
 
 [Next Post in Series: Development Part 1]()
