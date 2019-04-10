@@ -1,5 +1,5 @@
 ---
-title: Build a Production Part 1 - Introduction
+title: Build a Production Web App Part 1 - Introduction
 date: 2019-03-10 07:38:32
 tags:
 ---
@@ -51,6 +51,8 @@ For this project, we will be touching on each of the following skills, programmi
 
 You will need the following skills for this tutorial. I have written (also made videos for) crash courses on many of these, so if there are any areas you do not feel comfortable with, below are tutorials that I have created to assist you.  My recommendation is that you take them on an "as-needed" basis (i.e. do not take a tutorial unless you are going to immediately apply the concepts learned within).
 
+- Basic programming skills
+- HTML/CSS/JS skills
 - The MEAN programming stack 
     - NodeJS (Javascript) [video]() | [post]()
     - ExpressJS (Javascript)
@@ -89,17 +91,6 @@ You will need the following skills for this tutorial. I have written (also made 
 - Git workflow (branching strategy)
 - Logging 
 - Debugging (with Visual Studio Code)
-
-## Technology Stack
-
-For this series, I will be using the following technology stack.  We will dive further into the details behind this in a later post, but I wanted to preview the stack so that potential readers can decide whether this series is right for them.
-
-- MEAN Stack (MongoDB, ExpressJS, Angular 5+, NodeJS)
-- Digital Ocean for hosting
-- Sass / Bootstrap for CSS
-- Gitlab for source code management
-- Gitlab continuous delivery tool
-- Terraform for automated infrastructure
 
 ## How to use this Series
 

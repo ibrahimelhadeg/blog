@@ -1,20 +1,30 @@
 ---
-title: Build a Production Web App Part 2 - Ideating and Defining the Project
+title: Build a Production Web App Part 2 - Statement of Work
 date: 2019-03-15 14:26:06
 tags:
 ---
 
+Welcome to part 2 of the "Build a Production Web App" series.  If you are new here, I suggest starting from the beginning.
+
+[Go To Part 1](https://zachgoll.github.io/blog/2019/build-production-web-app-part-1/)
+
 <link href="https://fonts.googleapis.com/css?family=Tangerine" rel="stylesheet">
+
+## What First?
+
+As a developer or startup, it is tempting to jump into the deep end of the pool and start building your great idea.  I've caved into that temptation many times, and it rarely ends well.  Sure, you might be able to build a nice looking prototype, but that is not what we are aiming to do here.  We want a clean application that can be supported long into the future.
+
+To achieve this, we need to start by creating a project plan.
 
 ## Teams Involved in this 
 
 Given the fact that we will be developing the app start to finish without hiring any contractors, it begs the question whether a project plan is even necessary.  Why plan when you can just get started and figure it out along the way?
 
-Although there is no funding and no contractors to hire for this project, we still need a project plan.  Not only will it help simulate what a real project might look like, but it will also allow us to narrow the scope of the code we have to write.  Essentially, we will play the roles of _client, project manager, and developer_.
+Although there is no funding and no contractors to hire for this project, we still need a project plan.  Not only will it help simulate what a real project might look like, but it will also allow us to narrow the scope of the code we have to write.
 
 ## Choosing a Project Management Method
 
-Sure, there are plenty of methods to choose from, but in industry, companies will generally choose between two: 
+There are 1,000 correct ways to plan and manage a project, but you will generally see two standard approaches in the software industry:
 
 1. Waterfall Approach
 2. Agile Approach (continuous delivery)
@@ -23,15 +33,21 @@ At the time of writing, the waterfall approach carries a negative stigma in PM (
 
 I won't argue that the waterfall approach is better because in terms of efficiency, it's usually not.  That said, when working on a project for a client, that client is going to want to know a rough estimate of how long the project will take and for what cost.  You cannot just walk up to a client and say "We don't know how much this will cost, and we don't know how long it will take.  But we'll try our best?".
 
-Likewise, it would be hard for you as the reader/viewer of this series if I had no structure behind the project.  Therefore, we must use a Waterfall Approach for this project and lay out a reasonable estimate of time and scope.  **This post will encompass Phase 1 that is described in the SoW below**.  
+Likewise, it would be hard for you as the reader/viewer of this series if I had no structure behind the project.  For that reason, we are going to combine the best of both worlds and use both Agile methods and Waterfall methods.
+
+As a programmer, I love being able to make binary choices.  It's literally at the core of what I do.  But sometimes, blending the best of both worlds is the most reasonable approach.  
+
+You will see this paradigm throughout this tutorial many times.  Not only will we be using Agile and Waterfall planning methods together, but we will also be mixing object oriented programming with functional programming; Promises with Observables.  The list goes on.
+
+Although we are starting this project from the ground up, you will not always have the freedom to design the entire system from scratch.  Many times, you will have to build a new system while integrating it into legacy software architectures.  It feels comfortable to choose one or the other, but in programming, you have to work with what you've got.
 
 ## A Note on Cost Estimates
 
-The ideation has already happened, although in many cases the ideation phase can take weeks depending on the size of the project.  In our case, we are developing a small application that does not intend to extract large profits, so the ideation phase can be a quick analysis of whether it is worth the time.
+I have already come up with the idea to build, but in many cases, the ideation phase can take weeks depending on the size of the project.
 
 A project like this could cost around $20K-$30K depending on some of the features you are looking for (based on a price estimate from [Estimate My App](https://estimatemyapp.com/)).  Since I am developing it for myself, there is no concept of a client, and no cost estimates to make.  Nevertheless, we will go through some of the considerations I would make had I decided to hire a team to build this.
 
-**Most of the costs are personnel**.  The software itself does not cost much (unless you are a large corporation signing ELAs, SLAs, etc.).  As we will see, you can build a production web app with almost 100% open source (free) software.  The only _non-personnel_ cost we will incur across this project will be hosting costs and domain name costs (i.e. ongoing support costs).  
+**Most of the costs are personnel**.  The software itself does not cost much.  As you will see, you can build a production web app with almost 100% open source (free) software.  The only _non-personnel_ cost we will incur across this project will be hosting costs, domain name costs, and a few other miscellaneous expenses.  These costs will continue perpetually into the future, so be sure that you have the funding to support your new application.  
 
 To grasp just how expensive the labor for a software project can get, consider a project that will take 10 weeks.  If you have a team of **5** developers working at **$65 per hour** (that's even on the low end) every day of the week, you'll end up paying around **$130K** for the project.
 
@@ -41,9 +57,9 @@ To grasp just how expensive the labor for a software project can get, consider a
 
 Didn't someone say open source software was completely free?...
 
-In reality, cost estimates are more complex and involve multiple meetings with the client to discover what their product needs are, what their budget is, how fast they need the project completed, and other factors.  Through the course of the project, the client could also request additional features which will result in a request for funding.  If the client is not knowledgeable about software in general, the cost estimation process can turn out to be quite difficult and fall into the hands of the software agency to guide the client to a cost estimate.  Since our goal is to _write_ software and not _manage a project_, we will not dive too deep into the world of cost estimations.
+In reality, cost estimates are more complex and involve multiple meetings with the client to discover what their product needs are, what their budget is, how fast they need the project completed, and other factors.  Through the course of the project, the client could also request additional features, which will result in a request for funding.  If the client is not knowledgeable about software in general, the cost estimation process can turn out to be quite difficult.  Since our goal is to _write_ software and not _manage a project_, there is no need to explore this topic in depth.
 
-A cost estimate is helpful, but in order to start the project, we need a Statement of Work (SoW) and approval of funding.  The SoW can be as simple or as complex as you want it to be.  The ultimate goal with an SoW is to _protect yourself_ as a contractor against the client.  As the software company offering your development services, if there are any items that may become points of contention in the future, **put them in the SoW**.
+A cost estimate is helpful, but in order to start the project, we need a Statement of Work (SoW) and approval of funding.  The SoW can be as simple or as complex as you want it to be.  The ultimate goal with an SoW is to _protect yourself_ as a contractor against the client and define the work to be done.  As a software company offering your development services, if there are any items that may become points of contention in the future, **put them in the SoW**.
 
 ## Proposal and Statement of Work
 
@@ -53,7 +69,7 @@ _Before starting, I will give credit where credit is due and thank Ben from [The
 
 In other words, the SoW is a **contractor's legal protection** against an unfair client.  In an ideal situation, the client will respect the contractor's time and resources and not demand extra work for an unfair cost.  That said, you may find yourself with a client who wants "just one more feature" for free.
 
-Below is a sample SoW that I created for this project.  Please note that this SoW would only be suitable for small development projects.  For larger projects, you may need additional information filled out for the sections relating to project governance, copyright guarantees, intellectual property definitions, point of contact information, contingency resolution, change request processes, financial budgets, and more.
+Below is a simple SoW that I created for this project.  Please note that this SoW would only be suitable for small development projects.  For larger projects, you may need additional information filled out for the sections relating to project governance, copyright guarantees, intellectual property definitions, point of contact information, contingency resolution, change request processes, financial budgets, and more.
 
 <div class="document">
 
@@ -92,7 +108,7 @@ Start date:                     3/21/19
 Deadline:                       TBD
 Project Labor Budget:           $0 for phase 1
 Project Non-Labor Budget:       $0 for phase 1
-Delivery Approach:              Waterfall
+Delivery Approach:              Waterfall/Agile Hybrid
 Business Drivers:               Website traffic volume, Returning visitor count
 Project Owner:                  Zach Gollwitzer
 
@@ -100,15 +116,15 @@ Project Owner:                  Zach Gollwitzer
 
 **Risks**
 
-* Server downtime caused my increased site traffic
-* Errors in application due to non-segregation of duties (i.e. One developer writing the code, testing the code, and deploying the code)
-* Integration with external APIs not working correctly
+* Server downtime caused by increased site traffic
+* Lack of project governance (no segregation of duties)
+* Integration with external APIs not working correctly 
 
 **Project Overview**
 
 The project has two goals: 
 
-1. To demonstrate the process of building a production-ready web application
+1. To demonstrate the process and internals of building a production-ready web application
 2. To drive more users to www.thediygolfer.com through a value-added statistics tracking and practice application.
 
 The focus will be primarily on the technical development of the project rather than components like legal issues, project management, project governance, graphic design, etc.  The secondary goal is to achieve selected business objectives.
@@ -124,7 +140,7 @@ The expected outcomes of the project are:
 
 **Delivery Approach**
 
-Although I work closely to the project timeline, budget, and other requirements, the nature of software development is oftentimes volatile and timeslines, budgets, or requirements may need adjustment at various points.
+Although I work closely to the project timeline, budget, and other requirements, the nature of software development is oftentimes volatile and timelines, budgets, or requirements may need adjustment at various points.
 
 To minimize my risk as contractor, I break out the phases of the project into three distinct phases.  The 3 phases are: Ideation and Definition, Development, and Review.  Below are summaries of each.
 
@@ -134,7 +150,7 @@ All projects begin in phase 1 with the SoW (this document) to finalize budgets, 
 
 <div class="sow-comment">Obviously, I am both the AGENCY and the CLIENT in this situation, but this syntax is common in SoWs.</div>
 
-When the SoW is signed, the project will commence with a kick off meeting between the AGENCY and CLIENT.  In this meeting, stakeholders from both parties will discuss the problem at hand and map out a plan to successfully complete the design document from which the project will follow.  To complete this document, the stakeholders may require things like competitive analysis, brand exploration, stakeholder interviews, demographic research, etc.  The design document is a non-standard document which includes a portion of or all of the following.
+When the SoW is signed, the project will commence with a kick off meeting between the AGENCY and CLIENT.  In this meeting, stakeholders from both parties will discuss the problem at hand and map out a plan to successfully complete the design document from which the project will follow.  To complete this document, the stakeholders may require things like competitive analysis, brand exploration, stakeholder interviews, demographic research, etc.  The design document includes a portion of or all of the following.
 
 * Overall Business Objective
 * Data Design
@@ -168,6 +184,9 @@ The final phase necessary to transition between delivery and ongoing support.  A
 
 ### Project Milestones
 
+<div class="sow-comment">The below milestones are very characteristic of a Waterfall project planning method.  Many Agile advocates argue that planning this far in advance is pointless, but I wanted to include it here so that you as the reader have an idea where this project is going.
+</div>
+
 | Milestone Description                 |      Date      |
 |---------------------------------------|:--------------:|
 | v1.0 Planning Complete                |     4/5/19     |
@@ -180,12 +199,6 @@ The final phase necessary to transition between delivery and ongoing support.  A
 | v1.1 Mobile App (IOS) release         |     9/30/19    |
 | v1.2 Release (web and mobile update)  |     10/5/19    |
 | Future Releases                          | Not part of series |
-
-<div class="sow-comment">Considering I have a day job and need to release videos for each stage of the project, my timeline will look a bit different than you would usually see for such a small project.  A team of 5 could complete this project in just a couple months (or even weeks).</div>
-
-In the milestone schedule, you will notice that I will be showing you how to push updates to your deployed application (bug fixes, features, etc.) because one of the questions I always had was what to do once you've deployed your app?
-
-I will also be creating a series on how to take the app that we have built and convert it to an IOS compatible application.  We will go through the process of releasing it to the app store and even pushing an update to the app store.  This mobile application will look similar to the mobile version of the web app, but we will need to use NativeScript to make it compatible.
 
 ### Project Governance
 
@@ -230,6 +243,8 @@ General assumptions:
 
 <div class="sow-comment">The remaining parts of the SoW define the actual work to be done.</div>
 
+A design document will be created to guide the development phase.  The design document will include:
+
 - User Stories and Wireframes will be completed for all pages in the v1.0 release.  For each page, a summary of the page will be provided, a wireframe, and acceptance criteria will be drafted.  The v1.0 release will include all pages developed in this deliverable and no more.
 - Brand Style Sheet will include a color wheel, logo, font style, buttons, tables, etc. 
 - The data design will support the user stories and wireframes.  The API will be created to provide the front-end access to our database.
@@ -269,137 +284,4 @@ This phase has not been approved at the time of writing and will be updated at a
 
 </div>
 
-## Design Document
-
-Alright, so the Statement of Work is complete, and we will assume it has been signed.  Now, the AGENCY and CLIENT will work together to produce a design document that will be the "guidebook" for the development of the project.
-
-But what goes into a design document? 
-
-Unfortunately, there is no right answer to this question.  It would be nice if there was, but given all the possible variables introduced by each new project, it would be impossible to "templatize" the design document completely.  That said, there are a [few pieces that land in most design documents](https://medium.freecodecamp.org/how-to-write-a-good-software-design-document-66fcf019569c).
-
-The goal of writing a design document _is not to fit a template_, but to _make your development phase easier_.  A design document could be scribbles on a whiteboard, a perfectly formatted Word Document, or a collection of loose papers that you can never find (obviously not recommended).  Whatever the case, the design document is less of a _document_ and more of a _reference_.  As long as you have the required information, it works!
-
-You might ask--who is this information for?   Given the fact that I am building all the parts of this application, the design document is for me only.  For large projects with multiple team members, the design document is what keeps everything in order.  Instead of trying to send emails back and forth between the testing engineers, the front-end engineers, the dev-ops engineers, and the project manager, you have one central document that effectively governs the work.
-
-The design document below has several parts, and many of the parts are separate blog posts altogether.  I suggest first skimming through the entire document, and then returning to the individual pieces you are either unclear on or interested in.
-
-### Slow and Steady Wins the Race
-
-If you are starting a project from scratch, expect this section to be _painfully slow_.  You will be tempted to speed through this part, but having a complete design document will save your butt in a big way down the road.  You will be tempted to speed through this part, but having a complete design document will save your butt in a big way down the road.  You will be tempted to speed through this part, but having a complete design document will save your butt in a big way down the road.  You will be tempted to speed through this part, but having a complete design document will save your butt in a big way down the road.
-
-Maybe you should read that section again :)
-
-Anyways, this part of the project does not need to be boring!  Some ideas for this stage: 
-
-* Preliminary research (if you didn't do this with your client prior to this phase)
-    * Competitive analysis
-    * [Design inspiration](https://www.calltoidea.com/)
-    * Customer feedback/wishlist (I did this with my email list on my golf site.  {% asset_link survey-results.pdf "Check out the results here" %})
-* Testing out features
-    * Sometimes, there is a tricky technical feature that you are not sure will work.  It is better to find that out before you have half your application built!  In my case, I made sure that I could connect to the GHIN (golf handicap organization) scoring system before planning out my app.  Although archaic, I found this little [widget feature](http://widgets.ghin.com/) that I will be able to re-style in my application.  The USGA (United States Golf Association) does not make GHIN APIs, so I had to find an alternative route!
-
-<div class="document">
-<span style="font-size: 1.2rem;">**Design Document**</span>
-
-**Version: 1.0**
-**Date: 03/24/19**
-<div></div>
-
-### Contents Summary
-
-The contents of the design document are largely made up of the deliverables in the "Design Phase" of the SoW.  Just like stated in the SoW, the design document will expand in size to accomodate new versions of the application as they are released.  The design document below represents v1.0 of the application.  Subsequent versions and new features will require amendments to the SoW, additional funding, etc.
-
-<div class="sow-comment">This is a comment.  You will see these throughout the design document, but please note these comments _are not part of the design document_.  They are here for explanation only, and will include links to the extended descriptions of how each section was created.</div>
-
-[User Stories and Wireframes](#User-Stories-and-Wireframes)
-[Brand Style Sheet](#Branding-Guide)
-[Data Design](#Data-Design)
-[API Design](#API-Design)
-[Architectural Design](#Architectural-Design)
-
-### User Stories and Wireframes
-
-<div class="sow-comment">
-For a longer explanation of how these wireframes were created, go to the [wireframes extended description](#wireframes-extended-description).
-
-These wireframes do not need to be as neat as I have made them.  You can simply draw them out on sheets of printer paper and throw those into the design document (assuming your handwriting is not atrocious).  Click the link below to see my initial wireframes on paper.  I always start with a pen and paper as it helps me visualize and focus!
-
-<span style="font-size: 1.0rem; color: #00b7c8 !important;">{% asset_link prod-web-app-wireframes.pdf "PDF Link: Wireframes Rough Draft on Paper" %}</span>
-</div>
-
-The wireframes below are for v1.0 of the application.  Additional features will be added via a change request, amendment to the SoW, and additional funding request (if applicable).
-
-{% asset_img home_page.png %}
-
-{% asset_img score_entry.png %}
-
-{% asset_img video_upload.png %}
-
-{% asset_img analytics_dashboard.png %}
-
-{% asset_img profile_and_settings.png %}
-
-{% asset_img link_ghin_account.png %}
-
-<div class="sow-comment">If the graphic design of your application is highly important to you, you may create or hire someone to create "mockups" based on the wireframes.  These can be created in Photoshop, Illustrator, or another mockup tool and should represent the actual end state of the application.  This includes correct colors, logos, animations, etc.  For this project, I am not concerned with creating a stunning visual experience.  I intend to make the app look **clean and minimal**, but not overly creative.</div>
-
-### Branding Guide
-
-<div class="sow-comment">For an explanation on how the document below was created, go to the [Style Guide Extended Description Section.](#Style-Guide-Extended-Description).  For a PDF copy of the style guide shown below, {% asset_link prod-web-app-style-guide.pdf "click here" %}.
-</div>
-
-
-{% asset_img prod-web-app-style-guide.png %}
-
-### Architectural Design
-
-<div class="sow-comment">For an explanation on how the document below was created, go to the [Architecture Design Extended Description Section.](#Architecture-Design-Extended-Description).
-</div>
-
-### Data Design
-
-<div class="sow-comment">For an explanation on how the document below was created, go to the [Data Design Extended Description Section.](#Data-Design-Extended-Description).
-</div>
-
-### API Design
-
-<div class="sow-comment">For an explanation on how the document below was created, go to the [API Design Extended Description Section.](#API-Design-Extended-Description).
-</div>
-
-</div>
-
-### Wireframes Extended Description 
-
-The wireframes in the design document took me about 2-3 hours to fully complete (although I of course had done market research, brainstorming, etc. beforehand).  Many of the wireframe ideas were inspired by the survey that I gave to my golf site's email list.  You can see the survey results below (long form responses are abbreviated):
-
-<span style="font-size: 1.0rem; color: #00b7c8 !important;">{% asset_link survey-results.pdf "Market Research Survey" %}</span>
-
-I created wireframes using [The Pencil Project](http://pencil.evolus.vn/Downloads.html).  This tool is completely free forever and is available on all operating systems.  There are **plenty** of paid options (including the Adobe product suite), but unless you are a full time designer, they are rarely worth the expensive monthly subscriptions.  I absolutely loved my experience using Pencil, and I think you will too!  {% asset_link prod-web-app-wireframes.epgz "Here is the source file" %} for my wireframes that you could use as a template.  You can only open this file in the Pencil program itself.
-
-### Style Guide Extended Description
-
-For an application like the one we are building here, the branding style guide does not need to be as complex as you would see for a company website.  Nevertheless, we still need to create one to guide front-end development.  This is primarily to avoid that moment when you login to an application and see four shades of red on one page (cringe).
-
-Within a style guide, I consider three main sections: 
-
-1. Colors - staying consistent with your colors will save you headaches down the road.  Decide early which color will be used for headings, main text, hyperlinks, buttons, etc.
-2. Fonts - I almost always use Google Fonts.  Google Fonts not only has hundreds of free fonts; they also provide recommendations of which fonts pair well together.  Although some fonts might sound like a good idea, it is usually good to go with a serif or sans serif.
-3. Logo Variations - I recommend having two logos.  The large logo will be the main one, and the small logo will be used for social profiles and other small spaces.  You will also need light and dark variations so that your logo can be put on both dark and light backgrounds.
-
-Since I will be using Bootstrap CSS framework for this app, the style guide will be simple using two tools (I even created this logo in Canva): 
-
-1. [Bootswatch](https://bootswatch.com/flatly/) - A variety of custom Bootstrap color themes ready out of the box
-2. [Canva](https://www.canva.com/) - Creating the Style Guide Document
-
-Of course you can get far more creative with this section of the design document.  You could even hire an entire design department.  If you are a startup with funding, this might be a route to take.  In my case, I don't care to spend money nor does the application I am making warrant such an elaborate design process.
-
-### Architecture Design Extended Description
-
-
-
-### Data Design Extended Description
-
-### API Design Extended Description
-
-
-[Next Post in Series: Development Part 1]()
+[Next Post in Series: Ideation and Definition (Design Document)]()
