@@ -1035,6 +1035,7 @@ There are endless possibilities to writing bash scripts.  Play around a bit and 
 This topic can get quite loaded, and therefore I am not going to dig too deep into it.  We will cover the following: 
 
 * How to setup a public and private keypair for ssh access
+* Adding your keys to the ssh-agent (if applicable)
 * How to use SSH to connect to a remote machine
 * How to transfer files between your local machine and remote machine using `scp`
 * How to download files from the internet
@@ -1071,9 +1072,38 @@ Once you have done that, you can create your virtual machine.  Now, find the IP 
 ssh -p 22 root@157.230.167.2
 ```
 
-This should successfully log you into your VPS.  Next, I want to show how to transfer files to and from your remote machine and local computer.  To do this, we use the `scp` utility.
+This should successfully log you into your VPS.  
+
+### Permanently Add Keys to ssh-agent
+
+This is generally not a problem on Linux, but on Mac, you will need to alter a few of the default settings.  By default, any key that is not `id_rsa` will not be added to the ssh-agent utility, and not the Mac keychain.  This means that every time you want to login to your VM, you will have to add the ssh key.  For example, I have a key called `digital-ocean` that I use for logging in to my digital ocean droplets.
+
+```bash
+# Loads necessary environment variables
+eval `ssh-agent -s`
+
+# Adds ssh key
+ssh-add -K ~/.ssh/digital-ocean
+
+# Login
+ssh -p 22 root@<some-ip-address>
+```
+
+To avoid doing this every time you login to your Mac, you will need to modify `~/.ssh/config` to have the following entry: 
+
+```bash
+Host *
+  UseKeychain yes
+  AddKeysToAgent yes
+  IdentityFile ~/.ssh/id_rsa
+  IdentityFile ~/.ssh/digital-ocean
+```
+
+Above, you are specifying a host of "everything" (you could replace with a domain such as github.com), and telling the agent to use the keychain, add keys, and use the two identity files listed as logins.
 
 ### From local computer to remote machine
+
+Next, I want to show how to transfer files to and from your remote machine and local computer.  To do this, we use the `scp` utility.
 
 If I had `sample-file.txt`, the way I would upload this to my remote machine is like so: 
 
