@@ -53,7 +53,6 @@ The contents of the design document is largely made up of the deliverables in th
 [Brand Style Sheet](#Branding-Guide)
 [Architectural Design](#Architectural-Design)
 [Data Design](#Data-Design)
-[API Design](#API-Design)
 
 ### User Stories and Wireframes
 
