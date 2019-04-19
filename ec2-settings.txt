@@ -1,0 +1,5 @@
+Instance ID: i-09322166ceaa018a0
+Instance public IP: 18.234.72.56
+Subnet: subnet-4b515416
+
+./mongodb-linux-x86_64-amazon-4.0.8/bin/mongoexport -h ds039017.mlab.com:39017 -d diy-px-dashboard-prod -c users -u zach -p hankaaron20 -o users.csv --type csv -f name,email,facilities,desiredHandicap,currentHandicap,hoursAvailable,yearRound,physicalLimitation,trackStats,fitted,competitive,filmedSwing,practicer,comments
