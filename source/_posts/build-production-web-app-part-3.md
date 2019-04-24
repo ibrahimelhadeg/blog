@@ -56,8 +56,7 @@ The contents of the design document is largely made up of the deliverables in th
 
 ### User Stories and Wireframes
 
-<div class="sow-comment">
-For a longer explanation of how these wireframes were created, go to the [wireframes extended description](#Wireframes-Extended-Description).
+<div class="sow-comment">For a longer explanation of how these wireframes were created, go to the [wireframes extended description](#Wireframes-Extended-Description).
 </div>
 
 The wireframes below are for v1.0 of the application.  Additional features will be added via a change request, amendment to the SoW, and an additional funding request (if applicable).
@@ -78,7 +77,7 @@ The wireframes below are for v1.0 of the application.  Additional features will 
 
 ### Branding Guide
 
-<div class="sow-comment">For an explanation on how the document below was created, go to the [Style Guide Extended Description Section.](#Style-Guide-Extended-Description).  For a PDF copy of the style guide shown below, {% asset_link prod-web-app-style-guide.pdf "click here" %}.
+<div class="sow-comment">For an explanation on how the document below was created, go to the [Style Guide Extended Description Section](#Style-Guide-Extended-Description).  For a PDF copy of the style guide shown below, {% asset_link prod-web-app-style-guide.pdf "click here" %}.
 </div>
 
 {% asset_img prod-web-app-style-guide.png %}

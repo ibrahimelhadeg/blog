@@ -8,15 +8,15 @@ Welcome to part 4 of the "Build a Production Web App" series.  If you are new he
 
 [Go To Part 1](https://zachgoll.github.io/blog/2019/build-production-web-app-part-1/)
 
-In this part, we will be completing the software architecture portion of the design document introduced in the previous post.
+In this part, we will be completing the software [architecture portion of the design document](http://zachgoll.github.io/blog/2019/build-production-web-app-part-3/#Architectural-Design) introduced in the previous post.
 
 ## Introduction
 
 In this post, we will answer the following 3 questions: 
 
-**1. Why do we need a software architecture?**
-**2. What architectures are available, and how do we choose one?**
-**3. How do we actually build our chosen architecture?**
+1. **Why do we need a software architecture?**
+2. **What architectures are available, and how do we choose one?**
+3. **How do we actually build our chosen architecture?**
 
 If you are a self-taught developer, new to the industry, or something of the sort, the concept of "software architecture" is intimidating.  Enterprise architects get paid lots of money to do what they do because **architecting a quality software is difficult and requires experience**.
 
@@ -34,7 +34,7 @@ Throughout this post, we'll work through these concerns and figure out what this
 
 From E.F. Schumacher's book _Small is Beautiful_, this quote embodies a lot of what architecting software means.  As a developer, it is always more fun to solve a complex problem in a complex way.  It's more fun to create a Rube Goldberg Machine than walking from point A to point B and dropping the marble in the cup.
 
-Unfortunately, as a developer and architect, you get no additional bonus points for indirectly solving problems.  You get bonus points for creating an _effective system_.
+Unfortunately, as a developer and architect, you get no additional bonus points for indirectly solving problems.  You make the real money by solving a complex problem in a simple way.
 
 **Designing software architecture is about arranging components of a system to best fit the desired attributes of the system.**
 
@@ -74,9 +74,7 @@ The book points out that design decisions made at the beginning of a project hav
 
 This is where an experienced architect has an advantage over a novice.  They can see much further into the future and anticipate how certain design decisions will impact the system.  
 
-For those of us not so experienced in designing architecture, we must accept that things won't be perfect and **design it anyway**.
-
-But where do we even start?
+For those of us (including myself) not so experienced in designing architecture, we must accept that things won't be perfect and **design it anyway**.  Yes, revisions will have to be made, but what other choice is there?
 
 ## What Architectures are Available, and How do we Choose?
 
@@ -93,73 +91,51 @@ Just like a skyscraper, software has many layers; all of which require design/ar
 
 It is easy to become intimidated by all the fancy verbage and fall into a spiral of analysis paralysis, but in the end, software architecture is not about fancy names and classifications.  Software architecture is about choosing the right design patterns that will enable your code to run effectively and expose the quality attributes (scalability, performance, etc.) that you desire in your system.
 
-Although we could get into all four of the layers described by Richards above, the project that we are working on does not require it.  The golf practice application we are building is not architectually complex, and we can break it down into three phases: 
+Although we could get into all four of the categories described by Richards above, the project that we are working on does not require it.  The golf practice application we are building is not architectually complex, and we can break it down into three phases:
 
 1. **Design the Main Architecture** - This takes into consideration everything including firewalls, load balancers, application components, data stores, etc.  It might also show how the system will connect with an existing system if you are building it for a larger enterprise.
 2. **Design the Application Architecture** - This is specifically geared towards the design of the application itself.
-3. **Design the Components** - This is where we decompose the application architecture and use design patterns.  In many cases, this is the part where you start coding.
+3. **Design the Components** - This is where we decompose the application architecture and use design patterns to create a clean and effective codebase.
 
-### Main Architecture 
+### Defining the Attributes
+
+While reading through these three steps, keep in mind the following quality attributes: 
+
+* I wanted an architecture that was **easy to conceptualize** so those reading and watching the YouTube series can follow along.
+* I wanted an architecture that had high **modifiability** because I plan on adding more features after the series is over.
+* I wanted an architecture that maximized **usability**.  My users should know how to use the application immediately.
+
+## Main Architecture 
 
 The main architecture is tricky because there is no guidebook telling you how to put it together.  There is no Google search that can explain how to integrate a Vendor software into your company's existing data supply chain and legacy infrastructure.
 
-The goal of the main architecture is to capture all the pieces and define as best as you can how they will talk and relate to each other.  There is no book that can tell you how to get this part right; only experience.
+The goal of the main architecture is to capture all the pieces and define as best as you can how they will talk and relate to each other.  There is no book that can tell you how to get this part right; only experience (and even experienced architects go through many iterations).
 
-In a later section when I design the main architecture for this golf application we are building, you will get a sense of how to approach this problem.
+Below is the architecture that I put together for the Golf Practice Application based on the quality attributes above and the wireframes from the [previous section](http://zachgoll.github.io/blog/2019/build-production-web-app-part-3/) of the design document. 
 
-### Application Architecture
+{% asset_img golf-app-architecture.png %}
 
-There are [many architectures to choose from](https://en.wikipedia.org/wiki/Software_architecture#Architectural_styles_and_patterns), but not all of them are "beginner friendly" and sometimes require years of experience to implement correctly.  For example, creating an effective peer-to-peer architecture (i.e. Bitcoin, Bittorrent) is no easy undertaking.
+The design above is pretty standard for a NodeJS web application.  It mainly highlights the "devops" part of the application (i.e. what cloud computing and storage components you are using and how you are using them).  A few notes: 
 
-To keep things simple, I will be walking through 3 common architectures that cover a wide variety of use cases.  Unless you have a _specific reason and design experience_ to justify going a different route, one of these three architectures will suffice.
+* Some elements are put as placeholders for educational purposes
+    * We will not need a load balancer until we have multiple application servers (Digital Ocean Droplets).  A load balancer is a cloud computing tool that will automatically redirect traffic to the closest (or least busy) application instance.  This obviously requires more than 1 application instance.  Eventually, this app may need more than 1 instance depending on the amount of users interacting with it.
+    * The Digital Ocean Volume (block storage) attached to the Express application is only necessary if the actual application server runs out of memory.  This could happen if you are storing some type of user data on the application server rather than external storage.
+* The clients represent _people_ on their laptops, phones, or tablet devices
+* Kibana and Logstash are free, open source logging components that are produced by a company called Elastic.
+* The Angular, Express, Mongoose, and MongoDB components will be further decomposed in the next section
+* The CDN is for static files like CSS or Javascript, and the Digital Ocean "Spaces" is an object storage container that will store the contents on the CDN and backup our database.
+    * To understand the differences between object and block cloud storage, check out the tutorial on <span class="ext-topics">[cloud storage types](http://zachgoll.github.io/blog/2019/file-object-block-storage/)</span>
 
-I chose these three because they are natural progressions of each other.  The monolithic is simpler than the layered which is simpler than the microservices.  Sure, there are other useful architectures like Event-Driven, Client-Server, Microkernel, and more, but if you do not understand the 3 below, it would not make sense to attempt any of these advanced architectures anyways.
-
-https://stackoverflow.com/a/45661246/7437737
-https://www.oreilly.com/library/view/software-architecture-patterns/9781491971437/app01.html#pattern-analysis-summary
-https://martinfowler.com/bliki/MonolithFirst.html
-
-**1. Monolithic Architecture**
-
-A monolithic architecture describes an application where everything is condensed into one codebase.  You may have different parts of the application split into folders, but any change to any part of the codebase will affect the rest.
-
-If you have every taken tutorials online that teach you how to build a web application, you have most likely built a monolithic application.  
-
-[Here is a very basic monolithic software architecture](https://github.com/zachgoll/monolithic-architecture-example-app).
-
-A monolithic architecture describes an architecture where all of the following components are bunched into one codebase: 
-
-* Views 
-* Application/Business Logic 
-* Data Access/Database
-
-Each of these areas are separated in the application, but it is still a monolithic architecture because a change to any part of the application will require: 
-
-1. The entire application be restarted 
-2. Changes must be made in more than one part of the app
-
-Although this architecture may seem ineffective, not all industry professionals would write it off.  Martin Fowler, a thought leader in this space [advocates for the use of monolithic architectures](https://martinfowler.com/bliki/MonolithFirst.html) at the beginning of most projects that will eventually become n-tiered or microservices.  He does not advocate for monolithic architecture as an ending state of an app, but highlights that many of the effective microservice applications he has seen _started as monolithic architectures_ and was later refactored.
-
-**2. Layered Architecture (also called "n-tiered")**
-
-_All code mentioned below is stored in my [layered architecture repository on Github](https://github.com/zachgoll/layered-architecture-example-app)_
-
-**3. Microservices Architecture**
-
-_All code mentioned below is stored in my [microservices architecture repository on Github](https://github.com/zachgoll/microservices-architecture-example)_
-
-### Common Design Patterns 
-
-## Choosing the Architecture
+## Application Architecture
 
 For this project, I have chosen to use the layered architecture and several object oriented design patterns.  I came to these choices by first deciding which quality attributes were important to me: 
 
-* I wanted an architecture that was easy to conceptualize (mainly for the purpose of the blog and YouTube series).
-* I wanted an architecture that had high modifiability because I plan on adding many features past the first version release.
-* I wanted an architecture that maximized usability.  My users should not have to go through any complexity to get started.
+*
 
 A layered architecture is easy to understand and arguably the most common architecture of them all.  The isolation of layers will enable future iterations of the software to be seamless, and the simplicity of the design will maximize usability.
 
-## Building the Architecture
+## Design Patterns 
 
-It is finally time to build the architecture for the golf practice application!
+## Choosing the Architecture
+
+[Go to the next post in the series]()
