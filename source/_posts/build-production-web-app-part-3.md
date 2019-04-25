@@ -56,22 +56,24 @@ The contents of the design document is largely made up of the deliverables in th
 
 ### User Stories and Wireframes
 
-<div class="sow-comment">For a longer explanation of how these wireframes were created, go to the [wireframes extended description](#Wireframes-Extended-Description).
+<div class="sow-comment">For a longer explanation of how these wireframes were created, go to the [wireframes extended description](#Wireframes-Extended-Description).  Click on each image to expand.
 </div>
 
 The wireframes below are for v1.0 of the application.  Additional features will be added via a change request, amendment to the SoW, and an additional funding request (if applicable).
 
-{% asset_img home_page.png %}
+<div class="clickable-images">
+{% asset_img wf-1.svg %}
 
-{% asset_img score_entry.png %}
+{% asset_img wf-2.svg %}
 
-{% asset_img video_upload.png %}
+{% asset_img wf-3.svg %}
 
-{% asset_img analytics_dashboard.png %}
+{% asset_img wf-4.svg %}
 
-{% asset_img profile_and_settings.png %}
+{% asset_img wf-5.svg %}
 
-{% asset_img link_ghin_account.png %}
+{% asset_img wf-6.svg %}
+</div>
 
 <div class="sow-comment">If the graphic design of your application is highly important to you, you may hire someone to create "mockups" based on the wireframes.  These can be created in Photoshop, Illustrator, or another mockup tool and should represent the actual end state of the application.  This includes correct colors, logos, animations, etc.  For this project, I am not concerned with creating a stunning visual experience.  I intend to make the app look **clean and minimal**, but not overly creative.</div>
 
@@ -80,22 +82,23 @@ The wireframes below are for v1.0 of the application.  Additional features will 
 <div class="sow-comment">For an explanation on how the document below was created, go to the [Style Guide Extended Description Section](#Style-Guide-Extended-Description).  For a PDF copy of the style guide shown below, {% asset_link prod-web-app-style-guide.pdf "click here" %}.
 </div>
 
+<div class="clickable-images">
 {% asset_img prod-web-app-style-guide.png %}
+</div>
 
-### Architectural Design
+### Main Architectural Design
 
-<div class="sow-comment">For an explanation on how the section below was created, continue to [part 4 of the series]().
+<div class="sow-comment">This is the main architecture for the project.  It shows the entirety of the application, but does not get into detail.  For an explanation on how the section below was created, go to [Main Architecture Extended Description](#Main-Architecture-Extended-Description).
+</div>
+<div class="clickable-images">
+{% asset_img ar-1.svg %}
+
+Below is an alternate view to the above architecture.  This view only shows the application architecture and excludes many of the cloud computing components.  If a layer says "closed", this means that it can only be used by the layer above it.  If a layer is "open", it can be used by any of the layers.
+
+{% asset_img ar-2.svg %}
 </div>
 
 ### Data Design
-
-<div class="sow-comment">For an explanation on how the section below was created, continue to [part 5 of the series]().
-</div>
-
-### API Design
-
-<div class="sow-comment">For an explanation on how the section below was created, continue to [part 6 of the series]().
-</div>
 
 </div>
 
@@ -128,4 +131,15 @@ Since I will be using Bootstrap CSS framework for this app, the style guide will
 
 Of course you can get far more creative with this section of the design document.  You could even hire an entire design department.  If you are a startup with funding, this might be a route to take.  In my case, I don't care to spend money nor does the application I am making warrant such an elaborate design process.
 
-Next part in series: [Building the Architecture]()
+## Main Architecture Extended Description
+
+For any of the architecture diagrams to make sense, you must be able to answer the following questions:
+
+1. **Why do we need a software architecture?**
+2. **What architectures are available, and how do we choose one?**
+3. **How do we actually build our chosen architecture?**
+
+If you cannot answer these questions, or if terms like "layered", "monolithic", "microservices", or "quality attributes" do not ring a bell, I suggest you read my <span class="ext-topics">[Introduction to Software Architecture](/blog/2019/monolithic-layered-microservices-architecture/)</span>.  This will help you understand how I came to the designs that you see in this document.
+
+<hr>
+**Next part in series: [Building the Architecture]()**

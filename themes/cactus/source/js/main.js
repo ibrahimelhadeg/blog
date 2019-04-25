@@ -12,6 +12,13 @@ if (!!$.prototype.justifiedGallery) {
 
 
 $(document).ready(function() {
+
+  /*
+  When a hoverable image is clicked, it opens it in a new tab
+  */
+ $(".clickable-images img").click((event) => {
+  window.open(event.target.currentSrc, "_blank")
+ });
   
   /*
     When a tooltip is hovered, shows a box with the text
