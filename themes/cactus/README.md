@@ -54,6 +54,14 @@ Difficult topic that needs tooltip at end<span class="tooltip"><i class="fa fa-q
 </div>
 ```
 
+### Expandable Pictures 
+
+```
+<div class="clickable-images">
+{% asset_img microservices.png %}
+</div>
+```
+
 ## Install
 1. In the `root` directory:
 

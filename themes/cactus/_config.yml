@@ -22,6 +22,7 @@ nav:
 # (see https://fontawesome.com/icons?d=gallery&s=brands);
 # only 'mail' is an exception.
 social_links:
+  youtube: https://www.youtube.com/channel/UCDwIw3MiPJXu5SavbZ3_a2A
   github: http://github.com/zachgoll
   linkedin: http://linkedin.com/in/zachgollwitzer
 
