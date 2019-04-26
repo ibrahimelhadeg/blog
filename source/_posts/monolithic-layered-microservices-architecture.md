@@ -13,12 +13,12 @@ If you are coming from part 4 of my series [How to Build a Production Web App]()
 In this post, we will answer the following 3 questions: 
 
 1. **Why do we need a software architecture?**
-2. **Monolithic Architecture**
-3. **Layered Architecture**
-4. **Microservices Architecture**
+2. **What is a Monolithic Architecture?**
+3. **What is a Layered Architecture?**
+4. **What is a Microservices Architecture?**
 5. **Other Architectures**
 
-If you are a self-taught developer, new to the industry, or something of the sort, the concept of "software architecture" is intimidating.  Enterprise architects get paid lots of money to do what they do because **architecting a quality software is difficult and requires experience**.
+If you are a self-taught developer, new to the industry, or something of the sort, the concept of "software architecture" is intimidating.  Enterprise architects get paid lots of money because architecting a quality software is **difficult and requires experience**.
 
 You may have the following concerns: 
 
@@ -44,7 +44,7 @@ Unfortunately, as a developer and architect, you get no additional bonus points 
 * The head of security cares that the system is protected from malicious attacks
 * The application support team cares that the system is easy to understand and debug
 
-There is no way to appease every request without sacrificing the quality of the system.  Therefore, when designing software architecture, you must decide _which quality attributes_ matter most for the given business problem.  Below are a few examples of quality attributes: 
+There is no way to please everyone without sacrificing the quality of the system.  Therefore, when designing software architecture, you must decide _which quality attributes_ matter most for the given business problem.  Below are a few examples of quality attributes: 
 
 * Performance - how long do you have to wait before that spinning "loading" icon goes away?
 * Availability - what percentage of the time is the system running?
@@ -57,18 +57,16 @@ There is no way to appease every request without sacrificing the quality of the 
 * Deployability - is it easy to put a new feature in production?
 * Safety - if the software controls physical things, is it a hazard to real people?
 
-Depending on what software you are building or improving, certain attributes may be more critical to success.  If you are a financial services company, the most important quality attribute for your system would probably be _security_ (a breach of security could cause your clients to lose millions of dollars) followed by _availability_ (your clients need to always have access to their assets).
+Depending on what software you are building or improving, certain attributes may be more critical to success.  If you are a financial services company, the most important quality attribute for your system would probably be _security_ (a breach of security could cause your clients to lose millions of dollars) followed by _availability_ (your clients need to always have access to their assets).  If you are a gaming or video streaming company (i.e. Netflix), your first quality attribute is going to be _performance_ because if your games/movies freeze up all the time, nobody will play/watch them.
 
-If you are a gaming or video streaming company (i.e. Netflix), your first quality attribute is going to be _performance_ because if your games/movies freeze up all the time, nobody will play/watch them.
+As you can see, the process of building software architecture is not about finding the best tools and the latest technologies.  It's about **delivering a system that works effectively**.  But why do we need an architecture to do this?
 
-As you can see, the process of building software architecture is not about finding the best tools and the latest technologies.  It's about **delivering a system that works how it was intended to work**.  But why do we need an architecture to do this?
+According to the book _[Software Architecture in Practice](https://amzn.to/2X1Uoaq)_, there are 13 reasons why Software Architecture is important for the success of a project.  Of those 13, I pulled out a few that might resonate with a smaller team or individual developer: 
 
-According to the book _[Software Architecture in Practice](https://amzn.to/2X1Uoaq)_, there are 13 reasons why Software Architecture is important for the success of a project, but here are a few highlights: 
-
-* Architecture enables quality attributes (as discussed above)
-* Architecture enables communication among stakeholders
-* Architecture focuses on the assembly rather than creation of components
-* Architecture restricts design choices, enabling creativity in other areas
+**1. Architecture enables quality attributes** - For example, a peer to peer architecture is naturally going to have high _availability_ due to the decentralized nature of the system.  A microservices architecture will have high modifiability due to the segregation of duties.
+**2. Architecture enables communication among stakeholders** - When the architecture closely resembles the structure of your company, everyone knows which part of the software they are responsible for.
+**3. Architecture focuses on the assembly rather than creation of components** - Rather than focusing on how the code is written, architecture forces us to think about how the components in the system talk to one another.
+**4. Architecture restricts design choices, enabling creativity in other areas** - By defining some boundaries in your software project, you know which areas you can get creative in without hurting the progress or quality of the system.
 
 The book points out that design decisions made at the beginning of a project have a **disproportionate weighting** and restrict the ability to change certain areas of the software later on, so it is important to spend time to understand the requirements of the software and design it accordingly.
 
