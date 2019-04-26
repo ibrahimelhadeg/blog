@@ -9,7 +9,7 @@ A responsive, clean and simple [Hexo](http://hexo.io) theme for a personal websi
 ## Summary
 
 - [General](#general)
-- [Features](#features)
+- [Custom Mods](#Custom-Mods)
 - [Install](#install)
 - [Configuration](#configuration)
 - [License](#license)
@@ -19,19 +19,40 @@ A responsive, clean and simple [Hexo](http://hexo.io) theme for a personal websi
 - **Version** : 3.0
 - **Compatibility** : Hexo 3 or later
 
-## Features
+## Custom Mods
 
-- Fully responsive
-- Multiple color schemes
-- Pick your own code highlighting scheme
-- Configurable navigation menu
-- Support for local search
-- Projects list
-- I18n support
-- Disqus integration
-- Google analytics
-- Font Awesome icons
-- Simplicity
+### Tables
+
+To create a custom styled table that does not conflict with the code blocks, you must place a `before-table` div above it like so: 
+
+```
+<div id="before-table"></div>
+
+| Milestone Description       |   Date  |
+|-----------------------------|:-------:|
+| User Stories and Wireframes | 3/21/19 |
+| Brand Style Sheet           | 3/22/19 |
+| Data and API Design         | 3/29/19 |
+| Architectural Design        |  4/2/19 |
+| Design Document Finalized   |  4/5/19 |
+```
+
+### Tooltips
+
+Add the following code: 
+
+```
+Difficult topic that needs tooltip at end<span class="tooltip"><i class="fa fa-question-circle tooltip-icon"></i><span class="tooltip-text display-none">This is the text body of the tooltip<i class="fa fa-window-close close-it"></i></span></span>
+```
+
+### Series Headers
+
+```
+<div class="series-introduction">Welcome to part 2 of the "Build a Production Web App" series.  If you are new here, I suggest starting from the beginning.
+
+[Go To Part 1](/blog/2019/build-production-web-app-part-1/)
+</div>
+```
 
 ## Install
 1. In the `root` directory:

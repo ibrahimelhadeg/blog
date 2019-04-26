@@ -4,9 +4,10 @@ date: 2019-03-15 14:26:06
 tags:
 ---
 
-Welcome to part 2 of the "Build a Production Web App" series.  If you are new here, I suggest starting from the beginning.
+<div class="series-introduction">Welcome to part 2 of the "Build a Production Web App" series.  If you are new here, I suggest starting from the beginning.
 
-[Go To Part 1](https://zachgoll.github.io/blog/2019/build-production-web-app-part-1/)
+[Go To Part 1](/blog/2019/build-production-web-app-part-1/)
+</div>
 
 <link href="https://fonts.googleapis.com/css?family=Tangerine" rel="stylesheet">
 
@@ -187,6 +188,8 @@ The final phase necessary to transition between delivery and ongoing support.  A
 <div class="sow-comment">The below milestones are very characteristic of a Waterfall project planning method.  Many Agile advocates argue that planning this far in advance is pointless, but I wanted to include it here so that you as the reader have an idea where this project is going.
 </div>
 
+<div id="before-table"></div>
+
 | Milestone Description                 |      Date      |
 |---------------------------------------|:--------------:|
 | v1.0 Planning Complete                |     4/5/19     |
@@ -251,6 +254,8 @@ A design document will be created to guide the development phase.  The design do
 - The architectural design will show how our front-end, back-end, and automated infrastructure fits into a cohesive, production application.
 - The design document will bring all these pieces (and others) together.  This document will be referenced for all development.
 
+<div id="before-table"></div>
+
 | Milestone Description       |   Date  |
 |-----------------------------|:-------:|
 | User Stories and Wireframes | 3/21/19 |
@@ -258,6 +263,7 @@ A design document will be created to guide the development phase.  The design do
 | Data and API Design         | 3/29/19 |
 | Architectural Design        |  4/2/19 |
 | Design Document Finalized   |  4/5/19 |
+
 
 <div class="sow-comment">For funded projects, this section would also include hours and costs of resources decked to each deliverable.</div>
 
@@ -284,4 +290,6 @@ This phase has not been approved at the time of writing and will be updated at a
 
 </div>
 
-[Next Post in Series: Ideation and Definition (Design Document)]()
+<br>
+<hr>
+[Next Post in Series: Design Document](/blog/2019/build-production-web-app-part-3/)

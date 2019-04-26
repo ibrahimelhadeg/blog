@@ -4,9 +4,10 @@ date: 2019-04-07 19:08:45
 tags:
 ---
 
-Welcome to part 3 of the "Build a Production Web App" series.  If you are new here, I suggest starting from the beginning.
+<div class="series-introduction">Welcome to part 3 of the "Build a Production Web App" series.  If you are new here, I suggest starting from the beginning.
 
-[Go To Part 1](https://zachgoll.github.io/blog/2019/build-production-web-app-part-1/)
+[Go To Part 1](/blog/2019/build-production-web-app-part-1/)
+</div>
 
 In this part, we will be introducing the design document and explaining how it is created.
 
@@ -92,13 +93,35 @@ The wireframes below are for v1.0 of the application.  Additional features will 
 </div>
 <div class="clickable-images">
 {% asset_img ar-1.svg %}
+**Some Clarifying Notes (above architecture)**: 
 
-Below is an alternate view to the above architecture.  This view only shows the application architecture and excludes many of the cloud computing components.  If a layer says "closed", this means that it can only be used by the layer above it.  If a layer is "open", it can be used by any of the layers.
+**1)** We will not need a load balancer until we have multiple application servers (Digital Ocean Droplets).  A load balancer is a cloud computing tool that will automatically redirect traffic to the closest (or least busy) application instance.  This obviously requires more than 1 application instance.  Eventually, this app may need more than 1 instance depending on the amount of users interacting with it.
+**2)** The Digital Ocean Volume (block storage) attached to the Express application is only necessary if the actual application server runs out of memory.  This could happen if you are storing some type of user data on the application server rather than external storage.
+**3)** The clients represent _people_ on their laptops, phones, or tablet devices
+**4)** Kibana and Logstash are free, open source logging components that are produced by a company called Elastic.
+**5)** The Angular, Express, Mongoose, and MongoDB components will be further decomposed in the next section
+**6)** The CDN is for static files like CSS or Javascript, and the Digital Ocean "Spaces" is an object storage container that will store the contents on the CDN and backup our database.  To understand the differences between object and block cloud storage, check out my tutorial on 
+<span class="ext-topics">[cloud storage types](http://zachgoll.github.io/blog/2019/file-object-block-storage/)</span>
+
+Below is an **alternate view** to the above architecture.  This view only shows the application architecture and excludes many of the cloud computing components.  If a layer says "closed", this means that it can only be used by the layer above it.  If a layer is "open", it can be used by any of the layers.
 
 {% asset_img ar-2.svg %}
 </div>
 
-### Data Design
+### Data Layer Design
+
+<div class="sow-comment">This is the design for the database.  This is arguably the most important of all designs to think through because the business layer relies on the data coming from here to run the entire application.  For an explanation on how the section below was created, go to [Data Layer Extended Description](#Data-Layer-Extended-Description).
+</div>
+
+### Business Layer Design
+
+<div class="sow-comment">This is the design for the Express application, which could also be called the "business layer", or "backend" of the app.  This design is largely based on an object-oriented programming style that you will be introduced to later in the series.  For an explanation on how the section below was created, go to [Data Layer Extended Description](#Data-Layer-Extended-Description).
+</div>
+
+### Presentation Layer Design
+
+<div class="sow-comment">This is the Angular application, which could also be called the "presentation layer" or "front-end" of the app.  For an explanation on how the section below was created, go to [Data Layer Extended Description](#Data-Layer-Extended-Description).
+</div>
 
 </div>
 
@@ -140,6 +163,23 @@ For any of the architecture diagrams to make sense, you must be able to answer t
 3. **How do we actually build our chosen architecture?**
 
 If you cannot answer these questions, or if terms like "layered", "monolithic", "microservices", or "quality attributes" do not ring a bell, I suggest you read my <span class="ext-topics">[Introduction to Software Architecture](/blog/2019/monolithic-layered-microservices-architecture/)</span>.  This will help you understand how I came to the designs that you see in this document.
+
+To create the architecture that you see in the design document above, I focused on the following design attributes: 
+
+* I wanted an architecture that was **easy to conceptualize** so those reading and watching the YouTube series can follow along.
+* I wanted an architecture that had high **modifiability** because I plan on adding more features after the series is over.
+* I wanted an architecture that maximized **usability**.  My users should know how to use the application immediately.
+
+To satisfy these quality attributes, I chose a layered software architecture.  In the design document, you will see two views to the architecture.  The first view shows the holistic view of the entire application.  The second view shows the application itself arranged in a layered architectural pattern.
+
+## Data Layer Extended Description
+
+
+## Business Layer Extended Description
+
+
+## Presentation Layer Extended Description
+
 
 <hr>
 **Next part in series: [Building the Architecture]()**
