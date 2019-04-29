@@ -97,88 +97,88 @@ A monolithic architecture describes an architecture where all of the following c
 
 Although this architecture may seem ineffective, not all industry professionals believe it is useless.  For example, Martin Fowler [advocates for the use of monolithic architectures](https://martinfowler.com/bliki/MonolithFirst.html) when starting a new application.  He notes that those who start their applications as microservice architectures usually end up wasting time and energy because you don't start seeing the benefits of this architecture until the application becomes complex.
 
-He suggests starting with a monolithic architecture and refactoring it later into a layered or microservice architecture when it becomes too large to handle all in one piece.
+He suggests starting with a monolithic architecture and _refactoring it later_ into a layered or microservice architecture when it becomes too large to handle all in one piece.
 
 Let's take a look at the internals of a simple monolithic architecture.
 
 ### Application Structure
 
-This simple monolithic application has a server, mock database, and home view.
+_All code mentioned below is stored in my [monolithic architecture repository on Github](https://github.com/zachgoll/monolithic-architecture-example-app)_
 
-```
-database/
-    mock-database.js
-server/
-    server.js
-views/
-    home.ejs
-```
+The main thing that you will see with this type of architecture is a lack of distinction between application parts.  For example, in `app.js`, you will see a connection to the database, the server, and even some API endpoints.
 
 ```javascript
-// File: mock-database.js
+const express = require('express');
+const app = express();
+const mongoose = require('mongoose');
+const cors = require('cors');
+const bodyParser = require("body-parser");
 
-function returnData() {
+// This will allow our presentation layer to retrieve data from this API without
+// running into cross-origin issues (CORS)
+app.use(cors());
+app.use(bodyParser.json());
 
-    const fakeData = {
-        name: "Monolithic Architecture",
-        author: "Zach Gollwitzer",
-        blogPostUrl: "https://zachgoll.github.io/blog/2019/build-production-web-app-part-4" 
-    };
+// ============================================
+// ==========  DATABASE CONNECTION  ===========
+// ============================================
+// Connect to running database
+mongoose.connect(`mongodb://${process.env.DB_USER}:${process.env.DB_PW}@127.0.0.1:27017/monolithic_app_db`, 
+    {useNewUrlParser: true});
 
-    return fakeData;
+// User schema for mongodb
+const UserSchema = mongoose.Schema({
+	name: { type: String },
+    email: { type: String }
+}, { collection: 'users' } );
 
-}
+// Define the mongoose model for use below in method
+const User = mongoose.model('User', UserSchema);
 
-module.exports = returnData;
-```
-
-```javascript
-// File: server.js
-
-var express = require('express');
-var app = express();
-var db = require('../database/mock-database');
+function getUserByEmail (email, callback) {
+      try {
+            User.findOne({ email: email }, callback);
+      } catch (err) {
+            callback(err);
+      }
+};
 
 // set the view engine to ejs
 app.set('view engine', 'ejs');
 
 // index page 
 app.get('/', function(req, res) {
-    const data = db();
-
-    res.render('../views/home', {data: data} );
+    res.render('home');
 });
 
+// ============================================
+// ============  API ENDPOINT  ================
+// ============================================
+app.post('/register', function(req, res) {
+    
+    const newUser = new User({
+        name: req.body.name,
+        email: req.body.email
+    });
+
+    newUser.save((err, user) => {
+        res.status(200).json(user);
+    });
+
+});
+
+// ============================================
+// ==============  SERVER =====================
+// ============================================
 app.listen(8080);
 console.log("Visit app at http://localhost:8080")
 ```
 
-```html
-<!-- File: home.ejs -->
+If we wanted to add another API endpoint, we would need to edit `app.js`.  If we wanted to add another database Model, we would need to edit `app.js`.  Even if we wanted to modify an API call in `home.ejs`, we would probably need to make changes to `app.js`.
 
-<html>
-    <head>
-        <style>
-            body {
-                padding: 50px;
-            }
-        </style>
-    </head>
-    <body>
-        <h1>Monolithic Architecture Application</h1>
-        <hr>
-        <p><strong>App Type: </strong><%= data.name %></p>
-        <p><strong>Developer: </strong><%= data.author %></p>
-        <p><strong>Blog Post: </strong><a href="<%= data.blogPostUrl %>">Build Production Web App Part 4 - Architecture</a></p>
-    </body>
-</html>
-```
-
-I know this application is rather simple (only 3 files!), but it has enough components to demonstrate the essence of a monolithic architecture.  The key concept to realize is that touching one part of this application will affect the rest of the application.
+This centralization we see is not sustainable into the future, but that doesn't mean it is all bad.  As mentioned above, you may find it useful to start out with something like this and as the application grows, start refactoring the pieces into a more manageable architecture.  One of the ways we can refactor is through a _layered architecture_.
 
 ## Layered Architecture (also called "n-tiered")
-
-_All code mentioned below is stored in my [layered architecture repository on Github](https://github.com/zachgoll/layered-architecture-example-app)_
 
 After a while, your monolithic application will start getting big, you will start hiring people, and it will quickly become a mess.  Although many modern architects will turn to a microservices design to solve this problem (covered in the next section), another option to better segregate the duties of the application is to refactor your monolith into a layered architecture.
 
@@ -195,7 +195,7 @@ You may also stumble upon alternate terminology:
 3. Domain Layer
 4. Persistence Layer
 
-No matter what you call the layers, the point is to create a "separation of concerns" where each layer is only allowed to use the layer directly below it.
+No matter what you call the layers, the point is to create a "[separation of concerns](https://en.wikipedia.org/wiki/Separation_of_concerns)" where each layer is only allowed to use the layer directly below it.
 
 In some cases, you may have a shared layer that has utility functions.  In this case, you could create an additional layer that is considered "open" for all layers to use.  Other layers are considered "closed" which means they can only use the layer below them.
 
@@ -203,11 +203,116 @@ In some cases, you may have a shared layer that has utility functions.  In this 
 
 ### Application Structure 
 
-placeholder...
+_All code mentioned below is stored in my [layered architecture repository on Github](https://github.com/zachgoll/layered-architecture-example-app)_
+
+The critical factor in a layered architecture is the rule that each layer can only utilize the layer directly below it.  In the sample app linked above, I have created a basic User Authentication flow that illustrates this concept.  Furthermore, code from each layer is stored in a clearly marked folder (i.e. `business-layer`).
+
+In our example, the flow has the following steps: 
+
+1. Presentation layer makes a call from an HTML user form 
+2. Presentation layer javascript processes the form and executes a call to the business layer
+3. Business layer processes the form info and makes a call to the data access layer
+4. Data access layer processes the information and makes a query to the database for the user
+5. Data access layer returns the information to the business layer
+6. Business layer returns the information via HTTP to the presentation layer
+7. Presentation layer renders the view with the new information
+
+Let's walk through the steps with code now.
+
+**1. Presentation layer makes a call from an HTML user form**
+
+```html
+<!-- File: home.ejs -->
+
+<!-- On form submit, home.ejs executes the getDataFromBusinessLayer() function -->
+
+<form id="emailform" onsubmit="getDataFromBusinessLayer()">
+    <input name="email" id="email" placeholder="Enter email...">
+    <button type="submit">Load Profile</button>
+</form>
+```
+
+**2. Presentation layer javascript processes the form and executes a call to the business layer**
+
+```javascript
+// File: presentation-layer-user.js
+
+function getDataFromBusinessLayer() {
+    event.preventDefault();
+    const email = $('#email').val();
+
+    // Perform the GET request to the business layer
+    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    $.ajax({ 
+        url: `http://localhost:8081/get-user/${email}`, 
+        type: "GET",
+        success: function (user) {
+            // Render the user object on the page
+            // Ommitted for brevity
+        },
+        error: function (jqXHR, textStatus, ex) {
+            console.log(textStatus + "," + ex + "," + jqXHR.responseText);
+        }
+    });
+}
+```
+
+**3. Business layer processes the form info and makes a call to the data access layer**
+
+```javascript
+// File: business-layer-user.js
+
+app.get('/get-user/:useremail', function(req, res) {
+    
+    // Makes a call to the data access layer
+    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    const user = User.getUserByEmail(req.params.useremail, (error, user) => {
+        res.status(200).json({ name: user.name, email: user.email, profileUrl: user.profileUrl });
+    });    
+});
+```
+
+**4. Data access layer processes the information and makes a query to the database for the user**
+
+```javascript
+// File: data-layer-user.js
+
+module.exports.getUserByEmail = (email, callback) => {
+      try {
+            
+            // Makes a call to the database
+            // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            User.findOne({ email: email }, callback);
+
+      } catch (err) {
+            callback(err);
+      }
+};
+```
+
+**5. Data access layer returns the information to the business layer**
+
+No relevant code to show
+
+**6. Business layer returns the information via HTTP to the presentation layer**
+
+No relevant code to show
+
+**7. Presentation layer renders the view with the new information**
+
+No relevant code to show
+
+As we walked through each of the steps, you may have noticed how each layer is responsible for a very specific duty.  This requires more thought and time to implement, but allows for greater organization as the project grows.  This also allows multiple team members to work on the application at once.  You could have one team implementing all of the database calls in the data layer, another team implementing the REST API in the business layer, and another team creating the front-end user interface!
+
+This sounds great, but there is one problem that this architecture does not solve.  The layered architecture still operates as a single application.  If you want to make any large changes to a single layer, you will have to re-deploy the entire application to implement the changes.  In other words, you will always have a daily/weekly/monthly "release schedule" where the entire application goes down for a brief moment and the new changes are released to the public.
 
 ## Microservices Architecture
 
 _All code mentioned below is stored in my [microservices architecture repository on Github](https://github.com/zachgoll/microservices-architecture-example)_
+
+A layered architecture is suitable for many applications, but one of the trends in software as of late is a migration towards microservice architectures.  It solves the "release schedule" problem and allows developers to independently engineer each piece of a larger application.
+
+If each piece of your architecture is self-sufficient and does not require anything from other pieces of the application, you have a microservices architecture.
 
 <div class="clickable-images">
 {% asset_img microservices.png %}
@@ -215,4 +320,231 @@ _All code mentioned below is stored in my [microservices architecture repository
 
 ### Application Structure
 
-Placeholder...
+In the code mentioned above, we have three parts to our microservices architecture:
+
+1. **View Server (localhost:8080)** - This server runs all of the front-end application logic which includes the main `index.html` file that utilizes _multiple_ microservices.
+2. **User Authentication Server (localhost:8081)** - This server manages all user authentication.
+3. **Game Server (localhost:8082)** - This server controls the game that is played on the screen.
+
+Notice how each of the servers run independently on different ports.  This means you could host them on completely different servers and still make the application work.  Each piece of the application communicates through HTTP protocol, and therefore can operate independently.
+
+One thing that you might notice if you look at the code linked above is the presence of a layered architecture within each microservice.  This is where architecture gets a little fuzzy.  You can have a microservices architecture that utilizes a layered architecture within each microservice.  Although there are no strict rules on how you must build your microservices, it is common to utilize something like a layered architecture to structure them.
+
+As we walk through the pieces of this application, notice how we are not talking about "call chains" anymore.  Instead, we are talking about API endpoints (i.e. the communication between the microservices).
+
+**Microservice #1 - User Authentication (http://localhost:8081)**
+
+_Note: The password authentication is not implemented as you should in a production application; it is solely for demonstration and you should never store your users' passwords in plain text like I am doing here!_
+
+This microservice is solely responsible for creating and authenticating users.    
+
+In many complex applications, an entire server will be devoted to authenticating and managing users.  After all, without users, you have no application.  Therefore, it is critical to not only implement the user functionality, but maintain proper security and protect the users' data.
+
+To understand why a user authentication microservice might be useful, imagine a large company that offers a wide variety of services to their users.  A perfect example is Google because you not only use your login credentials for Gmail and other core Google services; you also use it to log into YouTube and many other applications.  
+
+Imagine if Google implemented a user authentication scheme in **each individual application**!!  This is highly inefficient, so instead, Google created a "microservice" that functions as user authentication for not only Google applications, but an increasingly large number of 3rd party applications.  This is made possible because the authentication microservice is _decoupled_ from the underlying infrastructure with robust APIs.  **This is the goal of microservices.**
+
+You will see in the application that I have created a much much much much much (did I say much?) simpler authentication microservice than what Google owns.  Nevertheless, it demonstrates how we might implement an "authentication API" for one or more applications.
+
+Below, you'll see the three API endpoints that this microservice exposes: 
+
+```javascript
+app.post('/register', function(req, res, next) {
+    
+    const newUser = new User({
+        email: req.body.email,
+        password: req.body.password
+    });
+    
+    User.createUser(newUser, (err, user) => {
+        res.status(200).json(user);
+    });
+});
+
+app.post('/authenticate', (req, res, next) => {
+    const email = req.body.email;
+    const password = req.body.password;
+
+    User.getUserByEmail(email, (error, user) => {
+        if (user && user.password == password) {
+            // User entered the correct password and we should authenticate them!
+            res.status(200).json({ authenticated: true });
+        } else {
+            // User entered the wrong password
+            res.status(200).json({ authenticated: false });
+        }
+    });
+
+});
+
+app.get('/get-user/:useremail', function(req, res) {
+    User.getUserByEmail(req.params.useremail, (error, user) => {
+        res.status(200).json({ email: user.email, password: user.password });
+    });    
+});
+```
+
+Our front-end user application can use these three endpoints at `localhost:8081` to manage users!
+
+**Microservice #2 - Game (http://localhost:8082)**
+
+**This microservice is solely responsible for managing gameplay results of all the application users registered through the authentication microservice.**
+
+The game microservice is a bit simpler than the user authentication microservice, but demonstrates how we can separate core pieces of functionality of our applications.  Although this is a simple game, you could imagine a much more complex scenario where the game had all sorts of graphic elements and user data.
+
+Below are the two API endpoints that the Game microservice exposes: 
+
+```javascript
+// Register API Call
+app.post('/score', function(req, res, next) {
+
+    const score = req.body.result;
+    const winValue = score == "win" ? 1 : 0;
+    const lossValue = score == "loss" ? 1 : 0;
+    const email = req.body.email;
+
+    // See if user has posted a score already
+    Game.getUserScoresByEmail(email, (err, user) => {
+        // If user hasn't posted a score yet, create an entry for their count in the database
+        if (!user) {
+            Game.createUserWithScore(new Game({
+                email: email,
+                wins: winValue,
+                losses: lossValue
+            }), (err, user) => {
+                res.status(200).json(user);
+            });
+        } else {
+            // If user already has posted a score, update his/her win and loss count based on result
+            Game.updateUserScores(email, winValue, lossValue, (err, count) => {
+                res.status(200).json(count);
+            });
+        }
+    });
+});
+
+app.get('/score/:email', function (req, res, next) {
+    
+    Game.getUserScoresByEmail(req.params.email, (err, user) => {
+        res.status(200).json(user);
+    });
+});
+```
+
+The user interface will make calls to localhost:8082 to update a user's gameplay stats.
+
+**Bringing it all together: The User Interface**
+
+We have walked through the API endpoints that each microservice exposes, but these endpoints are useless without a user interface to help the user interact with them!
+
+In this user interface, `index.html` has a bunch of click listeners that will execute API calls when certain events happen.  For example, when a user enters information into the register form and clicks the register button, the following function is triggered, and a `POST` request is sent to the `/register` endpoint.
+
+{% asset_img register-demonstration.gif %}
+
+```javascript
+function register() {
+    const email = $("#register-email").val();
+    const pw = $("#register-pw").val();
+    event.preventDefault();
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:8081/register",
+        data: JSON.stringify({ email: email, password: pw }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function(result){ 
+            setTimeout(() => {
+                $("#register-message").toggleClass("hide"); 
+            }, 3000);
+            $("#register-message").toggleClass("hide"); 
+        }
+    });
+}
+```
+
+You can see that the `url` property is set to our User Authentication microservice.
+
+There is another click listener on the buttons that start and stop the game.  When the game is stopped, the following function is triggered, and a `POST` request is sent to the `/score` endpoint: 
+
+{% asset_img play-game-demo.gif %}
+
+```javascript
+function stopSpinner(position) {
+
+    let coordinatesArray = position.slice(7).split(",");
+    let c1 = Math.abs(parseFloat(coordinatesArray[0]));
+    let c2 = Math.abs(parseFloat(coordinatesArray[1]));
+    let result;
+
+    let email = localStorage.getItem("email");
+
+    if (!email) {
+        setTimeout(() => {
+            $("#logged-out-warning").toggleClass("hide"); 
+        }, 3000);
+        $("#logged-out-warning").toggleClass("hide");
+    }
+
+    if (c1 >= 0.9935 && c1 <= 1 && c2 >= 0 && c2 <= 0.12) {
+        result = "win";
+        setTimeout(() => {
+            $("#winner").toggleClass("hide");
+        }, 3000);
+        $("#winner").toggleClass("hide");
+    } else {
+        result = "loss";
+        setTimeout(() => {
+            $("#loser").toggleClass("hide");
+        }, 3000);
+        $("#loser").toggleClass("hide");
+    }
+    
+    if (email) {
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8082/score",
+            data: JSON.stringify({ email: email, result: result }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(result){ console.log(result) }
+        });
+    }
+}
+```
+
+Finally, when you click the button to see your scores, the following function is invoked, and a `GET` request is sent to the `/score/:email` endpoint. 
+
+{% asset_img see-score-demo.gif %}
+
+```javascript
+function seeScores() {
+    const email = localStorage.getItem("email");
+    $.ajax({
+        url: `http://localhost:8082/score/${email}`,
+        type: "GET",
+        success: function (user) {
+            $("#wins").text(user.wins);
+            $("#losses").text(user.losses);
+        },
+        error: function (jqXHR, textStatus, ex) {
+            console.log(textStatus + "," + ex + "," + jqXHR.responseText);
+        }
+    });
+}
+```
+
+## Other Architectures
+
+Although I only talked about monolithic, layered, and microservice architectures, there are many others to choose from.  As you become more experienced, you may begin to see the usefulness of other architectural patterns.
+
+For example, if you were trying to build a platform like Wordpress that has a core system which can be extended via plugins, you might opt for a [microkernel architecture](https://www.oreilly.com/library/view/software-architecture-patterns/9781491971437/ch03.html).  If you were trying to build Bitcoin, you might look at a peer-to-peer architecture.  If you 
+wanted to build an instant messaging system or chat application, you might look towards and Event-Driven Architecture.
+
+## Conclusion
+
+Whatever your situation, there is an architecture out there for you.  Remember, the ultimate goal with architecting software solutions is twofold: 
+
+1. Solve your problems in the _simplest_ way possible
+2. Design your architecture to address the _quality attributes_ you desire in your system
+
+If you can meet these two requirements, you have succeeded.  Don't fall into the [architecture astronaut](https://www.joelonsoftware.com/2001/04/21/dont-let-architecture-astronauts-scare-you/) trap. Don't fall into analysis paralysis.  Build something that works and call it a day.
