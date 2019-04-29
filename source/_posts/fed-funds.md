@@ -52,6 +52,7 @@ The Federal Reserve system was created in 1913 for one primary reason--to allevi
 As mentioned above, the government runs the fed, but this often just confuses people more than anything.  Logistically, the Fed runs just like every other bank in the United States.  It has a board of directors (they call it the FRB, or Federal Reserve Board of Governors) and shareholders (member banks, not the public).  It makes loans, takes deposits, and invests in securities just like any other bank.
 
 To make things more realistic, let's take a look at the Federal Reserve vs. a prominent U.S. Bank, JP Morgan.
+<div id="before-table"></div>
 
 |            | JP Morgan | Federal Reserve |
 | ---------- | --------- | --------------- |
@@ -107,6 +108,7 @@ Remember, the Fed is just a bank, which means that they have deposits just like 
 Why would the Fed require banks to keep a percentage of their deposits in the "vault"?  To ensure systematic financial stability.  
 
 The banks need to be able to hand their depositors physical cash at any time.  But just how much does each bank have to keep as "vault cash"?  This amount depends on the size of the institution (by number of deposits).  The table below shows how much different banks must hold in vault cash and/or reserves at the federal reserve.
+<div id="before-table"></div>
 
 |                     |  % of Liabilities (deposits) |
 | ------------------- | ---------------------------- |
@@ -137,6 +139,7 @@ In summary, the monetary base represents the amount of central bank money availa
 In the above section we discussed the definition of the monetary base, but economists also use "M1 money" as a proxy for the amount of spendable cash in the economy at a given time.  In our examples with apples and cash, we spoke only of physical cash, but more realistically, we should have been talking about physical cash plus checking account deposits at all the banks.  M1 is just that--it represents all of the physical cash in the economy plus all of the checking account deposits at banks (excluding reserves held at the Fed).  To be clear, "checking account deposits" represent how much you have deposited at your bank that is free to withdraw at any moment.
 
 Yes, you read that right--M1 excludes the reserves or "vault cash" that we spoke about above.  In other words, MB and M1 overlap in some areas, and not in others.
+<div id="before-table"></div>
 
 | Type of Money | MB | M1 |
 | ------------- | --- | --- |

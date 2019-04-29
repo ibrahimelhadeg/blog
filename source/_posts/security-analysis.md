@@ -164,6 +164,7 @@ After presenting his idea of the _correct_ theory of stock investment, Graham di
 3.  Good common stocks will prove sound and profitable investments
 
 He then makes it clear that the major fallacy in this new method is the fact that price is entirely ignored! In an example, he shows a chart of three companies from 1925-1929 (part of the new-era), and compares the price of each to their average EPS over those years:
+<div id="before-table"></div>
 
 |                          | Average EPS (1925-1929) | 1929 High |
 | ------------------------ | ----------------------- | --------- |
@@ -191,6 +192,7 @@ The next method that Graham points out as a possible way of investing is based a
 # Selection Based on Margin-of-Safety
 
 This is quite apparently Graham's (and Warren Buffett's) favorite method for purchasing common stock. Under this method, an investor can either buy low and sell high, or purchase undervalued stocks that have gone under the radar during good economic times. Over the years, we have seen Warren Buffett employ both; perplexing those who think that the market is perfectly efficient. Under the first method of buying low and selling high, Graham actually offers a concrete method for selecting stocks. He says that one should take a basket of the strongest stocks in the market (S&P 500, DOW, etc.), calculate an average EPS capitalized at the going long term interest rate, and then determine your personal buying and selling points above and below this average line.((If the market price of the index is below, then it is undervalued (buy signal); above, and it is overvalued(sell signal) )) Out of curiosity, I have conducted this recommended analysis on the S&P 500 as of November 2, 2016:
+<div id="before-table"></div>
 
 | | |
 | --------------------- | ----- |
@@ -345,6 +347,7 @@ Graham makes it a point to explain that not all depreciation charges are treated
 ### Expended depreciation and obsolescence
 
 In the matter of the first case mentioned above, a company could have a situation where the recorded depreciation is much greater than the "expended depreciation," or in other words, the cost of maintaining the asset each year.  Graham believes that in this type of case, the building is not actually wearing out, and the company is not accumulating a large cash balance for its replacement in the future, so the standard depreciation charge should be omitted and considered as a "risk of obsolescence."  In other words, when investing in a company like this, you are integrating the chance of the property becoming obsolete (as the result of changing times in an industry, change in operations, etc.) into the price you pay, while calculating the actual earnings based on the "expended depreciation." For example, consider the scenario for a made up company below, which demonstrates the two methods an analyst could use when determining earnings (assume there are 1,000,000 shares outstanding):
+<div id="before-table"></div>
 
 |               | As Reported | Investor's Adjustment |
 | ------------- | ----------- | --------------------- |
@@ -442,6 +445,7 @@ If these conditions are not met, the analyst must look to the past 5-10 year ave
 ## Allowances for Change in Capitalization
 
 The rule that Graham puts forth in the previous paragraphs does not come without exception.  Sure, the P/E ratio could satisfactory, but the investor must also look at what might happen to the capitalization of the company in the years coming.  At all times, the analyst must be prudent and assume that any stock options outstanding/convertibles WILL be exercised in the future. Consider the example from the book (American Airlines - 1939):
+<div id="before-table"></div>
 
 | | |
 | -------------------- | ---------- |
@@ -454,6 +458,7 @@ These two chapters go hand in hand, because chapter 40 introduces the idea of a 
 ## What is the Optimal Capital Structure?
 
 Graham begins by illustrating how companies with the same exact earnings power are valued at very different prices on the sole basis of varying capital structure.  When he talks about capital structure, he is explaining the ratio between long-term debt and equity (bonds and stock).  I can assume that this is often referred to as the WACC (weighted average cost of capital) these days.  See the data below for an illustration of this:
+<div id="before-table"></div>
 
 | Company | Earnings for Common Stock | Value of Common Stock | Value of Bonds | Total Value of Company |
 | ------- | ------------------------- | --------------------- | -------------- | ---------------------- |
@@ -462,6 +467,7 @@ Graham begins by illustrating how companies with the same exact earnings power a
 | C | $520,000 | $6,000,000 | $12,000,000 | $18,000,000 |
 
 To determine earnings power, divide earnings by the total value of the companies:
+<div id="before-table"></div>
 
 | Company | Earnings/Value of Common |
 | ------- | ------------------------ |

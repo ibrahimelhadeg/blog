@@ -16,7 +16,7 @@ We first must understand what "ephemeral" storage is, as it explains why we need
 
 Take a moment to think about what a cloud computing and storage company provides.  Among others, they provide virtual machines and storage.  If you had 1 large server in your house and wanted to rent it out, how would you do it?  Would you find a single customer and give them access to the entire server?  Chances are, that customer will not use all the possible space on that server, so this approach would be cost inefficient.  If you really wanted to maximize the value of that server taking up space in your garage, you might consider renting it out five different clients at a time.
 
-You probably already guessed, but the way we could do that is through virtualization.  Instead of renting the entire server, we create five separate virtual machines that all use a portion of the [computer's resources](https://zachgoll.github.io/blog/2019/bash-essentials/#Process-Management-and-System-Management) (CPU, memory, storage, I/O).
+You probably already guessed, but the way we could do that is through virtualization.  Instead of renting the entire server, we create five separate virtual machines that all use a portion of the [computer's resources](/blog/2019/bash-essentials/#Process-Management-and-System-Management) (CPU, memory, storage, I/O).
 
 When a new client comes on board, we allocate resources and give them some login credentials.  When an existing client moves out, we take the portion of that server that we gave to them and delete everything on it.
 

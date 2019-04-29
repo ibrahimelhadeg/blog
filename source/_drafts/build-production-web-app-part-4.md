@@ -6,4 +6,4 @@ tags:
 
 Welcome to part 4 of the "Build a Production Web App" series.  If you are new here, I suggest starting from the beginning.
 
-[Go To Part 1](https://zachgoll.github.io/blog/2019/build-production-web-app-part-1/)
+[Go To Part 1](/blog/2019/build-production-web-app-part-1/)

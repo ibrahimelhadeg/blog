@@ -4,7 +4,7 @@ date: 2019-01-05 14:26:26
 tags: how to code, coding, teach yourself code
 ---
 
-**Note Before Starting**: If you run into problems with anything, [please refer to this post](https://zachgoll.github.io/blog/2019/how-to-raise-issue-github/) which will show you the proper way to raise an issue on Github for me to best answer your question.
+**Note Before Starting**: If you run into problems with anything, [please refer to this post](/blog/2019/how-to-raise-issue-github/) which will show you the proper way to raise an issue on Github for me to best answer your question.
  
 **Repository**: [Here is the repository this post is associated with.](https://github.com/zachgoll/how-to-code-1-hour-crash-course)
 

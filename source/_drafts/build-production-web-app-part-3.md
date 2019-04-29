@@ -101,7 +101,7 @@ The wireframes below are for v1.0 of the application.  Additional features will 
 **4)** Kibana and Logstash are free, open source logging components that are produced by a company called Elastic.
 **5)** The Angular, Express, Mongoose, and MongoDB components will be further decomposed in the next section
 **6)** The CDN is for static files like CSS or Javascript, and the Digital Ocean "Spaces" is an object storage container that will store the contents on the CDN and backup our database.  To understand the differences between object and block cloud storage, check out my tutorial on 
-<span class="ext-topics">[cloud storage types](http://zachgoll.github.io/blog/2019/file-object-block-storage/)</span>
+<span class="ext-topics">[cloud storage types](/blog/2019/file-object-block-storage/)</span>
 
 Below is an **alternate view** to the above architecture.  This view only shows the application architecture and excludes many of the cloud computing components.  If a layer says "closed", this means that it can only be used by the layer above it.  If a layer is "open", it can be used by any of the layers.
 

@@ -62,6 +62,18 @@ Difficult topic that needs tooltip at end<span class="tooltip"><i class="fa fa-q
 </div>
 ```
 
+### Amazon Book Pictures
+
+```
+<span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span>
+
+[See on Amazon](https://amzn.to/2pOsAHK)
+
+<p class="amazon-picture-container">
+[place the entire snippet from amazon image here]
+</p>
+```
+
 ## Install
 1. In the `root` directory:
 

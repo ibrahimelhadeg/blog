@@ -8,7 +8,7 @@ _This is the full video.  Individual video parts posted at beginning of each sec
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/o6kks8109Vg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-When starting out with the bash shell, there are a few essential concepts beyond the basic commands that one must be aware of.  Beyond [the basics]() and [user permissions](https://zachgoll.github.io/blog/2019/user-permissions/), one must learn about environment variables, aliases, and some more advanced commands relating to topics of networking, process management, ssh, and scripting.
+When starting out with the bash shell, there are a few essential concepts beyond the basic commands that one must be aware of.  Beyond [the basics]() and [user permissions](/blog/2019/user-permissions/), one must learn about environment variables, aliases, and some more advanced commands relating to topics of networking, process management, ssh, and scripting.
 
 # Environment variables
 
@@ -26,7 +26,7 @@ You can use this as long as the shell is still open.
 echo $MY_VARIABLE # some value 
 ```
 
-As soon as you close the shell, this will no longer be a variable.  If you want to create a global variable, you will need to export it in one of your bash configuration files.  It is recommended that you place it in the `~/.profile` file as described in [this tutorial](https://zachgoll.github.io/blog/2019/user-permissions/).
+As soon as you close the shell, this will no longer be a variable.  If you want to create a global variable, you will need to export it in one of your bash configuration files.  It is recommended that you place it in the `~/.profile` file as described in [this tutorial](/blog/2019/user-permissions/).
 
 ```bash
 # ~/.profile
@@ -1275,7 +1275,7 @@ On the other end, the server which is running my website will find the HTML docu
 
 The router represents a "local network", and actually has a dynamic IP address (DHCP) that will change from time to time.  This is okay because my request I sent has the current IP address for my home network and therefore the server sending back the information will find my network.  Once it finds the network, the router is in charge of routing that information to the correct device in my local network.
 
-A home has multiple devices (laptop, desktop, Chromecast, printer, etc.), and therefore each home network will need multiple IP addresses.  It would be difficult to manage a new IP address for each device out in the wild, but with our local area network, it is simple.  The network itself has an IP address which is called the "default gateway".  This IP address represents all the devices on the network and is where traffic leaves and enters.  Within the local network, each device has a "subnet mask" which will create a unique IP address for each device within the bounds of the local area network address space.  This topic is impossible to understand without an understanding of subnetting, so [I have written a separate post](https://zachgoll.github.io/blog/2019/ip-addresses-netmasks) to explain it for anyone looking to more deeply understand what is going on.  If you choose not to read it, here are the cliffnotes (and a diagram):
+A home has multiple devices (laptop, desktop, Chromecast, printer, etc.), and therefore each home network will need multiple IP addresses.  It would be difficult to manage a new IP address for each device out in the wild, but with our local area network, it is simple.  The network itself has an IP address which is called the "default gateway".  This IP address represents all the devices on the network and is where traffic leaves and enters.  Within the local network, each device has a "subnet mask" which will create a unique IP address for each device within the bounds of the local area network address space.  This topic is impossible to understand without an understanding of subnetting, so [I have written a separate post](/blog/2019/ip-addresses-netmasks) to explain it for anyone looking to more deeply understand what is going on.  If you choose not to read it, here are the cliffnotes (and a diagram):
 
 {% asset_img ipaddresses.PNG %}
 
@@ -1318,7 +1318,7 @@ lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
 
 There are three entries in my configuration.  The bottom one called "lo" is a loopback configuration which redirects the address 127.0.0.1 to "localhost", and is commonly used for developing web applications.  The first entry "enp37s0" seems to be an empty configuration.  The middle entry "enx000f00de66da" is what we are interested in, because it displays the IP address of this device, the subnet mask, and the broadcast address of my LAN.  
 
-This is where an [understanding of IP addresses and subnetting on a LAN](https://zachgoll.github.io/blog/2019/ip-addresses-netmasks) is helpful, because the INET address listed is not actually the public IP address recognized by the broader internet.  This IP address is the _local_ identifier which can be translated into the public IP for the network by combining it with the subnet mask which is also listed.  The broadcast address is also listed, but we could easily have derived that from the IP address and the subnet mask as well.
+This is where an [understanding of IP addresses and subnetting on a LAN](/blog/2019/ip-addresses-netmasks) is helpful, because the INET address listed is not actually the public IP address recognized by the broader internet.  This IP address is the _local_ identifier which can be translated into the public IP for the network by combining it with the subnet mask which is also listed.  The broadcast address is also listed, but we could easily have derived that from the IP address and the subnet mask as well.
 
 If I typed ifconfig into another computer on my network, the broadcast address and subnet mask will not change, but the IP address will.  There is also data like the maximum transmission units (MTU) which is the maximum size of a packet on this device, and RX/TX packets which indicate how many packets have been transmitted to and from this network.  These values will be constantly increasing.
 
@@ -1812,4 +1812,4 @@ It is difficult to know what a reasonable wait time is without benchmarking, but
 
 ## Conclusion 
 
-You may have never thought this would happen, but the post is finally over.  By now, you should have an intermediate to advanced skill-set using the bash shell, and paired with [users, groups, and permissions](https://zachgoll.github.io/blog/2019/user-permissions/), you will have a high level understanding of Bash (and even Linux for that matter).
+You may have never thought this would happen, but the post is finally over.  By now, you should have an intermediate to advanced skill-set using the bash shell, and paired with [users, groups, and permissions](/blog/2019/user-permissions/), you will have a high level understanding of Bash (and even Linux for that matter).

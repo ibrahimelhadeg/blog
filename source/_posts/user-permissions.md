@@ -113,20 +113,6 @@ The group output is as follows:
 3. Group ID (remember, root is always 0)
 4. Optional users that are part of the group (in addition to what is specified in the /etc/passwd file)
 
-## Switching, adding, modifying, and removing users and groups
-
-Generally, you will not need to create new users (unless you are a systems admin at work), but it is useful to understand the process of creating groups and users and how to deal with them.  To create a new user, run the following command.
-
-```bash 
-sudo useradd <name-of-your-user>
-```
-
-This will ask you to enter your current user's password (root access) and will then ask you to assign the new user a UNIX password followed by some basic info.  Now, let's create a group:
-
-```bash
-sudo 
-```
-
 ## Setting permissions
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/YWoI8FjvNn0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -141,13 +127,14 @@ There are four parts to a permission set:
 4. Rest of world permissions
 
 Below is a table that explains how we got to our permission set.  As you can see, the code `755` corresponds to the `-rwxr-xr-x` permission set.
+<div id="before-table"></div>
 
 |                       Type                       |               User permissions               |               Group Permissions              |           Rest of World Permissions          |
 |:------------------------------------------------:|:--------------------------------------------:|:--------------------------------------------:|:--------------------------------------------:|
 | Could be directory (d), file (-), or symlink (l) | Could be read (r), write (w), or execute (x) | Could be read (r), write (w), or execute (x) | Could be read (r), write (w), or execute (x) |
-|                         -                        |                      rwx                     |                      r-x                     |                      r-x                     |
-|                     Code --->                    |                       7                      |                       5                      |                       5                      |
-|                                                  | rwx = r (4) + w (2) + x (1) = 7              | r-x = r (4) + 0 + x (1) = 5                  | r-x = r (4) + 0 + x (1) = 5                  |
+|                    Letter Code                             |                      rwx                     |                      r-x                     |                      r-x                     |
+|                     Number Code                    |                       7                      |                       5                      |                       5                      |
+|                      Calculation                            | rwx = r (4) + w (2) + x (1) = 7              | r-x = r (4) + 0 + x (1) = 5                  | r-x = r (4) + 0 + x (1) = 5                  |
 
 If we print out the full permissioning of a single file in `/sbin` such as the `unix_update` binary, we get the following output.
 
@@ -191,18 +178,6 @@ chown -R ubuntu:ubuntu parent-dir/
 
 ## .bashrc, .bash_profile, .bash_login, .profile
 
+We have covered many concepts in the bash shell and UNIX based operating system, but what about the configuration file that controls how your bash shell runs?  There are actually several configuration files and they do not have an intuitive hierarchy in terms of which one takes precedence over another.  To make things more complicated, some of the config files run for "login shells" while others run in "non-login, interactive shells".  What is a login shell?  What is an interactive shell?  In video below, I clarify what all these files do and when they should be used. 
+
 <iframe width="560" height="315" src="https://www.youtube.com/embed/yIuPu4iLcY4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-We have covered many concepts in the bash shell and UNIX based operating system, but what about the configuration file that controls how your bash shell runs?  There are actually several configuration files and they do not have an intuitive hierarchy in terms of which one takes precedence over another.  To make things more complicated, some of the config files run for "login shells" while others run in "non-login, interactive shells".  What is a login shell?  What is an interactive shell?  In this section, we will clarify what all these files do and when they should be used. 
-
-### Login shell vs. non-login shell
-
-Before naming any of the files, we need to first understand the difference between a login shell and a non-login shell.  This is a tough concept for many modern day PC users because everything is "emulated".  In other words, when we say we are opening the "terminal", we are not actually opening a terminal because a terminal is a physical machine that computer operators used to operate.  We now have little programs on our computers that emulate a terminal, but are really just programs that implement a certain shell language like bash.  So when we talk about a login shell vs. a non-login shell, we are really talking about the moment that you wake up your computer and type in your password vs. the moment where you open a command line on your computer.
-
-A login shell runs in the background as you login through your computer's graphical interface.  It also runs when you ssh into a remote machine.
-
-A non-login shell is pretty much any other shell you run.  When you open your terminal application, that is a "non-login" shell running.
-
-### Interactive vs. Non-Interactive Shell
-
-This 

@@ -8,7 +8,7 @@ tags:
 
 ## Prerequisites
 
-This course is for anyone who is [familiar with the command line](https://zachgoll.github.io/blog/2019/bash-essentials) and needs to know all the essential commands for the Git utility.  You will need to have the following knowledge:
+This course is for anyone who is [familiar with the command line](/blog/2019/bash-essentials) and needs to know all the essential commands for the Git utility.  You will need to have the following knowledge:
 
 * Basic understanding of coding languages (we will not write any code, but will be looking at some)
 * Basic mastery of the command line
