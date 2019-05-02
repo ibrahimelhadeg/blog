@@ -1,8 +1,11 @@
 ---
-title: Introduction to Software Architecture (Monolithic vs. Layered vs. Microservices)
-date: 2019-04-24 05:21:18
+title: >-
+  Introduction to Software Architecture (Monolithic vs. Layered vs.
+  Microservices)
 tags: software architecture
+date: 2019-04-24 05:21:18
 ---
+
 
 <div class="series-introduction">If you are coming from part 4 of my series [How to Build a Production Web App](/blog/2019/build-production-web-app-part-3), you are probably wondering what my thought process was behind the architecture presented in the series.  This post should clear up any confusion and provide a quick introduction to the world of software architecture.
 </div>
@@ -84,8 +87,6 @@ I believe the easiest way to learn software architecture is to see it in practic
 ## Monolithic Architecture
 
 _All code mentioned below is stored in my [layered architecture repository on Github](https://github.com/zachgoll/monolithic-architecture-example-app)_
-
-A monolithic architecture describes an application where everything is condensed into one codebase.  You may have different parts of the application split into folders, but changes to any part of the codebase will affect the other elements.
 
 If you have ever taken tutorials online that teach you how to build a web application, you have most likely built a monolithic application.  It is by far the easiest to conceptualize starting out.  
 
