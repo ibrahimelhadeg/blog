@@ -4,6 +4,19 @@ date: 2019-03-10 07:38:32
 tags:
 ---
 
+## Steps to completing this tutorial: 
+
+1. Do research on topics that are confusing and create tutorials for these topics
+2. When you feel "ready enough", record your best effort video on that section.
+3. When the project is complete, go back and edit videos that have misinformed information.  <--- Most important part!!!
+
+## Requirements for Video 
+
+1. My video must be a standard size across all videos.
+2. The bottom quarter of my screen will have a banner with flashing notes and my video 
+3. Each section will have official intros to distinguish when a new section is coming.
+
+
 There is no shortage of tutorials on how to build a web application, but there is nothing that I have found which covers the process of building a production-ready application from start to finish (yes, everything!). This post/video series is for those individuals and/or startups who want to get it right the first time. Instead of hacking something together and later finding out you have secret keys in your repositories, unreadable and long functions, failing test suites, bad code syntax, and no scalability, why not just get it right the first time?
 
 This is not your average tutorial where I show you how to build the classic Todo List Application.  This tutorial is a **real life example** of what goes into building a useful software product.  In this series, I will be building a Golf Practice and Stats application for my site, [The DIY Golfer](https://www.thediygolfer.com).  It will be released to **real users**.

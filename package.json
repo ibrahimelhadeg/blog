@@ -6,7 +6,7 @@
     "version": "3.8.0"
   },
   "scripts": {
-    "start": "hexo server -p 8080"
+    "start": "hexo server --drafts -p 8080"
   },
   "dependencies": {
     "hexo-deployer-git": "^0.3.1",
