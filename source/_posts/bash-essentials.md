@@ -4,10 +4,6 @@ date: 2019-02-03 15:50:19
 tags: linux
 ---
 
-_This is the full video.  Individual video parts posted at beginning of each section._
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/o6kks8109Vg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
 When starting out with the bash shell, there are a few essential concepts beyond the basic commands that one must be aware of.  Beyond [the basics]() and [user permissions](/blog/2019/user-permissions/), one must learn about environment variables, aliases, and some more advanced commands relating to topics of networking, process management, ssh, and scripting.
 
 # Environment variables
