@@ -6,7 +6,8 @@
     "version": "3.8.0"
   },
   "scripts": {
-    "start": "hexo server --drafts -p 8080"
+    "start": "hexo server --drafts -p 8080",
+    "deploy": "hexo generate && hexo deploy"
   },
   "dependencies": {
     "hexo-deployer-git": "^0.3.1",
@@ -17,7 +18,9 @@
     "hexo-renderer-ejs": "^0.3.0",
     "hexo-renderer-marked": "^0.3.2",
     "hexo-renderer-stylus": "^0.3.1",
-    "hexo-server": "^0.2.2"
+    "hexo-server": "^0.2.2",
+    "https": "^1.0.0",
+    "querystring": "^0.2.0"
   },
   "devDependencies": {
     "hexo": "^3.8.0"
