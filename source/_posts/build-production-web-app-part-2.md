@@ -1,8 +1,10 @@
 ---
 title: Build a Production Web App Part 2 - Statement of Work
-date: 2019-03-15 14:26:06
 tags:
+  - series
+date: 2019-06-18 14:26:06
 ---
+
 
 <div class="series-introduction">Welcome to part 2 of the "Build a Production Web App" series.  If you are new here, I suggest starting from the beginning.
 
@@ -21,22 +23,22 @@ To achieve this, we need to start by creating a project plan.
 
 Given the fact that we will be developing the app start to finish without hiring any contractors, it begs the question whether a project plan is even necessary.  Why plan when you can just get started and figure it out along the way?
 
-Although there is no funding and no contractors to hire for this project, we still need a project plan.  Not only will it help simulate what a real project might look like, but it will also allow us to narrow the scope of the code we have to write.
+Although there is no funding and no contractors to hire for this project (I'm doing all of it), we still need a project plan.  Not only will it help simulate what a real project might look like, but it will also allow us to narrow the scope of the code we have to write.
 
 ## Choosing a Project Management Method
 
-There are 1,000 correct ways to plan and manage a project, but you will generally see two standard approaches in the software industry:
+There are 1,000 incorrect ways to plan and manage a project, but you will generally see two "less incorrect" methods in the software industry:
 
 1. Waterfall Approach
 2. Agile Approach (continuous delivery)
 
-At the time of writing, the waterfall approach carries a negative stigma in PM (project manager) circles because can you really get the planning and budget right for a 3 year project anyways?  What's the point of a waterfall approach if the project changes so much along the way that the original plan is deemed useless?
+At the time of writing, the waterfall approach carries a negative stigma in PM (project manager) circles because who can plan and budget right for a 3 year project anyways?  What's the point of a waterfall approach if the project changes so much along the way that the original plan is deemed useless?
 
 I won't argue that the waterfall approach is better because in terms of efficiency, it's usually not.  That said, when working on a project for a client, that client is going to want to know a rough estimate of how long the project will take and for what cost.  You cannot just walk up to a client and say "We don't know how much this will cost, and we don't know how long it will take.  But we'll try our best?".
 
 Likewise, it would be hard for you as the reader/viewer of this series if I had no structure behind the project.  For that reason, we are going to combine the best of both worlds and use both Agile methods and Waterfall methods.
 
-As a programmer, I love being able to make binary choices.  It's literally at the core of what I do.  But sometimes, blending the best of both worlds is the most reasonable approach.  
+As programmers, we love being able to make binary choices.  It's literally at the core of what we do.  But sometimes, blending the best of both worlds is the most reasonable approach.  
 
 You will see this paradigm throughout this tutorial many times.  Not only will we be using Agile and Waterfall planning methods together, but we will also be mixing object oriented programming with functional programming; Promises with Observables.  The list goes on.
 
@@ -48,7 +50,7 @@ I have already come up with the idea to build, but in many cases, the ideation p
 
 A project like this could cost around $20K-$30K depending on some of the features you are looking for (based on a price estimate from [Estimate My App](https://estimatemyapp.com/)).  Since I am developing it for myself, there is no concept of a client, and no cost estimates to make.  Nevertheless, we will go through some of the considerations I would make had I decided to hire a team to build this.
 
-**Most of the costs are personnel**.  The software itself does not cost much.  As you will see, you can build a production web app with almost 100% open source (free) software.  The only _non-personnel_ cost we will incur across this project will be hosting costs, domain name costs, and a few other miscellaneous expenses.  These costs will continue perpetually into the future, so be sure that you have the funding to support your new application.  
+**Most of the costs are personnel**.  The software itself does not cost much.  As you will see, you can build a production web app with almost 100% open source (free) software.  The only _non-personnel_ cost we will incur across this project will be hosting costs, domain name costs, and a few other miscellaneous expenses.  These costs will continue perpetually into the future, so be sure that you have the funding to support your new application.  There is nothing worse than building an awesome application and then realizing that you're going to need a second mortgage to pay the support for it!  
 
 To grasp just how expensive the labor for a software project can get, consider a project that will take 10 weeks.  If you have a team of **5** developers working at **$65 per hour** (that's even on the low end) every day of the week, you'll end up paying around **$130K** for the project.
 
@@ -58,9 +60,9 @@ To grasp just how expensive the labor for a software project can get, consider a
 
 Didn't someone say open source software was completely free?...
 
-In reality, cost estimates are more complex and involve multiple meetings with the client to discover what their product needs are, what their budget is, how fast they need the project completed, and other factors.  Through the course of the project, the client could also request additional features, which will result in a request for funding.  If the client is not knowledgeable about software in general, the cost estimation process can turn out to be quite difficult.  Since our goal is to _write_ software and not _manage a project_, there is no need to explore this topic in depth.
+In reality, cost estimates are more complex and involve multiple meetings with the client to discover what their product needs are, what their budget is, how fast they need the project completed, and other factors.  During the project, the client could also request additional features, which results in a request for funding.  If the client is not knowledgeable about software in general, the cost estimation process can turn out to be quite difficult.  Since our goal is to _write_ software and not _manage a project_, there is no need to explore this topic in depth, but definitely worth bringing up.
 
-A cost estimate is helpful, but in order to start the project, we need a Statement of Work (SoW) and approval of funding.  The SoW can be as simple or as complex as you want it to be.  The ultimate goal with an SoW is to _protect yourself_ as a contractor against the client and define the work to be done.  As a software company offering your development services, if there are any items that may become points of contention in the future, **put them in the SoW**.
+A cost estimate is helpful, but in order to start the project, we need a Statement of Work (SoW) and approval of funding.  The SoW can be as simple or as complex as you want it to be.  The ultimate goal with an SoW is 1) to _protect yourself_ as a contractor against the client, and 2) define the work to be done.  As a software company offering your development services, if there are any items that may become points of contention in the future, **put them in the SoW**.
 
 ## Proposal and Statement of Work
 
@@ -77,7 +79,7 @@ Below is a simple SoW that I created for this project.  Please note that this So
 <span style="font-size: 1.2rem;">**Statement of Work**</span>
 
 **Version: 1.0**
-**Date: 03/18/19**
+**Date: 06/18/19**
 
 <h3>Contents Summary</h3>
 This document has 2 distinct parts. The first section outlines over-arching project information; the second part defines the detail of each phase and will be extended through the course of the project as each phase ends.
@@ -103,10 +105,10 @@ This document has 2 distinct parts. The first section outlines over-arching proj
 
 ### Project Summary
 
-Project Number:                 1
+Project Number:                 2131 (just a random ID)
 Project Name:                   Build Production Web App YouTube Series
-Start date:                     3/21/19
-Deadline:                       TBD
+Start date:                     6/18/19
+Deadline:                       12/1/2019
 Project Labor Budget:           $0 for phase 1
 Project Non-Labor Budget:       $0 for phase 1
 Delivery Approach:              Waterfall/Agile Hybrid
@@ -127,14 +129,15 @@ The project has two goals:
 
 1. To demonstrate the process and internals of building a production-ready web application
 2. To drive more users to www.thediygolfer.com through a value-added statistics tracking and practice application.
+3. To provide an additional tool for students of my site to use during their training courses
 
-The focus will be primarily on the technical development of the project rather than components like legal issues, project management, project governance, graphic design, etc.  The secondary goal is to achieve selected business objectives.
+The focus will be primarily on the technical development of the project and education rather than components like legal issues, project management, project governance, graphic design, marketing, etc.
 
 **Expected Outcomes**
 
 The expected outcomes of the project are: 
 
-1. Educate a large technical audience the basics of building a production web application using the MEAN stack (MongoDB, Express, Angular, NodeJS)
+1. Educate startups, self-taught developers, and others the basics of building a production web application using the MEAN stack (MongoDB, Express, Angular, NodeJS)
 2. Gain 1000 new users within 1 year of first production release
 
 ### Project Process
@@ -175,9 +178,9 @@ Phase 2 is generally the longest phase and is where AGENCY builds out the soluti
 
 **Phase 3: Review and Support**
 
-The final phase necessary to transition between delivery and ongoing support.  A web application requires hosting, domain name renewal, and other support services.  When the project is complete, AGENCY will transfer all support costs to CLIENT.  AGENCY will also provide 2 months of ongoing support which may include troubleshooting application issues or training internal personnel how to support the application.  When the 2 months is up, the AGENCY will require additional budget for further support.
+The final phase necessary to transition between delivery and ongoing support.  A web application requires cloud computing services, domain name renewals, and other support services.  When the project is complete, AGENCY will transfer all support costs to CLIENT.  AGENCY will also provide 2 months of ongoing support which may include troubleshooting application issues or training internal personnel how to support the application.  When the 2 months is up, the AGENCY will require additional budget for further support.
 
-<div class="sow-comment">In a real-life scenario, the AGENCY may specify an hourly support rate.</div>
+<div class="sow-comment">In a real-life scenario, the AGENCY may offer an hourly support rate if the CLIENT is interested in such a service.</div>
 
 ### Project Budget
 
@@ -192,15 +195,15 @@ The final phase necessary to transition between delivery and ongoing support.  A
 
 | Milestone Description                 |      Date      |
 |---------------------------------------|:--------------:|
-| v1.0 Planning Complete                |     4/5/19     |
-| v1.0 Back-End Development Complete    |     4/30/19    |
-| v1.0 Front-End Development Complete   |     6/15/19    |
-| v1.0 QA Testing Complete              |     6/30/19    |
-| v1.0 User Acceptance Testing Complete |     7/10/19    |
-| v1.0 Final Testing and Deployment     |     8/31/19    |
-| v1.1 Release (small update to demonstrate how to push updates) | 9/5/19 |
-| v1.1 Mobile App (IOS) release         |     9/30/19    |
-| v1.2 Release (web and mobile update)  |     10/5/19    |
+| v1.0 Planning Complete                |     8/1/19     |
+| v1.0 Back-End Development Complete    |     9/1/19    |
+| v1.0 Front-End Development Complete   |     10/1/19    |
+| v1.0 QA Testing Complete              |     10/15/19    |
+| v1.0 User Acceptance Testing Complete |     11/1/19    |
+| v1.0 Final Testing and Deployment     |     12/1/19    |
+| v1.1 Release (small update to demonstrate how to push updates) | Date TBD |
+| v1.1 Mobile App (IOS) release         |     Date TBD    |
+| v1.2 Release (web and mobile update)  |     Date TBD    |
 | Future Releases                          | Not part of series |
 
 ### Project Governance
@@ -258,11 +261,11 @@ A design document will be created to guide the development phase.  The design do
 
 | Milestone Description       |   Date  |
 |-----------------------------|:-------:|
-| User Stories and Wireframes | 3/21/19 |
-| Brand Style Sheet           | 3/22/19 |
-| Data and API Design         | 3/29/19 |
-| Architectural Design        |  4/2/19 |
-| Design Document Finalized   |  4/5/19 |
+| User Stories and Wireframes | 6/21/19 |
+| Brand Style Sheet           | 6/22/19 |
+| Architectural Design        | 7/10/19 |
+| Data and API Design         | 7/20/19 |
+| Design Document Finalized   | 8/1/19  |
 
 
 <div class="sow-comment">For funded projects, this section would also include hours and costs of resources decked to each deliverable.</div>
@@ -290,6 +293,4 @@ This phase has not been approved at the time of writing and will be updated at a
 
 </div>
 
-<br>
-<hr>
-[Next Post in Series: Design Document](/blog/2019/build-production-web-app-part-3/)
+Next Post in Series: The Design Document (Coming Soon)

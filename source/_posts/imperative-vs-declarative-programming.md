@@ -1,13 +1,15 @@
 ---
-title: Imperative vs. Declarative Programming (Procedural, Functional, and OOP)
+title: 'Imperative vs. Declarative Programming (Procedural, Functional, and OOP)'
+date: 2019-06-19 14:46:26
 tags:
 ---
+
 
 ## Why You Should Care About this Question
 
 Maybe you heard it in an Object Oriented Programming book.  Maybe you read it on Stack Overflow.  Maybe you're reading a textbook for school.
 
-Eventually, you get annoyed reading the terms "declarative" and "imperative" because you know they are important but have no clue why.  In my mind, knowing the difference between imperative and declarative programming is useful for a single reason, and that is to help you better understand the difference between procedural, functional, and object-oriented programming styles.  By understanding these five terms, you'll have a better appreciation for the code you read.
+Eventually, you get annoyed reading the terms "declarative" and "imperative" because you know they are important but have no clue why.  In my mind, knowing the difference between imperative and declarative programming is useful for a single reason, and that is to help you better understand the difference between procedural, functional, and object-oriented programming styles.  By understanding these five terms, while reading code libraries, you will begin to see where the authors got their code designs.
 
 ## The Terms
 
@@ -51,7 +53,7 @@ Simple right?  In this declarative program, I have told you the _outputs_ that I
 
 As programmers, we hear the word "abstraction" a lot.  An abstraction is about stripping away the nitty gritty details in order to talk about a higher-level concept.  I don't care about all the steps it takes to get hot water to come out of my shower head.  I just care that hot water comes out!  This is abstraction.
 
-Imperative programming is an _enabler_ of abstraction.  Declarative programming is an _inhibitor_ of abstraction.  If you are programming imperatively and need to print something to the console in the C language, you can write the following program:
+Declarative programming is an _enabler_ of abstraction.  Imperative programming is an _inhibitor_ of abstraction.  Declarative programming allows you to say "I want this and I don't care how I get it" while imperative programming requires you to define each and every step.  If you are programming imperatively and need to print something to the console in the C language, you can write the following program:
 
 ```C
 #include <unistd.h>
@@ -87,7 +89,7 @@ Okay, okay.  You hate reading C code and trying to remember what a pointer is.  
 
 I used this example for two reasons: 
 
-1. It demonstrates imperative vs. declarative in code elegantly.
+1. It demonstrates imperative vs. declarative in code.
 2. C is considered a "procedural" programming language, which falls under the imperative category.
 
 So let's recap.  Imperative programming is about _how_, and is where you list out every step of a program.  It reduces abstraction to a minimum.  Declarative programming is about _what_, and specifies a desired output without caring how the program gets to that output.  It is the ultimate abstraction.
@@ -180,11 +182,11 @@ So that leaves us with functional programming, which is great for the following 
 
 And here is where Object Oriented programming comes into the picture.  Neither of these statements will make sense until we understand what object-oriented programming is all about.
 
-The real debate is not the merits of procedural vs. functional programming methods, but rather the merits of functional vs. object-oriented programming methods.
+The real debate is not the merits of procedural vs. functional programming methods, but rather the merits of functional vs. object-oriented programming methods, and furthermore, why are we comparing them?
 
 ### Two Camps
 
-On the web, although improving, there is a clear "us vs. them" mentality when it comes to functional vs. object-oriented programming.  One camp believes OOP is the way forward while the other camp doesn't believe it is "pure" enough.  Despite this, you'd have a hard time finding an Object-Oriented system that doesn't include some sort of functional programming in it!  There are subtleties you could compare, but good code isn't about picking one or the other.  Good code is about knowing _when_ to use each type of programming!
+On the web, although improving, there is a clear "us vs. them" mentality when it comes to functional vs. object-oriented programming.  One camp believes OOP is the way forward while the other camp doesn't believe it is "pure" enough.  Despite this, you'd have a hard time finding an Object-Oriented system that doesn't include some sort of functional programming in it!  There are subtleties you could compare, but good code isn't about picking one or the other.  Good code is about knowing _when_ to use each type of programming.
 
 ## Why use OOP?
 
@@ -196,7 +198,7 @@ Object-oriented programming is difficult to examine in the context of imperative
 * Advertisement 
 * Button
 
-This is a non-exhaustive list, but the important thing to understand about OOP is that each "object" has a set of "methods".  Said differently, your system has nouns and verbs.  A `Person` can `addFriend()`, `likePost()`, `updateProfile()`, etc.
+This is a non-exhaustive list, but the important thing to understand about OOP is that each "object" has a set of "methods".  Said differently, your system has nouns and verbs.  A `Person` can `addFriend()`, `likePost()`, or `updateProfile()`.
 
 I have no intention of diving deep into the concepts of OOP, but we now know _just enough_ to understand the reasons why we might use functional vs. OOP in our code.
 
@@ -222,7 +224,7 @@ In other words, functional programming is great when you are building something 
 
 Yes, you could define these as your objects and then implement methods on them, but likely, this kind of system will be written functionally utilizing some of Javascript's internal methods.
 
-You have a fixed set of objects that you may add operations to.  You may first release the library with 10 String operations and later release a version with 20 string operations.
+You have a fixed set of objects that you may add operations to.  You may first release the library with 10 String operations (i.e. `string.length()`, `string.type()`, `string.toJson()`) and later release a version with 20 string operations.
 
 Now if we are building Facebook, we might look towards OOP because we have a fixed number of operations on a growing set of objects.  Maybe we start with a Person, Photo, and Video Object, but as the business grows, we add objects like Businesses, Advertisements, Livestreams, etc.
 
