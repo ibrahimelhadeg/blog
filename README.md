@@ -9,6 +9,7 @@ A responsive, clean and simple [Hexo](http://hexo.io) theme for a personal websi
 ## Summary
 
 - [General](#general)
+- [User Archetype](#user-archetype)
 - [Custom Mods](#Custom-Mods)
 - [Install](#install)
 - [Configuration](#configuration)
@@ -18,6 +19,10 @@ A responsive, clean and simple [Hexo](http://hexo.io) theme for a personal websi
 
 - **Version** : 3.0
 - **Compatibility** : Hexo 3 or later
+
+## User Archetype
+
+I am targeting developers who program with the MEAN stack.  They already know how to program, but I want to take them to the next level.
 
 ## Custom Mods
 

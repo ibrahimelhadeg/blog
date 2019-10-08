@@ -10,7 +10,7 @@ tags: how to code, coding, teach yourself code
 
 This short crash course should be paired with the YouTube video below. Although the YouTube video covers all the topics in this post, you will find extra explanations throughout this post that are not in the video.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/VexzHwo6YLo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/wk80oPXKmk0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Who is this course for?
 
@@ -272,6 +272,8 @@ sort_clothes(items_in_room)
 ```
 
 I know I know. This is a lot of code to look at! Go ahead and try to read through and make sense of it and then we will walk through the lines.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/8ghyK5YrQzQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ### What is the Command Line?
 

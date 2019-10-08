@@ -14,5 +14,48 @@
     <%- page.content %>
   </div>
 
+<<<<<<< HEAD
+=======
+  <br>
+  
+  <!-- Checks to see if this post has a tag of "series" and conditionally creates a signup form -->
+  <% if ( _.findIndex(page.tags.data, (t) => { return t.name === 'series'; }) !== -1 ) { %>
+      <h2>Get Updated when new posts are published to this series</h2>
+      <form action="https://www.thediygolfer.com/sendy/subscribe" method="POST" accept-charset="utf-8">
+      	<label for="name">Name</label><br/>
+      	<input type="text" name="name" id="name"/>
+      	<br/>
+      	<label for="email">Email</label><br/>
+      	<input type="email" name="email" id="email"/><br/><div style="display:none;">
+      	<label for="hp">HP</label><br/>
+      	<input type="text" name="hp" id="hp"/>
+      	</div>
+      	<input type="hidden" name="list" value="KHx0RAHLyi4WOflAutqAbg"/>
+      	<input type="hidden" name="subform" value="yes"/>
+      	<input type="submit" name="submit" id="submit"/>
+      </form>
+
+  <% } else { %>
+      <h2>Stay in touch!</h2>
+      <form action="https://www.thediygolfer.com/sendy/subscribe" method="POST" accept-charset="utf-8">
+      	<label for="name">Name</label><br/>
+      	<input type="text" name="name" id="name"/>
+      	<br/>
+      	<label for="email">Email</label><br/>
+      	<input type="email" name="email" id="email"/><br/><div style="display:none;">
+      	<label for="hp">HP</label><br/>
+      	<input type="text" name="hp" id="hp"/>
+      	</div>
+      	<input type="hidden" name="list" value="HRDypeI9rHIeF89274G5bs892A"/>
+      	<input type="hidden" name="subform" value="yes"/>
+      	<input type="submit" name="submit" id="submit"/>
+      </form>
+  <% } %>
+
+  <br>
+
+  <p class="attention-box"><strong>Disagree with this article?  Something out of date?  Love it?  Let me know in the comments below!</strong></p>
+
+>>>>>>> 18b3243ef5de05a38d1bb18a3f2aaf5caaf19b42
 </article>
 <%- partial('_partial/comments') %>

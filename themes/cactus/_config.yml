@@ -80,7 +80,7 @@ highlight: ir-black
 colorscheme: white
 
 # Maximal width of the page in rem units.
-page_width: 60
+page_width: 50
 
 ##############################################################################
 # Miscellaneous
