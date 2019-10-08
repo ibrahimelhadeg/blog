@@ -16,9 +16,8 @@ nav:
   articles: /archives/
   projects: http://zachgoll.github.io/portfolio
 
-
 # Links to your social media accounts.
-# The keys should correspond to Fontawesome icon names 
+# The keys should correspond to Fontawesome icon names
 # (see https://fontawesome.com/icons?d=gallery&s=brands);
 # only 'mail' is an exception.
 social_links:
@@ -26,14 +25,12 @@ social_links:
   github: http://github.com/zachgoll
   linkedin: http://linkedin.com/in/zachgollwitzer
 
-
 # Customize the overview with the most recent blog posts on the index page.
 # Options:
 #   - show_all_posts: whether to show all available posts.
 #   - post_count: whether to show only the x most recent posts.
 posts_overview:
   show_all_posts: true
-
 
 ##############################################################################
 # Look and Feel
@@ -62,7 +59,7 @@ logo:
 # Options:
 #   - url: where the icon can be found
 #   - gravatar: whether to create a favicon from your Gravatar
-favicon: 
+favicon:
   desktop:
     url: /images/favicon.ico
     gravatar: false
@@ -93,26 +90,25 @@ page_width: 60
 rss: false
 
 # Turn your web pages into graph objects (see http://ogp.me).
-open_graph: 
+open_graph:
   fb_app_id:
   fb_admins:
   twitter_id:
   google_plus:
-
 
 ##############################################################################
 # Plugins
 ##############################################################################
 
 # Fill in your Disqus Comments Shortname to enable Disqus comments.
-disqus: 
-  enabled: false
-  shortname: cactus-1
+disqus:
+  enabled: true
+  shortname: zachgoll
 
 # Fill in your Google Analytics tracking ID to enable Google Analytics.
-google_analytics: 
-  enabled: false
-  id: UA-62489908-7
+google_analytics:
+  enabled: true
+  id: UA-149577498-1
 
 # Fill in you Gravatar user id / email if you want to use your gravatar as the
 # logo and/or favicons of you website.
