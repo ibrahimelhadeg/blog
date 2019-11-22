@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "hexo": {
-    "version": "3.8.0"
+    "version": "3.9.0"
   },
   "scripts": {
     "start": "hexo server --port 8080 --ip 0.0.0.0 --drafts",
@@ -23,6 +23,6 @@
     "querystring": "^0.2.0"
   },
   "devDependencies": {
-    "hexo": "^3.8.0"
+    "hexo": "^3.9.0"
   }
 }
