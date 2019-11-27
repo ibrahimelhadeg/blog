@@ -7,16 +7,11 @@ tags:
     - OpenID
 ---
 
-* Everyone has a slightly different method
-* Libraries get mixed up 
-* Auth as a service complicates things
-* Angular requires JWT because of front-end authentication
-
 In this post, I am going to walk through why the `Passport-JWT` authentication strategy is a simple, reliable solution for small teams and startups implementing a Node/Express + Angular web app. 
 
 In addition, I will be walking through the following topics: 
 
-* What authentication options are available
+* What authentication options are available (and how they work)
 * How to implement a Passport JWT strategy within a Node/Express + Angular application (database agnostic)
 
 If you are just looking for an implementation tutorial, [skip to this section](#implementation).
@@ -145,6 +140,42 @@ That said, the high-level concept is valid, and it allows us to understand the v
 Keep this example in mind as we move through the remainder of this post.
 
 #### Sessions
+
+Sessions and cookies are actually quite similar, and can get confused.  The _main difference_ between the two is the **location** of variable storage.
+
+In other words, a Cookie is _set_ by the server, but stored in the Browser.  If the server wants to use this Cookie to store data about a user's "state", it would have to come up with an elaborate scheme to constantly keep track of what the cookie in the browser looks like.  It might go something like this: 
+
+* Server: Hey browser, I just authenticated this user, so you should store a cookie to remind me (`Set-Cookie: user_auth=true; expires=Thu, 1-Jan-2020 20:00:00 GMT`) next time you request something from me
+* Browser: Thanks, server!  I will attach this cookie to my `Cookie` request header
+* Browser: Hey server, can I see the contents at `www.domain.com/protected`?  Here is the cookie you sent me on the last request.
+* Server: Sure, I can do that.  Here is the page data.  I have also included another `Set-Cookie` header (`Set-Cookie: marketing_page_visit_count=1; user_ip=192.1.234.21`) because the company who owns me likes to track how many people have visited this specific page and from which computer for marketing purposes.
+* Browser: Okay, I'll add that cookie to my `Cookie` request header
+* Browser: Hey Server, can you send me the contents at `www.domain.com/protected/special-offer`?  Here are all the cookies that you have set on me so far. (`Cookie: user_auth=true; expires=Thu, 1-Jan-2020 20:00:00 GMT; marketing_page_visit_count=1; user_ip=192.1.234.21`)
+
+As you can see, the more pages the browser visits, the more cookies the Server sets, and the more cookies the Browser must attach in each request Header.
+
+The Server might have some function that parses through all the cookies attached to a request and perform certain actions based on the presence or absence of a specific cookie.  To me, this naturally begs the question... Why doesn't the server just keep a record of this information in a database and use a single "session ID" to identify events that a user is taking?
+
+This is exactly what a session is for.  As I mentioned, the main difference between a cookie and a session is _where_ they are stored.  A session is stored in some Data Store (fancy term for a database) while a Cookie is stored in the Browser.  Since the session is stored on the server, it can store sensitive information.  Storing sensitive information in a cookie would be highly insecure.
+
+Now where this all gets a bit confusing is when we talk about using cookies and session _together_.
+
+Since Cookies are the method in which the client and server communicate metadata (among other HTTP Headers), a session must still utilize cookies.  The easiest way to see this interaction is by actually building out a simple authentication application in Node + Express + MongoDB.  I will assume that you have a basic understanding of building apps in Express, but I will try to explain each piece as we go.
+
+Setup a basic app: 
+
+```
+mkdir session-auth-app
+cd session-auth-app
+npm init -y
+npm install --save express mongoose dotenv connect-mongo express-session
+```
+
+Here is `app.js`
+
+```javascript
+```
+
 
 https://developer.mozilla.org/en-US/docs/Web/HTTP/Session
 https://stackoverflow.com/questions/11142882/what-are-cookies-and-sessions-and-how-do-they-relate-to-each-other
