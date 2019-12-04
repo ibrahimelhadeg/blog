@@ -1,28 +1,34 @@
 ---
 title: A Simple Authentication Strategy for Small Organizations (NodeJS, Express, Angular)
 tags:
-    - Node authentication
-    - JWT
-    - OAuth
-    - OpenID
+    - Session Based Authentication
+    - JWT Authentication
 ---
 
-In this post, I am going to walk through why the `Passport-JWT` authentication strategy is a simple, reliable solution for small teams and startups implementing a Node/Express + Angular web app. 
+In this post, I am going to walk through why the `Passport-JWT` authentication strategy is a simple, secure solution for small teams and startups implementing a Node/Express + Angular web app. 
 
-In addition, I will be walking through the following topics: 
+To understand why a JWT authentication flow is the best choice for this situation, I am going to take you through what authentication options are available to you, how they work, and how to implement them (with the exclusion of OAuth as this is out of scope).
 
-* What authentication options are available (and how they work)
-* How to implement a Passport JWT strategy within a Node/Express + Angular application (database agnostic)
+Since this post is long and detailed, if you are already familiar with a topic discussed, just skip it.  Likewise, if you are just looking for instructions on how to implemement a particular authentication method, you can jump to those sections below: 
 
-If you are just looking for an implementation tutorial, [skip to this section](#implementation).
+* [Session Based Authentication Implementation]()
+* [JWT Based Authentication Implementation]()
 
 ## Authentication Choices
 
 {% asset_img auth-types.PNG %}
 
-Above is a high level overview of the main authentication choices available to developers today.  This tutorial could become a full length book if I explored each in full detail, so my aim is to uncover the reason for each in the development ecosystem.
+Above is a high level overview of the main authentication choices available to developers today.  Here is a quick overview of each: 
 
-### Session Based Authentication
+* Session Based Authentication - Utilizes browser Cookies along with backend "Sessions" to manage logged-in and logged-out users.
+* JWT Authentication - A stateless authentication method where a JSON Web token (JWT) is stored in the browser (usually `localStorage`).  This JWT has assertions about a user and can only be decoded using a secret that is stored on the server.
+* OAuth and OpenID Connect Authentication - A modern authentication method where an application uses "claims" generated from other applications to authenticate its own users.  In other words, this is federated authentication where an existing service (like Google) handles the authentication and storage of users while your application leverages this flow to authenticate users.
+
+One note I'll make--Oauth can become confusing really quickly, and therefore is not fully explored in this post.  Not only is it unecessary for a small team/startup getting an application off the ground, but it is also highly variable depending on which service you are using (i.e. Google, Facebook, Github, etc.).
+
+Finally, you might notice that OAuth is listed as "As a service" and "In house".  This is a specific note made to highlight the fact that there is actually a company called "OAuth" that implements the OAuth protocol... As a service.  You can implement the OAuth protocol without using OAuth the company's service!
+
+## What is Session Based Authentication?
 
 If we were to create a lineage for these authentication methods, session based authentication would be the oldest of them all, but certainly not obsolete.  This method of authentication is "server-side", which means our Express application and database work together to keep the current authentication status of each user that visits our application.
 
@@ -32,6 +38,8 @@ To understand the basic tenets of session-based-authentication, you need to unde
 * What a cookie is
 * What a session is
 * How the session (server) and cookie (browser) interact to authenticate a user
+
+### HTTP Headers
 
 There are many ways to make an HTTP request in a browser.  An HTTP client could be a web application, IoT device, command line (curl), or a multitude of others.  Each of these clients connect to the internet and make HTTP requests which either fetch data (GET), or modify data (POST, PUT, DELETE, etc.).
 
@@ -91,7 +99,7 @@ These response headers are fairly straightforward with the exception of the `Set
 
 I included the `Set-Cookie` header because it is exactly what we need to understand in order to learn what Session based Authentication is all about (and will help us understand other auth methods later in this post).
 
-#### How Cookies Work
+### How Cookies Work
 
 Without Cookies in the browser, we have a problem.
 
@@ -131,7 +139,7 @@ As you might conclude, this could be extremely useful for authentication if we s
 7. The random person's browser creates an HTTP request with the header `Cookie: user_is_authenticated=true; expires=Thu, 1-Jan-2020 20:00:00 GMT` attached to the request.
 8. The server receives this request, sees that there is a cookie on the request, "remembers" that it had authenticated this user just a few seconds ago, and allows the user to visit the page.
 
-#### The Reality of this Situation
+### The Reality of this Situation
 
 Obviously, what I have just described would be a highly insecure way to authenticate a user.  In reality, the server would create some sort of hash from the password the user provided, and validate that hash with some crypto library on the server.
 
@@ -139,9 +147,9 @@ That said, the high-level concept is valid, and it allows us to understand the v
 
 Keep this example in mind as we move through the remainder of this post.
 
-#### Sessions
+### Sessions
 
-Sessions and cookies are actually quite similar, and can get confused.  The _main difference_ between the two is the **location** of variable storage.
+Sessions and cookies are actually quite similar, and can get confused because they can actually be used _together_ quite seamlessly.  The _main difference_ between the two is the **location** of their storage.  
 
 In other words, a Cookie is _set_ by the server, but stored in the Browser.  If the server wants to use this Cookie to store data about a user's "state", it would have to come up with an elaborate scheme to constantly keep track of what the cookie in the browser looks like.  It might go something like this: 
 
@@ -168,13 +176,444 @@ Setup a basic app:
 mkdir session-auth-app
 cd session-auth-app
 npm init -y
-npm install --save express mongoose dotenv connect-mongo express-session
+npm install --save express mongoose dotenv connect-mongo express-session passport passport-local
 ```
 
-Here is `app.js`
+Here is `app.js`.  Read through the comments to learn more about what is going on before continuing.
 
 ```javascript
+const express = require('express');
+const mongoose = require('mongoose');
+const session = require('express-session');
+
+// Package documentation - https://www.npmjs.com/package/connect-mongo
+const MongoStore = require('connect-mongo')(session);
+
+
+
+
+
+/**
+ * -------------- GENERAL SETUP ----------------
+ */
+
+// Gives us access to variables set in the .env file via `process.env.VARIABLE_NAME` syntax
+require('dotenv').config();
+
+// Create the Express application
+var app = express();
+
+
+// Middleware that allows Express to parse through both JSON and x-www-form-urlencoded request bodies
+// These are the same as `bodyParser` - you probably would see bodyParser put here in most apps
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
+
+
+/**
+ * -------------- DATABASE ----------------
+ */
+
+/**
+ * Connect to MongoDB Server using the connection string in the `.env` file.  To implement this, place the following
+ * string into the `.env` file
+ * 
+ * DB_STRING=mongodb://<user>:<password>@localhost:27017/database_name
+ */ 
+const connection = mongoose.createConnection(process.env.DB_STRING);
+
+// Creates simple schema for a User.  The hash and salt are derived from the user's given password when they register
+const UserSchema = new mongoose.Schema({
+    username: String,
+    hash: String,
+    salt: String
+});
+
+// Defines the model that we will use in the app
+mongoose.model('User', UserSchema);
+
+
+
+
+
+/**
+ * -------------- SESSION SETUP ----------------
+ */
+
+/**
+ * The MongoStore is used to store session data.  We will learn more about this in the post.
+ * 
+ * Note that the `connection` used for the MongoStore is the same connection that we are using above
+ */
+const sessionStore = new MongoStore({ mongooseConnection: connection, collection: 'sessions' })
+
+/**
+ * See the documentation for all possible options - https://www.npmjs.com/package/express-session
+ * 
+ * As a brief overview (we will add more later): 
+ * 
+ * secret: This is a random string that will be used to "authenticate" the session.  In a production environment,
+ * you would want to set this to a long, randomly generated string
+ * 
+ * resave: when set to true, this will force the session to save even if nothing changed.  If you don't set this, 
+ * the app will still run but you will get a warning in the terminal
+ * 
+ * saveUninitialized: Similar to resave, when set true, this forces the session to be saved even if it is unitialized
+ */
+app.use(session({
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: true,
+    store: sessionStore 
+}));
+
+
+
+
+
+/**
+ * -------------- ROUTES ----------------
+ */
+
+// When you visit http://localhost:3000/login, you will see "Login Page"
+app.get('/login', (req, res, next) => {
+
+    res.send('<h1>Login Page</h1>');
+
+});
+
+app.post('/login', (req, res, next) => {
+
+
+
+});
+
+// When you visit http://localhost:3000/register, you will see "Register Page"
+app.get('/register', (req, res, next) => {
+
+    res.send('<h1>Register Page</h1>');
+    
+});
+
+app.post('/register', (req, res, next) => {
+
+
+
+});
+
+
+
+
+
+
+
+/**
+ * -------------- SERVER ----------------
+ */
+
+// Server listens on http://localhost:3000
+app.listen(3000);
 ```
+
+The first thing we need to do is understand how the `express-session` module is working within this application.  This is a "middleware", which is a fancy way of saying that it is a function that modifies something in our application.  
+
+### Quick Refresher on Express Middleware
+
+Let's say we had the following code: 
+
+```javascript
+const express = require('express');
+
+var app = express();
+
+// Custom middleware
+function myMiddleware1(req, res, next) {
+    req.newProperty = 'my custom property';
+    next();
+}
+
+// Another custom middleware
+function myMiddleware2(req, res, next) {
+    req.newProperty = 'updated value';
+    next();
+}
+
+app.get('/', (req, res, next) => {
+    res.send(`<h1>Custom Property Value: ${req.newProperty}`);
+});
+
+// Server listens on http://localhost:3000
+app.listen(3000);
+```
+
+As you can see, this is an extremely simple Express application that defines two middlewares and has a single route that you can visit in your browser at `http://localhost:3000`.  If you started this application and visited that route, it would say "Custom Property Value: undefined" because defining middleware functions alone is not enough.
+
+We need to tell the Express application to actually use these middlewares.  We can do this in a few ways.  First, we can do it within a route.
+
+```javascript
+app.get('/', myMiddleware1, (req, res, next) => {
+    res.send(`<h1>Custom Property Value: ${req.newProperty}`);
+});
+```
+
+If you add the first middleware function as an argument to the route, you will now see "Custom Property Value: my custom property" show up in the browser.  What really happened here: 
+
+1. The application was initialized
+2. A user visited `http://localhost:3000/` in the browser, which triggered the `app.get()` function.
+3. The Express application first checked to see if there was any "global" middleware installed on the router, but it didn't find any.
+4. The Express application looked at the `app.get()` function and noticed that there was a middleware function installed before the callback.  The application ran the middleware and passed the middleware the `req` object, `res` object, and the `next()` callback.
+5. The `myMiddleware1` middleware first set `req.newProperty`, and then called `next()`, which tells the Express application "Go to the next middleware".  If the middleware did not call `next()`, the browser would get "stuck" and not return anything.
+6. The Express app did not see any more middleware, so it continued with the request and sent the result.
+
+This is just one way to use middleware, and it is exactly how the `passport.authenticate()` function (more on this later, so keep in mind) works.
+
+Another way we can use middleware is by setting it "globally".  Take a look at our app after this change:
+
+```javascript
+const express = require('express');
+
+var app = express();
+
+// Custom middleware
+function myMiddleware1(req, res, next) {
+    req.newProperty = 'my custom property';
+    next();
+}
+
+// Another custom middleware
+function myMiddleware2(req, res, next) {
+    req.newProperty = 'updated value';
+    next();
+}
+
+app.use(myMiddleware2);
+
+app.get('/', myMiddleware1, (req, res, next) => {
+    // Sends "Custom Property Value: my custom property
+    res.send(`<h1>Custom Property Value: ${req.newProperty}`);
+});
+
+// Server listens on http://localhost:3000
+app.listen(3000);
+```
+
+With this app structure, you will notice that visiting `http://localhost:3000/` in the browser _still_ returns the same value as before.  This is because the `app.use(myMiddleware2)` middleware is happening _before_ the `app.get('/', myMiddleware1)`.  If we removed the middleware from the route, you will see the updated value in the browser. 
+
+```javascript
+app.use(myMiddleware2);
+
+app.get('/', (req, res, next) => {
+    // Sends "Custom Property Value: updated value
+    res.send(`<h1>Custom Property Value: ${req.newProperty}`);
+});
+```
+
+We could also get this result by placing the second middleware after the first within the route.
+
+```javascript
+app.get('/', myMiddleware1, myMiddleware2, (req, res, next) => {
+    // Sends "Custom Property Value: updated value
+    res.send(`<h1>Custom Property Value: ${req.newProperty}`);
+});
+```
+
+Although this is a quick and high-level overview of middleware in Express, it will help us understand what is going on with the `express-session` middleware.
+
+### How Express Session Middleware works
+
+As I mentioned before, the `express-session` module gives us middleware that we can use in our application.  The middleware is defined in this line: 
+
+```javascript
+// Again, here is the documentation for this - https://www.npmjs.com/package/express-session
+app.use(session({
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: true,
+    store: sessionStore 
+}));
+```
+
+Here is a brief overview of what the Express Session Middleware is doing:
+
+1. When a route is loaded, the middleware checks to see if there is a session established in the Session Store (MongoDB database in our case since we are using the `connect-mongo` custom Session Store).  
+2. If there is a session, the middleware validates it cryptographically and then tells the Browser whether the session is valid or not.  If it is valid, the Browser automatically attaches the `connect.sid` Cookie to the HTTP request.
+3. If there is no session, the middleware creates a new session, takes a cryptographic hash of the session, and stores that value in a Cookie called `connect.sid`.  It then attaches the `Set-Cookie` HTTP header to the `res` object with the hashed value (`Set-Cookie: connect.sid=hashed value`).
+
+You might be wondering why this is useful at all, and how all this actually works.
+
+If you remember from the quick refresher on Express Middlewares, I said that a middleware has the ability to alter the `req` and `res` objects that are passed from one middleware to the next until it reaches the end of the HTTP request.  Just like we set a custom property on the `req` object, we could also set something much more complex like a `session` object that has properties, methods, etc.
+
+That is exactly what the `express-session` middleware does.  When a new session is created, the following properties are added to the `req` object: 
+
+* `req.sessionID` - A randomly generated UUID.  You can define a custom function to generate this ID by setting the `genid` option.  If you do not set this option, the default is to use the `uid-safe` [module](https://www.npmjs.com/package/uid-safe).
+
+```javascript
+app.use(session({
+  genid: function (req) {
+    // Put your UUID implementation here
+  }
+}));
+```
+
+* `req.session` - The Session object.  This contains information about the session and is available for setting custom properties to use.  For example, maybe you want to track how many times a particular page is loaded in a single session: 
+
+```javascript 
+app.get('/tracking-route', (req, res, next) => {
+  
+  if (req.session.viewCount) {
+    req.session.viewCount = req.session.viewCount + 1;
+  } else {
+    req.session.viewCount = 1;
+  }
+
+  res.send("<p>View count is: " + req.session.viewCount + "</p>");
+  
+});
+```
+
+* `req.session.cookie` - The Cookie object.  This defines the behaviour of the cookie that stores the hashed session ID in the browser.  Remember, once the cookie has been set, the browser will attach it to every HTTP request automatically until it expires.
+
+### How Passport JS Local Strategy works
+
+There is one last thing that we need to learn in order to fully understand Session Based Authentication--Passport JS.
+
+Passport JS has over 500 authentication "Strategies" that can be used within a Node/Express app.  Many of these strategies are highly specific (i.e. `passport-amazon` allows you to authenticate into your app via Amazon credentials), but they all work similar within your Express app.
+
+In my opinion, the Passport module could use some work in the department of documentation.  Not only does Passport consist of two modules (Passport base + Specific Strategy), but it is also a middleware, which as we saw is a bit confusing in its own right.  To add to the confusion, the strategy that we are going to walk through (`passport-local`) is a middleware that modifies an object created by another middleware (`express-session`).  Since the Passport documentation has little to say around how this all works, I will attempt to explain it to the best of my ability in this post.
+
+Let's first walk through the setup of the module.
+
+If you have been following along with this tutorial, you already have the modules needed.  If not, you will need to install Passport and a Strategy to your project.
+
+```
+npm install --save passport passport-local
+```
+
+Once you have done that, add Passport to your existing application.
+
+```javascript 
+const express = require('express');
+const mongoose = require('mongoose');
+const session = require('express-session');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+
+const MongoStore = require('connect-mongo')(session);
+
+require('dotenv').config();
+
+var app = express();
+
+const connection = mongoose.createConnection(process.env.DB_STRING);
+
+const UserSchema = new mongoose.Schema({
+    username: String,
+    hash: String,
+    salt: String
+});
+
+// Defines the model that we will use in the app
+mongoose.model('User', UserSchema);
+
+const sessionStore = new MongoStore({ mongooseConnection: connection, collection: 'sessions' })
+
+app.use(session({
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: true,
+    store: sessionStore 
+}));
+
+
+
+
+/**
+ * -------------- PASSPORT ----------------
+ */
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+
+
+/**
+ * -------------- ROUTES ----------------
+ */
+
+// When you visit http://localhost:3000/login, you will see "Login Page"
+app.get('/login', (req, res, next) => {
+
+    res.send('<h1>Login Page</h1>');
+
+});
+
+app.post('/login', (req, res, next) => {
+
+
+
+});
+
+// When you visit http://localhost:3000/register, you will see "Register Page"
+app.get('/register', (req, res, next) => {
+
+    res.send('<h1>Register Page</h1>');
+    
+});
+
+app.post('/register', (req, res, next) => {
+
+
+
+});
+
+
+
+
+
+
+
+/**
+ * -------------- SERVER ----------------
+ */
+
+// Server listens on http://localhost:3000
+app.listen(3000);
+```
+
+### Conceptual Overview of Session Based Authentication
+
+Now that we understand HTTP Headers, Cookies, Middleware, Express Session middleware, and Passport JS middleware, it is finally time to learn how to use these to authenticate users into our application.  I want to first use this section to review and explain the conceptual flow, and then dive into the implementation in the next section.
+
+
+
+### Session Based Authentication Implementation 
+
+This section will walk through a basic implementation of the Passport Local Strategy, and should be usable in production (although I would recommend refactoring, adding additional error handling, and other features like ensuring that there are no duplicate users).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 https://developer.mozilla.org/en-US/docs/Web/HTTP/Session
