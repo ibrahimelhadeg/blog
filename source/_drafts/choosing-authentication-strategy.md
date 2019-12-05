@@ -490,14 +490,19 @@ If you have been following along with this tutorial, you already have the module
 npm install --save passport passport-local
 ```
 
-Once you have done that, add Passport to your existing application.
+Once you have done that, you will need to implement Passport within your application.  Below, I have added all the pieces you need for the `passport-local` strategy.  I have removed comments to simplify.  Take a quick read through the code and then we will walk through all of the `// NEW` code.
 
 ```javascript 
 const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
+
+// NEW
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+var crypto = require('crypto');
+// ---
+
 
 const MongoStore = require('connect-mongo')(session);
 
@@ -513,7 +518,6 @@ const UserSchema = new mongoose.Schema({
     salt: String
 });
 
-// Defines the model that we will use in the app
 mongoose.model('User', UserSchema);
 
 const sessionStore = new MongoStore({ mongooseConnection: connection, collection: 'sessions' })
@@ -528,12 +532,550 @@ app.use(session({
 
 
 
-/**
- * -------------- PASSPORT ----------------
- */
+// NEW
+// START PASSPORT
+
+function validPassword(password, hash, salt) {
+    var hashVerify = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
+    return hash === hashVerify;
+}
+
+function genPassword(password) {
+    var salt = crypto.randomBytes(32).toString('hex');
+    var genHash = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
+    
+    return {
+      salt: salt,
+      hash: genHash
+    };
+}
+
+passport.use(new LocalStrategy(
+    function(username, password, cb) {
+        User.findOne({ username: username })
+            .then((user) => {
+
+                if (!user) { return cb(null, false) }
+                
+                // Function defined at bottom of app.js
+                const isValid = validPassword(password, user.hash, user.salt);
+                
+                if (isValid) {
+                    return cb(null, user);
+                } else {
+                    return cb(null, false);
+                }
+            })
+            .catch((err) => {   
+                cb(err);
+            });
+}));
+
+passport.serializeUser(function(user, cb) {
+    cb(null, user.id);
+});
+
+passport.deserializeUser(function(id, cb) {
+    User.findById(id, function (err, user) {
+        if (err) { return cb(err); }
+        cb(null, user);
+    });
+});
+
 app.use(passport.initialize());
 app.use(passport.session());
 
+// --- 
+// END PASSPORT
+
+
+
+
+
+
+app.get('/login', (req, res, next) => {
+    res.send('<h1>Login Page</h1>');
+});
+
+app.post('/login', (req, res, next) => {});
+
+app.get('/register', (req, res, next) => {
+    res.send('<h1>Register Page</h1>');
+});
+
+app.post('/register', (req, res, next) => {});
+
+app.listen(3000);
+```
+
+Yes, I know there is a lot to take in here.  Let's start with the easy parts--the helper functions.  In the code above, I have two helper functions that will assist in creating and validating a password.
+
+```javascript
+/**
+ * 
+ * @param {*} password - The plain text password
+ * @param {*} hash - The hash stored in the database
+ * @param {*} salt - The salt stored in the database
+ * 
+ * This function uses the crypto library to decrypt the hash using the salt and then compares
+ * the decrypted hash/salt with the password that the user provided at login
+ */
+function validPassword(password, hash, salt) {
+    var hashVerify = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
+    return hash === hashVerify;
+}
+
+/**
+ * 
+ * @param {*} password - The password string that the user inputs to the password field in the register form
+ * 
+ * This function takes a plain text password and creates a salt and hash out of it.  Instead of storing the plaintext
+ * password in the database, the salt and hash are stored for security
+ * 
+ * ALTERNATIVE: It would also be acceptable to just use a hashing algorithm to make a hash of the plain text password.
+ * You would then store the hashed password in the database and then re-hash it to verify later (similar to what we do here)
+ */
+function genPassword(password) {
+    var salt = crypto.randomBytes(32).toString('hex');
+    var genHash = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
+    
+    return {
+      salt: salt,
+      hash: genHash
+    };
+}
+```
+
+In addition to the comments, I'll note that these functions require the NodeJS built-in `crypto` library.  Some would argue a better crypto library, but unless your application requires a high degree of security, this library is plenty sufficient!
+
+Next up, let's take a look at the `passport.use()` method.
+
+```javascript
+/**
+ * This function is called when the `passport.authenticate()` method is called.
+ * 
+ * If a user is found an validated, a callback is called (`cb(null, user)`) with the user
+ * object.  The user object is then serialized with `passport.serializeUser()` and added to the 
+ * `req.session.passport` object. 
+ */
+passport.use(new LocalStrategy(
+    function(username, password, cb) {
+        User.findOne({ username: username })
+            .then((user) => {
+
+                if (!user) { return cb(null, false) }
+                
+                // Function defined at bottom of app.js
+                const isValid = validPassword(password, user.hash, user.salt);
+                
+                if (isValid) {
+                    return cb(null, user);
+                } else {
+                    return cb(null, false);
+                }
+            })
+            .catch((err) => {   
+                cb(err);
+            });
+}));
+```
+
+I know the above function is quite a lot to look at, so let's explore some of its key components.  First, I'll mention that with **all** Passport JS authentication strategies (not just the local strategy we are using), you will need to supply it with a callback that will be executed when you call the `passport.authenticate()` method.  For example, you might have a login route in your app: 
+
+```javascript
+app.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), (err, req, res, next) => {
+    if (err) next(err);
+    console.log('You are logged in!');
+});
+```
+
+Your user will type in their username and password via a login form, which will create an HTTP POST request to the `/login` route.  Let's say your post request contained the following data: 
+
+```json 
+{
+  "email": "sample@email.com",
+  "pw": "sample password"
+}
+```
+
+This WILL NOT WORK.  The reason?  Because the `passport.use()` method _expects_ your POST request to have the following fields: 
+
+```json
+{
+  "username": "sample@email.com",
+  "password": "sample password"
+} 
+```
+
+It looks for `username` and `password` field.  If you wanted the first json request body to work, you would need to supply the `passport.use()` function with field definitions:
+
+```javascript
+passport.use(
+
+  {
+    usernameField: 'email',
+    passwordField: 'pw'
+  },
+  function (email, password, callback) {
+
+    // Implement your callback function here
+
+  }
+
+);
+```
+
+By defining the `usernameField` and `passwordField`, you can specify a custom POST request body object.
+
+That aside, let's return to the POST request at the `/login` route:
+
+```javascript
+app.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), (err, req, res, next) => {
+    if (err) next(err);
+    console.log('You are logged in!');
+});
+```
+
+When the user submits his/her login credentials, the `passport.authenticate()` method (used as middleware here) will execute the callback that you have defined and supply it with the `username` and `password` from the POST request body.  The `passport.authenticate()` method takes two parameters--the name of the strategy, and options.  The default strategy name here is `local`, but you could change this like so: 
+
+```javascript 
+// Supply a name string as the first argument to the passport.use() function
+passport.use('custom-name', new Strategy());
+
+// Use the same name as above
+app.post('/login', passport.authenticate('custom-name', { failureRedirect: '/login' }), (err, req, res, next) => {
+    if (err) next(err);
+    console.log('You are logged in!');
+});
+```
+
+The way I have used the `passport.authenticate()` strategy will first execute the callback function that we defined within `new LocalStrategy()`, and if the authentication is successful, it will call the `next()` function, and we will enter the route.  If authentication was not successful (invalid username or password), the app will redirect to the `/login` route again.
+
+Now that we understand how it is used, let's return to the callback function that we defined earlier and that `passport.authenticate()` is using.
+
+```javascript
+// Tells Passport to use this strategy for the passport.authenticate() method
+passport.use(new LocalStrategy(
+
+    // Here is the function that is supplied with the username and password field from the login POST request
+    function(username, password, cb) {
+
+        // Search the MongoDB database for the user with the supplied username
+        User.findOne({ username: username })
+            .then((user) => {
+
+                /**
+                 * The callback function expects two values: 
+                 * 
+                 * 1. Err
+                 * 2. User 
+                 * 
+                 * If we don't find a user in the database, that doesn't mean there is an application error,
+                 * so we use `null` for the error value, and `false` for the user value
+                 */
+                if (!user) { return cb(null, false) }
+                
+                /**
+                 * Since the function hasn't returned, we know that we have a valid `user` object.  We then
+                 * validate the `user` object `hash` and `salt` fields with the supplied password using our 
+                 * utility function.  If they match, the `isValid` variable equals True.
+                 */
+                const isValid = validPassword(password, user.hash, user.salt);
+                
+                if (isValid) {
+                    // Since we have a valid user, we want to return no err and the user object
+                    return cb(null, user);
+                } else {
+                    // Since we have an invalid user, we want to return no err and no user
+                    return cb(null, false);
+                }
+            })
+            .catch((err) => {   
+                // This is an application error, so we need to populate the callback `err` field with it
+                cb(err);
+            });
+}));
+```
+
+I have commented the above in great detail, so be sure to read through before moving on.
+
+As you may notice, the callback function is database agnostic and validation agnostic.  In other words, we don't need to use MongoDB nor do we need to validate our passwords in the same way.  PassportJS leaves this up to us!  This can be confusing, but is also extremely powerful and is why PassportJS has such widespread adoption.
+
+Next, you'll see two related functions: 
+
+```javascript
+passport.serializeUser(function(user, cb) {
+    cb(null, user.id);
+});
+
+passport.deserializeUser(function(id, cb) {
+    User.findById(id, function (err, user) {
+        if (err) { return cb(err); }
+        cb(null, user);
+    });
+});
+```
+
+Personally, I found these two functions to be the most confusing because there is not a lot of documentation around them.  We will further explore what these functions are doing when we talk about how PassportJS and Express Session middleware interact, but in short, these two functions are responsible for "serializing" and "deserializing" users to and from the current session object.
+
+Instead of storing the entire `user` object in the session, we only need to store the database ID for the user.  When we need to get more information about the user in the current session, we can use the deserialize function to look the user up in the database using the ID that was stored in the session.  Again, we will make more sense of this soon.
+
+Finally, with the Passport implementation, you will see two more lines of code:
+
+```javascript
+app.use(passport.initialize());
+app.use(passport.session());
+```
+
+If you remember from earlier in the post on how middleware works, by calling `app.use()`, we are telling Express to execute the functions within the parentheses **in order** on **every request**.
+
+In other words, for every HTTP request our Express app makes, it will execute `passport.initialize()` and `passport.session()`.
+
+Something seem weird here??
+
+If `app.use()` **executes** the function contained within, then the above syntax is like saying: 
+
+```javascript 
+passport.initialize()();
+passport.session()();
+```
+
+The reason this works is because these two functions actually return another function!  Kind of like this:
+
+```javascript
+Passport.prototype.initialize = function () {
+  // Does something 
+
+  return function () {
+    // This is what is called by `app.use()`
+  }
+}
+```
+
+This is not necessary to know to use Passport, but definitely clears up some confusion if you were wondering about that syntax.
+
+Anyways... 
+
+These two middleware functions are necessary for integrating PassportJS with `express-session` middleware.  That is why these two functions **must come AFTER** the `app.use(session({}))` middleware!  Just like `passport.serializeUser()` and `passport.deserializeUser()`, these middlewares will make much more sense shortly.
+
+### Conceptual Overview of Session Based Authentication
+
+Now that we understand HTTP Headers, Cookies, Middleware, Express Session middleware, and Passport JS middleware, it is finally time to learn how to use these to authenticate users into our application.  I want to first use this section to review and explain the conceptual flow, and then dive into the implementation in the next section.
+
+Here is a basic flow of our app:
+
+1. Express app starts and listens on `http://www.expressapp.com` (just assume this is true for the sake of the example).
+2. A user visits `http://www.expressapp.com/login` in the browser
+3. The `express-session` middleware realizes that there is a user connecting to the Express server.  It checks the `Cookie` HTTP header on the `req` object.  Since this user is visiting for the first time, there is no value in the `Cookie` header.  Because there is no `Cookie` value, the Express server returns the `/login` HTML and calls the `Set-Cookie` HTTP header.  The `Set-Cookie` value is the cookie string generated by `express-session` middleware according to the options set by the developer (assume in this case the maxAge value is 10 days). 
+4. The user realizes that he doesn't want to login right now, but instead, wants to go for a walk.  He closes his browser.
+5. The user returns from his walk, opens the browser, and returns to `http://www.expressapp.com/login` again.
+6. Again, the `express-session` middleware runs on the GET request, checks the `Cookie` HTTP header, but this time, finds a value!  This is because the user had previously created a session earlier that day.  Since the `maxAge` option was set to 10 days on the `express-session` middleware, closing the browser does not destroy the cookie.
+7. The `express-session` middleware now takes the `connect.sid` value from the `Cookie` HTTP header, looks it up in the `MongoStore` (fancy way to say that it looks up the id in the database in the `sessions` collection), and finds it.  Since the session exists, the `express-session` middleware does not do anything, and both the `Cookie` HTTP header value and the `MongoStore` database entry in the `sessions` collection stays the same.
+8. Now, the user types in his username and password and presses the "Login" button.
+9. By pressing the "Login" button, the user sends a POST request to the `/login` route, which uses the `passport.authenticate()` middleware.  
+10. On every request so far, the `passport.initialize()` and `passport.session()` middlewares have been running.  On each request, these middlewares are checking the `req.session` object (created by the `express-session` middleware) for a property called `passport.user` (i.e. `req.session.passport.user`).  Since the `passport.authenticate()` method had not been called yet, the `req.session` object did not have a `passport` property.  Now that the `passport.authenticate()` method has been called via the POST request to `/login`, Passport will execute our user-defined authentication callback using the username and password our user typed in and submitted.
+11. We will assume that the user was already registered in the database and typed in the correct credentials.  The Passport callback validates the user successfully.
+12. The `passport.authenticate()` method now returns the `user` object that was validated.  In addition, it attaches the `req.session.passport` property to the `req.session` object, serializes the user via `passport.serializeUser()`, and attaches the serialized user (i.e. the ID of the user) to the `req.session.passport.user` property.  Finally, it attaches the full user object to `req.user`.
+13. The user turns off his computer and goes for another walk because our application is boring.
+14. The user turns on his computer the next day and visits a **protected route** on our application.
+15. The `express-session` middleware checks the `Cookie` HTTP header on `req`, finds the session from yesterday (still valid since our `maxAge` was set to 10 days), looks it up in `MongoStore`, finds it, and does nothing to the `Cookie` since the session is still valid.  The middleware re-initializes the `req.session` object and sets to the value returned from `MongoStore`.
+16. The `passport.initialize()` middleware checks the `req.session.passport` property and sees that there is still a `user` value there.  The `passport.session()` middleware uses the `user` property found on `req.session.passport.user` to re-initialize the `req.user` object to equal the user attached to the session via the `passport.deserializeUser()` function.
+17. The protected route looks to see if `req.session.passport.user` exists.  Since the Passport middleware just re-initialized it, it does, and the protected route allows the user access.
+18. The user leaves his computer for 2 months.
+19. The user comes back and visits the same protected route (hint: the session has expired!)
+20. The `express-session` middleware runs, realizes that the value of the `Cookie` HTTP header has an **expired** cookie value, and replaces the `Cookie` value with a new Session via the `Set-Cookie` HTTP header attached to the `res` object.
+21. The `passport.initialize()` and `passport.session()` middlewares run, but this time, since `express-session` middleware had to create a new session, there is no longer a `req.session.passport` object!
+22. Since the user did not log in and is trying to access a protected route, the route will check if `req.session.passport.user` exists.  Since it doesn't, access is denied!
+23. Once the user logs in again and triggers the `passport.authenticate()` middleware, the `req.session.passport` object will be re-established, and the user will again be able to visit protected routes.
+
+Phewwww....
+
+Got all that?
+
+### Session Based Authentication Implementation 
+
+The hard part is over.
+
+Putting everything together, below is your full functional Session Based authentication Express app.  I suggest re-factoring it (i.e. `passport.use()` goes to a config folder, all routes go to routes folders, etc.), but it is fully ready for production otherwise!
+
+```javascript
+const express = require('express');
+const mongoose = require('mongoose');
+const session = require('express-session');
+var passport = require('passport');
+var crypto = require('crypto');
+var LocalStrategy = require('passport-local').Strategy;
+
+// Package documentation - https://www.npmjs.com/package/connect-mongo
+const MongoStore = require('connect-mongo')(session);
+
+
+/**
+ * -------------- GENERAL SETUP ----------------
+ */
+
+// Gives us access to variables set in the .env file via `process.env.VARIABLE_NAME` syntax
+require('dotenv').config();
+
+// Create the Express application
+var app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
+/**
+ * -------------- DATABASE ----------------
+ */
+
+/**
+ * Connect to MongoDB Server using the connection string in the `.env` file.  To implement this, place the following
+ * string into the `.env` file
+ * 
+ * DB_STRING=mongodb://<user>:<password>@localhost:27017/database_name
+ */ 
+
+const conn = 'mongodb://devuser:123@localhost:27017/general_dev';
+//process.env.DB_STRING
+const connection = mongoose.createConnection(conn, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
+
+
+
+// Creates simple schema for a User.  The hash and salt are derived from the user's given password when they register
+const UserSchema = new mongoose.Schema({
+    username: String,
+    hash: String,
+    salt: String
+});
+
+
+const User = connection.model('User', UserSchema);
+
+/**
+ * This function is called when the `passport.authenticate()` method is called.
+ * 
+ * If a user is found an validated, a callback is called (`cb(null, user)`) with the user
+ * object.  The user object is then serialized with `passport.serializeUser()` and added to the 
+ * `req.session.passport` object. 
+ */
+passport.use(new LocalStrategy(
+    function(username, password, cb) {
+        User.findOne({ username: username })
+            .then((user) => {
+
+                if (!user) { return cb(null, false) }
+                
+                // Function defined at bottom of app.js
+                const isValid = validPassword(password, user.hash, user.salt);
+                
+                if (isValid) {
+                    return cb(null, user);
+                } else {
+                    return cb(null, false);
+                }
+            })
+            .catch((err) => {   
+                cb(err);
+            });
+}));
+  
+/**
+ * This function is used in conjunction with the `passport.authenticate()` method.  See comments in
+ * `passport.use()` above ^^ for explanation
+ */
+passport.serializeUser(function(user, cb) {
+    cb(null, user.id);
+});
+
+/**
+ * This function is used in conjunction with the `app.use(passport.session())` middleware defined below.
+ * Scroll down and read the comments in the PASSPORT AUTHENTICATION section to learn how this works.
+ * 
+ * In summary, this method is "set" on the passport object and is passed the user ID stored in the `req.session.passport`
+ * object later on.
+ */
+passport.deserializeUser(function(id, cb) {
+    User.findById(id, function (err, user) {
+        if (err) { return cb(err); }
+        cb(null, user);
+    });
+});
+
+
+/**
+ * -------------- SESSION SETUP ----------------
+ */
+
+/**
+ * The MongoStore is used to store session data.  We will learn more about this in the post.
+ * 
+ * Note that the `connection` used for the MongoStore is the same connection that we are using above
+ */
+const sessionStore = new MongoStore({ mongooseConnection: connection, collection: 'sessions' })
+
+/**
+ * See the documentation for all possible options - https://www.npmjs.com/package/express-session
+ * 
+ * As a brief overview (we will add more later): 
+ * 
+ * secret: This is a random string that will be used to "authenticate" the session.  In a production environment,
+ * you would want to set this to a long, randomly generated string
+ * 
+ * resave: when set to true, this will force the session to save even if nothing changed.  If you don't set this, 
+ * the app will still run but you will get a warning in the terminal
+ * 
+ * saveUninitialized: Similar to resave, when set true, this forces the session to be saved even if it is unitialized
+ *
+ * store: Sets the MemoryStore to the MongoStore setup earlier in the code.  This makes it so every new session will be 
+ * saved in a MongoDB database in a "sessions" table and used to lookup sessions
+ * 
+ * cookie: The cookie object has several options, but the most important is the `maxAge` property.  If this is not set, 
+ * the cookie will expire when you close the browser.  Note that different browsers behave slightly differently with this
+ * behaviour (for example, closing Chrome doesn't always wipe out the cookie since Chrome can be configured to run in the
+ * background and "remember" your last browsing session)
+ */
+app.use(session({
+    //secret: process.env.SECRET,
+    secret: 'some secret',
+    resave: false,
+    saveUninitialized: true,
+    store: sessionStore,
+    cookie: {
+        maxAge: 1000 * 30
+    }
+}));
+
+
+
+
+/**
+ * -------------- PASSPORT AUTHENTICATION ----------------
+ */
+
+/**
+ * Notice that these middlewares are initialized after the `express-session` middleware.  This is because
+ * Passport relies on the `express-session` middleware and must have access to the `req.session` object.
+ * 
+ * passport.initialize() - This creates middleware that runs before every HTTP request.  It works in two steps: 
+ *      1. Checks to see if the current session has a `req.session.passport` object on it.  This object will be
+ *          
+ *          { user: '<Mongo DB user ID>' }
+ * 
+ *      2.  If it finds a session with a `req.session.passport` property, it grabs the User ID and saves it to an 
+ *          internal Passport method for later.
+ *  
+ * passport.session() - This calls the Passport Authenticator using the "Session Strategy".  Here are the basic
+ * steps that this method takes:
+ *      1.  Takes the MongoDB user ID obtained from the `passport.initialize()` method (run directly before) and passes
+ *          it to the `passport.deserializeUser()` function (defined above in this module).  The `passport.deserializeUser()`
+ *          function will look up the User by the given ID in the database and return it.
+ *      2.  If the `passport.deserializeUser()` returns a user object, this user object is assigned to the `req.user` property
+ *          and can be accessed within the route.  If no user is returned, nothing happens and `next()` is called.
+ */
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 
@@ -541,32 +1083,90 @@ app.use(passport.session());
  * -------------- ROUTES ----------------
  */
 
+app.get('/', (req, res, next) => {
+    res.send('<h1>Home</h1>');
+});
+
 // When you visit http://localhost:3000/login, you will see "Login Page"
 app.get('/login', (req, res, next) => {
+   
+    const form = '<h1>Login Page</h1><form method="POST" action="/login">\
+    Enter Username:<br><input type="text" name="username">\
+    <br>Enter Password:<br><input type="password" name="password">\
+    <br><br><input type="submit" value="Submit"></form>';
 
-    res.send('<h1>Login Page</h1>');
+    res.send(form);
 
 });
 
-app.post('/login', (req, res, next) => {
-
-
-
+// Since we are using the passport.authenticate() method, we should be redirected no matter what 
+app.post('/login', passport.authenticate('local', { failureRedirect: '/login-failure', successRedirect: 'login-success' }), (err, req, res, next) => {
+    if (err) next(err);
 });
 
 // When you visit http://localhost:3000/register, you will see "Register Page"
 app.get('/register', (req, res, next) => {
 
-    res.send('<h1>Register Page</h1>');
+    const form = '<h1>Register Page</h1><form method="post" action="register">\
+                    Enter Username:<br><input type="text" name="username">\
+                    <br>Enter Password:<br><input type="password" name="password">\
+                    <br><br><input type="submit" value="Submit"></form>';
+
+    res.send(form);
     
 });
 
 app.post('/register', (req, res, next) => {
+    
+    const saltHash = genPassword(req.body.password);
+    
+    const salt = saltHash.salt;
+    const hash = saltHash.hash;
 
+    const newUser = new User({
+        username: req.body.username,
+        hash: hash,
+        salt: salt
+    });
 
+    newUser.save()
+        .then((user) => {
+            console.log(user);
+        });
+
+    res.redirect('/login');
 
 });
 
+/**
+ * Lookup how to authenticate users on routes with Local Strategy
+ * Google Search: "How to use Express Passport Local Strategy"
+ * 
+ * Also, look up what behaviour express session has without a maxage set
+ */
+app.get('/protected-route', (req, res, next) => {
+    console.log(req.session);
+    if (req.isAuthenticated()) {
+        res.send('<h1>You are authenticated</h1>');
+    } else {
+        res.send('<h1>You are not authenticated</h1>');
+    }
+});
+
+// Visiting this route logs the user out
+app.get('/logout', (req, res, next) => {
+    req.logout();
+    res.redirect('/login');
+});
+
+app.get('/login-success', (req, res, next) => {
+    console.log(req.session);
+    res.send('You successfully logged in.');
+});
+
+app.get('/login-failure', (req, res, next) => {
+    res.send('You entered the wrong password.');
+});
 
 
 
@@ -579,48 +1179,59 @@ app.post('/register', (req, res, next) => {
 
 // Server listens on http://localhost:3000
 app.listen(3000);
+
+
+
+
+/**
+ * -------------- HELPER FUNCTIONS ----------------
+ */
+
+/**
+ * 
+ * @param {*} password - The plain text password
+ * @param {*} hash - The hash stored in the database
+ * @param {*} salt - The salt stored in the database
+ * 
+ * This function uses the crypto library to decrypt the hash using the salt and then compares
+ * the decrypted hash/salt with the password that the user provided at login
+ */
+function validPassword(password, hash, salt) {
+    var hashVerify = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
+    return hash === hashVerify;
+}
+
+/**
+ * 
+ * @param {*} password - The password string that the user inputs to the password field in the register form
+ * 
+ * This function takes a plain text password and creates a salt and hash out of it.  Instead of storing the plaintext
+ * password in the database, the salt and hash are stored for security
+ * 
+ * ALTERNATIVE: It would also be acceptable to just use a hashing algorithm to make a hash of the plain text password.
+ * You would then store the hashed password in the database and then re-hash it to verify later (similar to what we do here)
+ */
+function genPassword(password) {
+    var salt = crypto.randomBytes(32).toString('hex');
+    var genHash = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
+    
+    return {
+      salt: salt,
+      hash: genHash
+    };
+}
 ```
 
-### Conceptual Overview of Session Based Authentication
+## What is JWT Based Authentication?
 
-Now that we understand HTTP Headers, Cookies, Middleware, Express Session middleware, and Passport JS middleware, it is finally time to learn how to use these to authenticate users into our application.  I want to first use this section to review and explain the conceptual flow, and then dive into the implementation in the next section.
+Before I start getting lost in the details, I must mention that if you read all the previous sections, this section will be much much easier!  We have already covered a lot of the topics needed to understand how to use the `passport-jwt` authentication strategy.
 
+Additionally, as we walk through the basics of JWT authentication, we will start to understand why JWT auth is far better for Angular front-end applications (hint: stateless auth!).
 
+### Components of a JSON Web Token (JWT)
 
-### Session Based Authentication Implementation 
+### Differences and why JWT Auth is better than Session Auth for Angular Apps 
 
-This section will walk through a basic implementation of the Passport Local Strategy, and should be usable in production (although I would recommend refactoring, adding additional error handling, and other features like ensuring that there are no duplicate users).
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-https://developer.mozilla.org/en-US/docs/Web/HTTP/Session
-https://stackoverflow.com/questions/11142882/what-are-cookies-and-sessions-and-how-do-they-relate-to-each-other
-https://hueniverse.com/introducing-oauth-2-0-b5681da60ce2
-http://www.passportjs.org/packages/passport-jwt/
-http://www.passportjs.org/packages/passport-auth0/
-
-## Implementation
+* In session auth, the cookie was simply used to maintain a session in the browser.  The session then stored info such as the passport objects on the server.
+* In JWT, the JWT IS the password 
 
