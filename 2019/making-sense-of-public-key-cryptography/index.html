@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang=EN>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-62489908-6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-62489908-6');
+    </script>
+
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="If you write web applications (and the authentication for them) or work in the space of cryptocurrency, understanding the basics of asymmetric cryptography (also known as “Public Key Cryptography”) is">
+<meta property="og:type" content="article">
+<meta property="og:title" content="making-sense-of-public-key-cryptography">
+<meta property="og:url" content="http://zachgoll.github.io/blog/2019/making-sense-of-public-key-cryptography/index.html">
+<meta property="og:site_name" content="Zach Gollwitzer">
+<meta property="og:description" content="If you write web applications (and the authentication for them) or work in the space of cryptocurrency, understanding the basics of asymmetric cryptography (also known as “Public Key Cryptography”) is">
+<meta property="og:locale" content="EN">
+<meta property="og:updated_time" content="2019-12-08T18:10:22.839Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="making-sense-of-public-key-cryptography">
+<meta name="twitter:description" content="If you write web applications (and the authentication for them) or work in the space of cryptocurrency, understanding the basics of asymmetric cryptography (also known as “Public Key Cryptography”) is">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/blog/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/blog/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>making-sense-of-public-key-cryptography</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/blog/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="http://zachgoll.github.io">Home</a></li>
+         
+          <li><a href="/blog/archives/">Writing</a></li>
+         
+          <li><a href="http://zachgoll.github.io/portfolio">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/blog/2019/javascript-this-keyword/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://zachgoll.github.io/blog/2019/making-sense-of-public-key-cryptography/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://zachgoll.github.io/blog/2019/making-sense-of-public-key-cryptography/&text=making-sense-of-public-key-cryptography"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://zachgoll.github.io/blog/2019/making-sense-of-public-key-cryptography/&title=making-sense-of-public-key-cryptography"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://zachgoll.github.io/blog/2019/making-sense-of-public-key-cryptography/&is_video=false&description=making-sense-of-public-key-cryptography"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=making-sense-of-public-key-cryptography&body=Check out this article: http://zachgoll.github.io/blog/2019/making-sense-of-public-key-cryptography/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://zachgoll.github.io/blog/2019/making-sense-of-public-key-cryptography/&title=making-sense-of-public-key-cryptography"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://zachgoll.github.io/blog/2019/making-sense-of-public-key-cryptography/&title=making-sense-of-public-key-cryptography"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://zachgoll.github.io/blog/2019/making-sense-of-public-key-cryptography/&title=making-sense-of-public-key-cryptography"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://zachgoll.github.io/blog/2019/making-sense-of-public-key-cryptography/&title=making-sense-of-public-key-cryptography"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://zachgoll.github.io/blog/2019/making-sense-of-public-key-cryptography/&name=making-sense-of-public-key-cryptography&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Creating-a-Public-Private-keypair"><span class="toc-number">1.</span> <span class="toc-text">Creating a Public/Private keypair</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Protecting-Data-through-“encryption”"><span class="toc-number">2.</span> <span class="toc-text">Protecting Data through “encryption”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Verifying-an-Identity-through-“Digital-Signatures”"><span class="toc-number">3.</span> <span class="toc-text">Verifying an Identity through “Digital Signatures”</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-components-of-a-digital-signature"><span class="toc-number">3.1.</span> <span class="toc-text">The components of a digital signature</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#What-is-a-Certificate-Authority"><span class="toc-number">4.</span> <span class="toc-text">What is a Certificate Authority?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Summary"><span class="toc-number">5.</span> <span class="toc-text">Summary</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        making-sense-of-public-key-cryptography
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Zach Gollwitzer</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2019-12-09T00:10:22.000Z" itemprop="datePublished">2019-12-08</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>If you write web applications (and the authentication for them) or work in the space of cryptocurrency, understanding the basics of asymmetric cryptography (also known as “Public Key Cryptography”) is a must.</p>
+<p>Whether you are authenticating users via an authentication server that issues JWTs (JSON web tokens) or you are sending cryptocurrency, there are three basic dimensions of this subject you must understand:</p>
+<ol>
+<li>Protecting data</li>
+<li>Verifying an identity</li>
+<li>Certificate Authorities</li>
+</ol>
+<p>How do these have anything to do with each other?  In this post, I will walk through each and explain their relationships.  By the end, you will have a firm understanding of basic Public Key Cryptography.</p>
+<h2 id="Creating-a-Public-Private-keypair"><a href="#Creating-a-Public-Private-keypair" class="headerlink" title="Creating a Public/Private keypair"></a>Creating a Public/Private keypair</h2><p>To make this post come to life a little bit, we are going to mesh together both the theory and the actual implementations into one.  For implementation, I will be using the NodeJS <code>crypto</code> library.  Please note that I have not chosen this library because it is the best or worst, but because it is simple and easy to use.</p>
+<p>Public and private keys come in “pairs” because they are mathematically linked.  By that statement, we could say that a Private:Public key could be  the following:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> privateKey = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">const</span> publicKey = privateKey * <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+<p>Sure, these are mathematically linked, but not in the way that cryptography works.  Public and private keys are mathematically linked with a <strong>one-way</strong> multiplication formula called “elliptic curve multiplication”.  Since elliptic curve multiplication is an entire post on its own, I will not get into the details.</p>
+<p>Elliptic curve multiplication makes it impossible to derive the private key from the public key.  With our simple example above, we could derive the private key like so:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> derivedPrivateKey = publicKey / <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+<p>In the real world, a private key is generated with a large, random number, and then the public key is generated by using an elliptic curve crypto algorithm.  In other words, we can apply this algorithm to the private key and get the same answer (public key) every time.  On the opposite end, a hacker could obtain the public key and spends hundreds of thousands of years running a powerful computer trying to figure out the private key without success.</p>
+<p>So now that you understand how this works, let’s generate a keypair.  For this tutorial, I will be working with RSA keypairs, which are commonly used on the web for things like SSH authentication.  There are additional types of keypairs that are not relevant to this basic discussion.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// file: createKey.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> crypto = <span class="built_in">require</span>(<span class="string">'crypto'</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">genKeyPair</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// Generates an object where the keys are stored in properties `privateKey` and `publicKey`</span></span><br><span class="line">    <span class="keyword">const</span> keyPair = crypto.generateKeyPairSync(<span class="string">'rsa'</span>, &#123;</span><br><span class="line">        modulusLength: <span class="number">4096</span>, <span class="comment">// bits - standard for RSA keys</span></span><br><span class="line">        publicKeyEncoding: &#123;</span><br><span class="line">            type: <span class="string">'pkcs1'</span>, <span class="comment">// "Public Key Cryptography Standards 1" </span></span><br><span class="line">            format: <span class="string">'pem'</span> <span class="comment">// Most common formatting choice</span></span><br><span class="line">        &#125;,</span><br><span class="line">        privateKeyEncoding: &#123;</span><br><span class="line">            type: <span class="string">'pkcs1'</span>, <span class="comment">// "Public Key Cryptography Standards 1"</span></span><br><span class="line">            format: <span class="string">'pem'</span> <span class="comment">// Most common formatting choice</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Create the public key file</span></span><br><span class="line">    fs.writeFileSync(__dirname + <span class="string">'/id_rsa_pub.pem'</span>, keyPair.publicKey); </span><br><span class="line">    </span><br><span class="line">    <span class="comment">// Create the private key file</span></span><br><span class="line">    fs.writeFileSync(__dirname + <span class="string">'/id_rsa_priv.pem'</span>, keyPair.privateKey);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Generates the keypair</span></span><br><span class="line">genKeyPair();</span><br></pre></td></tr></table></figure>
+<p>The above module creates a public and private RSA key and saves both to files within the directory you execute the script from.  Go ahead and run the script to generate a keypair.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># Console</span><br><span class="line"></span><br><span class="line">node createKey.js</span><br></pre></td></tr></table></figure>
+<p>Your keys are generated.  It’s now time to see what we can do with these keys!</p>
+<h2 id="Protecting-Data-through-“encryption”"><a href="#Protecting-Data-through-“encryption”" class="headerlink" title="Protecting Data through “encryption”"></a>Protecting Data through “encryption”</h2><p>With these two keys, we are capable of doing two things, depending on <em>which key</em> we “sign” with:</p>
+<ol>
+<li>Encrypt data (sign with your public key)</li>
+<li>Verify an identity (sign with your private key–also referred to as a “digital signature”)</li>
+</ol>
+<p>We will start with the function of encrypting data, because in my opinion, it is the easiest of the two.</p>
+<p>The entire goal with encrypting data is to make it impossible for an attacker to read something that you are sending over an insecure channel.  Despite most of the internet that we use communicating over SSL, it can still be considered “insecure”, especially in areas where there is a lot of local traffic (i.e. a coffee shop with an open wifi network).</p>
+<p>With a public/private keypair, we turn an insecure channel to a secure one.</p>
+<p>Think of it like a padlock and key.  Let’s imagine a highly unrealistic example that will simplify this concept.  My friend Jim, who lives across the country from me wants me to send him several ounces of gold that I have been storing for him.  Since we will be sending it via the postal service, he’s worried that it will be intercepted and tampered with.  Because of this, he first sends me a small, indestructible steel box with a latch (for locking it with a padlock).  He also sends me a highly secure padlock.  The padlock is currently unlocked, so all I have to do is put the gold in the steel box, lock the box with the padlock, and send it in the mail.</p>
+<p>Think of the padlock as Jim’s “public key”.  Jim has his private key at home, which means that nobody in the world can open that box except for him (again, we assume that the padlock cannot be picked and nobody has a copy of Jim’s private key).</p>
+<p>The package travels in the mail, Jim picks it up from his doorstep, and uses his private key to unlock the gold.</p>
+<p>If you think about it, this is <em>exactly</em> how data encryption works with public key cryptography.</p>
+<p>I, the sender of data need the receiver of data’s <em>public key</em>.  I then “lock” (encrypt) the message with the receiver’s public key (like locking the box with Jim’s padlock).  Finally, the receiver of data “unlocks” (decrypts) the message with his/her <em>private key</em>.</p>
+<p>In summary, we can write the following formulas for our public key cryptography use case #1–Data Encryption:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const encrypted = encrypt(receiverPublicKey, message);</span><br><span class="line"></span><br><span class="line">const decrypted = decrypt(receiverPrivateKey, message);</span><br></pre></td></tr></table></figure>
+<p>Lets take a quick look at how this is implemented in the real world.  Below is the <code>encrypt.js</code> file where I define a function that encrypts a secret message using the receiver’s public key.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// file: encrypt.js</span></span><br><span class="line"><span class="comment">// https://nodejs.org/api/crypto.html#crypto_crypto_publicencrypt_key_buffer</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> crypto = <span class="built_in">require</span>(<span class="string">'crypto'</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">encryptWithPublicKey</span>(<span class="params">publicKey, message</span>) </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">const</span> bufferMessage = Buffer.from(message, <span class="string">'utf8'</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> crypto.publicEncrypt(publicKey, bufferMessage);</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports.encryptWithPublicKey = encryptWithPublicKey;</span><br></pre></td></tr></table></figure>
+<p>The <code>crypto.publicEncrypt()</code> method takes the Buffer version of our message, encrypts it, and returns a Buffer version of the encrypted message.  Let’s run it.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// file: main.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> encrypt = <span class="built_in">require</span>(<span class="string">'./encrypt'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> publicKey = fs.readFileSync(__dirname + <span class="string">'/id_rsa_pub.pem'</span>, <span class="string">'utf8'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Stores a Buffer object</span></span><br><span class="line"><span class="keyword">const</span> encryptedMessage = encrypt.encryptWithPublicKey(publicKey, <span class="string">'Super secret message'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// If you try and "crack the code", you will just get gibberish</span></span><br><span class="line"><span class="built_in">console</span>.log(encryptedMessage.toString());</span><br></pre></td></tr></table></figure>
+<p>Run the file.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node main.js</span><br></pre></td></tr></table></figure>
+<p><code>encryptedMessage</code> is a Buffer, and if we convert it to a String, it contains characters that make no sense.  We could send this data over an insecure network and be confident that no hacker could ever decrypt it.</p>
+<p>Since we have the private key, we can decrypt it!  Let’s do that below:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// file: decrypt.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> crypto = <span class="built_in">require</span>(<span class="string">'crypto'</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">decryptWithPrivateKey</span>(<span class="params">privateKey, encryptedMessage</span>) </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> crypto.privateDecrypt(privateKey, encryptedMessage);</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports.decryptWithPrivateKey = decryptWithPrivateKey;</span><br></pre></td></tr></table></figure>
+<p>Remember, since we encrypted with the public key, we must decrypt with the corresponding private key.  The above function decrypts the encrypted Buffer using the private key.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> encrypt = <span class="built_in">require</span>(<span class="string">'./encrypt'</span>);</span><br><span class="line"><span class="keyword">const</span> decrypt = <span class="built_in">require</span>(<span class="string">'./decrypt'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// ==========================================</span></span><br><span class="line"><span class="comment">// ========= PART 1: Encrypt ================</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> publicKey = fs.readFileSync(__dirname + <span class="string">'/id_rsa_pub.pem'</span>, <span class="string">'utf8'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Stores a Buffer object</span></span><br><span class="line"><span class="keyword">const</span> encryptedMessage = encrypt.encryptWithPublicKey(publicKey, <span class="string">'Super secret message'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// ==========================================</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Imagine that this message is now sent over a network to another person...</span></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"><span class="comment">// ==========================================</span></span><br><span class="line"><span class="comment">// ========= PART 2: Decrypt ================</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> privateKey = fs.readFileSync(__dirname + <span class="string">'/id_rsa_priv.pem'</span>, <span class="string">'utf8'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> decryptedMessage = decrypt.decryptWithPrivateKey(privateKey, encryptedMessage);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Convert the Buffer to a string and print the message!</span></span><br><span class="line"><span class="built_in">console</span>.log(decryptedMessage.toString());</span><br><span class="line"></span><br><span class="line"><span class="comment">// ==========================================</span></span><br></pre></td></tr></table></figure>
+<p>I know the above code might seem trivial since we are encrypting and decrypting a message within the same file, but if you could imagine this happening on two different computers in two different geographical locations, you can begin to see the power of it.</p>
+<h2 id="Verifying-an-Identity-through-“Digital-Signatures”"><a href="#Verifying-an-Identity-through-“Digital-Signatures”" class="headerlink" title="Verifying an Identity through “Digital Signatures”"></a>Verifying an Identity through “Digital Signatures”</h2><p>In the first part, we explored the first of two use cases with public key cryptography–encrypting data.</p>
+<p>With that first use case, we can encrypt the data and ensure that only the holder of the private key can read the data, but we cannot ensure that the sender of data is who they say they are.</p>
+<p>With our previous example, Jim is the only person that can open the box with gold in it, but anyone could have locked that box.  Let’s say that while Jim’s padlock and box were in the mail coming to me, someone intercepted it, put fake gold in the box, locked the box, and sent it back to Jim.</p>
+<p>Jim knows for certain that after the box was locked, nobody tampered with the contents of it, but doesn’t know for sure <em>who</em> locked the box or <em>what</em> they put in the box.  </p>
+<p>In other words, encrypting data ensures that a message is not altered “in transport”, but doesn’t guarantee that the message was valid in the first place.</p>
+<p>To properly identify the sender of some data, we need to use the second form of public key cryptography–digital signatures.</p>
+<p>The primary difference to understand here is the fact that the message we are sending is not being protected in any way.  In addition, the message is now being decrypted with the signer’s public key.</p>
+<p>To me, this is where things get confusing.  If public key cryptography ensures that a public key <em>can</em> be derived from a private key, but a private key <em>cannot</em> be derived from a public key, then you might wonder, <strong>how can a public key <em>decrypt</em> a message signed with a private key without the sender exposing the private key to the recipient?</strong></p>
+<p>Since the answer to this is not so simple, I’ll defer to a <a href="https://stackoverflow.com/a/59230814/7437737" target="_blank" rel="noopener">StackOverflow answer that I wrote explaining it</a>.  For the rest of this post, all you need to know is the following:</p>
+<p><strong>In public key cryptography, you always encrypt and decrypt with opposite keys (hence the “asymmetric” part).</strong></p>
+<p>In other words:</p>
+<ol>
+<li>Encrypt with public key, decrypt with matching private key</li>
+<li>Encrypt with private key, decrypt with matching public key</li>
+</ol>
+<h3 id="The-components-of-a-digital-signature"><a href="#The-components-of-a-digital-signature" class="headerlink" title="The components of a digital signature"></a>The components of a digital signature</h3><p>Unlike basic encryption as explained in the previous section, digital signatures are a bit more complicated.  The goal of digital signatures is twofold:</p>
+<ol>
+<li>Ensure that the data sent has not been tampered with</li>
+<li>Ensure that the sender of the data is who he says he is</li>
+</ol>
+<p>To create a digital signature, we need the following components:</p>
+<ol>
+<li>A hashing algorithm</li>
+<li>Some data to send</li>
+<li>Your private key</li>
+</ol>
+<p>Before I show the code, here are the basic steps that need to happen:</p>
+<ol>
+<li>The sender of data must take a “hash” of that data</li>
+<li>The sender of data must encrypt the hashed data with their private key</li>
+<li>The sender of data must send a “package” of data containing the original data, the signed and encrypted data, and the hashing algorithm used.</li>
+</ol>
+<p>When the receiver of data receives the data, they will perform the following steps:</p>
+<ol>
+<li>Decrypt the signed and encrypted data, which should represent the “hash” of the original data</li>
+<li>Take a hash (using the algorithm specified) of the original data</li>
+<li>Compare the value in step 1 with the value in step 2.</li>
+</ol>
+<p>If the two values <strong>do not match</strong>, then you (as the receiver of data) know that <em>either</em> the data was tampered with, or the sender of this data is not the same person whose public key you are decrypting everything with.</p>
+<p>If the two values <strong>do match</strong>, then you know the data has not been tampered with.  You know this because the data was hashed before being sent.  Since a hash function is a one-way function, if the data payload was altered in any way, taking a hash of it would equal a different result than what you decrypted from the signed data.  Finally, you know that the sender of this data matches the public key you possess.</p>
+<p>Phewww….</p>
+<p>Let’s take a look at a practical example.  First, we have a module that signs a message and encrypts it.  This is the “sender” of data:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// file: signMessage.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> crypto = <span class="built_in">require</span>(<span class="string">'crypto'</span>);</span><br><span class="line"><span class="keyword">const</span> hash = crypto.createHash(<span class="string">'sha256'</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> encrypt = <span class="built_in">require</span>(<span class="string">'./encrypt'</span>);</span><br><span class="line"><span class="keyword">const</span> decrypt = <span class="built_in">require</span>(<span class="string">'./decrypt'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> myData = &#123;</span><br><span class="line">  firstName: <span class="string">'Zach'</span>,</span><br><span class="line">  lastName: <span class="string">'Gollwitzer'</span>,</span><br><span class="line">  socialSecurityNumber: <span class="string">'NO NO NO.  Never put personal info in a digitally \</span></span><br><span class="line"><span class="string">  signed message since this form of cryptography does not hide the data!'</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// String version of our data that can be hashed</span></span><br><span class="line"><span class="keyword">const</span> myDataString = <span class="built_in">JSON</span>.stringify(myData);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Sets the value on the hash object: requires string format, so we must convert our object</span></span><br><span class="line">hash.update(myDataString);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Hashed data in Hexidecimal format</span></span><br><span class="line"><span class="keyword">const</span> hashedData = hash.digest(<span class="string">'hex'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> senderPrivateKey = fs.readFileSync(__dirname + <span class="string">'/id_rsa_priv.pem'</span>, <span class="string">'utf8'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> signedMessage = encrypt.encryptWithPrivateKey(senderPrivateKey, hashedData);</span><br><span class="line"></span><br><span class="line"><span class="comment">// This module will return the "package of data", which is what is sent over the network</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    algorithm: <span class="string">'sha256'</span>,</span><br><span class="line">    originalData: myData,</span><br><span class="line">    signedAndEncryptedData: signedMessage</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>You can see that this module returns the entire “package” of data that we will send over the network.  Now imagine this data was sent over some insecure network, and the receiver of the data used the following module to verify it:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// file: verifyIdentity.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> crypto = <span class="built_in">require</span>(<span class="string">'crypto'</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> decrypt = <span class="built_in">require</span>(<span class="string">'./decrypt'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// This is the data that we are receiving from the sender</span></span><br><span class="line"><span class="keyword">const</span> receivedData = <span class="built_in">require</span>(<span class="string">'./signMessage'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Use the hash function provided!</span></span><br><span class="line"><span class="keyword">const</span> hash = crypto.createHash(receivedData.algorithm);</span><br><span class="line"></span><br><span class="line"><span class="comment">// We have the sender's public key here:</span></span><br><span class="line"><span class="keyword">const</span> publicKey = fs.readFileSync(__dirname + <span class="string">'/id_rsa_pub.pem'</span>, <span class="string">'utf8'</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// ==================================</span></span><br><span class="line"><span class="comment">// Step 1: Decrypt the signed message</span></span><br><span class="line"><span class="comment">// ==================================</span></span><br><span class="line"><span class="keyword">const</span> decryptedMessage = decrypt.decryptWithPublicKey(publicKey, receivedData.signedAndEncryptedData);</span><br><span class="line"></span><br><span class="line"><span class="comment">// By default, returns a Buffer object, so convert to string</span></span><br><span class="line"><span class="keyword">const</span> decryptedMessageHex = decryptedMessage.toString();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// ========================================</span></span><br><span class="line"><span class="comment">// Step 2: Take a hash of the original data</span></span><br><span class="line"><span class="comment">// ========================================</span></span><br><span class="line"><span class="keyword">const</span> hashOfOriginal = hash.update(<span class="built_in">JSON</span>.stringify(receivedData.originalData));</span><br><span class="line"><span class="keyword">const</span> hashOfOriginalHex = hash.digest(<span class="string">'hex'</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// ========================================</span></span><br><span class="line"><span class="comment">// Step 3: Check if two hashes match</span></span><br><span class="line"><span class="comment">// ========================================</span></span><br><span class="line"><span class="keyword">if</span> (hashOfOriginalHex === decryptedMessageHex) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Success!  The data has not been tampered with and the sender is valid.'</span>)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Uh oh... Someone is trying to manipulate the data or someone else is sending this!  Do not use!'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>If you run this file, you should get the success message, because we are using the correct keypair!</p>
+<h2 id="What-is-a-Certificate-Authority"><a href="#What-is-a-Certificate-Authority" class="headerlink" title="What is a Certificate Authority?"></a>What is a Certificate Authority?</h2><p>To wrap up this discussion, we might ask one more question…</p>
+<p>In the last example, how do we know that a hacker didn’t act like the sender of data?  </p>
+<p>A hacker could sign some data with his private key and convince the receiver that his public key is the correct one!  When the receiver of the data receives it, he will go through the process of verification described in the previous seciton, and since the hacker signed with his private key and you decrypted it with his public key, you would be none the wiser!</p>
+<p>That is where Certificate authorities come in.</p>
+<p>Since this is certainly a potential problem with digital signatures, we must use a Certificate authority who will “issue” a private/public keypair to someone who can then use this keypair.</p>
+<p>Using the same verification method described above, a receiver of data can not only verify that the sender of data is who he says he is, but the receiver of data can also verify that the public key they are using has been issued by a trusted Certificate Authority.  For example, if you are creating a website that runs the <code>HTTPS</code> protocol, you need to register for a certificate.  A common tool installed on many Apache2 servers is the <code>letsencrypt</code> utility, which allows you to register a free certificate with the company, <a href="https://letsencrypt.org/" target="_blank" rel="noopener">Lets Encrypt</a>.</p>
+<p>Since the web trusts this company, we know that any web traffic being sent over TLS (HTTPS) registered with Lets Encrypt is valid.</p>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>Public Key Cryptography allows data traveling on an insecure channel to either be <em>encrypted</em> (sign with public key) or <em>signed</em> (sign with private key).  By browsing the internet, you are indirectly using both of these use cases on a daily basis.</p>
+<p>By finishing this post, you now know more about cryptography than 99% of people.  Useful knowledge?  Not sure.  Knowledge that makes you feel smart?  Yup.  Have a great day and drop me a comment if you enjoyed this post.</p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="http://zachgoll.github.io">Home</a></li>
+         
+          <li><a href="/blog/archives/">Writing</a></li>
+         
+          <li><a href="http://zachgoll.github.io/portfolio">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Creating-a-Public-Private-keypair"><span class="toc-number">1.</span> <span class="toc-text">Creating a Public/Private keypair</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Protecting-Data-through-“encryption”"><span class="toc-number">2.</span> <span class="toc-text">Protecting Data through “encryption”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Verifying-an-Identity-through-“Digital-Signatures”"><span class="toc-number">3.</span> <span class="toc-text">Verifying an Identity through “Digital Signatures”</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-components-of-a-digital-signature"><span class="toc-number">3.1.</span> <span class="toc-text">The components of a digital signature</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#What-is-a-Certificate-Authority"><span class="toc-number">4.</span> <span class="toc-text">What is a Certificate Authority?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Summary"><span class="toc-number">5.</span> <span class="toc-text">Summary</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://zachgoll.github.io/blog/2019/making-sense-of-public-key-cryptography/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://zachgoll.github.io/blog/2019/making-sense-of-public-key-cryptography/&text=making-sense-of-public-key-cryptography"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://zachgoll.github.io/blog/2019/making-sense-of-public-key-cryptography/&title=making-sense-of-public-key-cryptography"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://zachgoll.github.io/blog/2019/making-sense-of-public-key-cryptography/&is_video=false&description=making-sense-of-public-key-cryptography"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=making-sense-of-public-key-cryptography&body=Check out this article: http://zachgoll.github.io/blog/2019/making-sense-of-public-key-cryptography/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://zachgoll.github.io/blog/2019/making-sense-of-public-key-cryptography/&title=making-sense-of-public-key-cryptography"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://zachgoll.github.io/blog/2019/making-sense-of-public-key-cryptography/&title=making-sense-of-public-key-cryptography"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://zachgoll.github.io/blog/2019/making-sense-of-public-key-cryptography/&title=making-sense-of-public-key-cryptography"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://zachgoll.github.io/blog/2019/making-sense-of-public-key-cryptography/&title=making-sense-of-public-key-cryptography"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://zachgoll.github.io/blog/2019/making-sense-of-public-key-cryptography/&name=making-sense-of-public-key-cryptography&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 Zach Gollwitzer
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="http://zachgoll.github.io">Home</a></li>
+         
+          <li><a href="/blog/archives/">Writing</a></li>
+         
+          <li><a href="http://zachgoll.github.io/portfolio">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/blog/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/blog/lib/jquery/jquery.min.js"></script>
+<script src="/blog/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/blog/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-149577498-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'zachgoll';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+

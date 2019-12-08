@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang=EN>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-62489908-6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-62489908-6');
+    </script>
+
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Link to documentation on this subject Note: I will refer to all versions of Angular2+ as Angular 12345678910&amp;lt;img [src]=&quot;imageLinkProperty&quot;&amp;gt; &amp;lt;!-- #1 --&amp;gt;&amp;lt;app-header [headerTitle]=&quot;titlePr">
+<meta name="keywords" content="Angular, Coding">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Understanding Angular2+ Template Syntax">
+<meta property="og:url" content="http://zachgoll.github.io/blog/2018/angular-template-syntax/index.html">
+<meta property="og:site_name" content="Zach Gollwitzer">
+<meta property="og:description" content="Link to documentation on this subject Note: I will refer to all versions of Angular2+ as Angular 12345678910&amp;lt;img [src]=&quot;imageLinkProperty&quot;&amp;gt; &amp;lt;!-- #1 --&amp;gt;&amp;lt;app-header [headerTitle]=&quot;titlePr">
+<meta property="og:locale" content="EN">
+<meta property="og:updated_time" content="2019-11-25T15:55:49.354Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Understanding Angular2+ Template Syntax">
+<meta name="twitter:description" content="Link to documentation on this subject Note: I will refer to all versions of Angular2+ as Angular 12345678910&amp;lt;img [src]=&quot;imageLinkProperty&quot;&amp;gt; &amp;lt;!-- #1 --&amp;gt;&amp;lt;app-header [headerTitle]=&quot;titlePr">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/blog/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/blog/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Understanding Angular2+ Template Syntax</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/blog/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="http://zachgoll.github.io">Home</a></li>
+         
+          <li><a href="/blog/archives/">Writing</a></li>
+         
+          <li><a href="http://zachgoll.github.io/portfolio">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/blog/2018/understanding-rxjs/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/blog/2018/extreme-ownership/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://zachgoll.github.io/blog/2018/angular-template-syntax/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://zachgoll.github.io/blog/2018/angular-template-syntax/&text=Understanding Angular2+ Template Syntax"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://zachgoll.github.io/blog/2018/angular-template-syntax/&title=Understanding Angular2+ Template Syntax"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://zachgoll.github.io/blog/2018/angular-template-syntax/&is_video=false&description=Understanding Angular2+ Template Syntax"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Understanding Angular2+ Template Syntax&body=Check out this article: http://zachgoll.github.io/blog/2018/angular-template-syntax/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://zachgoll.github.io/blog/2018/angular-template-syntax/&title=Understanding Angular2+ Template Syntax"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://zachgoll.github.io/blog/2018/angular-template-syntax/&title=Understanding Angular2+ Template Syntax"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://zachgoll.github.io/blog/2018/angular-template-syntax/&title=Understanding Angular2+ Template Syntax"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://zachgoll.github.io/blog/2018/angular-template-syntax/&title=Understanding Angular2+ Template Syntax"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://zachgoll.github.io/blog/2018/angular-template-syntax/&name=Understanding Angular2+ Template Syntax&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Element-Property"><span class="toc-number">1.</span> <span class="toc-text">1 - Element Property</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Component-Property"><span class="toc-number">2.</span> <span class="toc-text">2 - Component Property</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Directive-Property"><span class="toc-number">3.</span> <span class="toc-text">3 Directive Property</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Element-Events"><span class="toc-number">4.</span> <span class="toc-text">4 Element Events</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Custom-Events"><span class="toc-number">5.</span> <span class="toc-text">5 Custom Events</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-Two-Way-Data-Binding"><span class="toc-number">6.</span> <span class="toc-text">6 Two Way Data Binding</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-and-8-Styles"><span class="toc-number">7.</span> <span class="toc-text">7 and 8 Styles</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-Structural-Directives"><span class="toc-number">8.</span> <span class="toc-text">9 Structural Directives</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-References"><span class="toc-number">9.</span> <span class="toc-text">10 References</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Conclusion"><span class="toc-number"></span> <span class="toc-text">Conclusion</span></a>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Understanding Angular2+ Template Syntax
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Zach Gollwitzer</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2018-11-20T11:53:21.000Z" itemprop="datePublished">2018-11-20</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/blog/tags/Angular-Coding/">Angular, Coding</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p><a href="https://angular.io/guide/template-syntax#binding-syntax-an-overview" target="_blank" rel="noopener">Link to documentation on this subject</a></p>
+<p><em>Note: I will refer to all versions of Angular2+ as Angular</em></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> [<span class="attr">src</span>]=<span class="string">"imageLinkProperty"</span>&gt;</span> <span class="comment">&lt;!-- #1 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">app-header</span> [<span class="attr">headerTitle</span>]=<span class="string">"titleProperty"</span>&gt;</span><span class="tag">&lt;/<span class="name">app-header</span>&gt;</span> <span class="comment">&lt;!-- #2 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> [<span class="attr">ngClass</span>]=<span class="string">"&#123;'special': isSpecial&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span> <span class="comment">&lt;!-- #3 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> (<span class="attr">click</span>)=<span class="string">"onClickFunction()"</span>&gt;</span>Click Me<span class="tag">&lt;/<span class="name">button</span>&gt;</span> <span class="comment">&lt;!-- #4 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> (<span class="attr">customClickDirective</span>)=<span class="string">"clicked=$event"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span> <span class="comment">&lt;!-- #5 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> [(<span class="attr">ngModel</span>)]=<span class="string">"someInputProperty"</span>&gt;</span> <span class="comment">&lt;!-- #6 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> [<span class="attr">class.special</span>]=<span class="string">"someClassProperty"</span>&gt;</span>This is styled based on someClassProperty<span class="tag">&lt;/<span class="name">div</span>&gt;</span> <span class="comment">&lt;!-- #7 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> [<span class="attr">style.color</span>]=<span class="string">"someStyleProperty ? 'red' : 'green'"</span>&gt;</span>This button is conditionally styled<span class="tag">&lt;/<span class="name">button</span>&gt;</span> <span class="comment">&lt;!-- #8 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> *<span class="attr">ngIf</span>=<span class="string">"somePropIsTrue"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span> <span class="comment">&lt;!-- #9 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> #<span class="attr">myForm</span>=<span class="string">"ngForm"</span>&gt;</span> <span class="comment">&lt;!-- #10 --&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Above is a non-exhaustive list of <em>different</em> ways that you can bind properties and data in Angular.  Daunting? Yep.  Powerful?  Yep.  This short post will walk through each of the possibilities.</p>
+<h2 id="1-Element-Property"><a href="#1-Element-Property" class="headerlink" title="1 - Element Property"></a>1 - Element Property</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> [<span class="attr">src</span>]=<span class="string">"imageLinkProperty"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>To properly understand this, we need to understand the <a href="https://stackoverflow.com/questions/6003819/what-is-the-difference-between-properties-and-attributes-in-html" target="_blank" rel="noopener">difference between an html attribute and property</a>.  In short, an attribute pertains to the actual html element while a property pertains to the property of the DOM element that was created to display in the browser.  The trick is that there are some attributes that don’t have DOM properties and vice-versa, so Angular only binds to <em>non-reflective</em> properties.  A <em>non-reflective</em> property means that the property of the DOM element does not <em>reflect</em> the attribute of the html element.  Take the following example.</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component &#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">'my-app'</span>,</span><br><span class="line">  template: <span class="string">'&lt;input [id]="myElemId" [value]="myElemValue"&gt;&lt;button (click)="change()"&gt;Click to Change&lt;/button&gt;'</span>,</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent &#123;</span><br><span class="line">  myElemValue = <span class="string">'initial value'</span>;</span><br><span class="line">  myElemId = <span class="string">'initialId'</span>;</span><br><span class="line"></span><br><span class="line">  change() &#123;</span><br><span class="line">      <span class="keyword">this</span>.myElemValue = <span class="string">'new value'</span>;</span><br><span class="line">      <span class="keyword">this</span>.myElemId = <span class="string">'newId'</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Above, we have a super simple Angular component with a single input and button as HTML for the component.  When clicked, the button will change the values of the <code>id</code> attribute and <code>value</code> attribute.  Before we click the button, we can see the element in the console.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> myElem = <span class="built_in">document</span>.getElementById(<span class="string">"initialId"</span>);</span><br><span class="line">myElem.value <span class="comment">// initial value </span></span><br><span class="line">myElem.id <span class="comment">// initialId</span></span><br><span class="line">myElem.getAttribute(<span class="string">'value'</span>) <span class="comment">// initial value </span></span><br><span class="line">myElem.getAttribute(<span class="string">'id'</span>) <span class="comment">// initialId</span></span><br></pre></td></tr></table></figure>
+<p>Nothing unexpected.  Now, let’s click that button to change the attributes and properties.  After clicking, we go to the console again.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> myElem = <span class="built_in">document</span>.getElementById(<span class="string">"newId"</span>);</span><br><span class="line">myElem.value <span class="comment">// newValue</span></span><br><span class="line">myElem.id <span class="comment">// newId</span></span><br><span class="line">myElem.getAttribute(<span class="string">'value'</span>) <span class="comment">// null</span></span><br><span class="line">myElem.getAttribute(<span class="string">'id'</span>) <span class="comment">// newId</span></span><br></pre></td></tr></table></figure>
+<p>The properties of the element have changed and the <code>id</code> attribute has changed, but the <code>value</code> attribute has not.  This is because it is a <em>non-reflective</em> property.  This is why in some cases, we can bind to HTML properties (<code>src</code>) and sometimes we cannot (<code>value</code>).  Going back to our first example, every time the value of <code>imageLinkProperty</code> changes, the image will change in the HTML.</p>
+<h2 id="2-Component-Property"><a href="#2-Component-Property" class="headerlink" title="2 - Component Property"></a>2 - Component Property</h2><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// File: app.component.html</span></span><br><span class="line"></span><br><span class="line">&lt;app-header [headerTitle]=<span class="string">"titleProperty"</span>&gt;&lt;<span class="regexp">/app-header&gt;</span></span><br></pre></td></tr></table></figure>
+<p>This is a bit simpler than the first example.  Here, we have two components.</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// File: header.component.ts </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; Component, Input &#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">'app-header'</span>,</span><br><span class="line">  template: <span class="string">'&lt;p&gt;&#123;&#123; headerTitle &#125;&#125;&lt;/p&gt;'</span>,</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> HeaderComponent &#123;</span><br><span class="line">    <span class="meta">@Input</span>() headerTitle: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// File: app.component.ts </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; Component &#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  template: <span class="string">'&lt;app-header [headerTitle]="titleProperty"&gt;&lt;/app-header&gt;'</span>,</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> AppComponent &#123;</span><br><span class="line">  titleProperty: <span class="built_in">string</span> = <span class="string">'some title'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>In this example, we have two components–a parent component <code>app-root</code> and a child component <code>app-header</code>.  We want to make some data from the parent component available for use in the child component and we do this through component property binding.  The app root will define the <code>titleProperty</code> and bind it to the <code>headerTitle</code> property that exists as an <code>Input()</code> in the <code>app-header</code> (child component).  Consuming it as an input, the child component can use <code>headerTitle</code> however it wants!</p>
+<h2 id="3-Directive-Property"><a href="#3-Directive-Property" class="headerlink" title="3 Directive Property"></a>3 Directive Property</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> [<span class="attr">ngClass</span>]=<span class="string">"&#123;'special': isSpecial&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>This works very similar to the previous example but instead of making a property available for a child component, we are making a property (or value in this case) available for a directive.  We don’t care about what the directive does.  All we care about is that we are giving it the correct data to consume and do its magic.  In this case, we are providing the value <code>{&#39;special&#39;: isSpecial}</code> to Angular’s built in <code>ngClass</code> directive.  This directive will use that data and conditionally apply classes to the element.</p>
+<h2 id="4-Element-Events"><a href="#4-Element-Events" class="headerlink" title="4 Element Events"></a>4 Element Events</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> (<span class="attr">click</span>)=<span class="string">"onClickFunction()"</span>&gt;</span>Click Me<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>In my opinion, element events are the simplest trick that Angular has.  You simply define the DOM event that you want to wait for on that particular element and define a function to call when the event is clicked. </p>
+<h2 id="5-Custom-Events"><a href="#5-Custom-Events" class="headerlink" title="5 Custom Events"></a>5 Custom Events</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> (<span class="attr">customClickDirective</span>)=<span class="string">"clicked=$event"</span> <span class="attr">clickable</span>&gt;</span>&#123;&#123; clicked &#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span> <span class="comment">&lt;!-- #5 --&gt;</span></span><br></pre></td></tr></table></figure>
+<p>You can define custom events in either components (as we saw with the input in #2) or directives (shown here).  Let’s first define a super simple directive.</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Directive, Output, EventEmitter, ElementRef &#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Directive</span>(&#123;</span><br><span class="line">  <span class="comment">// This is the selector that we will call in the html template </span></span><br><span class="line">  <span class="comment">// call it like so:  (customClickDirective)=""</span></span><br><span class="line">  selector: <span class="string">'[customClickDirective]'</span>,</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> CustomClickDirective &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// customClickDirective is the alias that the component consuming the output will use to call it</span></span><br><span class="line">    <span class="meta">@Output</span>(<span class="string">'customClickDirective'</span>) clicks = <span class="keyword">new</span> EventEmitter&lt;<span class="built_in">string</span>&gt;(); </span><br><span class="line"></span><br><span class="line">    counter = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ElementRef passes the element this directive sits on to the Directive Class</span></span><br><span class="line">    <span class="keyword">constructor</span>(<span class="params">el: ElementRef</span>) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Add an event listener to the current element</span></span><br><span class="line">        el.nativeElement.addEventListener(<span class="string">'click'</span>, <span class="function">(<span class="params">event: Event</span>) =&gt;</span> &#123;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Every time the Directive detects a click on the element it increments the counter</span></span><br><span class="line">            <span class="comment">// and emits a string with the counter value in it</span></span><br><span class="line">            <span class="keyword">this</span>.clicks.emit(<span class="string">`Counter: <span class="subst">$&#123;this.counter++&#125;</span>`</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="6-Two-Way-Data-Binding"><a href="#6-Two-Way-Data-Binding" class="headerlink" title="6 Two Way Data Binding"></a>6 Two Way Data Binding</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> [(<span class="attr">ngModel</span>)]=<span class="string">"someInputProperty"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>This is a simple yet powerful feature of Angular.  In a component, we can create a data stream between an HTML element’s value and a property of the component.  Every time this HTML input changes in value, the <code>someInputProperty</code> which exists in the component will change.  You must use <code>ngModel</code> directive to achieve this.</p>
+<h2 id="7-and-8-Styles"><a href="#7-and-8-Styles" class="headerlink" title="7 and 8 Styles"></a>7 and 8 Styles</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> [<span class="attr">class.special</span>]=<span class="string">"someClassProperty"</span>&gt;</span>This is styled based on someClassProperty<span class="tag">&lt;/<span class="name">div</span>&gt;</span> <span class="comment">&lt;!-- #7 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> [<span class="attr">style.color</span>]=<span class="string">"someStyleProperty ? 'red' : 'green'"</span>&gt;</span>This button is conditionally styled<span class="tag">&lt;/<span class="name">button</span>&gt;</span> <span class="comment">&lt;!-- #8 --&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Although it makes more sense to use the <code>ngClass</code> or <code>ngStyle</code> built in directives usually, you can also edit classes and styles directly.</p>
+<h2 id="9-Structural-Directives"><a href="#9-Structural-Directives" class="headerlink" title="9 Structural Directives"></a>9 Structural Directives</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span> *<span class="attr">ngIf</span>=<span class="string">"somePropIsTrue"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>A structural directive is a directive that can alter any part of the DOM and not just the element that it sits in.  It is called with an asterisk and can most commonly be seen in the form of <code>*ngIf</code> or <code>*ngFor</code>.  This is opposed to an <em>attribute directive</em> which only affects the element it sits on (ex: <code>ngClass</code>).</p>
+<h2 id="10-References"><a href="#10-References" class="headerlink" title="10 References"></a>10 References</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> #<span class="attr">myForm</span>=<span class="string">"ngForm"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>You can get a reference to anything in a template using the hashtag syntax.  By setting this variable on a form, we can retrieve the values of a form from anywhere.  A simpler way of using this is seen below.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> #<span class="attr">phonenumber</span> <span class="attr">placeholder</span>=<span class="string">"111-111-1111"</span> <span class="attr">value</span>=<span class="string">"111-111-1111"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>The current phone number is &#123;&#123; phonenumber.value &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><p>Although not exhaustive, this list covers most of the basics of Angular templating.  Although it is complex to learn due to the seemingly infinite number of possibilities, this is the power of Angular and should be learned thoroughly.</p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="http://zachgoll.github.io">Home</a></li>
+         
+          <li><a href="/blog/archives/">Writing</a></li>
+         
+          <li><a href="http://zachgoll.github.io/portfolio">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Element-Property"><span class="toc-number">1.</span> <span class="toc-text">1 - Element Property</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Component-Property"><span class="toc-number">2.</span> <span class="toc-text">2 - Component Property</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Directive-Property"><span class="toc-number">3.</span> <span class="toc-text">3 Directive Property</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Element-Events"><span class="toc-number">4.</span> <span class="toc-text">4 Element Events</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Custom-Events"><span class="toc-number">5.</span> <span class="toc-text">5 Custom Events</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-Two-Way-Data-Binding"><span class="toc-number">6.</span> <span class="toc-text">6 Two Way Data Binding</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-and-8-Styles"><span class="toc-number">7.</span> <span class="toc-text">7 and 8 Styles</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-Structural-Directives"><span class="toc-number">8.</span> <span class="toc-text">9 Structural Directives</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-References"><span class="toc-number">9.</span> <span class="toc-text">10 References</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Conclusion"><span class="toc-number"></span> <span class="toc-text">Conclusion</span></a>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://zachgoll.github.io/blog/2018/angular-template-syntax/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://zachgoll.github.io/blog/2018/angular-template-syntax/&text=Understanding Angular2+ Template Syntax"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://zachgoll.github.io/blog/2018/angular-template-syntax/&title=Understanding Angular2+ Template Syntax"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://zachgoll.github.io/blog/2018/angular-template-syntax/&is_video=false&description=Understanding Angular2+ Template Syntax"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Understanding Angular2+ Template Syntax&body=Check out this article: http://zachgoll.github.io/blog/2018/angular-template-syntax/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://zachgoll.github.io/blog/2018/angular-template-syntax/&title=Understanding Angular2+ Template Syntax"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://zachgoll.github.io/blog/2018/angular-template-syntax/&title=Understanding Angular2+ Template Syntax"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://zachgoll.github.io/blog/2018/angular-template-syntax/&title=Understanding Angular2+ Template Syntax"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://zachgoll.github.io/blog/2018/angular-template-syntax/&title=Understanding Angular2+ Template Syntax"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://zachgoll.github.io/blog/2018/angular-template-syntax/&name=Understanding Angular2+ Template Syntax&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 Zach Gollwitzer
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="http://zachgoll.github.io">Home</a></li>
+         
+          <li><a href="/blog/archives/">Writing</a></li>
+         
+          <li><a href="http://zachgoll.github.io/portfolio">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/blog/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/blog/lib/jquery/jquery.min.js"></script>
+<script src="/blog/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/blog/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-149577498-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'zachgoll';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+

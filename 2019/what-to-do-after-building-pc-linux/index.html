@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang=EN>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-62489908-6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-62489908-6');
+    </script>
+
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="If you are coming from YouTube, be sure to check out my channel!  I recommend starting with my operating systems video. Note: This tutorial is specifically created for How To Build A Video Editing Com">
+<meta name="keywords" content="hardware">
+<meta property="og:type" content="article">
+<meta property="og:title" content="What to do after building a Custom PC (Linux with Windows VM)">
+<meta property="og:url" content="http://zachgoll.github.io/blog/2019/what-to-do-after-building-pc-linux/index.html">
+<meta property="og:site_name" content="Zach Gollwitzer">
+<meta property="og:description" content="If you are coming from YouTube, be sure to check out my channel!  I recommend starting with my operating systems video. Note: This tutorial is specifically created for How To Build A Video Editing Com">
+<meta property="og:locale" content="EN">
+<meta property="og:image" content="http://zachgoll.github.io/blog/2019/what-to-do-after-building-pc-linux/partition.jpg">
+<meta property="og:image" content="http://zachgoll.github.io/blog/2019/what-to-do-after-building-pc-linux/error-disk.jpg">
+<meta property="og:image" content="http://zachgoll.github.io/blog/2019/what-to-do-after-building-pc-linux/select-boot-device.png">
+<meta property="og:image" content="http://zachgoll.github.io/blog/2019/what-to-do-after-building-pc-linux/initial-bios.JPG">
+<meta property="og:image" content="http://zachgoll.github.io/blog/2019/what-to-do-after-building-pc-linux/boot-screen.JPG">
+<meta property="og:image" content="http://zachgoll.github.io/blog/2019/what-to-do-after-building-pc-linux/use-install-ubuntu.png">
+<meta property="og:image" content="http://zachgoll.github.io/blog/2019/what-to-do-after-building-pc-linux/after-install-ubuntu.JPG">
+<meta property="og:image" content="http://zachgoll.github.io/blog/2019/what-to-do-after-building-pc-linux/storage.jpg">
+<meta property="og:updated_time" content="2019-11-25T15:55:49.522Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="What to do after building a Custom PC (Linux with Windows VM)">
+<meta name="twitter:description" content="If you are coming from YouTube, be sure to check out my channel!  I recommend starting with my operating systems video. Note: This tutorial is specifically created for How To Build A Video Editing Com">
+<meta name="twitter:image" content="http://zachgoll.github.io/blog/2019/what-to-do-after-building-pc-linux/partition.jpg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/blog/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/blog/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>What to do after building a Custom PC (Linux with Windows VM)</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/blog/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="http://zachgoll.github.io">Home</a></li>
+         
+          <li><a href="/blog/archives/">Writing</a></li>
+         
+          <li><a href="http://zachgoll.github.io/portfolio">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/blog/2019/user-permissions/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/blog/2019/how-to-code-crash-course/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://zachgoll.github.io/blog/2019/what-to-do-after-building-pc-linux/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://zachgoll.github.io/blog/2019/what-to-do-after-building-pc-linux/&text=What to do after building a Custom PC (Linux with Windows VM)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://zachgoll.github.io/blog/2019/what-to-do-after-building-pc-linux/&title=What to do after building a Custom PC (Linux with Windows VM)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://zachgoll.github.io/blog/2019/what-to-do-after-building-pc-linux/&is_video=false&description=What to do after building a Custom PC (Linux with Windows VM)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=What to do after building a Custom PC (Linux with Windows VM)&body=Check out this article: http://zachgoll.github.io/blog/2019/what-to-do-after-building-pc-linux/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://zachgoll.github.io/blog/2019/what-to-do-after-building-pc-linux/&title=What to do after building a Custom PC (Linux with Windows VM)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://zachgoll.github.io/blog/2019/what-to-do-after-building-pc-linux/&title=What to do after building a Custom PC (Linux with Windows VM)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://zachgoll.github.io/blog/2019/what-to-do-after-building-pc-linux/&title=What to do after building a Custom PC (Linux with Windows VM)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://zachgoll.github.io/blog/2019/what-to-do-after-building-pc-linux/&title=What to do after building a Custom PC (Linux with Windows VM)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://zachgoll.github.io/blog/2019/what-to-do-after-building-pc-linux/&name=What to do after building a Custom PC (Linux with Windows VM)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-1-Create-Bootable-Linux-USB-Stick"><span class="toc-number">1.</span> <span class="toc-text">Step 1: Create Bootable Linux USB Stick</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-2-Boot-your-new-PC"><span class="toc-number">2.</span> <span class="toc-text">Step 2: Boot your new PC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-3-Setting-up-your-Wifi"><span class="toc-number">3.</span> <span class="toc-text">Step 3 - Setting up your Wifi</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-3-Creating-a-Windows-Virtual-Machine"><span class="toc-number">4.</span> <span class="toc-text">Step 3 - Creating a Windows Virtual Machine</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        What to do after building a Custom PC (Linux with Windows VM)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Zach Gollwitzer</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2019-01-23T12:13:50.000Z" itemprop="datePublished">2019-01-23</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/blog/tags/hardware/">hardware</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>If you are coming from YouTube, be sure to <a href="https://www.youtube.com/channel/UCDwIw3MiPJXu5SavbZ3_a2A/videos" target="_blank" rel="noopener">check out my channel!</a>  I recommend starting with my <a href="https://www.youtube.com/watch?v=09puF-VKWeI" target="_blank" rel="noopener">operating systems video</a>.</p>
+<p><em>Note: This tutorial is specifically created for <a href="https://www.youtube.com/watch?v=7-s04b5zel8&amp;t=3s" target="_blank" rel="noopener">How To Build A Video Editing Computer | $850 Ryzen PC Beginners Build Guide | 2017</a> video, but also has information on how to run the Linux driver for the <a href="https://amzn.to/2Mpn9Kb" target="_blank" rel="noopener">ANEWKODI wireless adapter</a>.</em></p>
+<h2 id="Step-1-Create-Bootable-Linux-USB-Stick"><a href="#Step-1-Create-Bootable-Linux-USB-Stick" class="headerlink" title="Step 1: Create Bootable Linux USB Stick"></a>Step 1: Create Bootable Linux USB Stick</h2><ol>
+<li>First, go to the <a href="https://www.ubuntu.com/download/desktop" target="_blank" rel="noopener">Ubuntu website and download the latest Long Term Support Version</a> (18.04 at time of writing).  </li>
+<li>Find a USB drive with more than 4GB of memory on it, and plug it into your Mac (if you have Windows, go through <a href="https://tutorials.ubuntu.com/tutorial/tutorial-create-a-usb-stick-on-windows" target="_blank" rel="noopener">this guide</a> and return to step 3 here.).  Open Disk Utility on the Mac (press CMD + Space and type “Disk Utility”), find the USB stick, and click “Erase” (this will delete all files on it, so back up accordingly!).  Select the following options: </li>
+</ol>
+<img src="/blog/2019/what-to-do-after-building-pc-linux/partition.jpg">
+<ol start="3">
+<li>Convert the ISO download to an img file.  This will allow your new PC to recognize it as a bootable disk (<a href="https://superuser.com/a/429233" target="_blank" rel="noopener">see this explanation</a> for more detail).</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># I am using the hdiutil tool to convert the ISO to an IMG format.  I first pass in the name and location # of the file I want to create (here I just kept the same name as the ISO without the extension), and </span></span><br><span class="line"><span class="comment"># then the original ISO you want to convert.  If you are on Mac like me, this will create a dmg file, but</span></span><br><span class="line"><span class="comment"># this is actually an img file under the surface.</span></span><br><span class="line">hdiutil convert -format UDRW -o ~/Downloads/ubuntu-18.04.1-desktop-amd64 ~/Downloads/ubuntu-18.04.1-desktop-amd64.iso</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>Unmount the USB from your Mac </li>
+</ol>
+<p>Before we can prep this USB for the new PC, we need to unmount it.  To do this, you need to find the disk number of the USB.  Run the following command.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">diskutil list</span><br></pre></td></tr></table></figure>
+<p>You can see that here is my USB, and it is disk3.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/dev/disk3 (external, physical):</span><br><span class="line">   #:                       TYPE NAME                    SIZE       IDENTIFIER</span><br><span class="line">   0:     Apple_partition_scheme                        *31.0 GB    disk3</span><br><span class="line">   1:        Apple_partition_map                         32.3 KB    disk3s1</span><br><span class="line">   2:                  Apple_HFS Ubuntu                  30.8 GB    disk3s3</span><br></pre></td></tr></table></figure>
+<p>Once you know which disk the USB is, run the following command, inserting the appropriate number.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">diskutil unmountDisk /dev/disk3</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>Format the Bootable USB </li>
+</ol>
+<p>You will now use the <code>dd</code> utility, which stands for “Data Definition” and is an old Unix based operating system tool for managing things like boot sectors, hard drives, etc.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># MAKE SURE YOU HAVE SPECIFIED THE CORRECT DISK NUMBER THAT YOU USED IN STEP 4</span></span><br><span class="line">sudo dd <span class="keyword">if</span>=~/Downloads/ubuntu-18.04.1-desktop-amd64.dmg of=/dev/disk3 bs=1m</span><br></pre></td></tr></table></figure>
+<p>After a few minutes, you should see something like this pop up on your Mac: </p>
+<img src="/blog/2019/what-to-do-after-building-pc-linux/error-disk.jpg">
+<p>Do not click anything yet.  First, go to the terminal and type the following command (with your appropriate disk number).</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">diskutil eject /dev/disk3</span><br></pre></td></tr></table></figure>
+<p>Now, go back to the dialogue and press “Ignore”.  After this, your USB is bootable!</p>
+<h2 id="Step-2-Boot-your-new-PC"><a href="#Step-2-Boot-your-new-PC" class="headerlink" title="Step 2: Boot your new PC"></a>Step 2: Boot your new PC</h2><ol>
+<li>Connect an HDMI (or other visual) cable to the HDMI port in your <strong>graphics card</strong> (not the default HDMI port), and then to your external monitor.  Connect your mouse and keyboard via USB, and then press the power button.  If the computer does not turn on, there is likely something wrong with your build, and you will need to troubleshoot on Google to figure that part out.</li>
+<li>When the monitor comes on, you will see something like this screen: </li>
+</ol>
+<img src="/blog/2019/what-to-do-after-building-pc-linux/select-boot-device.png">
+<ol start="3">
+<li>Plug in your bootable USB stick</li>
+<li>Turn your computer completely off (press or hold the power button on the case), and turn it back on.  Immediately after turning it on, hit the delete key on your keyboard repeatedly until you enter the BIOS screen.  You should see this: </li>
+</ol>
+<img src="/blog/2019/what-to-do-after-building-pc-linux/initial-bios.JPG">
+<ol start="5">
+<li>Click on the tab that says “Boot”, go to Boot Option #1, and select your USB drive.</li>
+</ol>
+<img src="/blog/2019/what-to-do-after-building-pc-linux/boot-screen.JPG">
+<ol start="6">
+<li>Save and Exit, and you will now be booted into the operating system installed on your USB.</li>
+<li>Ubuntu will load and you will see something like this: </li>
+</ol>
+<img src="/blog/2019/what-to-do-after-building-pc-linux/use-install-ubuntu.png">
+<ol start="8">
+<li>Click “Install Ubuntu”, and follow the steps (just use all the default settings here)</li>
+<li>Restart your computer, and you will come to this screen: </li>
+</ol>
+<img src="/blog/2019/what-to-do-after-building-pc-linux/after-install-ubuntu.JPG">
+<ol start="10">
+<li>Remove the USB drive, hold down the power to turn the computer off, and then press the power again to turn it back on.  The computer will first go to the ASROCK motherboard screen, and then will boot into Linux.</li>
+</ol>
+<h2 id="Step-3-Setting-up-your-Wifi"><a href="#Step-3-Setting-up-your-Wifi" class="headerlink" title="Step 3 - Setting up your Wifi"></a>Step 3 - Setting up your Wifi</h2><p>Before we can do much of anything, we need to get Wifi working.  If you have ethernet access, you can just plug that into your PC and you’re good to go!  But if you are like me and your router is across the room, you will need to setup the <a href="https://amzn.to/2Mpn9Kb" target="_blank" rel="noopener">ANEWKODI wireless adapter</a>.  Lucky for us (joke), our PC will not work right away with this little device.  If you open up your Wifi settings, you will see “No Wi-Fi Adapter Found”.</p>
+<p>To set this up, we need to use a little external software for the driver.</p>
+<ol>
+<li>Get your big new PC close to your router and plug in the ethernet.  Don’t worry, you don’t need to work here for the rest of your life–just until we download the necessary tools we need to get that wireless adapter working!</li>
+<li>Plug in your wireless adapter</li>
+<li>Open a terminal, navigate to the Downloads folder, and type the following commands.</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/Downloads </span><br><span class="line"></span><br><span class="line"><span class="comment"># Download necessary packages </span></span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install build-essential </span><br><span class="line">sudo apt-get install git</span><br><span class="line"></span><br><span class="line"><span class="comment"># Clone the repo and enter into it</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/gnab/rtl8812au</span><br><span class="line"><span class="built_in">cd</span> rtl8812au</span><br><span class="line"></span><br><span class="line"><span class="comment"># Compile the C files </span></span><br><span class="line">make</span><br><span class="line"></span><br><span class="line"><span class="comment"># Make the wifi adapter available</span></span><br><span class="line">sudo insmod 8812au.ko</span><br></pre></td></tr></table></figure>
+<p>At this point, if you open your Linux Wifi settings, you should see all of the available networks you can connect to.  Just a few more cleanup steps.</p>
+<ol start="4">
+<li>Add this driver to the list of built in drivers and configure it so it rebuilds on kernel updates and reboots </li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">sudo cp 8812au.ko /lib/modules/$(uname -r)/kernel/drivers/net/wireless</span><br><span class="line">sudo depmod </span><br><span class="line"></span><br><span class="line"><span class="comment"># Install dkms and build </span></span><br><span class="line">sudo apt-get install dkms</span><br><span class="line"></span><br><span class="line"><span class="comment"># Need to copy the source files to a directory called `8812au-4.2.2`</span></span><br><span class="line">sudo mkdir /usr/src/8812au-4.2.2</span><br><span class="line">sudo cp ./* /usr/src/8812au-4.2.2</span><br><span class="line"></span><br><span class="line"><span class="comment"># add, build, and install </span></span><br><span class="line">sudo dkms add -m 8812au -v 4.2.2</span><br><span class="line">sudo dkms build -m 8812au -v 4.2.2</span><br><span class="line">sudo dkms install -m 8812au -v 4.2.2</span><br><span class="line"></span><br><span class="line"><span class="comment"># Boot loader</span></span><br><span class="line"><span class="built_in">echo</span> 8812au | sudo tee -a /etc/modules </span><br><span class="line"></span><br><span class="line"><span class="comment"># Clean up </span></span><br><span class="line">sudo dkms remove -m 8812au -v 4.2.2 --all</span><br></pre></td></tr></table></figure>
+<p>Your Wifi is now setup!  You can walk that big PC back to your desk and connect wirelessly!</p>
+<h2 id="Step-3-Creating-a-Windows-Virtual-Machine"><a href="#Step-3-Creating-a-Windows-Virtual-Machine" class="headerlink" title="Step 3 - Creating a Windows Virtual Machine"></a>Step 3 - Creating a Windows Virtual Machine</h2><p>It is really hard to break away completely from Windows.  Someone is always sending you Word, PPT, and Excel documents, and it is just easiest if you have a way to edit them.  If you have a Windows license key, you will use it during this process.  If you are like me, you don’t have one and do not intend to buy one anytime soon.  That is fine too, because <a href="https://www.howtogeek.com/244678/you-dont-need-a-product-key-to-install-and-use-windows-10/" target="_blank" rel="noopener">Windows still offers a great deal of functionality without a full license</a>.</p>
+<p>To create our virtual machine, we will be using an Oracle product called Virtual Box.  </p>
+<ol>
+<li>Download Virtual Box <a href="https://www.virtualbox.org/wiki/Linux_Downloads" target="_blank" rel="noopener">from here</a>(select the 18.04 version at the top of the list)</li>
+<li><a href="https://www.microsoft.com/en-us/software-download/windows10" target="_blank" rel="noopener">Download Windows 10 here</a>(64-bit)</li>
+<li>You will want to move the Windows ISO file to a more permanent location than the downloads folder.  I moved mine to the Desktop.</li>
+<li>Open Virtual box and click the blue ribbon that says “new”</li>
+<li>Name your VM (whatever you want), select “Microsoft Windows” for type, and select “Windows 10 (64-bit)” for version.</li>
+<li>For memory size, select 4096</li>
+<li>Click the default settings for virtual hard disk </li>
+<li>Once you have completed the preliminary steps, go into the settings for your VM, click the “Storage” tab, click the “Empty” storage device on the left, and click the button you see here below (this screenshot is from another VM I was creating so it shows Ubuntu, but you will see the same options).  Select the Windows 10 ISO file you downloaded earlier in step 2.</li>
+</ol>
+<img src="/blog/2019/what-to-do-after-building-pc-linux/storage.jpg">
+<ol start="8">
+<li>Click the big green “Start” button to start your VM </li>
+<li>If you do not have a Windows 10 license, just click “I don’t have a product key”</li>
+<li>Select “Windows 10 Home” edition </li>
+<li>IMPORTANT!!! - You will want to select the CUSTOM option for the Windows install which will use the virtual hard disk you created in step 6.  Since we are running Linux on our main machine, the first option is not going to work.</li>
+<li>Be patient as Microsoft installs and follow the instructions.</li>
+<li>When loaded, we need to setup a file share so that we can access files from Linux on Windows 10 and vice-versa.  First, we need to install Windows Guest Additions.  This is surprisingly hard to find, so <a href="download.virtualbox.org/virtualbox/5.2.24/">here is the link</a> to the latest long term support version.  On this page, you will need to download the “ISO” version.</li>
+<li>Click on the “Devices” tab at the top of your Virtual Box window, click “Optical Drives”, and then click “Choose disk image”.  Now find the ISO file you just downloaded and select it.</li>
+<li>Click on the Devices tab again, and click “Insert Guest Additions CD image”.</li>
+<li>Now click into the Virtual Box window and open the file system.  Click “This PC”, and double click on the Guest Additions.  You should see a bunch of files.  Double click the one without any extension to start the Guest Additions installer.</li>
+<li>After a quick reboot, Guest Additions will be turned on.  The last step is to create a shared folder on your linux machine.  Get out of the Virtual Box window and open your host machine’s (Linux) terminal.  Create a share directory.</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir ~/vmshare</span><br></pre></td></tr></table></figure>
+<ol start="18">
+<li>Now, open your Windows VM settings, click “Shared folders”, and create a new shared folder.  Select “Auto-mount” and for the folder path select the <code>vmshare</code> directory we just created.  Finally, select “make permanent”.  Now, when you open your Windows file explorer, you should see a new drive (mine is the E: drive) where you can save files.  Save a file to this folder, and then check to see if you can find it on your Linux host machine at the directory path <code>~/vmshare</code>.</li>
+</ol>
+<p>And that’s it!  You are up and running with your newly built custom PC.  Customize it however you like!</p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="http://zachgoll.github.io">Home</a></li>
+         
+          <li><a href="/blog/archives/">Writing</a></li>
+         
+          <li><a href="http://zachgoll.github.io/portfolio">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-1-Create-Bootable-Linux-USB-Stick"><span class="toc-number">1.</span> <span class="toc-text">Step 1: Create Bootable Linux USB Stick</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-2-Boot-your-new-PC"><span class="toc-number">2.</span> <span class="toc-text">Step 2: Boot your new PC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-3-Setting-up-your-Wifi"><span class="toc-number">3.</span> <span class="toc-text">Step 3 - Setting up your Wifi</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-3-Creating-a-Windows-Virtual-Machine"><span class="toc-number">4.</span> <span class="toc-text">Step 3 - Creating a Windows Virtual Machine</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://zachgoll.github.io/blog/2019/what-to-do-after-building-pc-linux/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://zachgoll.github.io/blog/2019/what-to-do-after-building-pc-linux/&text=What to do after building a Custom PC (Linux with Windows VM)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://zachgoll.github.io/blog/2019/what-to-do-after-building-pc-linux/&title=What to do after building a Custom PC (Linux with Windows VM)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://zachgoll.github.io/blog/2019/what-to-do-after-building-pc-linux/&is_video=false&description=What to do after building a Custom PC (Linux with Windows VM)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=What to do after building a Custom PC (Linux with Windows VM)&body=Check out this article: http://zachgoll.github.io/blog/2019/what-to-do-after-building-pc-linux/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://zachgoll.github.io/blog/2019/what-to-do-after-building-pc-linux/&title=What to do after building a Custom PC (Linux with Windows VM)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://zachgoll.github.io/blog/2019/what-to-do-after-building-pc-linux/&title=What to do after building a Custom PC (Linux with Windows VM)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://zachgoll.github.io/blog/2019/what-to-do-after-building-pc-linux/&title=What to do after building a Custom PC (Linux with Windows VM)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://zachgoll.github.io/blog/2019/what-to-do-after-building-pc-linux/&title=What to do after building a Custom PC (Linux with Windows VM)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://zachgoll.github.io/blog/2019/what-to-do-after-building-pc-linux/&name=What to do after building a Custom PC (Linux with Windows VM)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 Zach Gollwitzer
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="http://zachgoll.github.io">Home</a></li>
+         
+          <li><a href="/blog/archives/">Writing</a></li>
+         
+          <li><a href="http://zachgoll.github.io/portfolio">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/blog/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/blog/lib/jquery/jquery.min.js"></script>
+<script src="/blog/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/blog/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-149577498-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'zachgoll';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+

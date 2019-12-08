@@ -1,0 +1,663 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:p="http://www.evolus.vn/Namespace/Pencil" xmlns:pencil="http://www.evolus.vn/Namespace/Pencil" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0" xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0" xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0" xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0" xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0" xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:meta="urn:oasis:names:tc:opendocument:xmlns:meta:1.0" xmlns:number="urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0" xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0" xmlns:chart="urn:oasis:names:tc:opendocument:xmlns:chart:1.0" xmlns:dr3d="urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0" xmlns:math="http://www.w3.org/1998/Math/MathML" xmlns:form="urn:oasis:names:tc:opendocument:xmlns:form:1.0" xmlns:script="urn:oasis:names:tc:opendocument:xmlns:script:1.0" xmlns:ooo="http://openoffice.org/2004/office" xmlns:ooow="http://openoffice.org/2004/writer" xmlns:oooc="http://openoffice.org/2004/calc" xmlns:dom="http://www.w3.org/2001/xml-events" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rpt="http://openoffice.org/2005/report" xmlns:of="urn:oasis:names:tc:opendocument:xmlns:of:1.2" xmlns:rdfa="http://docs.oasis-open.org/opendocument/meta/rdfa#" xmlns:field="urn:openoffice:names:experimental:ooo-ms-interop:xmlns:field:1.0" xmlns:regexp="http://exslt.org/regular-expressions" xmlns:em="http://exslt.org/math" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="1143" height="839" id="exportedSVG" version="1.1" pencil:version="1.2.2" sodipodi:docname="prod-web-app-architecture"><g inkscape:label="Main Architecture" inkscape:groupmode="layer" id="layer_main_architecture"><g><rect x="0" y="0" width="1143" height="839" fill="none"/><g p:type="Shape" p:def="Evolus.Flowchart:process" id="e41e5185ad4b42469f06e044ecb237d3" transform="matrix(1,0,0,1,189,279.75)"><p:metadata><p:property name="box">622.5,433.75</p:property><p:property name="outputPin1Origin">311.25,0</p:property><p:property name="outputPin1">311.25,0</p:property><p:property name="outputPin2Origin">622.5,216.875</p:property><p:property name="outputPin2">622.5,216.875</p:property><p:property name="outputPin3Origin">311.25,433.75</p:property><p:property name="outputPin3">311.3518821603928,433.75</p:property><p:property name="outputPin4Origin">0,216.875</p:property><p:property name="outputPin4">0,216.875</p:property><p:property name="fillColor">#FFFFFFFF</p:property><p:property name="strokeColor">#66666670</p:property><p:property name="strokeStyle">2|5,5</p:property><p:property name="textContent"/><p:property name="textFont">Helvetica|normal|normal|12px|none</p:property><p:property name="textColor">#000000FF</p:property><p:property name="textAlign">1,1</p:property><p:property name="optionText1"/><p:property name="optionText2"/><p:property name="optionText3"/><p:property name="optionText4"/><p:property name="optionTextFont">Helvetica|normal|normal|12px|none</p:property><p:property name="optionTextColor">#666666FF</p:property></p:metadata>
+            <rect style="stroke-linejoin: round; stroke: rgb(102, 102, 102); stroke-opacity: 0.439216; stroke-width: 2; fill: rgb(255, 255, 255); fill-opacity: 1; stroke-dasharray: 5, 5;" p:name="path" id="8fe3918614b947668bd86efa03f6200b" transform="translate(0,0)" x="0" y="0" width="622.5" height="433.75"/>
+
+            <text p:name="text1" id="5b888edf5c7e43678524b07c02481b91" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#2ecbc9eaae3c4647983e750930d15a8f" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan1" id="eb568695a36541919705efe540313e92" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text2" id="c4d5b1b031c14f0890a5428af9af6b4b" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#2a71b9c19cea45b4909332ee76fff4f2" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan2" id="b3609778808a4bcfa2fc672432878464" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text3" id="5f3e67ad2ec44a67a82fe145a6493e55" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#d87a743a9fac4e549b6ac9dfcb6d1f17" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan3" id="34dbef72896f4c29a5a9027d85e7ed78" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text4" id="3fc154b078c24fcaae49260b331f99f2" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#04afbef7068b4c139d9309b71bf61f97" startOffset="50%" text-anchor="middle" alignment-baseline="middle-left">
+                    <tspan dy="-4" p:name="textSpan4" id="60ae239549454a9793722231fc135ab6" dx="0"/>
+                </textPath>
+            </text>
+
+            <text text-anchor="start" xml:space="preserve" p:name="text" id="9e9200600b8b4165ad607ddb6ff17380" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(0, 0, 0); fill-opacity: 1;" transform="translate(311,217)"/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 0.439216; stroke-width: 2; stroke-dasharray: 5, 5;" p:name="outputArrrow1" id="2ecbc9eaae3c4647983e750930d15a8f" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 0.439216; stroke-width: 2; stroke-dasharray: 5, 5;" p:name="outputArrrow2" id="2a71b9c19cea45b4909332ee76fff4f2" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 0.439216; stroke-width: 2; stroke-dasharray: 5, 5;" p:name="outputArrrow3" id="d87a743a9fac4e549b6ac9dfcb6d1f17" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 0.439216; stroke-width: 2; stroke-dasharray: 5, 5;" p:name="outputArrrow4" id="04afbef7068b4c139d9309b71bf61f97" d=""/>
+        </g><g p:type="Shape" p:def="Evolus.Flowchart:process" id="a632432339604eaf91cc545619814e04" transform="matrix(1,0,0,1,190,188.75)"><p:metadata><p:property name="box">620,80</p:property><p:property name="outputPin1Origin">310,0</p:property><p:property name="outputPin1">310,0</p:property><p:property name="outputPin2Origin">620,40</p:property><p:property name="outputPin2">620,40</p:property><p:property name="outputPin3Origin">310,80</p:property><p:property name="outputPin3">310,80</p:property><p:property name="outputPin4Origin">0,40</p:property><p:property name="outputPin4">0,40</p:property><p:property name="fillColor">#FFFFFFFF</p:property><p:property name="strokeColor">#66666670</p:property><p:property name="strokeStyle">2|5,5</p:property><p:property name="textContent"/><p:property name="textFont">Helvetica|normal|normal|12px|none</p:property><p:property name="textColor">#000000FF</p:property><p:property name="textAlign">1,1</p:property><p:property name="optionText1"/><p:property name="optionText2"/><p:property name="optionText3"/><p:property name="optionText4"/><p:property name="optionTextFont">Helvetica|normal|normal|12px|none</p:property><p:property name="optionTextColor">#666666FF</p:property></p:metadata>
+            <rect style="stroke-linejoin: round; stroke: rgb(102, 102, 102); stroke-opacity: 0.439216; stroke-width: 2; fill: rgb(255, 255, 255); fill-opacity: 1; stroke-dasharray: 5, 5;" p:name="path" id="b0f0a8a0c54542ee99d9b22b1a3985ce" transform="translate(0,0)" x="0" y="0" width="620" height="80"/>
+
+            <text p:name="text1" id="2a038829f9584cb8b2c2c273243cd5ad" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#8b68a9d08d7d40a7b58acdb36a30f95a" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan1" id="1a7179924e814ee8abf5fe8f0a41bc62" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text2" id="e16c4fdd864a4addb908401a113811f1" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#76b92eb2c9b24f5ebefe877f56c6405c" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan2" id="cb931632cb424010b4519acc7fc49fb2" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text3" id="96b7c076996a48ee86d78fa6bc0dfbe5" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#b670c92174584d2fb405a86ec21487ae" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan3" id="63e52584bc0a4273bf3fc7321a15d2dc" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text4" id="447a5cbc6f424f56b67867504ef49da2" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#8f46e938ac6f41efa56200610b72bed3" startOffset="50%" text-anchor="middle" alignment-baseline="middle-left">
+                    <tspan dy="-4" p:name="textSpan4" id="4ba96c543cdf44d2836c67ab686ecb91" dx="0"/>
+                </textPath>
+            </text>
+
+            <text text-anchor="start" xml:space="preserve" p:name="text" id="292b5647985c45a6adc58b22b34ec007" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(0, 0, 0); fill-opacity: 1;" transform="translate(310,40)"/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 0.439216; stroke-width: 2; stroke-dasharray: 5, 5;" p:name="outputArrrow1" id="8b68a9d08d7d40a7b58acdb36a30f95a" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 0.439216; stroke-width: 2; stroke-dasharray: 5, 5;" p:name="outputArrrow2" id="76b92eb2c9b24f5ebefe877f56c6405c" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 0.439216; stroke-width: 2; stroke-dasharray: 5, 5;" p:name="outputArrrow3" id="b670c92174584d2fb405a86ec21487ae" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 0.439216; stroke-width: 2; stroke-dasharray: 5, 5;" p:name="outputArrrow4" id="8f46e938ac6f41efa56200610b72bed3" d=""/>
+        </g><g p:type="Shape" p:def="Evolus.Flowchart:MagneticDisk" id="93f9494b608a466e9bb5d8dce293e927" transform="matrix(1,0,0,1,243,594)"><p:metadata><p:property name="box">131,105</p:property><p:property name="outputPin1Origin">65.5,0</p:property><p:property name="outputPin1">65.5,0</p:property><p:property name="outputPin2Origin">131,52.5</p:property><p:property name="outputPin2">131,52.5</p:property><p:property name="outputPin3Origin">65.5,105</p:property><p:property name="outputPin3">65.5,105</p:property><p:property name="outputPin4Origin">0,52.5</p:property><p:property name="outputPin4">0,52.5</p:property><p:property name="fillColor">#000066FF</p:property><p:property name="strokeColor">#FFFFFFA6</p:property><p:property name="strokeStyle">2|</p:property><p:property name="textContent">MongoDB Database</p:property><p:property name="textFont">Helvetica|normal|normal|19px|none</p:property><p:property name="textColor">#FFFFFFFF</p:property><p:property name="textAlign">1,1</p:property><p:property name="optionText1"/><p:property name="optionText2"/><p:property name="optionText3"/><p:property name="optionText4"/><p:property name="optionTextFont">Helvetica|normal|normal|12px|none</p:property><p:property name="optionTextColor">#666666FF</p:property></p:metadata>
+            <path stroke="none" style="stroke-linejoin: round; fill: rgb(0, 0, 102); fill-opacity: 1;" p:name="fill" id="2f76ac9b0f39492c9e63b0ecdae332c5" transform="translate(0,0)" d="M 0 17.5 L 0 87.5 C 0 96.25 32.75 105 65.5 105 S 131 96.25 131 87.5 L 131 17.5 C 131 8.75 98.25 0 65.5 0 S 0 8.75 0 17.5 z"/>
+            <path fill="none" style="stroke-linejoin: round; stroke: rgb(255, 255, 255); stroke-opacity: 0.65098; stroke-width: 2;" p:name="path" id="e3d2c66551f344dba44c4ab82809699a" transform="translate(0,0)" d="M 0 17.5 L 0 87.5 C 0 96.25 32.75 105 65.5 105 S 131 96.25 131 87.5 L 131 17.5 C 131 26.25 98.25 35 65.5 35 S 0 26.25 0 17.5 C 0 8.75 32.75 0 65.5 0 S 131 8.75 131 17.5"/>
+
+            <text p:name="text1" id="61f6aacbe9214b0a91473cfe0e372e52" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#5e5ab297565e48978c39f746c19ab1e4" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan1" id="1b0e14fb5aa54b4bb4c57fbe312ba23f" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text2" id="57626eaf254b4e0088b555475ce6e23f" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#31cff1be00dc404ab8193260b487d06a" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan2" id="7522f6440d4747a1a97b365aab4b89ff" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text3" id="f878640b64a444acaaf2385f2b2655a5" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#f4c472a49936437f922f4c84a8a3dea6" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan3" id="eebeb69d68f3444aa8186dc9c79fa073" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text4" id="1925615cca9a421cad3ef6db2f4d8ba8" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#83ca1ea5ad604a3595338fece9d707c6" startOffset="50%" text-anchor="middle" alignment-baseline="middle-left">
+                    <tspan dy="-4" p:name="textSpan4" id="20d94843a426491e98a0503cef94e92b" dx="0"/>
+                </textPath>
+            </text>
+            <text text-anchor="start" xml:space="preserve" p:name="text" id="c5a4261c599a43cfbe67118547b8194e" style="font-family: Helvetica; font-size: 19px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(255, 255, 255); fill-opacity: 1;" transform="translate(10,66)"><tspan x="13.7578125" y="0">MongoDB</tspan><tspan x="15.3359375" y="21">Database</tspan></text>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(255, 255, 255); stroke-opacity: 0.65098; stroke-width: 2;" p:name="outputArrrow1" id="5e5ab297565e48978c39f746c19ab1e4" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(255, 255, 255); stroke-opacity: 0.65098; stroke-width: 2;" p:name="outputArrrow2" id="31cff1be00dc404ab8193260b487d06a" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(255, 255, 255); stroke-opacity: 0.65098; stroke-width: 2;" p:name="outputArrrow3" id="f4c472a49936437f922f4c84a8a3dea6" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(255, 255, 255); stroke-opacity: 0.65098; stroke-width: 2;" p:name="outputArrrow4" id="83ca1ea5ad604a3595338fece9d707c6" d=""/>
+        </g><g p:type="Shape" p:def="Evolus.Flowchart:process" id="f740ca7ef6a841b6997df9b9f0b326cc" transform="matrix(1,0,0,1,190,730)"><p:metadata><p:property name="box">764.25,67</p:property><p:property name="outputPin1Origin">382.125,0</p:property><p:property name="outputPin1">382.125,0</p:property><p:property name="outputPin2Origin">764.25,33.5</p:property><p:property name="outputPin2">764.25,33.5</p:property><p:property name="outputPin3Origin">382.125,67</p:property><p:property name="outputPin3">382.125,67</p:property><p:property name="outputPin4Origin">0,33.5</p:property><p:property name="outputPin4">0,33.5</p:property><p:property name="fillColor">#BDDFFFFF</p:property><p:property name="strokeColor">#666666FF</p:property><p:property name="strokeStyle">2|</p:property><p:property name="textContent">Digital Ocean "Spaces" (Object Storage)</p:property><p:property name="textFont">Helvetica|normal|normal|21px|none</p:property><p:property name="textColor">#000000FF</p:property><p:property name="textAlign">1,1</p:property><p:property name="optionText1"/><p:property name="optionText2"/><p:property name="optionText3"/><p:property name="optionText4"/><p:property name="optionTextFont">Helvetica|normal|normal|12px|none</p:property><p:property name="optionTextColor">#666666FF</p:property></p:metadata>
+            <rect style="stroke-linejoin: round; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2; fill: rgb(189, 223, 255); fill-opacity: 1;" p:name="path" id="abe161b9f3bf4630980b0f49015ecc29" transform="translate(0,0)" x="0" y="0" width="764.25" height="67"/>
+
+            <text p:name="text1" id="de11074752a746fa8667788e8d3b041c" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#db17bd0a5d244cf882c6623e5efcc457" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan1" id="4f23ef1f3f6e443f9b0dd99121808ba3" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text2" id="eda943e1005f429eb7ca933cfc9e1001" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#89943b7238f34c4eb1faf7d0d9ca0614" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan2" id="88e1eecf11fd490a814f29ef2358de69" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text3" id="5cf5f8ca540d4ac88daf8a85f30b5bf2" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#81a642ecae5743609fbd712372372366" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan3" id="23913c9d7f264f73a7b4bc9e5af8aa04" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text4" id="81d4f9cd43c2456eb17616ba3d54eddd" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#a850a08cf73643b1b85b110de66b3215" startOffset="50%" text-anchor="middle" alignment-baseline="middle-left">
+                    <tspan dy="-4" p:name="textSpan4" id="9aa07d944f1d47d7925dfe2ec62ff701" dx="0"/>
+                </textPath>
+            </text>
+
+            <text text-anchor="start" xml:space="preserve" p:name="text" id="998c5e773c9e4c8a9ac0f8add843a4da" style="font-family: Helvetica; font-size: 21px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(0, 0, 0); fill-opacity: 1;" transform="translate(11,41)"><tspan x="183.2578125" y="0">Digital Ocean "Spaces" (Object Storage)</tspan></text>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow1" id="db17bd0a5d244cf882c6623e5efcc457" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow2" id="89943b7238f34c4eb1faf7d0d9ca0614" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow3" id="81a642ecae5743609fbd712372372366" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow4" id="a850a08cf73643b1b85b110de66b3215" d=""/>
+        </g><g p:type="Shape" p:def="Evolus.Flowchart:process" id="081cb168b6e94f5398e44b75477123b6" transform="matrix(1,0,0,1,570,296)"><p:metadata><p:property name="box">213.5,383.5</p:property><p:property name="outputPin1Origin">106.75,0</p:property><p:property name="outputPin1">106.74999999999999,0</p:property><p:property name="outputPin2Origin">213.5,191.75</p:property><p:property name="outputPin2">213.49999999999997,194.61194029850745</p:property><p:property name="outputPin3Origin">106.75,383.5</p:property><p:property name="outputPin3">106.74999999999999,383.5</p:property><p:property name="outputPin4Origin">0,191.75</p:property><p:property name="outputPin4">0,191.75</p:property><p:property name="fillColor">#BDDFFFFF</p:property><p:property name="strokeColor">#666666FF</p:property><p:property name="strokeStyle">2|</p:property><p:property name="textContent">LogStash (Elastic Stack)</p:property><p:property name="textFont">Helvetica|normal|normal|19px|none</p:property><p:property name="textColor">#000000FF</p:property><p:property name="textAlign">1,1</p:property><p:property name="optionText1"/><p:property name="optionText2"/><p:property name="optionText3"/><p:property name="optionText4"/><p:property name="optionTextFont">Helvetica|normal|normal|12px|none</p:property><p:property name="optionTextColor">#666666FF</p:property></p:metadata>
+            <rect style="stroke-linejoin: round; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2; fill: rgb(189, 223, 255); fill-opacity: 1;" p:name="path" id="f0c99b7087f84173afdd83f7e96474d9" transform="translate(0,0)" x="0" y="0" width="213.5" height="383.5"/>
+
+            <text p:name="text1" id="b303953695a44ec3b4979e3ff509f386" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#47597dc4e027469787e141d72206aa10" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan1" id="569d7217067a4bd6bfa8e05f48470bd3" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text2" id="3d79024df8834a2d9c3580820e638b63" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#6a5484ba25cb4223af75645decfb3f91" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan2" id="cdb0a62a2a08484da974618b3920372d" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text3" id="9bb5cbebf1364568833dd3dab2f97579" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#09a11fd3ef3e430e86141c36800b592c" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan3" id="04b624e9e42c431a832ccc1e855642ee" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text4" id="8c3cc0a1589d4f17a8c9f091a92335fe" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#ef91fc0fe443402db1751ddf97c2d49c" startOffset="50%" text-anchor="middle" alignment-baseline="middle-left">
+                    <tspan dy="-4" p:name="textSpan4" id="abbc8b53a22b4d468ed92aaf63ddf813" dx="0"/>
+                </textPath>
+            </text>
+
+            <text text-anchor="start" xml:space="preserve" p:name="text" id="0bd4fb2c358b4566840ead0f237596a7" style="font-family: Helvetica; font-size: 19px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(0, 0, 0); fill-opacity: 1;" transform="translate(10,188)"><tspan x="23.328125" y="0">LogStash (Elastic</tspan><tspan x="70.328125" y="21">Stack)</tspan></text>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow1" id="47597dc4e027469787e141d72206aa10" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow2" id="6a5484ba25cb4223af75645decfb3f91" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow3" id="09a11fd3ef3e430e86141c36800b592c" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow4" id="ef91fc0fe443402db1751ddf97c2d49c" d=""/>
+        </g><g p:type="Shape" p:def="Evolus.Flowchart:process" id="0a68c1856197420990447131155b0cf2" transform="matrix(1,0,0,1,206,210)"><p:metadata><p:property name="box">340.5,50</p:property><p:property name="outputPin1Origin">170.25,0</p:property><p:property name="outputPin1">170.25,0</p:property><p:property name="outputPin2Origin">340.5,25</p:property><p:property name="outputPin2">340.5,25</p:property><p:property name="outputPin3Origin">170.25,50</p:property><p:property name="outputPin3">170.25,50</p:property><p:property name="outputPin4Origin">0,25</p:property><p:property name="outputPin4">0,25</p:property><p:property name="fillColor">#BDDFFFFF</p:property><p:property name="strokeColor">#666666FF</p:property><p:property name="strokeStyle">2|</p:property><p:property name="textContent">Load Balancer</p:property><p:property name="textFont">Helvetica|normal|normal|12px|none</p:property><p:property name="textColor">#000000FF</p:property><p:property name="textAlign">1,1</p:property><p:property name="optionText1"/><p:property name="optionText2"/><p:property name="optionText3"/><p:property name="optionText4"/><p:property name="optionTextFont">Helvetica|normal|normal|12px|none</p:property><p:property name="optionTextColor">#666666FF</p:property></p:metadata>
+            <rect style="stroke-linejoin: round; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2; fill: rgb(189, 223, 255); fill-opacity: 1;" p:name="path" id="c14e30032f204b6995d63b589dac47e0" transform="translate(0,0)" x="0" y="0" width="340.5" height="50"/>
+
+            <text p:name="text1" id="b72e9873e90b490499040ce923b99864" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#da33ada33531400d9e11108f9939bcc1" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan1" id="797f701dfd36489abe68cb12946d2125" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text2" id="e164b2c30556414d83bb99b338749b51" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#636c8e13f37446cd9a61d7fab64c6c77" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan2" id="ea4ceffd66c84afb9018c25bd4eb37c5" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text3" id="32187943eae44780a41a4d288ee52e59" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#7143a483593d4bbba46bf38c86e57637" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan3" id="8c3df40dbe824c8894906338301d0fd8" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text4" id="ccb9e874db704c5eaf7c185c7b3a885e" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#815e6985aac3419089ce17a9e1b412b4" startOffset="50%" text-anchor="middle" alignment-baseline="middle-left">
+                    <tspan dy="-4" p:name="textSpan4" id="4a46d3dd763440fbaec1364d6957c6fd" dx="0"/>
+                </textPath>
+            </text>
+
+            <text text-anchor="start" xml:space="preserve" p:name="text" id="61b753115ccd443f89e52176bee9d245" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(0, 0, 0); fill-opacity: 1;" transform="translate(6,29)"><tspan x="125.5546875" y="0">Load Balancer</tspan></text>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow1" id="da33ada33531400d9e11108f9939bcc1" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow2" id="636c8e13f37446cd9a61d7fab64c6c77" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow3" id="7143a483593d4bbba46bf38c86e57637" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow4" id="815e6985aac3419089ce17a9e1b412b4" d=""/>
+        </g><g p:type="Shape" p:def="Evolus.Flowchart:process" id="7495dad07a8d45c98806c7c7d2d255c2" transform="matrix(1,0,0,1,428,452)"><p:metadata><p:property name="box">127.25,50</p:property><p:property name="outputPin1Origin">63.625,0</p:property><p:property name="outputPin1">63.62499999999999,0</p:property><p:property name="outputPin2Origin">127.25,25</p:property><p:property name="outputPin2">127.24999999999999,25</p:property><p:property name="outputPin3Origin">63.625,50</p:property><p:property name="outputPin3">63.62499999999999,50</p:property><p:property name="outputPin4Origin">0,25</p:property><p:property name="outputPin4">0,25</p:property><p:property name="fillColor">#BDDFFFFF</p:property><p:property name="strokeColor">#666666FF</p:property><p:property name="strokeStyle">2|</p:property><p:property name="textContent">Digital Ocean Volume (if necessary)</p:property><p:property name="textFont">Helvetica|normal|normal|12px|none</p:property><p:property name="textColor">#000000FF</p:property><p:property name="textAlign">1,1</p:property><p:property name="optionText1"/><p:property name="optionText2"/><p:property name="optionText3"/><p:property name="optionText4"/><p:property name="optionTextFont">Helvetica|normal|normal|12px|none</p:property><p:property name="optionTextColor">#666666FF</p:property></p:metadata>
+            <rect style="stroke-linejoin: round; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2; fill: rgb(189, 223, 255); fill-opacity: 1;" p:name="path" id="743593b419054c26b86578ab6f8cf6bc" transform="translate(0,0)" x="0" y="0" width="127.25" height="50"/>
+
+            <text p:name="text1" id="d1b2accea7e743f0925e2cee364a1495" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#d678d7a95e8240f290c07b66cbb18584" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan1" id="5c2f713641a7499c9bb6550d93b1f171" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text2" id="6c1a693e50954afba44e975aa7007bd7" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#281007cc279c434b91ea421f625a0412" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan2" id="5b7eb1ffc383444e846b18c7a1163f0a" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text3" id="69def84be50a4ee1a7c8cc951ed555d3" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#e4f2404a39094877bd98f557d7863148" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan3" id="52420859c3c94313a0e272b6736fb910" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text4" id="a5144dc975b242dd9dc41a872157cf58" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#331b655eaf264b2f8fb822aeaad87f6c" startOffset="50%" text-anchor="middle" alignment-baseline="middle-left">
+                    <tspan dy="-4" p:name="textSpan4" id="29096bd031314622bedf17d924d9a0f0" dx="0"/>
+                </textPath>
+            </text>
+
+            <text text-anchor="start" xml:space="preserve" p:name="text" id="71f879ebe00f415380c09a037ed85e58" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(0, 0, 0); fill-opacity: 1;" transform="translate(6,15)"><tspan x="21.609375" y="0">Digital Ocean</tspan><tspan x="30.9453125" y="14">Volume (if</tspan><tspan x="28.28125" y="28">necessary)</tspan></text>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow1" id="d678d7a95e8240f290c07b66cbb18584" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow2" id="281007cc279c434b91ea421f625a0412" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow3" id="e4f2404a39094877bd98f557d7863148" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow4" id="331b655eaf264b2f8fb822aeaad87f6c" d=""/>
+        </g><g p:type="Shape" p:def="Evolus.Flowchart:process" id="fb64436f87cf41ddabd4c7682686f0a4" transform="matrix(1,0,0,1,206,320)"><p:metadata><p:property name="box">207,244</p:property><p:property name="outputPin1Origin">103.5,0</p:property><p:property name="outputPin1">103.5,0</p:property><p:property name="outputPin2Origin">207,122</p:property><p:property name="outputPin2">207,122</p:property><p:property name="outputPin3Origin">103.5,244</p:property><p:property name="outputPin3">103.5,244</p:property><p:property name="outputPin4Origin">0,122</p:property><p:property name="outputPin4">0,122</p:property><p:property name="fillColor">#BDDFFFFF</p:property><p:property name="strokeColor">#666666FF</p:property><p:property name="strokeStyle">2|</p:property><p:property name="textContent"/><p:property name="textFont">Helvetica|normal|normal|12px|none</p:property><p:property name="textColor">#000000FF</p:property><p:property name="textAlign">1,1</p:property><p:property name="optionText1"/><p:property name="optionText2"/><p:property name="optionText3"/><p:property name="optionText4"/><p:property name="optionTextFont">Helvetica|normal|normal|12px|none</p:property><p:property name="optionTextColor">#666666FF</p:property></p:metadata>
+            <rect style="stroke-linejoin: round; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2; fill: rgb(189, 223, 255); fill-opacity: 1;" p:name="path" id="f6a91c2b54c949f9880356469bbe3661" transform="translate(0,0)" x="0" y="0" width="207" height="244"/>
+
+            <text p:name="text1" id="4eee9d509ece4c678f463e27f2b23732" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#3c128e81120041098533dfc9ec38e98c" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan1" id="b95ff68d86cc4d30bbeb454d890f188c" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text2" id="2bb5faba14c14c4ebad4aa2ea694a2af" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#cb1ebf9b25ff4423b8c9469bb7679df2" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan2" id="573b711c1cae4997acf0c82749fff2c4" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text3" id="297eaec248db413d92e5b8f675389e66" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#12d0392be70c4f59be714f07a0170c90" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan3" id="ca86ef15a6ea447ca09383a94342fc3b" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text4" id="42ecd67d7fdd4d47942ea0c2edb58e2b" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#2a90ea56bf9943179b098c2afcfaa26c" startOffset="50%" text-anchor="middle" alignment-baseline="middle-left">
+                    <tspan dy="-4" p:name="textSpan4" id="1318fe11cf8641f5b4e98f20e15747fa" dx="0"/>
+                </textPath>
+            </text>
+
+            <text text-anchor="start" xml:space="preserve" p:name="text" id="71015d734dc44545b379f8d150e4499a" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(0, 0, 0); fill-opacity: 1;" transform="translate(104,122)"/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow1" id="3c128e81120041098533dfc9ec38e98c" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow2" id="cb1ebf9b25ff4423b8c9469bb7679df2" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow3" id="12d0392be70c4f59be714f07a0170c90" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow4" id="2a90ea56bf9943179b098c2afcfaa26c" d=""/>
+        </g><g p:type="Shape" p:def="Evolus.Flowchart:process" id="c845377b74d14fd18d2eddc659163335" transform="matrix(1,0,0,1,215,349)"><p:metadata><p:property name="box">188.68400000000005,23.27</p:property><p:property name="outputPin1Origin">94.34200000000003,0</p:property><p:property name="outputPin1">94.83593717277489,0</p:property><p:property name="outputPin2Origin">188.68400000000005,11.635</p:property><p:property name="outputPin2">188.68400000000005,11.635</p:property><p:property name="outputPin3Origin">94.34200000000003,23.27</p:property><p:property name="outputPin3">94.34200000000003,23.27</p:property><p:property name="outputPin4Origin">0,11.635</p:property><p:property name="outputPin4">0,11.635</p:property><p:property name="fillColor">#FFCC99FF</p:property><p:property name="strokeColor">#666666FF</p:property><p:property name="strokeStyle">2|</p:property><p:property name="textContent">Nginx Server</p:property><p:property name="textFont">Helvetica|normal|normal|12px|none</p:property><p:property name="textColor">#000000FF</p:property><p:property name="textAlign">1,1</p:property><p:property name="optionText1"/><p:property name="optionText2"/><p:property name="optionText3"/><p:property name="optionText4"/><p:property name="optionTextFont">Helvetica|normal|normal|12px|none</p:property><p:property name="optionTextColor">#666666FF</p:property></p:metadata>
+            <rect style="stroke-linejoin: round; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2; fill: rgb(255, 204, 153); fill-opacity: 1;" p:name="path" id="4331e3c3aee445028de6d5cbc14438fe" transform="translate(0,0)" x="0" y="0" width="188.68400000000005" height="23.27"/>
+
+            <text p:name="text1" id="ce140282d33a4441a44fb5483a5265ea" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#3b144c16d5a24fb0b9c8f14c12b7d7d2" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan1" id="dc20f219bad74920b57c8f1b1838726f" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text2" id="812734fd9dfc4855bf396f460327c797" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#dd83bcc4b3ee45709339f9fc6700c346" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan2" id="ab262d55e2b246a488eeba4bf1f30d2a" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text3" id="685d299f3343478f94db9248cd557137" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#1a6150df4d5742f8bd340533ba81f6de" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan3" id="169562f167754bfc83287fd142f9258e" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text4" id="57ee40a0d45644daac6a29337e6cc7c7" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#b8fc539e0c304144ae35f6a8d7b5b3f8" startOffset="50%" text-anchor="middle" alignment-baseline="middle-left">
+                    <tspan dy="-4" p:name="textSpan4" id="e294eb288cab4bd3809100be1bdec0f5" dx="0"/>
+                </textPath>
+            </text>
+
+            <text text-anchor="start" xml:space="preserve" p:name="text" id="763646698d944e9f85fe2682a1ad4604" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(0, 0, 0); fill-opacity: 1;" transform="translate(6,16)"><tspan x="53.67012500000003" y="0">Nginx Server</tspan></text>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow1" id="3b144c16d5a24fb0b9c8f14c12b7d7d2" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow2" id="dd83bcc4b3ee45709339f9fc6700c346" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow3" id="1a6150df4d5742f8bd340533ba81f6de" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow4" id="b8fc539e0c304144ae35f6a8d7b5b3f8" d=""/>
+        </g><g p:type="Shape" p:def="Evolus.Flowchart:process" id="0e23a1ce7f3845c7ba1bcfd5c8101a1a" transform="matrix(1,0,0,1,215,452)"><p:metadata><p:property name="box">188.11999999999995,50.912000000000006</p:property><p:property name="outputPin1Origin">94.05999999999997,0</p:property><p:property name="outputPin1">94.05999999999997,0</p:property><p:property name="outputPin2Origin">188.11999999999995,25.456000000000003</p:property><p:property name="outputPin2">188.11999999999995,25.456000000000003</p:property><p:property name="outputPin3Origin">94.05999999999997,50.912000000000006</p:property><p:property name="outputPin3">94.05999999999997,50.912000000000006</p:property><p:property name="outputPin4Origin">0,25.456000000000003</p:property><p:property name="outputPin4">0,25.456000000000003</p:property><p:property name="fillColor">#FFCC99FF</p:property><p:property name="strokeColor">#666666FF</p:property><p:property name="strokeStyle">2|</p:property><p:property name="textContent">Express App</p:property><p:property name="textFont">Helvetica|normal|normal|12px|none</p:property><p:property name="textColor">#000000FF</p:property><p:property name="textAlign">1,1</p:property><p:property name="optionText1"/><p:property name="optionText2"/><p:property name="optionText3"/><p:property name="optionText4"/><p:property name="optionTextFont">Helvetica|normal|normal|12px|none</p:property><p:property name="optionTextColor">#666666FF</p:property></p:metadata>
+            <rect style="stroke-linejoin: round; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2; fill: rgb(255, 204, 153); fill-opacity: 1;" p:name="path" id="bbe7d105f8714903b6914aa25b0e1315" transform="translate(0,0)" x="0" y="0" width="188.11999999999995" height="50.912000000000006"/>
+
+            <text p:name="text1" id="54e51101d5304a189f2e27e7679c7f7e" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#b9ceb6c3695c4565bf753b6d5617a900" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan1" id="b2dbf8ee07e24ca7a4ebbd026af1788c" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text2" id="ffb50c2109ca473b81dbfbcd92b8fdbc" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#30a2da010aa147d6b52e8ee8e5b8c49f" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan2" id="65cd5c8985684c559fd2cea15f3c3671" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text3" id="74e5b8397f4740a9a1b640ccc92ca6d3" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#4d0c3279e3c24dc3aa3854af29694c04" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan3" id="cc926b3f561e4136a067d3b9f891d5d8" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text4" id="589f840c4bca43d19310fc4bc968ca4d" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#17e1b836c5d54bd0b827ab5055d5c1e3" startOffset="50%" text-anchor="middle" alignment-baseline="middle-left">
+                    <tspan dy="-4" p:name="textSpan4" id="aa1b235041714d169488093b0cd3125a" dx="0"/>
+                </textPath>
+            </text>
+
+            <text text-anchor="start" xml:space="preserve" p:name="text" id="385149a5b63f4efd9bea15e953d39fab" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(0, 0, 0); fill-opacity: 1;" transform="translate(6,29)"><tspan x="54.044374999999974" y="0">Express App</tspan></text>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow1" id="b9ceb6c3695c4565bf753b6d5617a900" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow2" id="30a2da010aa147d6b52e8ee8e5b8c49f" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow3" id="4d0c3279e3c24dc3aa3854af29694c04" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow4" id="17e1b836c5d54bd0b827ab5055d5c1e3" d=""/>
+        </g><g p:type="Shape" p:def="Evolus.Flowchart:process" id="c342370f4ff44e1a9829349fbd46302e" transform="matrix(1,0,0,1,215,524)"><p:metadata><p:property name="box">188.096,29</p:property><p:property name="outputPin1Origin">94.048,0</p:property><p:property name="outputPin1">94.04800000000002,0</p:property><p:property name="outputPin2Origin">188.096,14.5</p:property><p:property name="outputPin2">188.09600000000003,14.500000000000002</p:property><p:property name="outputPin3Origin">94.048,29</p:property><p:property name="outputPin3">94.04800000000002,29.000000000000004</p:property><p:property name="outputPin4Origin">0,14.5</p:property><p:property name="outputPin4">0,14.500000000000002</p:property><p:property name="fillColor">#000066FF</p:property><p:property name="strokeColor">#66666600</p:property><p:property name="strokeStyle">2|</p:property><p:property name="textContent">ORM (Mongoose)</p:property><p:property name="textFont">Helvetica|normal|normal|12px|none</p:property><p:property name="textColor">#FFFFFFFF</p:property><p:property name="textAlign">1,1</p:property><p:property name="optionText1"/><p:property name="optionText2"/><p:property name="optionText3"/><p:property name="optionText4"/><p:property name="optionTextFont">Helvetica|normal|normal|12px|none</p:property><p:property name="optionTextColor">#666666FF</p:property></p:metadata>
+            <rect style="stroke-linejoin: round; stroke: rgb(102, 102, 102); stroke-opacity: 0; stroke-width: 2; fill: rgb(0, 0, 102); fill-opacity: 1;" p:name="path" id="23003ded20bf4f70b885bc55f40a1e3e" transform="translate(0,0)" x="0" y="0" width="188.096" height="29"/>
+
+            <text p:name="text1" id="9fb478e2f7f5493bb978e4b27c02f177" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#3ad80ea6d352475aa240892cd6721155" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan1" id="b90562602f0d4e33aa3c31ca2f8430c5" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text2" id="e81f76ae68e24d7db728a4ca4f2422c7" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#96ee4d61ccb646a8ad0caf3e7e38d3ca" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan2" id="50a898a5be2d4a3ea11ef296adbab4c2" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text3" id="c23e5cacafcd4f6799452b2afdcfecf8" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#402e7e48b9924140a6ce13e67a45f670" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan3" id="8fcf654ed6c2417fa48818428dd30003" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text4" id="75409c8ec6c4410aa4927da32c1b7b92" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#71421685e517493bbe8be5de6e62022d" startOffset="50%" text-anchor="middle" alignment-baseline="middle-left">
+                    <tspan dy="-4" p:name="textSpan4" id="1dd2c0e594404e8c8132206c8c5581f3" dx="0"/>
+                </textPath>
+            </text>
+
+            <text text-anchor="start" xml:space="preserve" p:name="text" id="177e6626630040bdbabba0eab1d37a3c" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(255, 255, 255); fill-opacity: 1;" transform="translate(6,19)"><tspan x="40.3683125" y="0">ORM (Mongoose)</tspan></text>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 0; stroke-width: 2;" p:name="outputArrrow1" id="3ad80ea6d352475aa240892cd6721155" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 0; stroke-width: 2;" p:name="outputArrrow2" id="96ee4d61ccb646a8ad0caf3e7e38d3ca" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 0; stroke-width: 2;" p:name="outputArrrow3" id="402e7e48b9924140a6ce13e67a45f670" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 0; stroke-width: 2;" p:name="outputArrrow4" id="71421685e517493bbe8be5de6e62022d" d=""/>
+        </g><g p:type="Shape" p:def="Evolus.Common:arrow" p:sc="Straight Connector" id="92344a02be84488a81faa407c7b98784" transform="matrix(1,0,0,1,84,482)"><p:metadata><p:property xmlns:ns9889235="http://www.evolus.vn/Namespace/Pencil" name="startPin" ns9889235:viay="30.912000000000006" ns9889235:viax="225.05999999999997" ns9889235:connectedOutletId="bottom-center" ns9889235:connectedShapeId="0e23a1ce7f3845c7ba1bcfd5c8101a1a">225.05999999999997,20.912000000000006</p:property><p:property xmlns:ns9889235="http://www.evolus.vn/Namespace/Pencil" name="endPin" ns9889235:connectedShapeId="c342370f4ff44e1a9829349fbd46302e" ns9889235:connectedOutletId="top-center" ns9889235:viax="225.048" ns9889235:viay="32">225.048,42</p:property><p:property name="withStartArrow">false</p:property><p:property name="withEndArrow">true</p:property><p:property name="mode">straight</p:property><p:property name="detached">false</p:property><p:property name="strokeColor">#666666FF</p:property><p:property name="strokeStyle">2|</p:property><p:property name="textContent"/><p:property name="textFont">Helvetica|normal|normal|12px|none</p:property><p:property name="textColor">#000000FF</p:property><p:property name="textAlign">1,1</p:property></p:metadata>
+            <defs>
+                <path style="stroke-linejoin: round; fill: none;" p:name="path" id="6743135b18804be5b71419fdbde07fa1" d="M 225.05999999999997 20.912000000000006 L 225.05369043913936 32.00000161905501 L 225.048 42 M 231 36 L 225.048 42 L 219 36"/>
+            </defs>
+            <use xlink:href="#6743135b18804be5b71419fdbde07fa1" stroke-width="10" stroke-opacity="0" stroke="#FF0000"/>
+            <use xlink:href="#6743135b18804be5b71419fdbde07fa1" p:name="outArrow1" id="4e47afc05a384b5d8019e7baa441e76a" style="stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;"/>
+            <text p:name="text" id="42f321136a3e4a37a7a97434f16f4fa0" style="fill: rgb(0, 0, 0); fill-opacity: 1; font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none;">
+                <textPath xlink:href="#6743135b18804be5b71419fdbde07fa1" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan" id="0976765e782e4c09a63804bd953e662e" dx="-16"/>
+                </textPath>
+            </text>
+        </g><g p:type="Shape" p:def="Evolus.Common:PlainTextV3" id="0a143ecb0b0e48759830cf676c2f16f0" transform="matrix(1,0,0,1,215,327)"><p:metadata><p:property name="disabled">false</p:property><p:property name="width">100,0</p:property><p:property name="fixedWidth">false</p:property><p:property name="label">Digital Ocean Droplet</p:property><p:property name="textColor">#000000FF</p:property><p:property name="textFont">"Liberation Sans",Arial,sans-serif|bold|normal|13px|none</p:property><p:property name="textAlign">0,0</p:property></p:metadata>
+            <rect x="0" y="0" style="fill: none; stroke: none; visibility: hidden; display: none;" p:name="bgRect" id="2bf6f38a5f0b447bbcacc741e98b05da" width="132.1875" height="15"/>
+            <text xml:space="preserve" dominant-baseline="hanging" p:name="text" id="eafcdb7c3ab64894812bf1d2b9ceaa06" style="fill: rgb(0, 0, 0); fill-opacity: 1; font-family: &quot;Liberation Sans&quot;, Arial, sans-serif; font-size: 13px; font-weight: bold; font-style: normal; text-decoration: none;"><tspan x="0" y="0">Digital Ocean Droplet</tspan></text>
+        </g><g p:type="Shape" p:def="Evolus.Flowchart:process" id="62cad9bc44ec4be49b9ba12b17b059e6" transform="matrix(1,0,0,1,215,386)"><p:metadata><p:property name="box">188.11999999999995,50.912000000000006</p:property><p:property name="outputPin1Origin">94.05999999999997,0</p:property><p:property name="outputPin1">94.05999999999997,0</p:property><p:property name="outputPin2Origin">188.11999999999995,25.456000000000003</p:property><p:property name="outputPin2">188.11999999999995,25.456000000000003</p:property><p:property name="outputPin3Origin">94.05999999999997,50.912000000000006</p:property><p:property name="outputPin3">94.05999999999997,50.912000000000006</p:property><p:property name="outputPin4Origin">0,25.456000000000003</p:property><p:property name="outputPin4">0,25.456000000000003</p:property><p:property name="fillColor">#FFCC99FF</p:property><p:property name="strokeColor">#666666FF</p:property><p:property name="strokeStyle">2|</p:property><p:property name="textContent">Angular 6 Front End</p:property><p:property name="textFont">Helvetica|normal|normal|12px|none</p:property><p:property name="textColor">#000000FF</p:property><p:property name="textAlign">1,1</p:property><p:property name="optionText1"/><p:property name="optionText2"/><p:property name="optionText3"/><p:property name="optionText4"/><p:property name="optionTextFont">Helvetica|normal|normal|12px|none</p:property><p:property name="optionTextColor">#666666FF</p:property></p:metadata>
+            <rect style="stroke-linejoin: round; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2; fill: rgb(255, 204, 153); fill-opacity: 1;" p:name="path" id="a3dc2ebbfbdc44ac85e0f8769c920012" transform="translate(0,0)" x="0" y="0" width="188.11999999999995" height="50.912000000000006"/>
+
+            <text p:name="text1" id="ddce6a7be01240b09ec61ad550882662" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#c2a9d917eecd4332b972cb2d5a62e058" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan1" id="eb6f66cd60174dc4a187e5485a50f75b" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text2" id="4a20c47befdd4633b840e6c0619e3f32" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#db972f5179e146b6922714b633231ff7" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan2" id="d5722bbd9faf4c4c8e8318dbd529d9cb" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text3" id="71dc2e8e6f4549738771ad38c0bc7131" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#473db052ecea403c961ff8493df6632b" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan3" id="51e86509b0424355a941cb26bcf97404" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text4" id="be824f2990704b5b9ba147c3bc641c72" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#e4ff6ad112794a0d90d5ddaef41a5021" startOffset="50%" text-anchor="middle" alignment-baseline="middle-left">
+                    <tspan dy="-4" p:name="textSpan4" id="58aee032feeb4a14807e25065d3c6816" dx="0"/>
+                </textPath>
+            </text>
+
+            <text text-anchor="start" xml:space="preserve" p:name="text" id="ef61cd66c5324b66aed625e441ef8f60" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(0, 0, 0); fill-opacity: 1;" transform="translate(6,29)"><tspan x="34.364687499999974" y="0">Angular 6 Front End</tspan></text>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow1" id="c2a9d917eecd4332b972cb2d5a62e058" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow2" id="db972f5179e146b6922714b633231ff7" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow3" id="473db052ecea403c961ff8493df6632b" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow4" id="e4ff6ad112794a0d90d5ddaef41a5021" d=""/>
+        </g><g p:type="Shape" p:def="Evolus.Common:arrow" p:sc="Straight Connector" id="9dfe9f1b8a34445aac9c54d24595dc32" transform="matrix(1,0,0,1,52,360)"><p:metadata><p:property xmlns:ns9889235="http://www.evolus.vn/Namespace/Pencil" name="startPin" ns9889235:connectedShapeId="c845377b74d14fd18d2eddc659163335" ns9889235:connectedOutletId="bottom-center" ns9889235:viax="257.34200000000004" ns9889235:viay="22.269999999999996">257.34200000000004,12.27</p:property><p:property xmlns:ns9889235="http://www.evolus.vn/Namespace/Pencil" name="endPin" ns9889235:connectedShapeId="62cad9bc44ec4be49b9ba12b17b059e6" ns9889235:connectedOutletId="top-center" ns9889235:viax="257.05999999999995" ns9889235:viay="16">257.05999999999995,26</p:property><p:property name="withStartArrow">false</p:property><p:property name="withEndArrow">true</p:property><p:property name="mode">straight</p:property><p:property name="detached">false</p:property><p:property name="strokeColor">#666666FF</p:property><p:property name="strokeStyle">2|</p:property><p:property name="textContent"/><p:property name="textFont">Helvetica|normal|normal|12px|none</p:property><p:property name="textColor">#000000FF</p:property><p:property name="textAlign">1,1</p:property></p:metadata>
+            <defs>
+                <path style="stroke-linejoin: round; fill: none;" p:name="path" id="5990cf6d79894a9ca57a450dbe46c838" d="M 257.34200000000004 12.27 L 257.2653463496629 16.00210857847115 L 257.05999999999995 26 M 263 20 L 257.05999999999995 26 L 252 20"/>
+            </defs>
+            <use xlink:href="#5990cf6d79894a9ca57a450dbe46c838" stroke-width="10" stroke-opacity="0" stroke="#FF0000"/>
+            <use xlink:href="#5990cf6d79894a9ca57a450dbe46c838" p:name="outArrow1" id="5a99bc09280a468e8633dbb0130465a6" style="stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;"/>
+            <text p:name="text" id="969df3bde8c04b4192c3e1290d7ce39c" style="fill: rgb(0, 0, 0); fill-opacity: 1; font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none;">
+                <textPath xlink:href="#5990cf6d79894a9ca57a450dbe46c838" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan" id="f96d80ade56546a5916e67e475f74c62" dx="-16"/>
+                </textPath>
+            </text>
+        </g><g p:type="Shape" p:def="Evolus.Common:arrow" p:sc="Straight Connector" id="195ff801d8ad449894e6181d81c20c57" transform="matrix(1,0,0,1,-41,401)"><p:metadata><p:property xmlns:ns9889235="http://www.evolus.vn/Namespace/Pencil" name="startPin" ns9889235:connectedShapeId="62cad9bc44ec4be49b9ba12b17b059e6" ns9889235:connectedOutletId="bottom-center" ns9889235:viax="350.05999999999995" ns9889235:viay="45.912000000000006">350.05999999999995,35.912000000000006</p:property><p:property xmlns:ns9889235="http://www.evolus.vn/Namespace/Pencil" name="endPin" ns9889235:viay="41" ns9889235:viax="350.05999999999995" ns9889235:connectedOutletId="top-center" ns9889235:connectedShapeId="0e23a1ce7f3845c7ba1bcfd5c8101a1a">350.05999999999995,51</p:property><p:property name="withStartArrow">false</p:property><p:property name="withEndArrow">true</p:property><p:property name="mode">straight</p:property><p:property name="detached">false</p:property><p:property name="strokeColor">#666666FF</p:property><p:property name="strokeStyle">2|</p:property><p:property name="textContent"/><p:property name="textFont">Helvetica|normal|normal|12px|none</p:property><p:property name="textColor">#000000FF</p:property><p:property name="textAlign">1,1</p:property></p:metadata>
+            <defs>
+                <path style="stroke-linejoin: round; fill: none;" p:name="path" id="8c3f1b71fc2f4f0490f256c37f402b44" d="M 350.05999999999995 35.912000000000006 L 350.05999999999995 41 L 350.05999999999995 51 M 356 45 L 350.05999999999995 51 L 344 45"/>
+            </defs>
+            <use xlink:href="#8c3f1b71fc2f4f0490f256c37f402b44" stroke-width="10" stroke-opacity="0" stroke="#FF0000"/>
+            <use xlink:href="#8c3f1b71fc2f4f0490f256c37f402b44" p:name="outArrow1" id="042f4575d1994030baef93505eb08b50" style="stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;"/>
+            <text p:name="text" id="8c7670d074cd4fd8b465e22a629c3832" style="fill: rgb(0, 0, 0); fill-opacity: 1; font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none;">
+                <textPath xlink:href="#8c3f1b71fc2f4f0490f256c37f402b44" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan" id="bcd0b2d451f849c5991ad05fc756fcca" dx="-16"/>
+                </textPath>
+            </text>
+        </g><g p:type="Shape" p:def="Evolus.Common:arrow" p:sc="Straight Connector" id="6e7e9d9213f742d790bad33e84395f55" transform="matrix(1,0,0,1,73,590)"><p:metadata><p:property xmlns:ns9889235="http://www.evolus.vn/Namespace/Pencil" name="startPin" ns9889235:connectedShapeId="c342370f4ff44e1a9829349fbd46302e" ns9889235:connectedOutletId="bottom-center" ns9889235:viax="236.048" ns9889235:viay="-27">236.048,-37</p:property><p:property xmlns:ns9889235="http://www.evolus.vn/Namespace/Pencil" name="endPin" ns9889235:viay="-6" ns9889235:viax="235.5" ns9889235:connectedOutletId="top-center" ns9889235:connectedShapeId="93f9494b608a466e9bb5d8dce293e927">235.5,4</p:property><p:property name="withStartArrow">false</p:property><p:property name="withEndArrow">true</p:property><p:property name="mode">straight</p:property><p:property name="detached">false</p:property><p:property name="strokeColor">#666666FF</p:property><p:property name="strokeStyle">2|</p:property><p:property name="textContent"/><p:property name="textFont">Helvetica|normal|normal|12px|none</p:property><p:property name="textColor">#000000FF</p:property><p:property name="textAlign">1,1</p:property></p:metadata>
+            <defs>
+                <path style="stroke-linejoin: round; fill: none;" p:name="path" id="31bf8e8246d148cf81c4e6961aa8a51b" d="M 236.048 -37 L 235.63364659940032 -5.999106889441112 L 235.5 4 M 241 -2 L 235.5 4 L 230 -2"/>
+            </defs>
+            <use xlink:href="#31bf8e8246d148cf81c4e6961aa8a51b" stroke-width="10" stroke-opacity="0" stroke="#FF0000"/>
+            <use xlink:href="#31bf8e8246d148cf81c4e6961aa8a51b" p:name="outArrow1" id="5090395c6a374a55b4d4875bcbc873e6" style="stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;"/>
+            <text p:name="text" id="df333c33e427461585a2ef344c90f204" style="fill: rgb(0, 0, 0); fill-opacity: 1; font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none;">
+                <textPath xlink:href="#31bf8e8246d148cf81c4e6961aa8a51b" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan" id="ecc7a1d112044ed0946629f6eaee30fa" dx="-16"/>
+                </textPath>
+            </text>
+        </g><g p:type="Shape" p:def="Evolus.Flowchart:process" id="c237c241f0f94b7b84d51cc258a31f6c" transform="matrix(1,0,0,1,190,108)"><p:metadata><p:property name="box">213,50</p:property><p:property name="outputPin1Origin">106.5,0</p:property><p:property name="outputPin1">106.5,0</p:property><p:property name="outputPin2Origin">213,25</p:property><p:property name="outputPin2">213,25</p:property><p:property name="outputPin3Origin">106.5,50</p:property><p:property name="outputPin3">106.5,50</p:property><p:property name="outputPin4Origin">0,25</p:property><p:property name="outputPin4">0,25</p:property><p:property name="fillColor">#CCCCCCFF</p:property><p:property name="strokeColor">#666666FF</p:property><p:property name="strokeStyle">2|</p:property><p:property name="textContent">Client 1</p:property><p:property name="textFont">Helvetica|normal|normal|12px|none</p:property><p:property name="textColor">#000000FF</p:property><p:property name="textAlign">1,1</p:property><p:property name="optionText1"/><p:property name="optionText2"/><p:property name="optionText3"/><p:property name="optionText4"/><p:property name="optionTextFont">Helvetica|normal|normal|12px|none</p:property><p:property name="optionTextColor">#666666FF</p:property></p:metadata>
+            <rect style="stroke-linejoin: round; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2; fill: rgb(204, 204, 204); fill-opacity: 1;" p:name="path" id="af5b567c349f41dbac90a9d7c69522a4" transform="translate(0,0)" x="0" y="0" width="213" height="50"/>
+
+            <text p:name="text1" id="54a391505c0343c7987c4aea5551798a" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#a0164ed22df0488a876fb15f21588844" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan1" id="903679f3530e4ecaa796351a4ab57c28" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text2" id="9a7c943af95041cfbaa73c6ae8b38f9c" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#24a18ce5132d49298f2112ed564ee2ca" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan2" id="d39799ece3d844f48521088265cfd908" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text3" id="2a2d4c78b12940c4a42e0a1fbb3bc3f9" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#0f1cecaedfa04238b371272765fe015e" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan3" id="d62d2b3c8525453eb97b0bf735cb4e56" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text4" id="51d38daf166c4ae59715594222711e9e" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#747727791fc644c1856be36cabbf7d90" startOffset="50%" text-anchor="middle" alignment-baseline="middle-left">
+                    <tspan dy="-4" p:name="textSpan4" id="02d5bcd654ef42a08d156cafb18dddd8" dx="0"/>
+                </textPath>
+            </text>
+
+            <text text-anchor="start" xml:space="preserve" p:name="text" id="f91c9c89153044968c5197f6e477f26c" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(0, 0, 0); fill-opacity: 1;" transform="translate(6,29)"><tspan x="80.15625" y="0">Client 1</tspan></text>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow1" id="a0164ed22df0488a876fb15f21588844" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow2" id="24a18ce5132d49298f2112ed564ee2ca" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow3" id="0f1cecaedfa04238b371272765fe015e" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow4" id="747727791fc644c1856be36cabbf7d90" d=""/>
+        </g><g p:type="Shape" p:def="Evolus.Flowchart:process" id="65be59d8fb344997a19415632e1cafbc" transform="matrix(1,0,0,1,464,108)"><p:metadata><p:property name="box">213,50</p:property><p:property name="outputPin1Origin">106.5,0</p:property><p:property name="outputPin1">106.5,0</p:property><p:property name="outputPin2Origin">213,25</p:property><p:property name="outputPin2">213,25</p:property><p:property name="outputPin3Origin">106.5,50</p:property><p:property name="outputPin3">106.5,50</p:property><p:property name="outputPin4Origin">0,25</p:property><p:property name="outputPin4">0,25</p:property><p:property name="fillColor">#CCCCCCFF</p:property><p:property name="strokeColor">#666666FF</p:property><p:property name="strokeStyle">2|</p:property><p:property name="textContent">Client 2</p:property><p:property name="textFont">Helvetica|normal|normal|12px|none</p:property><p:property name="textColor">#000000FF</p:property><p:property name="textAlign">1,1</p:property><p:property name="optionText1"/><p:property name="optionText2"/><p:property name="optionText3"/><p:property name="optionText4"/><p:property name="optionTextFont">Helvetica|normal|normal|12px|none</p:property><p:property name="optionTextColor">#666666FF</p:property></p:metadata>
+            <rect style="stroke-linejoin: round; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2; fill: rgb(204, 204, 204); fill-opacity: 1;" p:name="path" id="aee295bcf02c42ad8775ee6ed436947b" transform="translate(0,0)" x="0" y="0" width="213" height="50"/>
+
+            <text p:name="text1" id="12695de6247a4494bac87a2d275dad50" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#775a94d3ff794eff98fb6dfa54bfee7b" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan1" id="dd3ac01fb297488684357e82200ef0c1" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text2" id="66678131eb294da785b309735370dcbf" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#3f1f53eb2a7e480bbd04f82ac2f57da1" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan2" id="75dd310217cf4814b2df67dde87e5034" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text3" id="03ee3e6d450e4262bf5f58ef72c6e1f0" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#7732dc7fa8594a74aeaefbe7fe9ac375" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan3" id="83729e0260bc448fa798b86f6120bd58" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text4" id="b479f78d87aa463c8bc2372c51899988" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#d05017fa16054e3580e3de2330f83c43" startOffset="50%" text-anchor="middle" alignment-baseline="middle-left">
+                    <tspan dy="-4" p:name="textSpan4" id="44a7991f456b4526941c7069ac3a26a7" dx="0"/>
+                </textPath>
+            </text>
+
+            <text text-anchor="start" xml:space="preserve" p:name="text" id="56b64817acc64e8eac1250e623b9eec3" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(0, 0, 0); fill-opacity: 1;" transform="translate(6,29)"><tspan x="80.15625" y="0">Client 2</tspan></text>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow1" id="775a94d3ff794eff98fb6dfa54bfee7b" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow2" id="3f1f53eb2a7e480bbd04f82ac2f57da1" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow3" id="7732dc7fa8594a74aeaefbe7fe9ac375" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow4" id="d05017fa16054e3580e3de2330f83c43" d=""/>
+        </g><g p:type="Shape" p:def="Evolus.Flowchart:process" id="40a86575511f482c9358b50f94f329c3" transform="matrix(1,0,0,1,739,108)"><p:metadata><p:property name="box">213,50</p:property><p:property name="outputPin1Origin">106.5,0</p:property><p:property name="outputPin1">106.5,0</p:property><p:property name="outputPin2Origin">213,25</p:property><p:property name="outputPin2">213,25</p:property><p:property name="outputPin3Origin">106.5,50</p:property><p:property name="outputPin3">106.5,50</p:property><p:property name="outputPin4Origin">0,25</p:property><p:property name="outputPin4">0,25</p:property><p:property name="fillColor">#CCCCCCFF</p:property><p:property name="strokeColor">#666666FF</p:property><p:property name="strokeStyle">2|</p:property><p:property name="textContent">Client 3</p:property><p:property name="textFont">Helvetica|normal|normal|12px|none</p:property><p:property name="textColor">#000000FF</p:property><p:property name="textAlign">1,1</p:property><p:property name="optionText1"/><p:property name="optionText2"/><p:property name="optionText3"/><p:property name="optionText4"/><p:property name="optionTextFont">Helvetica|normal|normal|12px|none</p:property><p:property name="optionTextColor">#666666FF</p:property></p:metadata>
+            <rect style="stroke-linejoin: round; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2; fill: rgb(204, 204, 204); fill-opacity: 1;" p:name="path" id="890a2dd26d3144578d43479146f2236a" transform="translate(0,0)" x="0" y="0" width="213" height="50"/>
+
+            <text p:name="text1" id="5508d6a490144de2b63cedc8ecffb6db" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#182224dc9b264b34a6f027b6fdd41023" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan1" id="1f0a44baee374ad5967c59f52bde8f71" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text2" id="78f8832b5ce24b05bc2891def5c3f701" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#5e56fd11c4e0462b853f5649e2de3e15" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan2" id="920d99ddb3284a39a23447f3fa5be854" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text3" id="da3d92f1e4b348fda8b133a09165412b" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#b5a41039e0f74e72a7c641e4f56b2d21" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan3" id="049210981b264ef0998eae4e400334f0" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text4" id="147cd952eb6b4188a015ee2aaada581e" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#6e4b5c93a3604d41b6650a245c590628" startOffset="50%" text-anchor="middle" alignment-baseline="middle-left">
+                    <tspan dy="-4" p:name="textSpan4" id="51409c1af448424bb7f1c602db65a2ce" dx="0"/>
+                </textPath>
+            </text>
+
+            <text text-anchor="start" xml:space="preserve" p:name="text" id="f894451f64004898a60e1129cf44078f" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(0, 0, 0); fill-opacity: 1;" transform="translate(6,29)"><tspan x="80.15625" y="0">Client 3</tspan></text>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow1" id="182224dc9b264b34a6f027b6fdd41023" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow2" id="5e56fd11c4e0462b853f5649e2de3e15" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow3" id="b5a41039e0f74e72a7c641e4f56b2d21" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow4" id="6e4b5c93a3604d41b6650a245c590628" d=""/>
+        </g><g p:type="Shape" p:def="Evolus.Common:arrow" p:sc="Straight Connector" id="10542d12bc2941d4bcf5ec04b2c520fb" transform="matrix(1,0,0,1,78.75,655)"><p:metadata><p:property xmlns:ns9889235="http://www.evolus.vn/Namespace/Pencil" name="startPin" ns9889235:viay="54" ns9889235:viax="229.75" ns9889235:connectedOutletId="bottom-center" ns9889235:connectedShapeId="93f9494b608a466e9bb5d8dce293e927">229.75,44</p:property><p:property name="endPin">230,73</p:property><p:property name="withStartArrow">false</p:property><p:property name="withEndArrow">true</p:property><p:property name="mode">straight</p:property><p:property name="detached">false</p:property><p:property name="strokeColor">#666666FF</p:property><p:property name="strokeStyle">2|</p:property><p:property name="textContent"/><p:property name="textFont">Helvetica|normal|normal|12px|none</p:property><p:property name="textColor">#000000FF</p:property><p:property name="textAlign">1,1</p:property></p:metadata>
+            <defs>
+                <path style="stroke-linejoin: round; fill: none;" p:name="path" id="979a323283f5476e949cdb14b444542b" d="M 229.75 44 L 229.9137963065581 63.000371560741016 L 230 73 M 236 67 L 230 73 L 224 67"/>
+            </defs>
+            <use xlink:href="#979a323283f5476e949cdb14b444542b" stroke-width="10" stroke-opacity="0" stroke="#FF0000"/>
+            <use xlink:href="#979a323283f5476e949cdb14b444542b" p:name="outArrow1" id="e3bd264c05dc410fb3cd26be41037428" style="stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;"/>
+            <text p:name="text" id="dc53158c0c144f759e3b7df990036359" style="fill: rgb(0, 0, 0); fill-opacity: 1; font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none;">
+                <textPath xlink:href="#979a323283f5476e949cdb14b444542b" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan" id="b20c227e100a49b49747b340660c621e" dx="-16"/>
+                </textPath>
+            </text>
+        </g><g p:type="Shape" p:def="Evolus.Flowchart:process" id="d0fd3db14b8943f3ac5f1dc2c20aaf32" transform="matrix(1,0,0,1,570,210)"><p:metadata><p:property name="box">213,50</p:property><p:property name="outputPin1Origin">106.5,0</p:property><p:property name="outputPin1">106.5,0</p:property><p:property name="outputPin2Origin">213,25</p:property><p:property name="outputPin2">213,25</p:property><p:property name="outputPin3Origin">106.5,50</p:property><p:property name="outputPin3">106.5,50</p:property><p:property name="outputPin4Origin">0,25</p:property><p:property name="outputPin4">0,25</p:property><p:property name="fillColor">#BDDFFFFF</p:property><p:property name="strokeColor">#666666FF</p:property><p:property name="strokeStyle">2|</p:property><p:property name="textContent">Kibana (Elastic Stack)</p:property><p:property name="textFont">Helvetica|normal|normal|12px|none</p:property><p:property name="textColor">#000000FF</p:property><p:property name="textAlign">1,1</p:property><p:property name="optionText1"/><p:property name="optionText2"/><p:property name="optionText3"/><p:property name="optionText4"/><p:property name="optionTextFont">Helvetica|normal|normal|12px|none</p:property><p:property name="optionTextColor">#666666FF</p:property></p:metadata>
+            <rect style="stroke-linejoin: round; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2; fill: rgb(189, 223, 255); fill-opacity: 1;" p:name="path" id="3403f676d3e44162aafc33fff770679d" transform="translate(0,0)" x="0" y="0" width="213" height="50"/>
+
+            <text p:name="text1" id="843e26192167441fa1ac921e50bb9190" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#da220b4fdeb34fe7b61f2f5e16e36388" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan1" id="4ddc0cca33cf4a76aaa88913b589da0b" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text2" id="c1ffaf7724e04392a57fe1d62e7510bb" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#75de75e0e51c40518a66ad8757d692bf" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan2" id="bf7072ab73c448be83e86bf7e91d07e0" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text3" id="0afc0520ec4b49e5bfc307f686e267ae" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#f5666f5b444c4b3fab123298757efb12" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan3" id="d68df851bd7140da9fd5ccc077da8aba" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text4" id="0dedb7da6af9443e98d639652d8f8f38" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#a304a4d60daa4d7baf64cd3731c079ee" startOffset="50%" text-anchor="middle" alignment-baseline="middle-left">
+                    <tspan dy="-4" p:name="textSpan4" id="e8821ffa4e764231beafdc6b26fb7e61" dx="0"/>
+                </textPath>
+            </text>
+
+            <text text-anchor="start" xml:space="preserve" p:name="text" id="d298ee8a8fc3410ca7e8b66499732206" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(0, 0, 0); fill-opacity: 1;" transform="translate(6,29)"><tspan x="41.8125" y="0">Kibana (Elastic Stack)</tspan></text>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow1" id="da220b4fdeb34fe7b61f2f5e16e36388" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow2" id="75de75e0e51c40518a66ad8757d692bf" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow3" id="f5666f5b444c4b3fab123298757efb12" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow4" id="a304a4d60daa4d7baf64cd3731c079ee" d=""/>
+        </g><g p:type="Shape" p:def="Evolus.Common:arrow" p:sc="Straight Connector" id="1d4575dfe17a47b3990d40d6da612b6a" transform="matrix(1,0,0,1,-44.75,305.75)"><p:metadata><p:property xmlns:ns9889235="http://www.evolus.vn/Namespace/Pencil" name="startPin" ns9889235:connectedShapeId="d0fd3db14b8943f3ac5f1dc2c20aaf32" ns9889235:connectedOutletId="bottom-center" ns9889235:viax="721.25" ns9889235:viay="-35.75">721.25,-45.75</p:property><p:property xmlns:ns9889235="http://www.evolus.vn/Namespace/Pencil" name="endPin" ns9889235:connectedShapeId="081cb168b6e94f5398e44b75477123b6" ns9889235:connectedOutletId="top-center" ns9889235:viax="721.5" ns9889235:viay="-19.75">721.5,-9.75</p:property><p:property name="withStartArrow">false</p:property><p:property name="withEndArrow">true</p:property><p:property name="mode">straight</p:property><p:property name="detached">false</p:property><p:property name="strokeColor">#666666FF</p:property><p:property name="strokeStyle">2|</p:property><p:property name="textContent"/><p:property name="textFont">Helvetica|normal|normal|12px|none</p:property><p:property name="textColor">#000000FF</p:property><p:property name="textAlign">1,1</p:property></p:metadata>
+            <defs>
+                <path style="stroke-linejoin: round; fill: none;" p:name="path" id="7751c1193e0d4768b85f93dc675bbdd6" d="M 721.25 -45.75 L 721.4305572299849 -19.749758882177744 L 721.5 -9.75 M 727 -15 L 721.5 -9.75 L 716 -15"/>
+            </defs>
+            <use xlink:href="#7751c1193e0d4768b85f93dc675bbdd6" stroke-width="10" stroke-opacity="0" stroke="#FF0000"/>
+            <use xlink:href="#7751c1193e0d4768b85f93dc675bbdd6" p:name="outArrow1" id="8db9d93adb2f434bb7381eda0756b10c" style="stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;"/>
+            <text p:name="text" id="b818e172136c40ac9ebad44795cdd152" style="fill: rgb(0, 0, 0); fill-opacity: 1; font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none;">
+                <textPath xlink:href="#7751c1193e0d4768b85f93dc675bbdd6" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan" id="63a6ee0dfe5649c6a928dcf5ea50b271" dx="-16"/>
+                </textPath>
+            </text>
+        </g><g p:type="Shape" p:def="Evolus.Common:PlainTextV3" id="946aae941469466788da8a0b1e04010e" transform="matrix(1,0,0,1,206,195.25)"><p:metadata><p:property name="disabled">false</p:property><p:property name="width">100,0</p:property><p:property name="fixedWidth">false</p:property><p:property name="label">Public Subnet</p:property><p:property name="textColor">#000000FF</p:property><p:property name="textFont">"Liberation Sans",Arial,sans-serif|bold|normal|13px|none</p:property><p:property name="textAlign">0,0</p:property></p:metadata>
+            <rect x="0" y="0" style="fill: none; stroke: none; visibility: hidden; display: none;" p:name="bgRect" id="340b01271de84c85b4a07e3e646c9201" width="86.65625" height="15"/>
+            <text xml:space="preserve" dominant-baseline="hanging" p:name="text" id="152fa51946bd4e43a84c175db3a3fd71" style="fill: rgb(0, 0, 0); fill-opacity: 1; font-family: &quot;Liberation Sans&quot;, Arial, sans-serif; font-size: 13px; font-weight: bold; font-style: normal; text-decoration: none;"><tspan x="0" y="0">Public Subnet</tspan></text>
+        </g><g p:type="Shape" p:def="Evolus.Common:PlainTextV3" id="b66a2716d7c345f396ebff8e061abb73" transform="matrix(1,0,0,1,206,292)"><p:metadata><p:property name="disabled">false</p:property><p:property name="width">100,0</p:property><p:property name="fixedWidth">false</p:property><p:property name="label">Private Subnet</p:property><p:property name="textColor">#000000FF</p:property><p:property name="textFont">"Liberation Sans",Arial,sans-serif|bold|normal|13px|none</p:property><p:property name="textAlign">0,0</p:property></p:metadata>
+            <rect x="0" y="0" style="fill: none; stroke: none; visibility: hidden; display: none;" p:name="bgRect" id="eac553003edb41c995624d410116bef1" width="91.015625" height="15"/>
+            <text xml:space="preserve" dominant-baseline="hanging" p:name="text" id="71d73b133fed436cae1f65334a125388" style="fill: rgb(0, 0, 0); fill-opacity: 1; font-family: &quot;Liberation Sans&quot;, Arial, sans-serif; font-size: 13px; font-weight: bold; font-style: normal; text-decoration: none;"><tspan x="0" y="0">Private Subnet</tspan></text>
+        </g><g p:type="Shape" p:def="Evolus.Common:arrow" p:sc="Straight Connector" id="170c8c674acb49d89989bff6fe79eb0a" transform="matrix(1,0,0,1,155.25,910.75)"><p:metadata><p:property xmlns:ns9889235="http://www.evolus.vn/Namespace/Pencil" name="startPin" ns9889235:connectedShapeId="d0fd3db14b8943f3ac5f1dc2c20aaf32" ns9889235:connectedOutletId="bottom-center" ns9889235:viax="521.25" ns9889235:viay="-640.75">521.25,-650.75</p:property><p:property xmlns:ns9889235="http://www.evolus.vn/Namespace/Pencil" name="endPin" ns9889235:connectedShapeId="081cb168b6e94f5398e44b75477123b6" ns9889235:connectedOutletId="top-center" ns9889235:viax="521.5" ns9889235:viay="-624.75">521.5,-614.75</p:property><p:property name="withStartArrow">false</p:property><p:property name="withEndArrow">true</p:property><p:property name="mode">straight</p:property><p:property name="detached">false</p:property><p:property name="strokeColor">#666666FF</p:property><p:property name="strokeStyle">2|</p:property><p:property name="textContent"/><p:property name="textFont">Helvetica|normal|normal|12px|none</p:property><p:property name="textColor">#000000FF</p:property><p:property name="textAlign">1,1</p:property></p:metadata>
+            <defs>
+                <path style="stroke-linejoin: round; fill: none;" p:name="path" id="716f6cf5244e4d54804bb9c5c010b84c" d="M 521.25 -650.75 L 521.4305572299849 -624.7497588821777 L 521.5 -614.75 M 527 -620 L 521.5 -614.75 L 516 -620"/>
+            </defs>
+            <use xlink:href="#716f6cf5244e4d54804bb9c5c010b84c" stroke-width="10" stroke-opacity="0" stroke="#FF0000"/>
+            <use xlink:href="#716f6cf5244e4d54804bb9c5c010b84c" p:name="outArrow1" id="fb325a0f58ac41278092935018dff7f1" style="stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;"/>
+            <text p:name="text" id="86e49a38a51e4482b42dbfb4f36f18f0" style="fill: rgb(0, 0, 0); fill-opacity: 1; font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none;">
+                <textPath xlink:href="#716f6cf5244e4d54804bb9c5c010b84c" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan" id="25aaac9be79a4647a8babac010ca0e02" dx="-16"/>
+                </textPath>
+            </text>
+        </g><g p:type="Shape" p:def="Evolus.Flowchart:process" id="07191280f34648e0a25b65a81cdff30e" transform="matrix(1,0,0,1,825,212)"><p:metadata><p:property name="box">124.25,50</p:property><p:property name="outputPin1Origin">62.125,0</p:property><p:property name="outputPin1">62.12500000000001,0</p:property><p:property name="outputPin2Origin">124.25,25</p:property><p:property name="outputPin2">124.25000000000001,25</p:property><p:property name="outputPin3Origin">62.125,50</p:property><p:property name="outputPin3">62.12500000000001,50</p:property><p:property name="outputPin4Origin">0,25</p:property><p:property name="outputPin4">0,25</p:property><p:property name="fillColor">#BDDFFFFF</p:property><p:property name="strokeColor">#666666FF</p:property><p:property name="strokeStyle">2|</p:property><p:property name="textContent">CDN</p:property><p:property name="textFont">Helvetica|normal|normal|12px|none</p:property><p:property name="textColor">#000000FF</p:property><p:property name="textAlign">1,1</p:property><p:property name="optionText1"/><p:property name="optionText2"/><p:property name="optionText3"/><p:property name="optionText4"/><p:property name="optionTextFont">Helvetica|normal|normal|12px|none</p:property><p:property name="optionTextColor">#666666FF</p:property></p:metadata>
+            <rect style="stroke-linejoin: round; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2; fill: rgb(189, 223, 255); fill-opacity: 1;" p:name="path" id="da0548a87e7d4ce28aa9b479accd005b" transform="translate(0,0)" x="0" y="0" width="124.25" height="50"/>
+
+            <text p:name="text1" id="53e81c5954ea4e188c16d8ea1c3fc419" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#f8edadfe960c46a69947af70d2662410" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan1" id="c47f6a4ee95c49c48716bd0319c41cb1" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text2" id="48221595e8534b768c29c6081bf9d185" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#c477600d83ad490d881be88421ecb0b7" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan2" id="f8b0d74f620e4ad6b8dac7716c0e522a" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text3" id="ca363325f31a4018b83e072efe4bdcf6" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#124e72396bf84cc39abb6e922923284d" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan3" id="aa848e1d591d4bd0a15b3da99c1cda26" dx="0"/>
+                </textPath>
+            </text>
+            <text p:name="text4" id="07ecb459d25b44f7b9e84b73ac82149a" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(102, 102, 102); fill-opacity: 1; visibility: hidden; display: none;">
+                <textPath xlink:href="#0c05a60c48ac4daa80949722f3686084" startOffset="50%" text-anchor="middle" alignment-baseline="middle-left">
+                    <tspan dy="-4" p:name="textSpan4" id="79b8a32cd65d43ceb7da8e48422cfa01" dx="0"/>
+                </textPath>
+            </text>
+
+            <text text-anchor="start" xml:space="preserve" p:name="text" id="690499329bf8444a88f7570c8b78ffdc" style="font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none; fill: rgb(0, 0, 0); fill-opacity: 1;" transform="translate(6,29)"><tspan x="43.1328125" y="0">CDN</tspan></text>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow1" id="f8edadfe960c46a69947af70d2662410" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow2" id="c477600d83ad490d881be88421ecb0b7" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow3" id="124e72396bf84cc39abb6e922923284d" d=""/>
+            <path style="stroke-linejoin: round; fill: none; stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;" p:name="outputArrrow4" id="0c05a60c48ac4daa80949722f3686084" d=""/>
+        </g><g p:type="Shape" p:def="Evolus.Common:arrow" p:sc="Straight Connector" id="017755b18a8b4e219eb7bdd7d16a8400" transform="matrix(1,0,0,1,2.75,411.25)"><p:metadata><p:property name="startPin">411,-35</p:property><p:property name="endPin">567,-35</p:property><p:property name="withStartArrow">false</p:property><p:property name="withEndArrow">true</p:property><p:property name="mode">straight</p:property><p:property name="detached">false</p:property><p:property name="strokeColor">#666666FF</p:property><p:property name="strokeStyle">2|</p:property><p:property name="textContent"/><p:property name="textFont">Helvetica|normal|normal|12px|none</p:property><p:property name="textColor">#000000FF</p:property><p:property name="textAlign">1,1</p:property></p:metadata>
+            <defs>
+                <path style="stroke-linejoin: round; fill: none;" p:name="path" id="3fb4301e4ff34a10845caea510c994c2" d="M 411 -35 L 557 -35 L 567 -35 M 561 -41 L 567 -35 L 561 -29"/>
+            </defs>
+            <use xlink:href="#3fb4301e4ff34a10845caea510c994c2" stroke-width="10" stroke-opacity="0" stroke="#FF0000"/>
+            <use xlink:href="#3fb4301e4ff34a10845caea510c994c2" p:name="outArrow1" id="9208912453a74c748d1a8ea653acf2a3" style="stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;"/>
+            <text p:name="text" id="0ccef0d8d4bc47578f48db37122cc83b" style="fill: rgb(0, 0, 0); fill-opacity: 1; font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none;">
+                <textPath xlink:href="#3fb4301e4ff34a10845caea510c994c2" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan" id="04c5337895494991a39e3f5fcc42f5f6" dx="-16"/>
+                </textPath>
+            </text>
+        </g><g p:type="Shape" p:def="Evolus.Common:arrow" p:sc="Straight Connector" id="933997a05673419cab86b9adf1d2fc41" transform="matrix(1,0,0,1,-37.25,681.25)"><p:metadata><p:property name="startPin">411,-35</p:property><p:property name="endPin">605,-35</p:property><p:property name="withStartArrow">false</p:property><p:property name="withEndArrow">true</p:property><p:property name="mode">straight</p:property><p:property name="detached">false</p:property><p:property name="strokeColor">#666666FF</p:property><p:property name="strokeStyle">2|</p:property><p:property name="textContent"/><p:property name="textFont">Helvetica|normal|normal|12px|none</p:property><p:property name="textColor">#000000FF</p:property><p:property name="textAlign">1,1</p:property></p:metadata>
+            <defs>
+                <path style="stroke-linejoin: round; fill: none;" p:name="path" id="3c97c4e0e1c34f2d95bac12923a2bf98" d="M 411 -35 L 595 -35 L 605 -35 M 599 -41 L 605 -35 L 599 -29"/>
+            </defs>
+            <use xlink:href="#3c97c4e0e1c34f2d95bac12923a2bf98" stroke-width="10" stroke-opacity="0" stroke="#FF0000"/>
+            <use xlink:href="#3c97c4e0e1c34f2d95bac12923a2bf98" p:name="outArrow1" id="7ba9f19558bd416c90be716ccb89224e" style="stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;"/>
+            <text p:name="text" id="0ca5060445154baf8fb94ee03aa77235" style="fill: rgb(0, 0, 0); fill-opacity: 1; font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none;">
+                <textPath xlink:href="#3c97c4e0e1c34f2d95bac12923a2bf98" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan" id="2b70a3f49f154697aadb84ff7a3efeff" dx="-16"/>
+                </textPath>
+            </text>
+        </g><g p:type="Shape" p:def="Evolus.Common:arrow" p:sc="Straight Connector" id="c5c4b19ff4ed4eaf97780f940ea61cc5" transform="matrix(1,0,0,1,-26.75,421)"><p:metadata><p:property xmlns:ns9889235="http://www.evolus.vn/Namespace/Pencil" name="startPin" ns9889235:connectedShapeId="0e23a1ce7f3845c7ba1bcfd5c8101a1a" ns9889235:connectedOutletId="middle-right" ns9889235:viax="439.86999999999995" ns9889235:viay="56.456">429.86999999999995,56.456</p:property><p:property xmlns:ns9889235="http://www.evolus.vn/Namespace/Pencil" name="endPin" ns9889235:connectedShapeId="7495dad07a8d45c98806c7c7d2d255c2" ns9889235:connectedOutletId="middle-left" ns9889235:viax="444.75" ns9889235:viay="56">454.75,56</p:property><p:property name="withStartArrow">false</p:property><p:property name="withEndArrow">true</p:property><p:property name="mode">straight</p:property><p:property name="detached">false</p:property><p:property name="strokeColor">#666666FF</p:property><p:property name="strokeStyle">2|</p:property><p:property name="textContent"/><p:property name="textFont">Helvetica|normal|normal|12px|none</p:property><p:property name="textColor">#000000FF</p:property><p:property name="textAlign">1,1</p:property></p:metadata>
+            <defs>
+                <path style="stroke-linejoin: round; fill: none;" p:name="path" id="e16fcaf4ff774678827ac4612ceedd9d" d="M 429.86999999999995 56.456 L 444.7516791501789 56.18324896734399 L 454.75 56 M 449 50 L 454.75 56 L 449 62"/>
+            </defs>
+            <use xlink:href="#e16fcaf4ff774678827ac4612ceedd9d" stroke-width="10" stroke-opacity="0" stroke="#FF0000"/>
+            <use xlink:href="#e16fcaf4ff774678827ac4612ceedd9d" p:name="outArrow1" id="24308c571db04569ae0538425bcf4734" style="stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;"/>
+            <text p:name="text" id="846cda97c93d417fbf24ca93f73a7978" style="fill: rgb(0, 0, 0); fill-opacity: 1; font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none;">
+                <textPath xlink:href="#e16fcaf4ff774678827ac4612ceedd9d" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan" id="0d90f73c307940289717caa9eed0a093" dx="-16"/>
+                </textPath>
+            </text>
+        </g><g p:type="Shape" p:def="Evolus.Common:arrow" p:sc="Straight Connector" id="fd222c829b9f43f399adc2bcc368aeb9" transform="matrix(1,0,0,1,1000.75,343.75)"><p:metadata><p:property xmlns:ns9889235="http://www.evolus.vn/Namespace/Pencil" name="startPin" ns9889235:connectedShapeId="07191280f34648e0a25b65a81cdff30e" ns9889235:connectedOutletId="bottom-center" ns9889235:viax="-113.625" ns9889235:viay="-71.75">-113.625,-81.75</p:property><p:property name="endPin">-114,384</p:property><p:property name="withStartArrow">false</p:property><p:property name="withEndArrow">true</p:property><p:property name="mode">straight</p:property><p:property name="detached">false</p:property><p:property name="strokeColor">#666666FF</p:property><p:property name="strokeStyle">2|</p:property><p:property name="textContent"/><p:property name="textFont">Helvetica|normal|normal|12px|none</p:property><p:property name="textColor">#000000FF</p:property><p:property name="textAlign">1,1</p:property></p:metadata>
+            <defs>
+                <path style="stroke-linejoin: round; fill: none;" p:name="path" id="299ea9b2b69347c7be8268c48ee09fe2" d="M -113.625 -81.75 L -113.99194847281913 374.00000324135505 L -114 384 M -108 378 L -114 384 L -120 378"/>
+            </defs>
+            <use xlink:href="#299ea9b2b69347c7be8268c48ee09fe2" stroke-width="10" stroke-opacity="0" stroke="#FF0000"/>
+            <use xlink:href="#299ea9b2b69347c7be8268c48ee09fe2" p:name="outArrow1" id="298e8d99c3b44896a0df6777abfdec6a" style="stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;"/>
+            <text p:name="text" id="211461b334b6488ca808ccf1ab199c95" style="fill: rgb(0, 0, 0); fill-opacity: 1; font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none;">
+                <textPath xlink:href="#299ea9b2b69347c7be8268c48ee09fe2" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan" id="7764617103dc4a4c8a27ce7b7295e743" dx="-16"/>
+                </textPath>
+            </text>
+        </g><g p:type="Shape" p:def="Evolus.Common:arrow" p:sc="Multi-segment Connector" id="3459b21e930e449bb930d03e9dd7f42b" transform="matrix(1,0,0,1,-55.25,201.75)"><p:metadata><p:property xmlns:ns9889235="http://www.evolus.vn/Namespace/Pencil" name="startPin" ns9889235:connectedShapeId="c237c241f0f94b7b84d51cc258a31f6c" ns9889235:connectedOutletId="bottom-center" ns9889235:viax="351.75" ns9889235:viay="-33.75">351.75,-43.75</p:property><p:property xmlns:ns9889235="http://www.evolus.vn/Namespace/Pencil" name="endPin" ns9889235:connectedShapeId="0a68c1856197420990447131155b0cf2" ns9889235:connectedOutletId="top-center" ns9889235:viax="431.5" ns9889235:viay="-1.75">431.5,8.25</p:property><p:property name="withStartArrow">false</p:property><p:property name="withEndArrow">true</p:property><p:property name="mode">multi-straight</p:property><p:property name="detached">false</p:property><p:property name="strokeColor">#666666FF</p:property><p:property name="strokeStyle">2|</p:property><p:property name="textContent"/><p:property name="textFont">Helvetica|normal|normal|12px|none</p:property><p:property name="textColor">#000000FF</p:property><p:property name="textAlign">1,1</p:property></p:metadata>
+            <defs>
+                <path style="stroke-linejoin: round; fill: none;" p:name="path" id="146af59d773848c7ac819aadfed6a204" d="M 351.75 -43.75 L 352 -34 L 432 -2 L 431.9872255371341 -1.7381235112489666 L 431.5 8.25 M 437 3 L 431.5 8.25 L 426 2"/>
+            </defs>
+            <use xlink:href="#146af59d773848c7ac819aadfed6a204" stroke-width="10" stroke-opacity="0" stroke="#FF0000"/>
+            <use xlink:href="#146af59d773848c7ac819aadfed6a204" p:name="outArrow1" id="9971a1949c9b4b798d29bccb73747e5c" style="stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;"/>
+            <text p:name="text" id="dec6c066f8d542c0a80a5d1fe1aa3060" style="fill: rgb(0, 0, 0); fill-opacity: 1; font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none;">
+                <textPath xlink:href="#146af59d773848c7ac819aadfed6a204" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan" id="d6ddfd67f8ed487ab85b7b87e67702ee" dx="-16"/>
+                </textPath>
+            </text>
+        </g><g p:type="Shape" p:def="Evolus.Common:arrow" p:sc="Multi-segment Connector" id="8cd1c4e19d9e4864a0455e0aa068fd33" transform="matrix(1,0,0,1,4.25,247.25)"><p:metadata><p:property xmlns:ns9889235="http://www.evolus.vn/Namespace/Pencil" name="startPin" ns9889235:connectedShapeId="65be59d8fb344997a19415632e1cafbc" ns9889235:connectedOutletId="bottom-center" ns9889235:viax="566.25" ns9889235:viay="-79.25">566.25,-89.25</p:property><p:property xmlns:ns9889235="http://www.evolus.vn/Namespace/Pencil" name="endPin" ns9889235:connectedShapeId="0a68c1856197420990447131155b0cf2" ns9889235:connectedOutletId="top-center" ns9889235:viax="372" ns9889235:viay="-47.25">372,-37.25</p:property><p:property name="withStartArrow">false</p:property><p:property name="withEndArrow">true</p:property><p:property name="mode">multi-straight</p:property><p:property name="detached">false</p:property><p:property name="strokeColor">#666666FF</p:property><p:property name="strokeStyle">2|</p:property><p:property name="textContent"/><p:property name="textFont">Helvetica|normal|normal|12px|none</p:property><p:property name="textColor">#000000FF</p:property><p:property name="textAlign">1,1</p:property></p:metadata>
+            <defs>
+                <path style="stroke-linejoin: round; fill: none;" p:name="path" id="45d320ffb67444d698d70c6c81ae0bcb" d="M 566.25 -89.25 L 566 -79 L 372 -47 L 372 -47.25 L 372 -37.25 M 378 -43 L 372 -37.25 L 366 -43"/>
+            </defs>
+            <use xlink:href="#45d320ffb67444d698d70c6c81ae0bcb" stroke-width="10" stroke-opacity="0" stroke="#FF0000"/>
+            <use xlink:href="#45d320ffb67444d698d70c6c81ae0bcb" p:name="outArrow1" id="784a12bd6581441984c158ba57812287" style="stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;"/>
+            <text p:name="text" id="f96c3510566d4ea3956609b03e01cb54" style="fill: rgb(0, 0, 0); fill-opacity: 1; font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none;">
+                <textPath xlink:href="#45d320ffb67444d698d70c6c81ae0bcb" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan" id="5b46eed099a846fca5013f16329916f7" dx="-16"/>
+                </textPath>
+            </text>
+        </g><g p:type="Shape" p:def="Evolus.Common:arrow" p:sc="Multi-segment Connector" id="3a9ae3369fc44b77adf043de4c05858e" transform="matrix(1,0,0,1,-130,280.25)"><p:metadata><p:property xmlns:ns9889235="http://www.evolus.vn/Namespace/Pencil" name="startPin" ns9889235:connectedShapeId="40a86575511f482c9358b50f94f329c3" ns9889235:connectedOutletId="bottom-center" ns9889235:viax="975.5" ns9889235:viay="-112.25">975.5,-122.25</p:property><p:property xmlns:ns9889235="http://www.evolus.vn/Namespace/Pencil" name="endPin" ns9889235:connectedShapeId="0a68c1856197420990447131155b0cf2" ns9889235:connectedOutletId="top-center" ns9889235:viax="506.25" ns9889235:viay="-80.25">506.25,-70.25</p:property><p:property name="withStartArrow">false</p:property><p:property name="withEndArrow">true</p:property><p:property name="mode">multi-straight</p:property><p:property name="detached">false</p:property><p:property name="strokeColor">#666666FF</p:property><p:property name="strokeStyle">2|</p:property><p:property name="textContent"/><p:property name="textFont">Helvetica|normal|normal|12px|none</p:property><p:property name="textColor">#000000FF</p:property><p:property name="textAlign">1,1</p:property></p:metadata>
+            <defs>
+                <path style="stroke-linejoin: round; fill: none;" p:name="path" id="578f051f72a84d58854f006e0777dc71" d="M 975.5 -122.25 L 976 -112 L 506 -80 L 505.9936739920745 -80.24671430909481 L 506.25 -70.25 M 512 -76 L 506.25 -70.25 L 500 -76"/>
+            </defs>
+            <use xlink:href="#578f051f72a84d58854f006e0777dc71" stroke-width="10" stroke-opacity="0" stroke="#FF0000"/>
+            <use xlink:href="#578f051f72a84d58854f006e0777dc71" p:name="outArrow1" id="9338fe5ff42342ffa0837391e5b71d91" style="stroke: rgb(102, 102, 102); stroke-opacity: 1; stroke-width: 2;"/>
+            <text p:name="text" id="dd0ea97c5c2d4c2a890743774c35e560" style="fill: rgb(0, 0, 0); fill-opacity: 1; font-family: Helvetica; font-size: 12px; font-weight: normal; font-style: normal; text-decoration: none;">
+                <textPath xlink:href="#578f051f72a84d58854f006e0777dc71" startOffset="50%" text-anchor="middle" alignment-baseline="middle">
+                    <tspan dy="-4" p:name="textSpan" id="00b625cdd88b47e8bc708437cbdd331e" dx="-16"/>
+                </textPath>
+            </text>
+        </g><g p:type="Shape" p:def="Evolus.Common:PlainTextV3" id="c037dee85e29494fba32258e2c9e2f05" transform="matrix(1,0,0,1,458,29.25)"><p:metadata><p:property name="disabled">false</p:property><p:property name="width">100,0</p:property><p:property name="fixedWidth">false</p:property><p:property name="label">Main Architecture</p:property><p:property name="textColor">#000000FF</p:property><p:property name="textFont">"Liberation Sans",Arial,sans-serif|bold|normal|26px|none</p:property><p:property name="textAlign">0,0</p:property></p:metadata>
+            <rect x="0" y="0" style="fill: none; stroke: none; visibility: hidden; display: none;" p:name="bgRect" id="2abdf79ee08743d2ba3834e94f19a5b6" width="219.59375" height="30"/>
+            <text xml:space="preserve" dominant-baseline="hanging" p:name="text" id="d10cab506684426bbd507780376597c7" style="fill: rgb(0, 0, 0); fill-opacity: 1; font-family: &quot;Liberation Sans&quot;, Arial, sans-serif; font-size: 26px; font-weight: bold; font-style: normal; text-decoration: none;"><tspan x="0" y="0">Main Architecture</tspan></text>
+        </g><g p:type="Shape" p:def="Evolus.Common:PlainTextV3" id="9ed468ae2b084b7ab7d2b75c9197af1e" transform="matrix(1,0,0,1,521,64.25)"><p:metadata><p:property name="disabled">false</p:property><p:property name="width">100,0</p:property><p:property name="fixedWidth">false</p:property><p:property name="label">Click to View</p:property><p:property name="textColor">#000000FF</p:property><p:property name="textFont">"Liberation Sans",Arial,sans-serif|normal|italic|16px|none</p:property><p:property name="textAlign">0,0</p:property></p:metadata>
+            <rect x="0" y="0" style="fill: none; stroke: none; visibility: hidden; display: none;" p:name="bgRect" id="d02433c2731c436a9312f9f737d75feb" width="92.140625" height="17"/>
+            <text xml:space="preserve" dominant-baseline="hanging" p:name="text" id="8dff1e0d94b940c8baecb1c9e51ed051" style="fill: rgb(0, 0, 0); fill-opacity: 1; font-family: &quot;Liberation Sans&quot;, Arial, sans-serif; font-size: 16px; font-weight: normal; font-style: italic; text-decoration: none;"><tspan x="0" y="0">Click to View</tspan></text>
+        </g></g></g></svg>

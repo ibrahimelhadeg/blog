@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang=EN>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-62489908-6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-62489908-6');
+    </script>
+
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Checking PHP VersionFirst, to check your current PHP version, open up your FTP manager.  At the root of your site (public_html), upload a file with the following contents:  1&amp;lt;?php phpinfo(); ?&amp;gt;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to Check PHP Version and Upgrade to PHP 7 with Wordpress and Bluehost">
+<meta property="og:url" content="http://zachgoll.github.io/blog/2018/upgrade-php-bluehost-wordpress/index.html">
+<meta property="og:site_name" content="Zach Gollwitzer">
+<meta property="og:description" content="Checking PHP VersionFirst, to check your current PHP version, open up your FTP manager.  At the root of your site (public_html), upload a file with the following contents:  1&amp;lt;?php phpinfo(); ?&amp;gt;">
+<meta property="og:locale" content="EN">
+<meta property="og:image" content="http://zachgoll.github.io/blog/2018/upgrade-php-bluehost-wordpress/php-cpanel.jpg">
+<meta property="og:updated_time" content="2019-11-25T15:55:49.522Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="How to Check PHP Version and Upgrade to PHP 7 with Wordpress and Bluehost">
+<meta name="twitter:description" content="Checking PHP VersionFirst, to check your current PHP version, open up your FTP manager.  At the root of your site (public_html), upload a file with the following contents:  1&amp;lt;?php phpinfo(); ?&amp;gt;">
+<meta name="twitter:image" content="http://zachgoll.github.io/blog/2018/upgrade-php-bluehost-wordpress/php-cpanel.jpg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/blog/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/blog/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>How to Check PHP Version and Upgrade to PHP 7 with Wordpress and Bluehost</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/blog/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="http://zachgoll.github.io">Home</a></li>
+         
+          <li><a href="/blog/archives/">Writing</a></li>
+         
+          <li><a href="http://zachgoll.github.io/portfolio">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/blog/2018/serverpress-error/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/blog/2018/security-analysis/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://zachgoll.github.io/blog/2018/upgrade-php-bluehost-wordpress/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://zachgoll.github.io/blog/2018/upgrade-php-bluehost-wordpress/&text=How to Check PHP Version and Upgrade to PHP 7 with Wordpress and Bluehost"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://zachgoll.github.io/blog/2018/upgrade-php-bluehost-wordpress/&title=How to Check PHP Version and Upgrade to PHP 7 with Wordpress and Bluehost"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://zachgoll.github.io/blog/2018/upgrade-php-bluehost-wordpress/&is_video=false&description=How to Check PHP Version and Upgrade to PHP 7 with Wordpress and Bluehost"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=How to Check PHP Version and Upgrade to PHP 7 with Wordpress and Bluehost&body=Check out this article: http://zachgoll.github.io/blog/2018/upgrade-php-bluehost-wordpress/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://zachgoll.github.io/blog/2018/upgrade-php-bluehost-wordpress/&title=How to Check PHP Version and Upgrade to PHP 7 with Wordpress and Bluehost"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://zachgoll.github.io/blog/2018/upgrade-php-bluehost-wordpress/&title=How to Check PHP Version and Upgrade to PHP 7 with Wordpress and Bluehost"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://zachgoll.github.io/blog/2018/upgrade-php-bluehost-wordpress/&title=How to Check PHP Version and Upgrade to PHP 7 with Wordpress and Bluehost"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://zachgoll.github.io/blog/2018/upgrade-php-bluehost-wordpress/&title=How to Check PHP Version and Upgrade to PHP 7 with Wordpress and Bluehost"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://zachgoll.github.io/blog/2018/upgrade-php-bluehost-wordpress/&name=How to Check PHP Version and Upgrade to PHP 7 with Wordpress and Bluehost&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Checking-PHP-Version"><span class="toc-number">1.</span> <span class="toc-text">Checking PHP Version</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Upgrading-PHP-Version"><span class="toc-number">2.</span> <span class="toc-text">Upgrading PHP Version</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        How to Check PHP Version and Upgrade to PHP 7 with Wordpress and Bluehost
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Zach Gollwitzer</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2018-07-25T11:26:55.000Z" itemprop="datePublished">2018-07-25</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="Checking-PHP-Version"><a href="#Checking-PHP-Version" class="headerlink" title="Checking PHP Version"></a>Checking PHP Version</h1><p>First, to check your current PHP version, open up your FTP manager.  At the root of your site (<code>public_html</code>), upload a file with the following contents: </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> phpinfo(); <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Name this file something obscure like <code>ajdkslvhckdf.php</code> so bots cannot pick it up.  Upload the file via FTP to the root of your site.  Now, navigate to <code>http://my-site/ajdkslvhckdf.php</code> and you should see a big box with a bunch of information regarding your site.</p>
+<h1 id="Upgrading-PHP-Version"><a href="#Upgrading-PHP-Version" class="headerlink" title="Upgrading PHP Version"></a>Upgrading PHP Version</h1><p>First, make sure that your plugins and themes work well with whatever PHP version you are moving to.  Use <a href="https://wordpress.org/plugins/php-compatibility-checker/" target="_blank" rel="noopener">PHP Compatibility Checker</a> to determine this.  Fix any conflicts, and then navigate to <code>cpanel</code> on your Bluehost hosting account.  Scroll down to the “programming” section and click “PHP Config”.</p>
+<img src="/blog/2018/upgrade-php-bluehost-wordpress/php-cpanel.jpg">
+<p>Now, just select the PHP version you want to upgrade to.  Go back to the link that you checked earlier <code>http://my-site/ajdkslvhckdf.php</code> and your version should have changed!</p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="http://zachgoll.github.io">Home</a></li>
+         
+          <li><a href="/blog/archives/">Writing</a></li>
+         
+          <li><a href="http://zachgoll.github.io/portfolio">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Checking-PHP-Version"><span class="toc-number">1.</span> <span class="toc-text">Checking PHP Version</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Upgrading-PHP-Version"><span class="toc-number">2.</span> <span class="toc-text">Upgrading PHP Version</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://zachgoll.github.io/blog/2018/upgrade-php-bluehost-wordpress/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://zachgoll.github.io/blog/2018/upgrade-php-bluehost-wordpress/&text=How to Check PHP Version and Upgrade to PHP 7 with Wordpress and Bluehost"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://zachgoll.github.io/blog/2018/upgrade-php-bluehost-wordpress/&title=How to Check PHP Version and Upgrade to PHP 7 with Wordpress and Bluehost"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://zachgoll.github.io/blog/2018/upgrade-php-bluehost-wordpress/&is_video=false&description=How to Check PHP Version and Upgrade to PHP 7 with Wordpress and Bluehost"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=How to Check PHP Version and Upgrade to PHP 7 with Wordpress and Bluehost&body=Check out this article: http://zachgoll.github.io/blog/2018/upgrade-php-bluehost-wordpress/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://zachgoll.github.io/blog/2018/upgrade-php-bluehost-wordpress/&title=How to Check PHP Version and Upgrade to PHP 7 with Wordpress and Bluehost"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://zachgoll.github.io/blog/2018/upgrade-php-bluehost-wordpress/&title=How to Check PHP Version and Upgrade to PHP 7 with Wordpress and Bluehost"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://zachgoll.github.io/blog/2018/upgrade-php-bluehost-wordpress/&title=How to Check PHP Version and Upgrade to PHP 7 with Wordpress and Bluehost"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://zachgoll.github.io/blog/2018/upgrade-php-bluehost-wordpress/&title=How to Check PHP Version and Upgrade to PHP 7 with Wordpress and Bluehost"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://zachgoll.github.io/blog/2018/upgrade-php-bluehost-wordpress/&name=How to Check PHP Version and Upgrade to PHP 7 with Wordpress and Bluehost&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 Zach Gollwitzer
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="http://zachgoll.github.io">Home</a></li>
+         
+          <li><a href="/blog/archives/">Writing</a></li>
+         
+          <li><a href="http://zachgoll.github.io/portfolio">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/blog/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/blog/lib/jquery/jquery.min.js"></script>
+<script src="/blog/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/blog/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-149577498-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'zachgoll';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+

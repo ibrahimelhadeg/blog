@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang=EN>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-62489908-6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-62489908-6');
+    </script>
+
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="In order to host multiple sites on one Digital Ocean Droplet, you first need to understand a little bit about DNS (domain name system). Quick Primer on DNSThere are three concepts to understand in rel">
+<meta name="keywords" content="hosting">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to Host Multiple Wordpress Sites on One Digital Ocean Droplet">
+<meta property="og:url" content="http://zachgoll.github.io/blog/2018/host-multiple-sites-one-droplet/index.html">
+<meta property="og:site_name" content="Zach Gollwitzer">
+<meta property="og:description" content="In order to host multiple sites on one Digital Ocean Droplet, you first need to understand a little bit about DNS (domain name system). Quick Primer on DNSThere are three concepts to understand in rel">
+<meta property="og:locale" content="EN">
+<meta property="og:updated_time" content="2019-11-25T15:55:49.434Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="How to Host Multiple Wordpress Sites on One Digital Ocean Droplet">
+<meta name="twitter:description" content="In order to host multiple sites on one Digital Ocean Droplet, you first need to understand a little bit about DNS (domain name system). Quick Primer on DNSThere are three concepts to understand in rel">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/blog/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/blog/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>How to Host Multiple Wordpress Sites on One Digital Ocean Droplet</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/blog/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="http://zachgoll.github.io">Home</a></li>
+         
+          <li><a href="/blog/archives/">Writing</a></li>
+         
+          <li><a href="http://zachgoll.github.io/portfolio">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/blog/2019/how-to-code-crash-course/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/blog/2018/permission-denied-publickey-error/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://zachgoll.github.io/blog/2018/host-multiple-sites-one-droplet/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://zachgoll.github.io/blog/2018/host-multiple-sites-one-droplet/&text=How to Host Multiple Wordpress Sites on One Digital Ocean Droplet"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://zachgoll.github.io/blog/2018/host-multiple-sites-one-droplet/&title=How to Host Multiple Wordpress Sites on One Digital Ocean Droplet"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://zachgoll.github.io/blog/2018/host-multiple-sites-one-droplet/&is_video=false&description=How to Host Multiple Wordpress Sites on One Digital Ocean Droplet"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=How to Host Multiple Wordpress Sites on One Digital Ocean Droplet&body=Check out this article: http://zachgoll.github.io/blog/2018/host-multiple-sites-one-droplet/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://zachgoll.github.io/blog/2018/host-multiple-sites-one-droplet/&title=How to Host Multiple Wordpress Sites on One Digital Ocean Droplet"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://zachgoll.github.io/blog/2018/host-multiple-sites-one-droplet/&title=How to Host Multiple Wordpress Sites on One Digital Ocean Droplet"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://zachgoll.github.io/blog/2018/host-multiple-sites-one-droplet/&title=How to Host Multiple Wordpress Sites on One Digital Ocean Droplet"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://zachgoll.github.io/blog/2018/host-multiple-sites-one-droplet/&title=How to Host Multiple Wordpress Sites on One Digital Ocean Droplet"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://zachgoll.github.io/blog/2018/host-multiple-sites-one-droplet/&name=How to Host Multiple Wordpress Sites on One Digital Ocean Droplet&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Primer-on-DNS"><span class="toc-number">1.</span> <span class="toc-text">Quick Primer on DNS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Domain-Name-Registrar"><span class="toc-number">1.1.</span> <span class="toc-text">Domain Name Registrar</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Nameserver-s"><span class="toc-number">1.2.</span> <span class="toc-text">Nameserver(s)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#A-AAAA-and-CNAME-records"><span class="toc-number">1.3.</span> <span class="toc-text">A, AAAA, and CNAME records</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Setting-DNS-records-in-Digital-Ocean"><span class="toc-number">1.3.1.</span> <span class="toc-text">Setting DNS records in Digital Ocean</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Virtual-Hosts"><span class="toc-number">2.</span> <span class="toc-text">Virtual Hosts</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Testing-the-configuration"><span class="toc-number">3.</span> <span class="toc-text">Testing the configuration</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Local-Testing"><span class="toc-number">3.1.</span> <span class="toc-text">Local Testing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tk-domain"><span class="toc-number">3.2.</span> <span class="toc-text">.tk domain</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Setting-up-the-Wordpress-Site"><span class="toc-number">4.</span> <span class="toc-text">Setting up the Wordpress Site</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Setting-Permissions"><span class="toc-number">5.</span> <span class="toc-text">Setting Permissions</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Quick-Crash-Course-on-Linux-File-Permissions-Optional"><span class="toc-number">5.1.</span> <span class="toc-text">Quick Crash Course on Linux File Permissions (Optional)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Enabling-HTTPS"><span class="toc-number">6.</span> <span class="toc-text">Enabling HTTPS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hosting-a-MEAN-Stack-Application-alongside-Wordpress-sites"><span class="toc-number">7.</span> <span class="toc-text">Hosting a MEAN Stack Application alongside Wordpress sites</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Troubleshooting-Root-Login-Issues"><span class="toc-number">8.</span> <span class="toc-text">Troubleshooting Root Login Issues</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Transferring-Databases-from-One-Host-to-Another"><span class="toc-number">9.</span> <span class="toc-text">Transferring Databases from One Host to Another</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Uploading-Plugins-from-Local-Computer-to-Digital-Ocean-Droplet"><span class="toc-number">10.</span> <span class="toc-text">Uploading Plugins from Local Computer to Digital Ocean Droplet</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Setting-Up-a-Reverse-Proxy-Server-for-Express-Application"><span class="toc-number">11.</span> <span class="toc-text">Setting Up a Reverse Proxy Server for Express Application</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        How to Host Multiple Wordpress Sites on One Digital Ocean Droplet
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Zach Gollwitzer</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2018-11-26T14:18:58.000Z" itemprop="datePublished">2018-11-26</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/blog/tags/hosting/">hosting</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>In order to host multiple sites on one <a href="https://m.do.co/c/82d3943c33b4" target="_blank" rel="noopener">Digital Ocean Droplet</a>, you first need to understand a little bit about DNS (domain name system).</p>
+<h2 id="Quick-Primer-on-DNS"><a href="#Quick-Primer-on-DNS" class="headerlink" title="Quick Primer on DNS"></a>Quick Primer on DNS</h2><p>There are three concepts to understand in relation to DNS.</p>
+<ol>
+<li>Domain name registrar </li>
+<li>Nameserver </li>
+<li>A, AAAA, and CNAME records</li>
+</ol>
+<h3 id="Domain-Name-Registrar"><a href="#Domain-Name-Registrar" class="headerlink" title="Domain Name Registrar"></a>Domain Name Registrar</h3><p>There are hundreds of domain name registrars which are companies that provide the service of registering domain names with <a href="https://www.icann.org/" target="_blank" rel="noopener">ICANN</a>.  These registrars act as directories for domain name lookups.  For example, my personal site, <code>thediygolfer.com</code> is registered through NameSilo.  When I type <code>www.thediygolfer.com</code> into my browser, it will retrieve a single piece of information from my registrar–the nameservers that this domain points to.</p>
+<h3 id="Nameserver-s"><a href="#Nameserver-s" class="headerlink" title="Nameserver(s)"></a>Nameserver(s)</h3><p>Hosting companies (like Digital Ocean) operate nameservers, which are simply computers that store information about a specific domain.  If you type <code>whois thediygolfer.com</code> into your terminal, you will find a bunch of information about this domain including the address of the registrar and the nameserver addresses.  Although these nameservers provide various functionalities in the DNS world, we are concerned about two primary functions.</p>
+<ol>
+<li>What IP address my domain name points to </li>
+<li>What subdomain rules are setup on the nameserver about this particular domain</li>
+</ol>
+<h3 id="A-AAAA-and-CNAME-records"><a href="#A-AAAA-and-CNAME-records" class="headerlink" title="A, AAAA, and CNAME records"></a>A, AAAA, and CNAME records</h3><p>These are the 3 most common pieces of information that sit on a nameserver like Digital Ocean’s nameservers.  When I login to my NameSilo account and direct my domain name <code>thediygolfer.com</code> to the Digital Ocean nameservers, these nameservers will map <code>thediygolfer.com</code> with a specific droplet that I am running (simply an IP address).  This is the most basic “A record”.  It points <code>thediygolfer.com -&gt; &lt;ip-address&gt;</code>.  The AAAA record is the IPV6 version, so instead of pointing my domain at an IPV4 address, it points it at an IPV6 address (same functionality and result).  The CNAME record will point one domain name (thediygolfer.com) to another domain name (thediygolfernewsite.com).  For hosting multiple Wordpress sites on one Digital Ocean droplet this is not necessary.</p>
+<p>The important thing to understand when setting up multiple Wordpress sites is whether you are attempting to host two <em>primary domain</em> sites, or one primary domain and one <em>subdomain</em>.  In this tutorial, we will be hosting one <em>primary domain</em> and one <em>subdomain</em> for our main site and our staging site (where development and testing happens).  In order to set this up, we need to create the following A records in Digital Ocean.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">thediygolfer.com.	    14400	IN	A	&lt;droplet-ip-address&gt;</span><br><span class="line">dev.thediygolfer.com.   14400   IN  A   &lt;same-droplet-ip-address as above&gt;</span><br></pre></td></tr></table></figure>
+<p>The above A records will appear if you type <code>dig thediygolfer.com</code> into your Mac terminal.  Notice the period at the end of each domain and subdomain.  These records will sit on Digital Ocean’s nameservers and tell anyone trying to reach either of these domains that they both sit at the designated IP address.</p>
+<h4 id="Setting-DNS-records-in-Digital-Ocean"><a href="#Setting-DNS-records-in-Digital-Ocean" class="headerlink" title="Setting DNS records in Digital Ocean"></a>Setting DNS records in Digital Ocean</h4><ol>
+<li>Click the Networking tab in your dashboard </li>
+<li>Enter your domain name (i.e. <code>thediygolfer.com</code>)</li>
+<li>Click on your new domain name (it will have 3 initial DNS records that all point thediygolfer.com to <code>ns1.digitalocean.com</code>, <code>ns2.digitalocean.com</code>, and <code>ns3.digitalocean.com</code>)</li>
+<li>Make sure you have selected the “A” record type, and then enter a “@” symbol in the HOSTNAME field, select your droplet, and click “Create Record”.  This represents our first A record as shown in the previous section.</li>
+<li>Again, select the “A” record type, and then enter “dev” in the HOSTNAME field, select the <em>same</em> droplet you just chose, and click “Create Record”.  This represents the second A record as shown in the previous section.</li>
+<li>You are now done configuring the Digital Ocean nameserver!</li>
+</ol>
+<p>But how could two separate domains point to the same exact IP address yet host two different Wordpress sites??  Virtual Hosts.</p>
+<h2 id="Virtual-Hosts"><a href="#Virtual-Hosts" class="headerlink" title="Virtual Hosts"></a>Virtual Hosts</h2><p>Since web traffic from <code>thediygolfer.com</code> <em>and</em> <code>dev.thediygolfer.com</code> is all coming to the same Droplet (ip-address), we need to configure some settings within our droplet.  To do this, we first need to install and adjust some permissions with the steps below.  Before doing the following steps, make sure you:</p>
+<ol>
+<li>Have created the <code>WordPress on 18.04</code> (or whatever the current version is) “One-click apps” droplet.</li>
+<li>Have <a href="https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-16-04" target="_blank" rel="noopener">created a non-root user with admin privileges</a></li>
+<li>Logged in with this user via ssh</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Updates packages and installs the Apache2 server we will use for our Wordpress </span></span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install apache2</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create the directories where our site files will be located</span></span><br><span class="line">sudo mkdir -p /var/www/thediygolfer.com/public_html</span><br><span class="line">sudo mkdir -p /var/www/dev.thediygolfer.com/public_html</span><br><span class="line"></span><br><span class="line"><span class="comment"># Allow the current user to modify files in these site directories</span></span><br><span class="line">sudo chown -R <span class="variable">$USER</span>:<span class="variable">$USER</span> /var/www/thediygolfer.com/public_html</span><br><span class="line">sudo chown -R <span class="variable">$USER</span>:<span class="variable">$USER</span> /var/www/dev.thediygolfer.com/public_html</span><br><span class="line"></span><br><span class="line"><span class="comment"># Set global permissions </span></span><br><span class="line">sudo chmod -R 755 /var/www/</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create the homepage for the main site (will eventually replace with Wordpress site files)</span></span><br><span class="line">touch /var/www/thediygolfer.com/public_html/index.html</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;h1&gt;thediygolfer.com is working!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;"</span> &gt; /var/www/thediygolfer.com/public_html/index.html</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create a homepage for the development site (will eventually replace with Wordpress site files)</span></span><br><span class="line">touch /var/www/dev.thediygolfer.com/public_html/index.html</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;h1&gt;dev.thediygolfer.com is working!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;"</span> &gt; /var/www/dev.thediygolfer.com/public_html/index.html</span><br></pre></td></tr></table></figure>
+<p>At this point, we have two site directories with super simple home pages.  If you had permissioning errors with any of the above commands or any of the commands to follow, just run the <code>sudo chown -R $USER:$USER /directory/to/the/file.ext</code> to enable root privileges to edit.  Now, we need to create the two virtual hosts so that when web traffic comes into our droplet, they are directed to the site based on the original web address.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sudo chown -R <span class="variable">$USER</span>:<span class="variable">$USER</span> /etc/apache2/sites-available</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create the virtual host files </span></span><br><span class="line">touch /etc/apache2/sites-available/thediygolfer.com.conf</span><br><span class="line">touch /etc/apache2/sites-available/dev.thediygolfer.com.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># Disable the old virtual host default file </span></span><br><span class="line">sudo a2dissite 000-default.conf</span><br></pre></td></tr></table></figure>
+<p>The default host file looks like so: </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;VirtualHost *:80&gt;</span><br><span class="line">        ServerAdmin webmaster@localhost</span><br><span class="line">        DocumentRoot /var/www/html</span><br><span class="line"></span><br><span class="line">        &lt;Directory /var/www/html/&gt;</span><br><span class="line">            Options FollowSymLinks</span><br><span class="line">            AllowOverride All</span><br><span class="line">            Require all granted</span><br><span class="line">        &lt;/Directory&gt;</span><br><span class="line"></span><br><span class="line">        ErrorLog <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/error.log</span><br><span class="line">        CustomLog <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/access.log combined</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
+<p>Without getting into too much detail, when traffic comes through port 80 (the default HTTP port), it will be redirected to the <code>DocumentRoot</code> of <code>/var/www/html</code> which by default (if you are using the Wordpress One Click Application) will be the Wordpress installation.  What we want to do is redirect traffic based on the host.  Below is the proper configuration that we will need.  Notice we have added a <code>ServerName</code> and <code>ServerAlias</code> field and pointed these hosts to the new document root that we placed the simple <code>index.html</code> file in.   We have also removed the Directory field as it is unecessary.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;VirtualHost *:80&gt;</span><br><span class="line">    ServerAdmin zach@thediygolfer.com</span><br><span class="line">    DocumentRoot /var/www/thediygolfer.com/public_html</span><br><span class="line">    ServerName thediygolfer.com</span><br><span class="line">    ServerAlias www.thediygolfer.com</span><br><span class="line">    ErrorLog <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/error.log</span><br><span class="line">    CustomLog <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/access.log combined</span><br><span class="line"></span><br><span class="line">    &lt;Directory /var/www/thediygolfer.com/public_html/&gt;</span><br><span class="line">        Options FollowSymLinks</span><br><span class="line">        AllowOverride All</span><br><span class="line">        Require all granted</span><br><span class="line">    &lt;/Directory&gt;</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
+<p>You will need to edit the <code>/etc/apache2/sites-available/thediygolfer.com.conf</code> file and the <code>/etc/apache2/sites-available/dev.thediygolfer.com.conf</code> file to have the information shown above.  Make sure to replace the <code>ServerAdmin</code>, <code>DocumentRoot</code>, <code>ServerName</code>, and <code>ServerAlias</code> with the appropriate information.  Also, make sure under the <directory>, you have AllowOverride set to “All”.  This will allow our <code>.htaccess</code> file to work.  After completing this, we need to activate these two new host files and restart the Apache2 server.</directory></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Enable the hosts</span></span><br><span class="line">sudo a2ensite thediygolfer.com.conf </span><br><span class="line">sudo a2ensite dev.thediygolfer.com.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># Restart Apache2</span></span><br><span class="line">sudo systemctl restart apache2</span><br></pre></td></tr></table></figure>
+<h2 id="Testing-the-configuration"><a href="#Testing-the-configuration" class="headerlink" title="Testing the configuration"></a>Testing the configuration</h2><p>There are 2 ways you can test the configuration.</p>
+<ol>
+<li>Locally</li>
+<li>With a free .tk domain </li>
+</ol>
+<h3 id="Local-Testing"><a href="#Local-Testing" class="headerlink" title="Local Testing"></a>Local Testing</h3><p>To test the configuration locally, make sure you are <strong>on your local machine</strong> (not ssh’d into the VPS), and open the <code>/etc/hosts</code> file.  If this file doesn’t yet exist, create it.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /etc/hosts file </span></span><br><span class="line"></span><br><span class="line">&lt;your-digital-ocean-droplet-ip-address&gt;     thediygolfer.com</span><br><span class="line">&lt;your-digital-ocean-droplet-ip-address&gt;     dev.thediygolfer.com</span><br></pre></td></tr></table></figure>
+<p>Make sure to clear your local machine’s DNS cache with the following command:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo killall -HUP mDNSResponder</span><br></pre></td></tr></table></figure>
+<p>By doing this, you are telling your local laptop that all traffic coming to <code>www.thediygolfer.com</code> and <code>dev.thediygolfer.com</code> should be redirected to the IP address of the Digital Ocean droplet.  This will only work on your local computer and is not a live change.</p>
+<h3 id="tk-domain"><a href="#tk-domain" class="headerlink" title=".tk domain"></a>.tk domain</h3><p>You can get a free <a href="http://www.dot.tk/en/index.html?lang=en" target="_blank" rel="noopener">.tk domain</a> and use it for testing.  If you choose this method, you will need to modify a few things.</p>
+<ol>
+<li>In your <code>.conf</code> files, you will need to update the <code>ServerName</code> and <code>ServerAlias</code> to the domain name you have obtained for testing.</li>
+<li>Point your new domain at the Digital Ocean nameservers (<code>ns1.digitalocean.com</code>, etc.)<ul>
+<li>Create an account at dot.tk, and then navigate to <a href="https://my.freenom.com/clientarea.php?action=domains" target="_blank" rel="noopener">https://my.freenom.com/clientarea.php?action=domains</a></li>
+<li>On your domain, click “Manage Domain”</li>
+<li>Click “Management Tools”</li>
+<li>“Use Custom Nameservers” and enter the Digital Ocean servers </li>
+</ul>
+</li>
+<li>Create a new domain in your Digital Ocean Dashboard and add the A records we added earlier in this post</li>
+</ol>
+<p>So for example, if I got <code>thediygolfer.tk</code> domain name, I need to add this to all my <code>.conf</code> files, point it to the Digital Ocean nameservers, and then create the following A records in Digital Ocean DNS:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">thediygolfer.tk.	    14400	IN	A	&lt;droplet-ip-address&gt;</span><br><span class="line">dev.thediygolfer.tk.    14400    IN   A    &lt;same-droplet-ip-address as above&gt;</span><br></pre></td></tr></table></figure>
+<p>If all goes smoothly, when you navigate to <code>http://www.thediygolfer.tk</code> in the browser, you should see a blank page that says “thediygolfer.com is working!” and when you navigate to <code>http://dev.thediygolfer.tk</code>, you should see a blank page that says “dev.thediygolfer.com is working!”.  These are the <code>index.html</code> pages that we placed in the <code>/var/www/thediygolfer.com/public_html</code> and <code>/var/www/dev.thediygolfer.com/public_html</code>.</p>
+<h2 id="Setting-up-the-Wordpress-Site"><a href="#Setting-up-the-Wordpress-Site" class="headerlink" title="Setting up the Wordpress Site"></a>Setting up the Wordpress Site</h2><p>This section will take you through the setup process of the Wordpress site.  First, we need to install PHPMyAdmin, which is a graphical interface we will host to manage our database.  This GUI will be located at <code>http://&lt;url-to-virtual-host&gt;/phpmyadmin</code>.  Similar to how Wordpress gives you the <code>/wp-admin</code> URL, this is just an extension to manage the database.  In this example, I will be setting up the development version of my Wordpress site.</p>
+<p>Before doing so, we need to add the Wordpress files to the respective directories.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Copy Wordpress to your new site</span></span><br><span class="line">cp -R /var/www/html/* /var/www/dev.thediygolfer.com/public_html/</span><br><span class="line"></span><br><span class="line"><span class="comment"># Remove the index.html file we previously created for testing</span></span><br><span class="line">rm /var/www/dev.thediygolfer.com/public_html/index.html</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create the wp-config.php file from the sample </span></span><br><span class="line">cp /home/zachgoll/dev.thediygolfer.com/wp-config-sample.php /var/www/dev.thediygolfer.com/public_html/wp-config.php</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create the .htaccess file</span></span><br><span class="line">touch /var/www/dev.thediygolfer.com/public_html/.htaccess</span><br></pre></td></tr></table></figure>
+<p>At this point, when you visit <code>http://dev.thediygolfer.tk</code> (remember we setup the test domain for this exercise), you will be prompted to setup your Wordpress site.  We still need to configure a few more things.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># When prompted for default configs, say NO</span></span><br><span class="line">sudo apt-get install phpmyadmin</span><br><span class="line"></span><br><span class="line"><span class="comment"># Add the path to phpmyadmin app to our virtual host file </span></span><br><span class="line"><span class="comment"># This will "include" the default host configuration for the </span></span><br><span class="line"><span class="comment"># phpmyadmin application </span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Include /etc/phpmyadmin/apache.conf"</span> &gt;&gt; /etc/apache2/sites-available/dev.thediygolfer.com.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># Reload the Apache2 server </span></span><br><span class="line">sudo systemctl restart apache2</span><br></pre></td></tr></table></figure>
+<p>If you navigate to <code>http://dev.thediygolfer.tk/phpmyadmin</code>, you should see a login screen to your database.  Run the following command to print your password to the terminal.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo cat /root/.digitalocean_password</span><br></pre></td></tr></table></figure>
+<p>Your username is “root” and your password is “root_mysql_pass” indicated in the lines you just printed to the terminal.  If this login does not work, follow these troubleshooting steps.</p>
+<p>If it does work, click “User Accounts”, and then click “Add user account”.  Enter a username (ex: wp_dev_thediygolfer) and then a password.  For the Host name, enter “localhost”.  Finally make sure to check the box that says “Create database with same name and grant all privileges”.</p>
+<p>Once the User and database have been created, go back to your terminal and edit the <code>wp-config.php</code> file, adding the database name, username, and password.  At the bottom of the file, create a unique prefix for the database tables (or use the existing one if you are importing a database).  Finally, navigate to <code>https://api.wordpress.org/secret-key/1.1/salt/</code>, copy the configuration, and replace the configuration in <code>wp-config.php</code> (this link generates random codes every time you refresh).</p>
+<p>Now, when you return to <code>http://dev.thediygolfer.tk</code>, you will see the famous Wordpress 5 Minute Install screen.  If you still see the database screen, you know that your database is not setup correctly.</p>
+<h2 id="Setting-Permissions"><a href="#Setting-Permissions" class="headerlink" title="Setting Permissions"></a>Setting Permissions</h2><p><em>Quick Tip: To see the Octal permissions code (i.e. 755) of a directory, run the command</em> <code>stat -c &quot;%a %n&quot; &lt;directory-or-file&gt;</code>.</p>
+<p><em>These permission settings are based on <a href="https://stackoverflow.com/questions/18352682/correct-file-permissions-for-wordpress" target="_blank" rel="noopener">this SO post</a>.</em></p>
+<h3 id="Quick-Crash-Course-on-Linux-File-Permissions-Optional"><a href="#Quick-Crash-Course-on-Linux-File-Permissions-Optional" class="headerlink" title="Quick Crash Course on Linux File Permissions (Optional)"></a>Quick Crash Course on Linux File Permissions (Optional)</h3><p>The easiest way to think about permissions is the 3x3 rule.  Each file _or_ directory has 3 permissions configurations (owner, group, other), and each of these have 3 possible permissions (read, write, execute).  Take for an example a directory with 2 files in it.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Go ahead and create this directory and files </span></span><br><span class="line">mkdir sample-directory</span><br><span class="line">touch sample-directory/text-file.txt </span><br><span class="line">touch sample-directory/executable.sh</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"some text for example purposes"</span> &gt; sample-directory/text-file.txt</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"echo 'this executable file will print this text string when executed'"</span> &gt; sample-directory/executable.sh</span><br><span class="line"></span><br><span class="line"><span class="comment"># List the directory </span></span><br><span class="line">ls -la sample-directory/</span><br><span class="line"><span class="comment"># Permissions       Number of links     Owner Name    Owner Group     File Size       Time last modified  File/Directory name</span></span><br><span class="line"><span class="comment"># ---------------------------------------------------------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"># drwxrwxr-x        2                   zachgoll      zachgoll        4096            Dec  1 19:42        .</span></span><br><span class="line"><span class="comment"># drwxr-xr-x        18                  zachgoll      zachgoll        4096            Dec  1 19:42        ..</span></span><br><span class="line"><span class="comment"># -rw-rw-r--        1                   zachgoll      zachgoll        70              Dec  1 19:42        executable.sh</span></span><br><span class="line"><span class="comment"># -rw-rw-r--        1                   zachgoll      zachgoll        31              Dec  1 19:42        text-file.txt</span></span><br></pre></td></tr></table></figure>
+<p>At creation, Linux will give default permissions to your files, but as in our case with Wordpress, there are certain files like <code>wp-config.php</code> that we don’t want the outside world to see (read) while other files like <code>.htaccess</code> we want the server to be able to write to (for permalink modification within the Wordpress dashboard).  In the above snippet, I have shown the output of the <code>ls -la</code> command, which will list all the files in the directory along with additional information.  The information that we need to understand is the “Permissions”, “Owner Name”, and “Owner Group”.  We will start by understanding owner vs. group.  Within Linux, there are profiles called “owners” and groups that hold one or more profiles.  Let’s take a look at the groups on our Linux machine by running the <code>groups</code> command.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">groups <span class="comment"># zachgoll sudo</span></span><br></pre></td></tr></table></figure>
+<p>On my machine, I have 2 basic groups, “zachgoll” and “sudo”.  But this is not all of the groups on the system.  We can run another command to see all of them.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">cut -d: -f1 /etc/group | sort</span><br><span class="line"><span class="comment"># adm</span></span><br><span class="line"><span class="comment"># admin</span></span><br><span class="line"><span class="comment"># audio</span></span><br><span class="line"><span class="comment"># ... omitted for brevity, there are more than just these groups</span></span><br><span class="line"><span class="comment"># root</span></span><br><span class="line"><span class="comment"># utmp</span></span><br><span class="line"><span class="comment"># uucp</span></span><br><span class="line"><span class="comment"># uuidd</span></span><br><span class="line"><span class="comment"># video</span></span><br><span class="line"><span class="comment"># voice</span></span><br><span class="line"><span class="comment"># www-data          This group represents the web server</span></span><br><span class="line"><span class="comment"># zachgoll</span></span><br></pre></td></tr></table></figure>
+<p>As you can see, there are several user groups–all of which have different permissions on different files.  For example, a code of <code>drwxrwxr-x</code> (the permissions of the <code>sample-directory/</code> we created) means that the type is of directory (d), the owner of the directory can read, write, and execute (rwx), the users in the group that owns the directory can read, write, and execute (rwx), and all other users can read and execute (r-x) but not write.  By default, this directory has been assigned an owner of <code>zachgoll</code> and a group of <code>zachgoll</code>.  This is a bit confusing.  To clear it up, let’s create a new user, new group, and assign the new user to the new group.  Then we will modify the file permissions on <code>text-file.txt</code> so that the new user is the owner and the new group is the owner.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create the user </span></span><br><span class="line">sudo useradd testuser</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create the group</span></span><br><span class="line">sudo groupadd testgroup</span><br><span class="line"></span><br><span class="line"><span class="comment"># Assign the user to the group</span></span><br><span class="line">sudo usermod -a -G testgroup testuser</span><br><span class="line"></span><br><span class="line"><span class="comment"># Make the new user the owner of text-file.txt, and the new group the owner of the file</span></span><br><span class="line"><span class="comment"># chown command takes 3 arguments --   chown &lt;user&gt;:&lt;group&gt; file</span></span><br><span class="line">chown testuser:testgroup text-file.txt</span><br><span class="line"></span><br><span class="line">ls -la text-file.txt </span><br><span class="line"><span class="comment"># -rw-rw-r-- 1 testuser testgroup 31 Dec  1 19:55 text-file.txt</span></span><br></pre></td></tr></table></figure>
+<p>The owner and group of <code>text-file.txt</code> is now changed.  Notice that we have <em>not</em> added the user <code>zachgoll</code> (the user I created when I started the VPS) to <code>testgroup</code>.  Since the <code>zachgoll</code> user is no longer an owner of the file nor is it in the group that owns the file, it has permissions of <code>r--</code>.  Remember, the permissions on this file are <code>-rw-rw-r--</code>, so that means anyone who does not own or belong to the group that owns the file has the last three symbols as permissions.  In other words, the <code>zachgoll</code> user can now only <em>read</em> the file.  We are still operating as <code>zachgoll</code>, so we can test this by running the following command.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"some text modification"</span> &gt;&gt; text-file.txt</span><br><span class="line"><span class="comment"># -bash: text-file.txt: Permission denied</span></span><br></pre></td></tr></table></figure>
+<p>We get a Permission denied error.  Now let’s try to read the file.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat text-file.txt </span><br><span class="line"><span class="comment"># some text for example purposes</span></span><br></pre></td></tr></table></figure>
+<p>It works!  Now, let’s change the permissions of the file so that anyone who does not own it or belong to the group that owns it cannot read, write, or execute it.  But how do we do this?  We first need to understand how to convert octal characters to what we see when we print the permissions out (i.e. “rwx”).  In short, read is representing by the number 4, write by the number 2, and execute by the number 1.  We can add these numbers together to generate different codes.  For example, 4+2+1 = 7 = read, write, execute, or “rwx”.  We can then extend this to the user, group, and world permissions we explored earlier.  So if we wanted to create a code of <code>rwxrwxrwx</code>, we would use 777.  In our case, we want to modify <code>text-file.txt</code> so that the owner can read, write, execute, the group can read only, and the rest of the world can do nothing.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># chmod takes two arguments -- chmod &lt;mode&gt; &lt;file&gt;</span></span><br><span class="line"><span class="comment"># 7 is rwx, or 4 (r) + 2 (w) + 1 (x)</span></span><br><span class="line"><span class="comment"># 4 is r--, or r (r) + 0 (-) + 0 (-)</span></span><br><span class="line"><span class="comment"># 0 is ---, or 0 (-) + 0 (-) + 0 (-)</span></span><br><span class="line"><span class="comment"># Final code will be rwxr-----</span></span><br><span class="line">sudo chmod 740 text-file.txt</span><br><span class="line"></span><br><span class="line">ls -la text-file.txt</span><br><span class="line"><span class="comment"># -rwxr----- 1 testuser testgroup 31 Dec  1 19:55 text-file.txt</span></span><br></pre></td></tr></table></figure>
+<p>Now, when we (running as <code>zachgoll</code>) try to run <code>cat text-file.txt</code>, we get the permission denied error.  Now, let’s change the group owner of the file back to <code>zachgoll</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">sudo chgrp zachgoll text-file.txt</span><br><span class="line"></span><br><span class="line">ls -la text-file.txt</span><br><span class="line"><span class="comment"># -rwxr----- 1 testuser zachgoll 31 Dec  1 19:55 text-file.txt</span></span><br><span class="line"></span><br><span class="line">cat text-file.txt</span><br><span class="line"><span class="comment"># some text for example purposes</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"some text modification"</span> &gt;&gt; text-file.txt</span><br><span class="line"><span class="comment"># -bash: text-file.txt: Permission denied</span></span><br></pre></td></tr></table></figure>
+<p>The user <code>zachgoll</code> still is not the owner of the file, but is part of the <code>zachgoll</code> group, so this user can read but not write as shown above.  Finally, let’s look at the execute permission.  Right now, the <code>zachgoll</code> userand the <code>zachgoll</code> group still own the <code>executable.sh</code> file, so this user can execute it.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sh executable.sh </span><br><span class="line"><span class="comment"># this executable file will print this text string when executed</span></span><br></pre></td></tr></table></figure>
+<p>But if we change the ownership of the file to <code>testuser</code> and change the permissions so only the owner can execute it, we will get a permission denied error.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Change owner to testuser </span></span><br><span class="line">sudo chown testuser executable.sh</span><br><span class="line"></span><br><span class="line"><span class="comment"># Change the permissions </span></span><br><span class="line">sudo chmod 700 executable.sh </span><br><span class="line"></span><br><span class="line"><span class="comment"># Try to execute it using the user zachgoll </span></span><br><span class="line">sh executable.sh </span><br><span class="line"><span class="comment"># sh: 0: Can't open executable.sh</span></span><br></pre></td></tr></table></figure>
+<p>Going back to our Wordpress permissions, if you try to download a Plugin with the current permission settings, it will not work.  We need to give our Apache2 server the correct permissions to be able to write files and folders.  Before doing this, we need to edit one more thing in <code>wp-config.php</code>.  Add the following line after the other define() statements.</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">define(<span class="string">'FS_METHOD'</span>, <span class="string">'direct'</span>);</span><br></pre></td></tr></table></figure>
+<p>By adding this definition, we are telling Wordpress to write files and folders directly to the server.  With some Hosts where the administrator has less control, the only way to download and upload plugins in via FTP.  Since we have more control over our server, we can write directly.  After defining this, we still cannot properly add plugins to our site because the Apache2 server does not have permissions.  To fix this, we need to run the following permissioning commands.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Add your user (zachgoll) to the www-data group </span></span><br><span class="line">sudo usermod -a -G www-data zachgoll</span><br><span class="line"></span><br><span class="line"><span class="comment"># We need to let the server have permissions so in the admin dashboard we can change things</span></span><br><span class="line">sudo chown -R www-data:www-data /var/www/dev.thediygolfer.com/public_html/</span><br><span class="line"></span><br><span class="line"><span class="comment"># The owner of every Wordpress file should have all permissions granted, and the outside world </span></span><br><span class="line"><span class="comment"># should have read and execute permissions but not the permissions to modify files</span></span><br><span class="line">sudo find /var/www/dev.thediygolfer.com/public_html/ -<span class="built_in">type</span> d -<span class="built_in">exec</span> chmod 755 &#123;&#125; \;</span><br><span class="line">sudo find /var/www/dev.thediygolfer.com/public_html/ -<span class="built_in">type</span> f -<span class="built_in">exec</span> chmod 644 &#123;&#125; \;</span><br></pre></td></tr></table></figure>
+<h2 id="Enabling-HTTPS"><a href="#Enabling-HTTPS" class="headerlink" title="Enabling HTTPS"></a>Enabling HTTPS</h2><p>The Wordpress One Click Droplet comes with a utility called “certbot”.  Run this for all of the virtual hosts you have setup.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">certbot --apache -d thediygolfer.com -d dev.thediygolfer.com</span><br></pre></td></tr></table></figure>
+<p>This command will create a new <code>.conf</code> file in the <code>/etc/apache2/sites-available/</code> directory.</p>
+<p>At this point, you are done with the essential steps!  Below are a few extra sections that may be useful in specific cases like my own.</p>
+<h2 id="Hosting-a-MEAN-Stack-Application-alongside-Wordpress-sites"><a href="#Hosting-a-MEAN-Stack-Application-alongside-Wordpress-sites" class="headerlink" title="Hosting a MEAN Stack Application alongside Wordpress sites"></a>Hosting a MEAN Stack Application alongside Wordpress sites</h2><p>I have a small application that runs alongside my site, and for now, I do not want to buy another Droplet to host it.  It is a NodeJS application, so I will need to install a few things since this Droplet is meant for Wordpress sites.  Like above, I will need to create a folder in the <code>/var/www/</code> directory.  This NodeJS app is a training portal for users of the site, so I want to call it <code>/var/www/training.thediygolfer.com</code>.  Create that directory, create a new host file in <code>/etc/apache2/sites-available/training.thediygolfer.com.conf</code>, and replace the hosts file with the appropriate information.  Since my Node application serves HTML content from the <code>&lt;app-root&gt;/public/</code> directory, I will actually need to update my <code>.conf</code> file so that the <code>DocumentRoot</code> property has the path of <code>/var/www/training.thediygolfer.com/public_html/public</code> rather than <code>/var/www/training.thediygolfer.com/public_html</code>.</p>
+<p>In my personal situation I needed to run two Wordpress sites (live and development) and a simple MEAN stack application alongside it.  To do this, log in to the VPS and follow these steps.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Update packages</span></span><br><span class="line">sudo apt update </span><br><span class="line"></span><br><span class="line"><span class="comment"># Enable HTTPS</span></span><br><span class="line">certbot --apache -d training.thediygolfer.com</span><br><span class="line"></span><br><span class="line"><span class="comment"># Install essential packages </span></span><br><span class="line">sudo apt install nodejs </span><br><span class="line">sudo apt install npm </span><br><span class="line"></span><br><span class="line"><span class="comment"># Install nvm (node version manager)</span></span><br><span class="line"><span class="comment"># Get the latest version at - https://github.com/creationix/nvm/blob/master/README.md</span></span><br><span class="line">curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash</span><br><span class="line"></span><br><span class="line"><span class="comment"># Activate nvm </span></span><br><span class="line"><span class="built_in">command</span> -v nvm</span><br><span class="line"></span><br><span class="line"><span class="comment">############################################# </span></span><br><span class="line"><span class="comment"># Logout and log back in to the ssh session </span></span><br><span class="line"><span class="comment">#############################################</span></span><br><span class="line"><span class="comment"># New Session</span></span><br><span class="line"><span class="comment">#############################################</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Check to make sure nvm is working </span></span><br><span class="line">nvm --version  <span class="comment"># 0.33.11 </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># See the current versions available</span></span><br><span class="line">nvm ls </span><br><span class="line"></span><br><span class="line"><span class="comment"># Install the version that you desire </span></span><br><span class="line">nvm install 8.10.0</span><br><span class="line"></span><br><span class="line"><span class="comment"># Switch to the newly installed version </span></span><br><span class="line">nvm use 8.10.0</span><br><span class="line"></span><br><span class="line"><span class="comment"># Check to make sure it all worked </span></span><br><span class="line">node -v        <span class="comment"># v8.10.0</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Clone your Node application to the home directory of your VPS</span></span><br><span class="line"><span class="built_in">cd</span> ~/</span><br><span class="line">git <span class="built_in">clone</span> &lt;your repository here&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Install application dependencies</span></span><br><span class="line">npm install </span><br><span class="line"></span><br><span class="line"><span class="comment"># Install Angular dependencies </span></span><br><span class="line"><span class="built_in">cd</span> /&lt;your-angular-app-directory&gt;</span><br><span class="line">npm install</span><br><span class="line"></span><br><span class="line"><span class="comment"># Install the Angular Client globally</span></span><br><span class="line">sudo npm install -g @angular/cli</span><br><span class="line"></span><br><span class="line"><span class="comment"># Build your Angular application (mine builds to the public/ directory in the root of my project)</span></span><br><span class="line">ng build --prod</span><br></pre></td></tr></table></figure>
+<p>The final thing we need to do is download a production Node process manager to run our Express server on the VPS.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Install pm2</span></span><br><span class="line">sudo npm install -g pm2</span><br><span class="line"></span><br><span class="line"><span class="comment"># Run the server </span></span><br><span class="line">pm2 start app.js</span><br></pre></td></tr></table></figure>
+<p>This will start the application and persist it.  To see more information on managing pm2 processes, see <a href="http://pm2.keymetrics.io/docs/usage/quick-start/#cheat-sheet" target="_blank" rel="noopener">this cheatsheet</a>.</p>
+<h2 id="Troubleshooting-Root-Login-Issues"><a href="#Troubleshooting-Root-Login-Issues" class="headerlink" title="Troubleshooting Root Login Issues"></a>Troubleshooting Root Login Issues</h2><p>The mysql process can be quite finnicky and cause lots of issues due to the fact that they are multiple versions of sql, multiple ways to start and stop the process, etc.  I have linked to a few helpful Stack Overflow pages below, but here is the general process to changing your root password.</p>
+<ol>
+<li>Stop the mysql process</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl stop mysql </span><br><span class="line"></span><br><span class="line"><span class="comment"># If this doesn't work, try the following </span></span><br><span class="line"><span class="comment"># ----------------------------------------</span></span><br><span class="line"><span class="comment"># Get the process id to kill </span></span><br><span class="line">sudo cat /var/run/mysqld/mysqld.pid</span><br><span class="line"></span><br><span class="line">sudo <span class="built_in">kill</span> &lt;process-id&gt;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>Start database </li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo mysqld_safe --skip-grant-tables --skip-networking &amp;</span><br><span class="line"></span><br><span class="line">mysql -u root</span><br></pre></td></tr></table></figure>
+<p>If you get an error here because the directory does not exist, go through the following sequence.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir /var/run/mysqld </span><br><span class="line">sudo chown mysql: /var/run/mysqld </span><br><span class="line">sudo mysqld_safe --skip-grant-tables --skip-networking &amp;</span><br><span class="line">mysql -u root</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>Edit the User </li>
+</ol>
+<p>At this point, you should be in the sql shell.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;sql FLUSH PRIVILEGES;</span><br><span class="line">&gt;sql UPDATE mysql.user SET authentication_string = PASSWORD(<span class="string">'new_password'</span>)     WHERE User = <span class="string">'root'</span> AND Host = <span class="string">'localhost'</span>;</span><br><span class="line">&gt;sql quit;</span><br></pre></td></tr></table></figure>
+<p>Your password should now be reset.</p>
+<ol start="4">
+<li>Kill the sql process </li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo cat /var/run/mysqld/mysqld.pid</span><br><span class="line"></span><br><span class="line">sudo <span class="built_in">kill</span> &lt;process-id&gt;</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>Restart the sql process and apache2 server</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl start mysql</span><br><span class="line">sudo systemctl restart apache2</span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li>Navigate to your PHPMyAdmin dashboard in the browser and login with the username ‘root’ and the password you just set!</li>
+</ol>
+<p><a href="https://stackoverflow.com/questions/21944936/error-1045-28000-access-denied-for-user-rootlocalhost-using-password-y/42967789#42967789" target="_blank" rel="noopener">Help 1</a><br><a href="https://www.tecmint.com/how-to-kill-a-process-in-linux/" target="_blank" rel="noopener">Killing Linux Processes</a><br><a href="https://stackoverflow.com/questions/37879448/mysql-fails-on-mysql-error-1524-hy000-plugin-auth-socket-is-not-loaded" target="_blank" rel="noopener">Help 2</a></p>
+<h2 id="Transferring-Databases-from-One-Host-to-Another"><a href="#Transferring-Databases-from-One-Host-to-Another" class="headerlink" title="Transferring Databases from One Host to Another"></a>Transferring Databases from One Host to Another</h2><p>If you are like me and need to transfer your database, follow the steps below.</p>
+<ol>
+<li>Navigate to your <em>old</em> hosting site’s phpmyadmin interface.</li>
+<li>Find the database that you want to export <ul>
+<li>The name of the database is stored in each site’s <code>wp-config.php</code> file.</li>
+</ul>
+</li>
+<li>Navigate to the “export” tab </li>
+<li>Use the “Quick” export method</li>
+<li>Go to your <em>new</em> site’s phpmyadmin </li>
+<li>Click the “SQL” Tab and run the command <code>CREATE DATABASE dev_thediygolfer_wordpress</code> which will create a new database</li>
+<li>On the left-hand pane, click on the new database </li>
+<li>Click the “Import” tab, upload your recently exported sql file, and click “Go” with the default options.</li>
+</ol>
+<p>You should now have your old database in place!</p>
+<h2 id="Uploading-Plugins-from-Local-Computer-to-Digital-Ocean-Droplet"><a href="#Uploading-Plugins-from-Local-Computer-to-Digital-Ocean-Droplet" class="headerlink" title="Uploading Plugins from Local Computer to Digital Ocean Droplet"></a>Uploading Plugins from Local Computer to Digital Ocean Droplet</h2><p>You can use the <code>scp</code> utility to transfer files and folders from remote-&gt;local or local-&gt;remote hosts via ssh.</p>
+<p>To upload a Zip file to the Digital ocean droplet, type the command in your <em>local</em> terminal.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">scp -r -P 22 /path/to/zip/file/on/<span class="built_in">local</span>/computer/file.zip username@&lt;digital-ocean-droplet-ip-address&gt;:/home/&lt;username&gt;/</span><br><span class="line"></span><br><span class="line"><span class="comment"># Example:</span></span><br><span class="line"><span class="comment"># scp -r -P 22 ~/all-in-one-wp-migration-unlimited-extension.zip zachgoll@&lt;digital-ocean-droplet-ip-address&gt;:/var/www/</span></span><br></pre></td></tr></table></figure>
+<p>I want to add this plugin, so I am going to run the following command to put it in my site.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Download utility if it is not there already</span></span><br><span class="line">sudo apt install unzip</span><br><span class="line"></span><br><span class="line"><span class="comment"># Unzip and place in desired directory</span></span><br><span class="line">sudo unzip all-in-one-wp-migration-unlimited-extension.zip -d /var/www/dev.thediygolfer.com/wp-content/plugins/</span><br></pre></td></tr></table></figure>
+<p>To download a file from your server, just flip the paths.</p>
+<h2 id="Setting-Up-a-Reverse-Proxy-Server-for-Express-Application"><a href="#Setting-Up-a-Reverse-Proxy-Server-for-Express-Application" class="headerlink" title="Setting Up a Reverse Proxy Server for Express Application"></a>Setting Up a Reverse Proxy Server for Express Application</h2><p>On your local computer, a NodeJS app usually has api routes such as <code>http://localhost:3000/api/users/:user-id</code>.  This route for example might retrieve a user by ID.  When you start the application on Digital Ocean with Virtual Hosts like we did, typing in the ip address followed by an arbitrary port will not work.  In the above example, if I replaced <code>localhost</code> with the ip address of my server, it would throw an error.  My NodeJS app runs on port 3000, so I want to be able to navigate to <code>training.thediygolfer.com:3000/api/users/:user-id</code> and retrieve a user.  To do this, I need to enable a few Apache2 plugins and configure a few things in my <code>/etc/apache2/</code> files (extended tutorial found <a href="https://www.digitalocean.com/community/tutorials/how-to-use-apache-as-a-reverse-proxy-with-mod_proxy-on-ubuntu-16-04" target="_blank" rel="noopener">here</a>).</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo a2enmod proxy</span><br><span class="line">sudo a2enmod proxy_http</span><br><span class="line"><span class="comment"># Applies changes</span></span><br><span class="line">sudo systemctl restart apache2</span><br></pre></td></tr></table></figure>
+<p>Now edit both your http and https version of the apache2 proxy configuration files and add the following 3 lines.  When you are editing the https conf file, you should still use <code>http</code> rather than <code>https</code> for your ProxyPass and ProxyPassReverse lines.  So for both files, you will add the following 3 lines exactly.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ProxyPreserveHost On</span><br><span class="line"></span><br><span class="line"><span class="comment"># This is the main line -- it tells your server to take any traffic coming in on port 80 and redirect it to your backend server</span></span><br><span class="line"><span class="comment"># on the designated port.  127.0.0.1 is another way to say "localhost"</span></span><br><span class="line">ProxyPass / http://127.0.0.1:&lt;your-backend-app-port&gt;/</span><br><span class="line"></span><br><span class="line"><span class="comment"># Tells Apache2 not to forward to the subdirectory where SSL authentication happens using letsencrypt</span></span><br><span class="line">ProxyPass /.well-known !</span><br><span class="line">ProxyPassReverse / http://127.0.0.1:&lt;your-backend-app-port&gt;/</span><br></pre></td></tr></table></figure>
+<p>Restart the server.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl restart apache2</span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="http://zachgoll.github.io">Home</a></li>
+         
+          <li><a href="/blog/archives/">Writing</a></li>
+         
+          <li><a href="http://zachgoll.github.io/portfolio">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Primer-on-DNS"><span class="toc-number">1.</span> <span class="toc-text">Quick Primer on DNS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Domain-Name-Registrar"><span class="toc-number">1.1.</span> <span class="toc-text">Domain Name Registrar</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Nameserver-s"><span class="toc-number">1.2.</span> <span class="toc-text">Nameserver(s)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#A-AAAA-and-CNAME-records"><span class="toc-number">1.3.</span> <span class="toc-text">A, AAAA, and CNAME records</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Setting-DNS-records-in-Digital-Ocean"><span class="toc-number">1.3.1.</span> <span class="toc-text">Setting DNS records in Digital Ocean</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Virtual-Hosts"><span class="toc-number">2.</span> <span class="toc-text">Virtual Hosts</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Testing-the-configuration"><span class="toc-number">3.</span> <span class="toc-text">Testing the configuration</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Local-Testing"><span class="toc-number">3.1.</span> <span class="toc-text">Local Testing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tk-domain"><span class="toc-number">3.2.</span> <span class="toc-text">.tk domain</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Setting-up-the-Wordpress-Site"><span class="toc-number">4.</span> <span class="toc-text">Setting up the Wordpress Site</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Setting-Permissions"><span class="toc-number">5.</span> <span class="toc-text">Setting Permissions</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Quick-Crash-Course-on-Linux-File-Permissions-Optional"><span class="toc-number">5.1.</span> <span class="toc-text">Quick Crash Course on Linux File Permissions (Optional)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Enabling-HTTPS"><span class="toc-number">6.</span> <span class="toc-text">Enabling HTTPS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hosting-a-MEAN-Stack-Application-alongside-Wordpress-sites"><span class="toc-number">7.</span> <span class="toc-text">Hosting a MEAN Stack Application alongside Wordpress sites</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Troubleshooting-Root-Login-Issues"><span class="toc-number">8.</span> <span class="toc-text">Troubleshooting Root Login Issues</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Transferring-Databases-from-One-Host-to-Another"><span class="toc-number">9.</span> <span class="toc-text">Transferring Databases from One Host to Another</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Uploading-Plugins-from-Local-Computer-to-Digital-Ocean-Droplet"><span class="toc-number">10.</span> <span class="toc-text">Uploading Plugins from Local Computer to Digital Ocean Droplet</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Setting-Up-a-Reverse-Proxy-Server-for-Express-Application"><span class="toc-number">11.</span> <span class="toc-text">Setting Up a Reverse Proxy Server for Express Application</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://zachgoll.github.io/blog/2018/host-multiple-sites-one-droplet/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://zachgoll.github.io/blog/2018/host-multiple-sites-one-droplet/&text=How to Host Multiple Wordpress Sites on One Digital Ocean Droplet"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://zachgoll.github.io/blog/2018/host-multiple-sites-one-droplet/&title=How to Host Multiple Wordpress Sites on One Digital Ocean Droplet"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://zachgoll.github.io/blog/2018/host-multiple-sites-one-droplet/&is_video=false&description=How to Host Multiple Wordpress Sites on One Digital Ocean Droplet"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=How to Host Multiple Wordpress Sites on One Digital Ocean Droplet&body=Check out this article: http://zachgoll.github.io/blog/2018/host-multiple-sites-one-droplet/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://zachgoll.github.io/blog/2018/host-multiple-sites-one-droplet/&title=How to Host Multiple Wordpress Sites on One Digital Ocean Droplet"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://zachgoll.github.io/blog/2018/host-multiple-sites-one-droplet/&title=How to Host Multiple Wordpress Sites on One Digital Ocean Droplet"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://zachgoll.github.io/blog/2018/host-multiple-sites-one-droplet/&title=How to Host Multiple Wordpress Sites on One Digital Ocean Droplet"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://zachgoll.github.io/blog/2018/host-multiple-sites-one-droplet/&title=How to Host Multiple Wordpress Sites on One Digital Ocean Droplet"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://zachgoll.github.io/blog/2018/host-multiple-sites-one-droplet/&name=How to Host Multiple Wordpress Sites on One Digital Ocean Droplet&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 Zach Gollwitzer
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="http://zachgoll.github.io">Home</a></li>
+         
+          <li><a href="/blog/archives/">Writing</a></li>
+         
+          <li><a href="http://zachgoll.github.io/portfolio">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/blog/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/blog/lib/jquery/jquery.min.js"></script>
+<script src="/blog/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/blog/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-149577498-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'zachgoll';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+

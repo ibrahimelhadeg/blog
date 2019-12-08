@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang=EN>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-62489908-6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-62489908-6');
+    </script>
+
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Why You Should Care About this QuestionMaybe you heard it in an Object Oriented Programming book.  Maybe you read it on Stack Overflow.  Maybe you’re reading a textbook for school. Eventually, you get">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Imperative vs. Declarative Programming (Procedural, Functional, and OOP)">
+<meta property="og:url" content="http://zachgoll.github.io/blog/2019/imperative-vs-declarative-programming/index.html">
+<meta property="og:site_name" content="Zach Gollwitzer">
+<meta property="og:description" content="Why You Should Care About this QuestionMaybe you heard it in an Object Oriented Programming book.  Maybe you read it on Stack Overflow.  Maybe you’re reading a textbook for school. Eventually, you get">
+<meta property="og:locale" content="EN">
+<meta property="og:image" content="http://zachgoll.github.io/blog/2019/imperative-vs-declarative-programming/imperative-vs-declarative.png">
+<meta property="og:updated_time" content="2019-11-25T15:55:49.514Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Imperative vs. Declarative Programming (Procedural, Functional, and OOP)">
+<meta name="twitter:description" content="Why You Should Care About this QuestionMaybe you heard it in an Object Oriented Programming book.  Maybe you read it on Stack Overflow.  Maybe you’re reading a textbook for school. Eventually, you get">
+<meta name="twitter:image" content="http://zachgoll.github.io/blog/2019/imperative-vs-declarative-programming/imperative-vs-declarative.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/blog/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/blog/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Imperative vs. Declarative Programming (Procedural, Functional, and OOP)</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/blog/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="http://zachgoll.github.io">Home</a></li>
+         
+          <li><a href="/blog/archives/">Writing</a></li>
+         
+          <li><a href="http://zachgoll.github.io/portfolio">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/blog/2019/javascript-this-keyword/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/blog/2019/comments-not-showing-wordpress/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://zachgoll.github.io/blog/2019/imperative-vs-declarative-programming/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://zachgoll.github.io/blog/2019/imperative-vs-declarative-programming/&text=Imperative vs. Declarative Programming (Procedural, Functional, and OOP)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://zachgoll.github.io/blog/2019/imperative-vs-declarative-programming/&title=Imperative vs. Declarative Programming (Procedural, Functional, and OOP)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://zachgoll.github.io/blog/2019/imperative-vs-declarative-programming/&is_video=false&description=Imperative vs. Declarative Programming (Procedural, Functional, and OOP)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Imperative vs. Declarative Programming (Procedural, Functional, and OOP)&body=Check out this article: http://zachgoll.github.io/blog/2019/imperative-vs-declarative-programming/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://zachgoll.github.io/blog/2019/imperative-vs-declarative-programming/&title=Imperative vs. Declarative Programming (Procedural, Functional, and OOP)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://zachgoll.github.io/blog/2019/imperative-vs-declarative-programming/&title=Imperative vs. Declarative Programming (Procedural, Functional, and OOP)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://zachgoll.github.io/blog/2019/imperative-vs-declarative-programming/&title=Imperative vs. Declarative Programming (Procedural, Functional, and OOP)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://zachgoll.github.io/blog/2019/imperative-vs-declarative-programming/&title=Imperative vs. Declarative Programming (Procedural, Functional, and OOP)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://zachgoll.github.io/blog/2019/imperative-vs-declarative-programming/&name=Imperative vs. Declarative Programming (Procedural, Functional, and OOP)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Why-You-Should-Care-About-this-Question"><span class="toc-number">1.</span> <span class="toc-text">Why You Should Care About this Question</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Terms"><span class="toc-number">2.</span> <span class="toc-text">The Terms</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#A-High-Level-Explanation"><span class="toc-number">3.</span> <span class="toc-text">A High Level Explanation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Building-a-House-“Imperatively”"><span class="toc-number">3.1.</span> <span class="toc-text">Building a House “Imperatively”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Building-a-House-“Declaratively”"><span class="toc-number">3.2.</span> <span class="toc-text">Building a House “Declaratively”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#It’s-all-about-Abstraction"><span class="toc-number">3.3.</span> <span class="toc-text">It’s all about Abstraction</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#One-Big-Problem"><span class="toc-number">4.</span> <span class="toc-text">One Big Problem</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Functional-Programming"><span class="toc-number">5.</span> <span class="toc-text">Functional Programming</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Why-Use-Functional-and-Procedural-Programming"><span class="toc-number">6.</span> <span class="toc-text">Why Use Functional and Procedural Programming?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Two-Camps"><span class="toc-number">6.1.</span> <span class="toc-text">Two Camps</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Why-use-OOP"><span class="toc-number">7.</span> <span class="toc-text">Why use OOP?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#When-to-Use-Functional-vs-OOP"><span class="toc-number">8.</span> <span class="toc-text">When to Use Functional vs. OOP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conclusion"><span class="toc-number">9.</span> <span class="toc-text">Conclusion</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Imperative vs. Declarative Programming (Procedural, Functional, and OOP)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Zach Gollwitzer</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2019-06-19T19:46:26.000Z" itemprop="datePublished">2019-06-19</time>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="Why-You-Should-Care-About-this-Question"><a href="#Why-You-Should-Care-About-this-Question" class="headerlink" title="Why You Should Care About this Question"></a>Why You Should Care About this Question</h2><p>Maybe you heard it in an Object Oriented Programming book.  Maybe you read it on Stack Overflow.  Maybe you’re reading a textbook for school.</p>
+<p>Eventually, you get annoyed reading the terms “declarative” and “imperative” because you know they are important but have no clue why.  In my mind, knowing the difference between imperative and declarative programming is useful for a single reason, and that is to help you better understand the difference between procedural, functional, and object-oriented programming styles.  By understanding these five terms, while reading code libraries, you will begin to see where the authors got their code designs.</p>
+<h2 id="The-Terms"><a href="#The-Terms" class="headerlink" title="The Terms"></a>The Terms</h2><ol>
+<li>Imperative Programming </li>
+<li>Declarative Programming</li>
+<li>Procedural Programming</li>
+<li>Object-Oriented Programming</li>
+<li>Functional Programming</li>
+</ol>
+<p>All five of these terms are considered “programming paradigms”, although Imperative and Declarative paradigms are parent hierarchies to procedural, object-oriented, and functional programming.</p>
+<img src="/blog/2019/imperative-vs-declarative-programming/imperative-vs-declarative.png">
+<p>The diagram above doesn’t make sense yet; especially because Object-Oriented Programming (OOP) is listed under both categories!</p>
+<h2 id="A-High-Level-Explanation"><a href="#A-High-Level-Explanation" class="headerlink" title="A High Level Explanation"></a>A High Level Explanation</h2><p>The difference between Imperative and Declarative programming is related to <em>how</em> a program works vs. <em>what</em> a program does.  Imperative programming is about <em>how</em> a program works while Declarative programming is about <em>what</em> a program does.  Let’s look at an example.</p>
+<h3 id="Building-a-House-“Imperatively”"><a href="#Building-a-House-“Imperatively”" class="headerlink" title="Building a House “Imperatively”"></a>Building a House “Imperatively”</h3><p>Imperative is about the HOW.  For example, if I was writing an imperative program for building a house, it would go something like this: </p>
+<ol>
+<li>Build the foundation</li>
+<li>Put in the framework</li>
+<li>Install the utilities</li>
+<li>Add the walls</li>
+<li>Finishing touches</li>
+</ol>
+<p>In this imperative program, I have told you the exact steps to take in order to build the house (okay, not so detailed, but you get it!).</p>
+<h3 id="Building-a-House-“Declaratively”"><a href="#Building-a-House-“Declaratively”" class="headerlink" title="Building a House “Declaratively”"></a>Building a House “Declaratively”</h3><p>Declarative is about the WHAT.  Building a house declaratively would include the following steps:</p>
+<ol>
+<li>I don’t care how you build it, but I want a nice fireplace, a lakefront view, and a big kitchen.</li>
+</ol>
+<p>Simple right?  In this declarative program, I have told you the <em>outputs</em> that I want.  I know that if I give you <em>inputs</em> in the form of money, I will get the desired outputs.</p>
+<h3 id="It’s-all-about-Abstraction"><a href="#It’s-all-about-Abstraction" class="headerlink" title="It’s all about Abstraction"></a>It’s all about Abstraction</h3><p>As programmers, we hear the word “abstraction” a lot.  An abstraction is about stripping away the nitty gritty details in order to talk about a higher-level concept.  I don’t care about all the steps it takes to get hot water to come out of my shower head.  I just care that hot water comes out!  This is abstraction.</p>
+<p>Declarative programming is an <em>enabler</em> of abstraction.  Imperative programming is an <em>inhibitor</em> of abstraction.  Declarative programming allows you to say “I want this and I don’t care how I get it” while imperative programming requires you to define each and every step.  If you are programming imperatively and need to print something to the console in the C language, you can write the following program:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> counter;</span><br><span class="line">    <span class="keyword">char</span>* str = <span class="string">"Hello, World"</span>;</span><br><span class="line"></span><br><span class="line">	counter = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span> (*(str + counter) != <span class="string">'\0'</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		write(<span class="number">1</span>, str + counter, <span class="number">1</span>);</span><br><span class="line">		counter = counter + <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>In this program, I looped through each character in my string and printed it to the console using the built-in <code>write()</code> function.  Luckily, we can just include the <code>stdio.h</code> library and simplify this program.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// This is imperative, because we </span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Hello, World"</span>); </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> (<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Okay, okay.  You hate reading C code and trying to remember what a pointer is.  Who uses it anymore anyways?!  </p>
+<p>I used this example for two reasons: </p>
+<ol>
+<li>It demonstrates imperative vs. declarative in code.</li>
+<li>C is considered a “procedural” programming language, which falls under the imperative category.</li>
+</ol>
+<p>So let’s recap.  Imperative programming is about <em>how</em>, and is where you list out every step of a program.  It reduces abstraction to a minimum.  Declarative programming is about <em>what</em>, and specifies a desired output without caring how the program gets to that output.  It is the ultimate abstraction.</p>
+<p>These are the top level categories, but we can also dive one level below and talk about “procedural” programming, which is nearly synonymous with imperative programming.  Sure, there are subtleties that I’m sure plenty of people could point out, but for the desired depth of this post, we will treat imperative and procedural programming as synonymous terms.</p>
+<h2 id="One-Big-Problem"><a href="#One-Big-Problem" class="headerlink" title="One Big Problem"></a>One Big Problem</h2><p>When talking about imperative vs. declarative programming, there is always the tempation to fall into a rabbit-hole of logical analysis.  Let’s take another look at our “imperative” program:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> counter;</span><br><span class="line">    <span class="keyword">char</span>* str = <span class="string">"Hello, World"</span>;</span><br><span class="line"></span><br><span class="line">	counter = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span> (*(str + counter) != <span class="string">'\0'</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// Cough cough</span></span><br><span class="line">		<span class="comment">// Notice anything here?</span></span><br><span class="line">		<span class="comment">// --------------------------</span></span><br><span class="line">		write(<span class="number">1</span>, str + counter, <span class="number">1</span>);</span><br><span class="line">		<span class="comment">// --------------------------</span></span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		counter = counter + <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>I called this program “imperative”, but where did this <code>write()</code> function come from?  Wouldn’t this be considered declarative?  We have no idea what goes on inside that function, so we wouldn’t be correct in saying this is truly an imperative program!</p>
+<p>And this is where the abstraction dilemma starts.  We could <a href="http://lxr.linux.no/linux+v3.9.4/fs/read_write.c#L502" target="_blank" rel="noopener">go look inside</a> the <code>write()</code> function to see how it is written, but then we would find other functions that have internal implementations.  We would go at this futile exercise until we were reading the implementation of the C compiler!! </p>
+<p>So when talking about imperative coding, we need to realize that it is a loose categorization of a much bigger idea that can be broken apart quickly if you think about it too much.</p>
+<h2 id="Functional-Programming"><a href="#Functional-Programming" class="headerlink" title="Functional Programming"></a>Functional Programming</h2><p>Since we are talking about functions and the internals of those functions already, our transition to the concept of “functional programming”.  Similar to our discussion about how procedural and imperative programming were synonymous, we can think of functional programming as a synonym to declarative programming.</p>
+<p>So at this point, be can assume the following: </p>
+<p>imperative = procedural = concrete (opposite of abstract)</p>
+<p>declarative = functional = abstract</p>
+<p>By understanding what procedural programming is, we implicitly understand what functional programming is.  It is the ability to abstract away the internals of your code.  Take the following Javascript program for example:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">findIndex</span>(<span class="params">value, array</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; array.length; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (array[i] === value) &#123;</span><br><span class="line">            <span class="keyword">return</span> i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> myArray = [<span class="string">"dog"</span>, <span class="string">"cat"</span>, <span class="string">"fish"</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> foundIndex = findIndex(<span class="string">"cat"</span>, myArray);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">`The index of the cat is <span class="subst">$&#123;foundIndex&#125;</span>`</span>);</span><br></pre></td></tr></table></figure>
+<p>The above code works okay, but by steering towards a “functional” approach, we might realize that Lodash (a javascript utility library) provides us a much more elegant way to implement this.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> _ = <span class="built_in">require</span>(<span class="string">'lodash'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> myArray = [<span class="string">"dog"</span>, <span class="string">"cat"</span>, <span class="string">"fish"</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> foundIndex = _.indexOf(myArray, <span class="string">"cat"</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">`The index of the cat is <span class="subst">$&#123;foundIndex&#125;</span>`</span>);</span><br></pre></td></tr></table></figure>
+<p>By choosing a more “functional” way of programming, we saved ourselves 6 lines of code.  One could argue that both approaches are relatively similar since the internals of Lodash do something similar to the function we wrote, but again, just like we can’t get drawn down the rabbit hole of abstraction, we can’t think too far into it here.</p>
+<h2 id="Why-Use-Functional-and-Procedural-Programming"><a href="#Why-Use-Functional-and-Procedural-Programming" class="headerlink" title="Why Use Functional and Procedural Programming?"></a>Why Use Functional and Procedural Programming?</h2><p>Let’s get one thing straight right away–you’re not going to be using procedural programming methods much.  Unless you are writing software for your custom piece of hardware and need to get into the details of memory management and all that fun stuff, procedural programming is not going to be on your radar.</p>
+<p>So that leaves us with functional programming, which is great for the following scenarious:</p>
+<ol>
+<li>If the language you are using is primarily dedicated to being a “functional” language (as opposed to object-oriented languages)</li>
+<li>If you have a <em>fixed</em> set of “things” and you need to add operations to those “things” over time</li>
+</ol>
+<p>And here is where Object Oriented programming comes into the picture.  Neither of these statements will make sense until we understand what object-oriented programming is all about.</p>
+<p>The real debate is not the merits of procedural vs. functional programming methods, but rather the merits of functional vs. object-oriented programming methods, and furthermore, why are we comparing them?</p>
+<h3 id="Two-Camps"><a href="#Two-Camps" class="headerlink" title="Two Camps"></a>Two Camps</h3><p>On the web, although improving, there is a clear “us vs. them” mentality when it comes to functional vs. object-oriented programming.  One camp believes OOP is the way forward while the other camp doesn’t believe it is “pure” enough.  Despite this, you’d have a hard time finding an Object-Oriented system that doesn’t include some sort of functional programming in it!  There are subtleties you could compare, but good code isn’t about picking one or the other.  Good code is about knowing <em>when</em> to use each type of programming.</p>
+<h2 id="Why-use-OOP"><a href="#Why-use-OOP" class="headerlink" title="Why use OOP?"></a>Why use OOP?</h2><p>Object-oriented programming is difficult to examine in the context of imperative vs. declarative programming because it is truly doesn’t represent <em>either</em>.  OOP is a beast of its own that tries to emulate the “real world” through code.  If you are making a web app similar to Facebook, your “objects” could be the following: </p>
+<ul>
+<li>Person</li>
+<li>Video</li>
+<li>Picture</li>
+<li>Advertisement </li>
+<li>Button</li>
+</ul>
+<p>This is a non-exhaustive list, but the important thing to understand about OOP is that each “object” has a set of “methods”.  Said differently, your system has nouns and verbs.  A <code>Person</code> can <code>addFriend()</code>, <code>likePost()</code>, or <code>updateProfile()</code>.</p>
+<p>I have no intention of diving deep into the concepts of OOP, but we now know <em>just enough</em> to understand the reasons why we might use functional vs. OOP in our code.</p>
+<h2 id="When-to-Use-Functional-vs-OOP"><a href="#When-to-Use-Functional-vs-OOP" class="headerlink" title="When to Use Functional vs. OOP"></a>When to Use Functional vs. OOP</h2><p>Remember what I said earlier?  Functional programming is great for… </p>
+<ol>
+<li>If the language you are using is primarily dedicated to being a “functional” language (as opposed to object-oriented languages)</li>
+<li>If you have a <em>fixed</em> set of “things” and you need to add operations to those “things” over time</li>
+</ol>
+<p>And OOP is great for </p>
+<ol>
+<li>If the language you are using is built to support it (i.e. Java, Python)</li>
+<li>If you have a <em>fixed</em> set of operations that you do on “things”, and you need to add more “things” over time.</li>
+</ol>
+<p>Now that we have talked about OOP, we could substitute the word “things” with “nouns”, or “objects”.</p>
+<p>In other words, functional programming is great when you are building something that does not mimic the real world, while OOP is great when you are building something that may reflect the real world.  For example, you might build a utility library just like <a href="https://lodash.com/" target="_blank" rel="noopener">Lodash</a> (as we used earlier in a code example).  The Lodash library has hundreds of utility functions, and if you tried to break it out into the “nouns”, you might come up with the following:</p>
+<ol>
+<li>Array</li>
+<li>Object</li>
+<li>String</li>
+</ol>
+<p>Yes, you could define these as your objects and then implement methods on them, but likely, this kind of system will be written functionally utilizing some of Javascript’s internal methods.</p>
+<p>You have a fixed set of objects that you may add operations to.  You may first release the library with 10 String operations (i.e. <code>string.length()</code>, <code>string.type()</code>, <code>string.toJson()</code>) and later release a version with 20 string operations.</p>
+<p>Now if we are building Facebook, we might look towards OOP because we have a fixed number of operations on a growing set of objects.  Maybe we start with a Person, Photo, and Video Object, but as the business grows, we add objects like Businesses, Advertisements, Livestreams, etc.</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>The differences between imperative, declarative, procedural, functional, and object-oriented programming paradigms are <em>subtle</em>, but hopefully you have a better background to understand them from now. </p>
+<p>With experience, you will learn which situations call for which programming paradigms, and you may even start to think about design patterns around these building blocks!</p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="http://zachgoll.github.io">Home</a></li>
+         
+          <li><a href="/blog/archives/">Writing</a></li>
+         
+          <li><a href="http://zachgoll.github.io/portfolio">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Why-You-Should-Care-About-this-Question"><span class="toc-number">1.</span> <span class="toc-text">Why You Should Care About this Question</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Terms"><span class="toc-number">2.</span> <span class="toc-text">The Terms</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#A-High-Level-Explanation"><span class="toc-number">3.</span> <span class="toc-text">A High Level Explanation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Building-a-House-“Imperatively”"><span class="toc-number">3.1.</span> <span class="toc-text">Building a House “Imperatively”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Building-a-House-“Declaratively”"><span class="toc-number">3.2.</span> <span class="toc-text">Building a House “Declaratively”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#It’s-all-about-Abstraction"><span class="toc-number">3.3.</span> <span class="toc-text">It’s all about Abstraction</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#One-Big-Problem"><span class="toc-number">4.</span> <span class="toc-text">One Big Problem</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Functional-Programming"><span class="toc-number">5.</span> <span class="toc-text">Functional Programming</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Why-Use-Functional-and-Procedural-Programming"><span class="toc-number">6.</span> <span class="toc-text">Why Use Functional and Procedural Programming?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Two-Camps"><span class="toc-number">6.1.</span> <span class="toc-text">Two Camps</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Why-use-OOP"><span class="toc-number">7.</span> <span class="toc-text">Why use OOP?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#When-to-Use-Functional-vs-OOP"><span class="toc-number">8.</span> <span class="toc-text">When to Use Functional vs. OOP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conclusion"><span class="toc-number">9.</span> <span class="toc-text">Conclusion</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://zachgoll.github.io/blog/2019/imperative-vs-declarative-programming/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://zachgoll.github.io/blog/2019/imperative-vs-declarative-programming/&text=Imperative vs. Declarative Programming (Procedural, Functional, and OOP)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://zachgoll.github.io/blog/2019/imperative-vs-declarative-programming/&title=Imperative vs. Declarative Programming (Procedural, Functional, and OOP)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://zachgoll.github.io/blog/2019/imperative-vs-declarative-programming/&is_video=false&description=Imperative vs. Declarative Programming (Procedural, Functional, and OOP)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Imperative vs. Declarative Programming (Procedural, Functional, and OOP)&body=Check out this article: http://zachgoll.github.io/blog/2019/imperative-vs-declarative-programming/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://zachgoll.github.io/blog/2019/imperative-vs-declarative-programming/&title=Imperative vs. Declarative Programming (Procedural, Functional, and OOP)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://zachgoll.github.io/blog/2019/imperative-vs-declarative-programming/&title=Imperative vs. Declarative Programming (Procedural, Functional, and OOP)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://zachgoll.github.io/blog/2019/imperative-vs-declarative-programming/&title=Imperative vs. Declarative Programming (Procedural, Functional, and OOP)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://zachgoll.github.io/blog/2019/imperative-vs-declarative-programming/&title=Imperative vs. Declarative Programming (Procedural, Functional, and OOP)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://zachgoll.github.io/blog/2019/imperative-vs-declarative-programming/&name=Imperative vs. Declarative Programming (Procedural, Functional, and OOP)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 Zach Gollwitzer
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="http://zachgoll.github.io">Home</a></li>
+         
+          <li><a href="/blog/archives/">Writing</a></li>
+         
+          <li><a href="http://zachgoll.github.io/portfolio">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/blog/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/blog/lib/jquery/jquery.min.js"></script>
+<script src="/blog/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/blog/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-149577498-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'zachgoll';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+

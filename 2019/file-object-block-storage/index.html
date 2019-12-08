@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang=EN>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-62489908-6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-62489908-6');
+    </script>
+
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="When designing your application’s architecture, one of the most important considerations from both a cost and performance standpoint is what type of data storage to use.  Unfortunately for startups">
+<meta name="keywords" content="data storage, cloud computing">
+<meta property="og:type" content="article">
+<meta property="og:title" content="File (NAS) vs. Block (SAN) vs. Object Cloud Storage">
+<meta property="og:url" content="http://zachgoll.github.io/blog/2019/file-object-block-storage/index.html">
+<meta property="og:site_name" content="Zach Gollwitzer">
+<meta property="og:description" content="When designing your application’s architecture, one of the most important considerations from both a cost and performance standpoint is what type of data storage to use.  Unfortunately for startups">
+<meta property="og:locale" content="EN">
+<meta property="og:image" content="http://zachgoll.github.io/blog/2019/file-object-block-storage/hard-drive.png">
+<meta property="og:image" content="http://zachgoll.github.io/blog/2019/file-object-block-storage/nas-storage.png">
+<meta property="og:image" content="http://zachgoll.github.io/blog/2019/file-object-block-storage/nas-storage-diagram.jpg">
+<meta property="og:image" content="http://zachgoll.github.io/blog/2019/file-object-block-storage/filesystem.png">
+<meta property="og:image" content="http://zachgoll.github.io/blog/2019/file-object-block-storage/hard-drive-partitions.png">
+<meta property="og:image" content="http://zachgoll.github.io/blog/2019/file-object-block-storage/object-storage.png">
+<meta property="og:updated_time" content="2019-11-25T15:55:49.366Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="File (NAS) vs. Block (SAN) vs. Object Cloud Storage">
+<meta name="twitter:description" content="When designing your application’s architecture, one of the most important considerations from both a cost and performance standpoint is what type of data storage to use.  Unfortunately for startups">
+<meta name="twitter:image" content="http://zachgoll.github.io/blog/2019/file-object-block-storage/hard-drive.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/blog/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/blog/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>File (NAS) vs. Block (SAN) vs. Object Cloud Storage</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/blog/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="http://zachgoll.github.io">Home</a></li>
+         
+          <li><a href="/blog/archives/">Writing</a></li>
+         
+          <li><a href="http://zachgoll.github.io/portfolio">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/blog/2019/architecture-types/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/blog/2019/git-crash-course/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://zachgoll.github.io/blog/2019/file-object-block-storage/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://zachgoll.github.io/blog/2019/file-object-block-storage/&text=File (NAS) vs. Block (SAN) vs. Object Cloud Storage"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://zachgoll.github.io/blog/2019/file-object-block-storage/&title=File (NAS) vs. Block (SAN) vs. Object Cloud Storage"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://zachgoll.github.io/blog/2019/file-object-block-storage/&is_video=false&description=File (NAS) vs. Block (SAN) vs. Object Cloud Storage"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=File (NAS) vs. Block (SAN) vs. Object Cloud Storage&body=Check out this article: http://zachgoll.github.io/blog/2019/file-object-block-storage/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://zachgoll.github.io/blog/2019/file-object-block-storage/&title=File (NAS) vs. Block (SAN) vs. Object Cloud Storage"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://zachgoll.github.io/blog/2019/file-object-block-storage/&title=File (NAS) vs. Block (SAN) vs. Object Cloud Storage"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://zachgoll.github.io/blog/2019/file-object-block-storage/&title=File (NAS) vs. Block (SAN) vs. Object Cloud Storage"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://zachgoll.github.io/blog/2019/file-object-block-storage/&title=File (NAS) vs. Block (SAN) vs. Object Cloud Storage"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://zachgoll.github.io/blog/2019/file-object-block-storage/&name=File (NAS) vs. Block (SAN) vs. Object Cloud Storage&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Ephemeral-Storage"><span class="toc-number">1.</span> <span class="toc-text">Ephemeral Storage</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Direct-Attached-Storage"><span class="toc-number">2.</span> <span class="toc-text">Direct Attached Storage</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Network-Attached-Storage-file-storage"><span class="toc-number">3.</span> <span class="toc-text">Network Attached Storage (file storage)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Storage-Area-Network-block-storage"><span class="toc-number">4.</span> <span class="toc-text">Storage Area Network (block storage)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Block-vs-File-Storage"><span class="toc-number">4.1.</span> <span class="toc-text">Block vs. File Storage</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SAN-Storage-Area-Network"><span class="toc-number">4.2.</span> <span class="toc-text">SAN (Storage Area Network)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Object-Storage"><span class="toc-number">5.</span> <span class="toc-text">Object Storage</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Storage-on-Various-Platforms"><span class="toc-number">6.</span> <span class="toc-text">Storage on Various Platforms</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        File (NAS) vs. Block (SAN) vs. Object Cloud Storage
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Zach Gollwitzer</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2019-03-28T18:23:45.000Z" itemprop="datePublished">2019-03-28</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/blog/tags/data-storage-cloud-computing/">data storage, cloud computing</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/3r9RGJ0_Bls" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<p>When designing your application’s architecture, one of the most important considerations from both a cost and performance standpoint is what type of data storage to use.  Unfortunately for startups and lone developers, most of the descriptions around data storage are highly <em>generalized</em> and highly <em>technical</em> without much in between.  It is no surprise considering the cloud storage and computing platforms are the ones explaining the topics.  Just type “file vs. block vs. object storage” into Google and you’ll find several platforms explaining/advertising their products.</p>
+<p>In this post, I hope to explain data storage in a way that those from all backgrounds (not just IT) can understand.</p>
+<h2 id="Ephemeral-Storage"><a href="#Ephemeral-Storage" class="headerlink" title="Ephemeral Storage"></a>Ephemeral Storage</h2><p>We first must understand what “ephemeral” storage is, as it explains why we need cloud storage in the first place.</p>
+<p>Take a moment to think about what a cloud computing and storage company provides.  Among others, they provide virtual machines and storage.  If you had 1 large server in your house and wanted to rent it out, how would you do it?  Would you find a single customer and give them access to the entire server?  Chances are, that customer will not use all the possible space on that server, so this approach would be cost inefficient.  If you really wanted to maximize the value of that server taking up space in your garage, you might consider renting it out five different clients at a time.</p>
+<p>You probably already guessed, but the way we could do that is through virtualization.  Instead of renting the entire server, we create five separate virtual machines that all use a portion of the <a href="/blog/2019/bash-essentials/#Process-Management-and-System-Management">computer’s resources</a> (CPU, memory, storage, I/O).</p>
+<p>When a new client comes on board, we allocate resources and give them some login credentials.  When an existing client moves out, we take the portion of that server that we gave to them and delete everything on it.</p>
+<p>This is an efficient process, but with efficiency comes tradeoffs.  It’s similar to an apartment building.  The owner of the building can rent out hundreds of units at a time and make profits off each.  When a tenant stops paying or leaves, the unit they left needs to be completely cleared out and ready for the next tenant.  You cannot break a lease, store your couch and TV there for a year, and then come back to it later.</p>
+<p>A virtual machine is like an apartment unit.  Once you leave, everything is gone.  You do not have rights to store your data there for “just another 3 days”.</p>
+<p>This is why the storage on a virtual machine is considered “ephemeral”.  The minute you terminate your virtual machine instance (or a freak accident happens and the server goes down), that data is wiped out forever.  “Terminating” a virtual machine is the equivalent of taking a hammer and smashing your PC to pieces.</p>
+<p>Sure, you could store all your data on that virtual machine and hope that the server never crashes and you never have to shut it down, but this is risky; especially if you are handling user data.  Ideally, you would store your user data on an entirely separate machine(s) that can be “attached” to the virtual machine.  You should also have a backup of your data stored somewhere.</p>
+<p>But what type of storage is available for this purpose?</p>
+<h2 id="Direct-Attached-Storage"><a href="#Direct-Attached-Storage" class="headerlink" title="Direct Attached Storage"></a>Direct Attached Storage</h2><p>The type of storage most people are familiar with is DAS (direct attached storage).  This type of storage is anything that is directly attached to your server or computer (i.e. internal/external hard drives, usb devices).</p>
+<img src="/blog/2019/file-object-block-storage/hard-drive.png">
+<p>As you may have inferred, there are two big problems with this type of storage: </p>
+<ol>
+<li>It cannot be shared - the cloud computing center cannot manually walk around plugging and unplugging these storage devices whenever a user needs to share their data</li>
+<li>It cannot be scaled - if a site goes viral and the client needs to extend their storage, the operators at the data center cannot just find the computer, walk over, and plug in a bunch of external hard drives.</li>
+</ol>
+<p>For these reasons, this is also the cheapest option.  You can purchase several terabytes of data storage for $100 these days.</p>
+<h2 id="Network-Attached-Storage-file-storage"><a href="#Network-Attached-Storage-file-storage" class="headerlink" title="Network Attached Storage (file storage)"></a>Network Attached Storage (file storage)</h2><p>One of the most common solutions is something called NAS (network attached storage).  This is the equivalent of saying “shared drive”, and is commonly associated with what we call “file storage”.  I really don’t like the name “file storage”, but we are not yet to the point where we can discuss why.</p>
+<p>Many explanations online start with architectural diagrams of NAS trying to explain how it works.  This does not work.  You need to see what a NAS is first.</p>
+<img src="/blog/2019/file-object-block-storage/nas-storage.png">
+<p>Nope, NAS is not some esoteric storage configuration.  It is simply a big box with a bunch of disk drives (also called “hard drives”) loaded into it.  This NAS device is a simplified computer that runs an efficient operating system.  It only knows how to handle data and connect to wifi.  You cannot connect peripherals like a keyboard, monitor, or mouse to it.</p>
+<p>When talking about NAS, you’ll also see the acronym RAID (redundant array of independent disks), which can be made as simple or as confusing as possible.  Simply put, RAID just explains how the disks that you put in that big NAS box are organized and how they store data.  You could set up a “RAID configuration” where disks 1 and 2 are exact replicas of each other, and disks 3 and 4 are exact replicas of each other (This configuration is called RAID 1).  Since there is data replication going on in a NAS, you cannot utilize the entire storage space for new data, but you have the assurance that there are backups if one disk fails.</p>
+<p>The last question is… How do all the computers get the files off of that big NAS device?</p>
+<img src="/blog/2019/file-object-block-storage/nas-storage-diagram.jpg">
+<p>In the most basic form, these files are transferred over a network.  The NAS computer connects to the router which then connects to all the computers in the network.</p>
+<p>This type of storage is essentially a personal Dropbox, iCloud, Google Drive, or Sharepoint, and is great for collaborating on files that are changed often (lots of read/write operations).</p>
+<h2 id="Storage-Area-Network-block-storage"><a href="#Storage-Area-Network-block-storage" class="headerlink" title="Storage Area Network (block storage)"></a>Storage Area Network (block storage)</h2><p>Most commonly, you will hear the phrases “block storage” and SAN (storage area network) used synonymously.  To me, this is a contrived way to explain the concept.  Yes, block storage is the type of storage commonly used in a SAN, but block storage can also be used in a NAS.  It totally depends on the <em>context</em> in which you are talking about block storage.  Let’s take a quick detour.</p>
+<h3 id="Block-vs-File-Storage"><a href="#Block-vs-File-Storage" class="headerlink" title="Block vs. File Storage"></a>Block vs. File Storage</h3><p>You’ll see many headlines (including this post) that say “file vs. block vs. object storage”.  To me, this is like comparing an apple (file) to two oranges (block and object).</p>
+<p>Everyone knows what a filesystem is: </p>
+<img src="/blog/2019/file-object-block-storage/filesystem.png">
+<p>But this is not really a type of storage per se.  If you take a closer look at a hard drive, it is simply made of partitions that run filesystems and store files as 512 byte (usually) blocks.</p>
+<img src="/blog/2019/file-object-block-storage/hard-drive-partitions.png">
+<p>Even though the files are stored in 512 byte blocks, you see them as files on your computer because each partition runs a filesystem within it.</p>
+<p>Let’s say you are on a Windows computer, and you plugged in the hard drive above.  Since NTFS is the only filesystem of the four that works on windows, the files you can access are in partition 4.  Maybe you decide to open a Word document that is a few pages in length and a size of 32kb (32,000 bytes).  When you open this, you are performing a “read” operation, and your filesystem is retrieving roughly 62 blocks (assuming 512 bytes per block).  Now, you decide to make a change to the first page of the document (a “write” operation).  When you do this and click save, only the blocks relevant to that part of the file are updated. </p>
+<p>Based on the above example, you can see why this hard drive can be considered a “block storage device”, meaning it stores the <em>files</em> as multiple <em>blocks</em>.</p>
+<p>Here’s where the confusion happens…</p>
+<p>When you hear “block storage” from a cloud computing context, this refers to the <em>emulation</em> of a physical block storage device like the one shown above.  So moving forward, let’s be clear that “block storage” from a cloud storage/computing context is referring to the <em>emulation</em> of block storage devices combined into a network called a SAN (storage area network).  Essentially, you are creating a network of hard drives that communicate over fiber optic cables and is highly efficient.</p>
+<h3 id="SAN-Storage-Area-Network"><a href="#SAN-Storage-Area-Network" class="headerlink" title="SAN (Storage Area Network)"></a>SAN (Storage Area Network)</h3><p>Remember when we talked about a DAS and how it doesn’t scale?  Well a SAN (storage area network) is a bunch of hard drives (which could also be used as DAS) that are connected together via the Fibre Network.  Why not “Fiber” Network?  Well, this network could include fiber optic cables _or_ copper wires.  If using fiber optic cables to connect the storage area network, you will get data transfer of up to 128 Gbps.  To put that in perspective, your home internet has a download speed around 96Mbps, which means data transfer is over 1,000x faster via SAN vs. HTTP (internet).</p>
+<p>Remember, each of the storage devices (hard drives) on this SAN are “block storage devices”, which means they are good at reading/writing lots of data at once.  This makes a SAN great for running high performance databases, websites, etc.  It also allows you to mount the SAN to your computer as if it was a single drive.</p>
+<p>A SAN is basically a NAS with the following exceptions:</p>
+<ul>
+<li>Data is communicated differently.  In a NAS, the NAS box connects to the local area network (LAN) via ethernet.  In a SAN, a bunch of servers, switches, and storage devices (hard drives) are connected via fiber optic cables.  This in effect creates an isolated network that is not affected by TCP/IP traffic in the LAN.</li>
+<li>SAN is the combination of storage, but not necessarily in a “NAS box”.  A SAN is not a single box with hard drives inserted into it.  Instead, a SAN is just a bunch of hard drives all connected together.</li>
+</ul>
+<h2 id="Object-Storage"><a href="#Object-Storage" class="headerlink" title="Object Storage"></a>Object Storage</h2><p>The last type of storage is kind of an outlier.  It does not work similarly to a DAS, NAS, or SAN, and it is a newer technology than all of them.</p>
+<p>Instead of storing files as a bunch of blocks, files are stored as “blobs”.  Every file has three components: </p>
+<ol>
+<li>ID</li>
+<li>Metadata (i.e. permissions, author, timestamps, etc.)</li>
+<li>Blob (the actual file data)</li>
+</ol>
+<img src="/blog/2019/file-object-block-storage/object-storage.png">
+<p>To read and write the objects in the object store, you need to submit an HTTP request.  This is great for developers because adding, modifying, and removing files can be integrated seamlessly in a few lines of code.  It is also great for developers who are storing user pictures, videos, or other files that once uploaded will never change.</p>
+<p>The only two downsides to this type of storage is: </p>
+<ol>
+<li>Expensive (but most services implement a “pay as you go” structure)</li>
+<li>Not great for read/write operations</li>
+</ol>
+<p>Every time you need to make a change to an object, you must change the <em>entire</em> object rather than just the part you modified.  This means that if you are working with files that will change often, object storage is the wrong route to go.</p>
+<h2 id="Storage-on-Various-Platforms"><a href="#Storage-on-Various-Platforms" class="headerlink" title="Storage on Various Platforms"></a>Storage on Various Platforms</h2><p>Below is a chart which shows the product names of various storage types.</p>
+<div id="before-table"></div>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Service</th>
+<th style="text-align:center">File Storage</th>
+<th style="text-align:center">Block Storage</th>
+<th style="text-align:center">Object Storage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Amazon</td>
+<td style="text-align:center">“EFS”</td>
+<td style="text-align:center">“EBS”</td>
+<td style="text-align:center">“S3”</td>
+</tr>
+<tr>
+<td style="text-align:center">Microsoft Azure</td>
+<td style="text-align:center">“Files”</td>
+<td style="text-align:center">“Disks”</td>
+<td style="text-align:center">“Blobs”</td>
+</tr>
+<tr>
+<td style="text-align:center">Google</td>
+<td style="text-align:center">“Filestore”</td>
+<td style="text-align:center">“Persistent Disk”</td>
+<td style="text-align:center">“Cloud Storage”</td>
+</tr>
+<tr>
+<td style="text-align:center">Digital Ocean</td>
+<td style="text-align:center">n/a</td>
+<td style="text-align:center">“Volumes”</td>
+<td style="text-align:center">“Spaces”</td>
+</tr>
+</tbody>
+</table>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="http://zachgoll.github.io">Home</a></li>
+         
+          <li><a href="/blog/archives/">Writing</a></li>
+         
+          <li><a href="http://zachgoll.github.io/portfolio">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Ephemeral-Storage"><span class="toc-number">1.</span> <span class="toc-text">Ephemeral Storage</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Direct-Attached-Storage"><span class="toc-number">2.</span> <span class="toc-text">Direct Attached Storage</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Network-Attached-Storage-file-storage"><span class="toc-number">3.</span> <span class="toc-text">Network Attached Storage (file storage)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Storage-Area-Network-block-storage"><span class="toc-number">4.</span> <span class="toc-text">Storage Area Network (block storage)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Block-vs-File-Storage"><span class="toc-number">4.1.</span> <span class="toc-text">Block vs. File Storage</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SAN-Storage-Area-Network"><span class="toc-number">4.2.</span> <span class="toc-text">SAN (Storage Area Network)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Object-Storage"><span class="toc-number">5.</span> <span class="toc-text">Object Storage</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Storage-on-Various-Platforms"><span class="toc-number">6.</span> <span class="toc-text">Storage on Various Platforms</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://zachgoll.github.io/blog/2019/file-object-block-storage/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://zachgoll.github.io/blog/2019/file-object-block-storage/&text=File (NAS) vs. Block (SAN) vs. Object Cloud Storage"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://zachgoll.github.io/blog/2019/file-object-block-storage/&title=File (NAS) vs. Block (SAN) vs. Object Cloud Storage"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://zachgoll.github.io/blog/2019/file-object-block-storage/&is_video=false&description=File (NAS) vs. Block (SAN) vs. Object Cloud Storage"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=File (NAS) vs. Block (SAN) vs. Object Cloud Storage&body=Check out this article: http://zachgoll.github.io/blog/2019/file-object-block-storage/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://zachgoll.github.io/blog/2019/file-object-block-storage/&title=File (NAS) vs. Block (SAN) vs. Object Cloud Storage"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://zachgoll.github.io/blog/2019/file-object-block-storage/&title=File (NAS) vs. Block (SAN) vs. Object Cloud Storage"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://zachgoll.github.io/blog/2019/file-object-block-storage/&title=File (NAS) vs. Block (SAN) vs. Object Cloud Storage"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://zachgoll.github.io/blog/2019/file-object-block-storage/&title=File (NAS) vs. Block (SAN) vs. Object Cloud Storage"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://zachgoll.github.io/blog/2019/file-object-block-storage/&name=File (NAS) vs. Block (SAN) vs. Object Cloud Storage&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 Zach Gollwitzer
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="http://zachgoll.github.io">Home</a></li>
+         
+          <li><a href="/blog/archives/">Writing</a></li>
+         
+          <li><a href="http://zachgoll.github.io/portfolio">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/blog/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/blog/lib/jquery/jquery.min.js"></script>
+<script src="/blog/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/blog/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-149577498-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'zachgoll';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+

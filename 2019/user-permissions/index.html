@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang=EN>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-62489908-6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-62489908-6');
+    </script>
+
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Note: This tutorial applies to the BASH shell and UNIX based operating systems.  Windows OS will be different. Many tutorials cover the topic of permissioning within a UNIX based operating system, but">
+<meta name="keywords" content="linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to add Users and Groups on Ubuntu Linux">
+<meta property="og:url" content="http://zachgoll.github.io/blog/2019/user-permissions/index.html">
+<meta property="og:site_name" content="Zach Gollwitzer">
+<meta property="og:description" content="Note: This tutorial applies to the BASH shell and UNIX based operating systems.  Windows OS will be different. Many tutorials cover the topic of permissioning within a UNIX based operating system, but">
+<meta property="og:locale" content="EN">
+<meta property="og:updated_time" content="2019-11-25T15:55:49.522Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="How to add Users and Groups on Ubuntu Linux">
+<meta name="twitter:description" content="Note: This tutorial applies to the BASH shell and UNIX based operating systems.  Windows OS will be different. Many tutorials cover the topic of permissioning within a UNIX based operating system, but">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/blog/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/blog/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>How to add Users and Groups on Ubuntu Linux</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/blog/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="http://zachgoll.github.io">Home</a></li>
+         
+          <li><a href="/blog/archives/">Writing</a></li>
+         
+          <li><a href="http://zachgoll.github.io/portfolio">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/blog/2019/bash-essentials/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/blog/2019/what-to-do-after-building-pc-linux/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://zachgoll.github.io/blog/2019/user-permissions/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://zachgoll.github.io/blog/2019/user-permissions/&text=How to add Users and Groups on Ubuntu Linux"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://zachgoll.github.io/blog/2019/user-permissions/&title=How to add Users and Groups on Ubuntu Linux"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://zachgoll.github.io/blog/2019/user-permissions/&is_video=false&description=How to add Users and Groups on Ubuntu Linux"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=How to add Users and Groups on Ubuntu Linux&body=Check out this article: http://zachgoll.github.io/blog/2019/user-permissions/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://zachgoll.github.io/blog/2019/user-permissions/&title=How to add Users and Groups on Ubuntu Linux"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://zachgoll.github.io/blog/2019/user-permissions/&title=How to add Users and Groups on Ubuntu Linux"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://zachgoll.github.io/blog/2019/user-permissions/&title=How to add Users and Groups on Ubuntu Linux"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://zachgoll.github.io/blog/2019/user-permissions/&title=How to add Users and Groups on Ubuntu Linux"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://zachgoll.github.io/blog/2019/user-permissions/&name=How to add Users and Groups on Ubuntu Linux&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#What-is-a-User"><span class="toc-number">1.</span> <span class="toc-text">What is a User?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Root-User"><span class="toc-number">1.1.</span> <span class="toc-text">The Root User</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Getting-more-information-about-a-user"><span class="toc-number">1.2.</span> <span class="toc-text">Getting more information about a user</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#What-is-a-Group"><span class="toc-number">2.</span> <span class="toc-text">What is a Group?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Setting-permissions"><span class="toc-number">3.</span> <span class="toc-text">Setting permissions</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bashrc-bash-profile-bash-login-profile"><span class="toc-number">4.</span> <span class="toc-text">.bashrc, .bash_profile, .bash_login, .profile</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        How to add Users and Groups on Ubuntu Linux
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Zach Gollwitzer</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2019-02-01T20:06:11.000Z" itemprop="datePublished">2019-02-01</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/blog/tags/linux/">linux</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p><em>Note: This tutorial applies to the BASH shell and UNIX based operating systems.  Windows OS will be different.</em></p>
+<p>Many tutorials cover the topic of permissioning within a UNIX based operating system, but often overlooked is the topic of users and groups.  For individual users, it is difficult to understand what the usefulness of this architecture is.  In this short tutorial, I will be walking through the reason why we have permissions, how to set permissions, and how to manage your users and groups that these permissions apply to.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/9HT16EIQHRQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<h2 id="What-is-a-User"><a href="#What-is-a-User" class="headerlink" title="What is a User?"></a>What is a User?</h2><p>A user <em>profile</em> can be defined as an entity that can own processes, run files, and who is associated with a username and home directory.  On a fresh install of any UNIX based operating system, there is a default <code>root</code> user setup with no password.  This user is far too important to gloss over, so let’s dig in and get a better idea of what <code>root</code> is and why it is useful.</p>
+<h3 id="The-Root-User"><a href="#The-Root-User" class="headerlink" title="The Root User"></a>The Root User</h3><p>To enter a shell as the root user in bash, just run the following command.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">su</span><br></pre></td></tr></table></figure>
+<p>This will prompt you for a password and once you have entered it, you will be running as <code>root</code>.  There is just one problem with this given the default Ubuntu settings… </p>
+<p><strong>There is no root password</strong></p>
+<p>The default Ubuntu setup creates the root user without a password, which is actually a security feature given the fact that a hacker cannot break into a system without a password.  In order to run the <code>su</code> command successfully, you would need to setup the password with the root user, which is <em>highly discouraged</em>.  The proper way to run a command as the <code>root</code> user is by prepending the <code>sudo</code> command in front of the command you are trying to run.  As long as your current user is allowed to operate as root, it will ask you for your current user’s password and successfully run the command.  For example, type the following commands into the terminal.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/sudoers</span><br><span class="line"><span class="comment"># cat: /etc/sudoers: Permission denied</span></span><br><span class="line"></span><br><span class="line">sudo cat /etc/sudoers</span><br><span class="line"><span class="comment"># output ---</span></span><br></pre></td></tr></table></figure>
+<p>The <code>sudoers</code> file in the <code>/etc</code> directory is not readable by a non-root user, so when we try to print its contents with our user, it does not allow it.  We simply need to prepend the <code>root</code> keyword to the command and it will then print out.</p>
+<p>The ability to use <code>sudo</code> is great, but why would we ever need to use it?  Among others, here are a few main reasons why you would need to use the root user.</p>
+<ol>
+<li>To edit system configuration files </li>
+<li>To install global programs </li>
+<li>Change ownership of files and directories</li>
+</ol>
+<p>The true benefit of the root user is when you are managing multiple users on a system in a corporate work environment.  Although most workplaces user Windows, the same concept applies.  Most employees will not be given root privileges (“administrator on Windows”), and therefore they cannot install programs at their discretion.  When companies purchase laptops for their employees, the last thing they want is the employee installing malicious programs that could expose their internal data, so they give each employee the minimum privileges that they need to do their job (which is rarely superuser privileges).</p>
+<h3 id="Getting-more-information-about-a-user"><a href="#Getting-more-information-about-a-user" class="headerlink" title="Getting more information about a user"></a>Getting more information about a user</h3><p>Now that we understand the <code>root</code> user and its basic functions, lets take a look at some commands that will help us understand the user system a little better.  Naturally, the first thing I want to know about my machine is what users exist?  To get all of the local users on your system, you can run the following command.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cut -d: -f1 /etc/passwd</span><br></pre></td></tr></table></figure>
+<p>At the top of this list is the root user, and you will also be able to search for the current user you are operating as.  To figure out who you are operating as, you can run the following command.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">whoami</span><br></pre></td></tr></table></figure>
+<p>As you can see, there are quite a few users on your computer already, and this is by design.  Remember, users are simply entities that can own processes and run files.  If you had MySQL installed on your system, you wouldn’t want the <code>mysql</code> user to have access to everything; you just want it to have access to the files and folders required to run its server.  </p>
+<p>If you want to find out more about a user, you will need to dig into some of the system configuration files.  Run the following two commands to find out more about the root user and your current user.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sudo cat /etc/passwd | grep <span class="string">'root'</span></span><br><span class="line"><span class="comment">#   1  2 3 4  5      6      7</span></span><br><span class="line"><span class="comment"># root:x:0:0:root:/root:/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># My current user is ubuntu</span></span><br><span class="line">sudo cat /etc/passwd | grep <span class="string">'ubuntu'</span></span><br><span class="line"><span class="comment">#    1   2   3    4  5      6           7          </span></span><br><span class="line"><span class="comment"># ubuntu:x:1000:1000::/home/ubuntu:/bin/bash</span></span><br></pre></td></tr></table></figure>
+<p>I have labeled the output, so let’s walk through it by number.</p>
+<ol>
+<li>The first part of the output specifies the name of the user </li>
+<li>If the second part is an “x”, this means that this user’s password is stored in the /etc/shadow file</li>
+<li>User id (root is always 0)</li>
+<li>User group id (root is always 0)</li>
+<li>The users full name (as entered – notice the ubuntu user does not have a full name, but that is okay)</li>
+<li>The user’s home directory path</li>
+<li>The shell that the user is using</li>
+</ol>
+<h2 id="What-is-a-Group"><a href="#What-is-a-Group" class="headerlink" title="What is a Group?"></a>What is a Group?</h2><p>Before we look at the groups that your user is part of, what is a group anyways?  To my knowledge, there is one primary purpose for having groups, and that is to make permissioning of files and folders simpler.  Let’s say you are the administrator for a corporation’s IT system and you noticed that your employees are having wifi connectivity issues.  You go ahead and write a script that resolves these issues, but by default, your employees will not be able to execute this script.  You have to give them permission to do so.  One method would be to get a list of all the employees and give them execute privileges over this script file.  This would be extremely tedious when there are thousands of employees.  Instead, it would make more sense to give the “employees” group execute privileges on this script.  At this point, we haven’t covered how to set permissions for a file or directory, but hopefully this example clarifies the purpose of having groups.</p>
+<p>To find out what groups your user is a part of, type the following command.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">groups</span><br></pre></td></tr></table></figure>
+<p>This will list all the groups that your user is a part of.  You can also list all the groups on the system with the following command.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo cat /etc/group </span><br><span class="line"></span><br><span class="line"><span class="comment"># Only print root group</span></span><br><span class="line">sudo cat /etc/group | grep <span class="string">'root'</span></span><br><span class="line"><span class="comment">#  1   2 3 4 </span></span><br><span class="line"><span class="comment"># root:x:0:</span></span><br></pre></td></tr></table></figure>
+<p>The group output is as follows:</p>
+<ol>
+<li>Name of group</li>
+<li>Group password (rarely used)</li>
+<li>Group ID (remember, root is always 0)</li>
+<li>Optional users that are part of the group (in addition to what is specified in the /etc/passwd file)</li>
+</ol>
+<h2 id="Setting-permissions"><a href="#Setting-permissions" class="headerlink" title="Setting permissions"></a>Setting permissions</h2><iframe width="560" height="315" src="https://www.youtube.com/embed/YWoI8FjvNn0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<p>There truly aren’t a whole lot of permission commands to remember if you understand what it means to permission something and the three permission modes.  For starters, the reason we would permission a file or directory is to isolate different spaces in your filesystem for different users and groups.  For example, most of the files at the path <code>/sbin</code> are considered system call scripts or binaries and therefore only the root user should be able to modify them.  Therefore, they have a permission set of <code>-rwxr-xr-x</code>.  What does this mean??</p>
+<p>There are four parts to a permission set: </p>
+<ol>
+<li>Type - is this a file (-), directory (d), or symlink (l)?</li>
+<li>Owner permissions </li>
+<li>Group permissions</li>
+<li>Rest of world permissions</li>
+</ol>
+<p>Below is a table that explains how we got to our permission set.  As you can see, the code <code>755</code> corresponds to the <code>-rwxr-xr-x</code> permission set.</p>
+<div id="before-table"></div>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Type</th>
+<th style="text-align:center">User permissions</th>
+<th style="text-align:center">Group Permissions</th>
+<th style="text-align:center">Rest of World Permissions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Could be directory (d), file (-), or symlink (l)</td>
+<td style="text-align:center">Could be read (r), write (w), or execute (x)</td>
+<td style="text-align:center">Could be read (r), write (w), or execute (x)</td>
+<td style="text-align:center">Could be read (r), write (w), or execute (x)</td>
+</tr>
+<tr>
+<td style="text-align:center">Letter Code</td>
+<td style="text-align:center">rwx</td>
+<td style="text-align:center">r-x</td>
+<td style="text-align:center">r-x</td>
+</tr>
+<tr>
+<td style="text-align:center">Number Code</td>
+<td style="text-align:center">7</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">5</td>
+</tr>
+<tr>
+<td style="text-align:center">Calculation</td>
+<td style="text-align:center">rwx = r (4) + w (2) + x (1) = 7</td>
+<td style="text-align:center">r-x = r (4) + 0 + x (1) = 5</td>
+<td style="text-align:center">r-x = r (4) + 0 + x (1) = 5</td>
+</tr>
+</tbody>
+</table>
+<p>If we print out the full permissioning of a single file in <code>/sbin</code> such as the <code>unix_update</code> binary, we get the following output.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ls -l /sbin/unix_update</span><br><span class="line"><span class="comment"># -rwxr-xr-x 1 root root 31376 Mar 16  2016 /sbin/unix_update*</span></span><br></pre></td></tr></table></figure>
+<p>We can break this down as follows… The permission set is <code>-rwxr-xr-x</code>, which can also be expressed as <code>755</code> based on the table above.  The <code>root</code> user is the owner of the file, and the <code>root</code> <em>group</em> is the group owner of the file.  The rest of the line is just file info!</p>
+<p>So we know we can print the permissions of a file with the <code>ls -l</code> command, but how do we set them?  And what should we set them too?  A general rule of thumb: </p>
+<ul>
+<li>For files, set the permissions to 644 (i.e. <code>drw-r--r--</code>)</li>
+<li>For directories, set the permissions to 755 (i.e. <code>-rwxr-xr-x</code>)</li>
+</ul>
+<p>Directories and files have slightly different permissioning rules, which is why we must set them to different default permissions.  With directories, if the executable permission is disabled, the user will not be able to see any of the files in that directory or cd into that directory.  With these default settings, only the user that owns the file or directory will have write permissions.</p>
+<p>To change the permission of a file or directory, we use the <code>chmod</code> command.  The syntax is as follows: </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Add sudo to front of command if necessary</span></span><br><span class="line">chmod &lt;permission-code&gt; &lt;file-or-directory&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Example</span></span><br><span class="line">chmod 775 <span class="built_in">test</span>-script.sh</span><br></pre></td></tr></table></figure>
+<p>To check the current permission, remember that you can always use the <code>ls -l &lt;file&gt;</code> command.  To change the <em>owner</em> of a directory or file, you can use the <code>chown</code> command:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Use sudo if necessary</span></span><br><span class="line">chown &lt;user&gt;:&lt;group&gt; &lt;file-or-directory&gt;</span><br></pre></td></tr></table></figure>
+<p>Oftentimes, you will want to change the ownership of multiple files within a single directory, which can be done using the <code>-R</code> flag on the <code>chown</code> command.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># This will change the ownership of every file in the parent-dir/ to have ubuntu as the owner and ubuntu as the group</span></span><br><span class="line">chown -R ubuntu:ubuntu parent-dir/</span><br></pre></td></tr></table></figure>
+<h2 id="bashrc-bash-profile-bash-login-profile"><a href="#bashrc-bash-profile-bash-login-profile" class="headerlink" title=".bashrc, .bash_profile, .bash_login, .profile"></a>.bashrc, .bash_profile, .bash_login, .profile</h2><p>We have covered many concepts in the bash shell and UNIX based operating system, but what about the configuration file that controls how your bash shell runs?  There are actually several configuration files and they do not have an intuitive hierarchy in terms of which one takes precedence over another.  To make things more complicated, some of the config files run for “login shells” while others run in “non-login, interactive shells”.  What is a login shell?  What is an interactive shell?  In video below, I clarify what all these files do and when they should be used. </p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/yIuPu4iLcY4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="http://zachgoll.github.io">Home</a></li>
+         
+          <li><a href="/blog/archives/">Writing</a></li>
+         
+          <li><a href="http://zachgoll.github.io/portfolio">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#What-is-a-User"><span class="toc-number">1.</span> <span class="toc-text">What is a User?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Root-User"><span class="toc-number">1.1.</span> <span class="toc-text">The Root User</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Getting-more-information-about-a-user"><span class="toc-number">1.2.</span> <span class="toc-text">Getting more information about a user</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#What-is-a-Group"><span class="toc-number">2.</span> <span class="toc-text">What is a Group?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Setting-permissions"><span class="toc-number">3.</span> <span class="toc-text">Setting permissions</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bashrc-bash-profile-bash-login-profile"><span class="toc-number">4.</span> <span class="toc-text">.bashrc, .bash_profile, .bash_login, .profile</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://zachgoll.github.io/blog/2019/user-permissions/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://zachgoll.github.io/blog/2019/user-permissions/&text=How to add Users and Groups on Ubuntu Linux"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://zachgoll.github.io/blog/2019/user-permissions/&title=How to add Users and Groups on Ubuntu Linux"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://zachgoll.github.io/blog/2019/user-permissions/&is_video=false&description=How to add Users and Groups on Ubuntu Linux"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=How to add Users and Groups on Ubuntu Linux&body=Check out this article: http://zachgoll.github.io/blog/2019/user-permissions/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://zachgoll.github.io/blog/2019/user-permissions/&title=How to add Users and Groups on Ubuntu Linux"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://zachgoll.github.io/blog/2019/user-permissions/&title=How to add Users and Groups on Ubuntu Linux"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://zachgoll.github.io/blog/2019/user-permissions/&title=How to add Users and Groups on Ubuntu Linux"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://zachgoll.github.io/blog/2019/user-permissions/&title=How to add Users and Groups on Ubuntu Linux"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://zachgoll.github.io/blog/2019/user-permissions/&name=How to add Users and Groups on Ubuntu Linux&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 Zach Gollwitzer
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="http://zachgoll.github.io">Home</a></li>
+         
+          <li><a href="/blog/archives/">Writing</a></li>
+         
+          <li><a href="http://zachgoll.github.io/portfolio">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/blog/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/blog/lib/jquery/jquery.min.js"></script>
+<script src="/blog/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/blog/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-149577498-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'zachgoll';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang=EN>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-62489908-6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-62489908-6');
+    </script>
+
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="You know those concepts that you learn over and over again, yet they seem to vanish from your memory no matter how many notebooks you fill with detailed notes? The this keyword in Javascript was one o">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How the Javascript `this` Keyword Works">
+<meta property="og:url" content="http://zachgoll.github.io/blog/2019/javascript-this-keyword/index.html">
+<meta property="og:site_name" content="Zach Gollwitzer">
+<meta property="og:description" content="You know those concepts that you learn over and over again, yet they seem to vanish from your memory no matter how many notebooks you fill with detailed notes? The this keyword in Javascript was one o">
+<meta property="og:locale" content="EN">
+<meta property="og:updated_time" content="2019-12-05T14:28:11.605Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="How the Javascript `this` Keyword Works">
+<meta name="twitter:description" content="You know those concepts that you learn over and over again, yet they seem to vanish from your memory no matter how many notebooks you fill with detailed notes? The this keyword in Javascript was one o">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/blog/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/blog/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>How the Javascript `this` Keyword Works</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/blog/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="http://zachgoll.github.io">Home</a></li>
+         
+          <li><a href="/blog/archives/">Writing</a></li>
+         
+          <li><a href="http://zachgoll.github.io/portfolio">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/blog/2019/making-sense-of-public-key-cryptography/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/blog/2019/imperative-vs-declarative-programming/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://zachgoll.github.io/blog/2019/javascript-this-keyword/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://zachgoll.github.io/blog/2019/javascript-this-keyword/&text=How the Javascript `this` Keyword Works"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://zachgoll.github.io/blog/2019/javascript-this-keyword/&title=How the Javascript `this` Keyword Works"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://zachgoll.github.io/blog/2019/javascript-this-keyword/&is_video=false&description=How the Javascript `this` Keyword Works"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=How the Javascript `this` Keyword Works&body=Check out this article: http://zachgoll.github.io/blog/2019/javascript-this-keyword/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://zachgoll.github.io/blog/2019/javascript-this-keyword/&title=How the Javascript `this` Keyword Works"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://zachgoll.github.io/blog/2019/javascript-this-keyword/&title=How the Javascript `this` Keyword Works"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://zachgoll.github.io/blog/2019/javascript-this-keyword/&title=How the Javascript `this` Keyword Works"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://zachgoll.github.io/blog/2019/javascript-this-keyword/&title=How the Javascript `this` Keyword Works"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://zachgoll.github.io/blog/2019/javascript-this-keyword/&name=How the Javascript `this` Keyword Works&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Compile-Time-vs-Run-Time"><span class="toc-number">1.</span> <span class="toc-text">Compile Time vs. Run Time</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#But-hold-on-I’m-not-sure-I-know-what-“compilation”-is"><span class="toc-number">1.1.</span> <span class="toc-text">But hold on, I’m not sure I know what “compilation” is?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-Time"><span class="toc-number">1.2.</span> <span class="toc-text">Run Time</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#“Run-Time”-vs-“Runtime”"><span class="toc-number">1.3.</span> <span class="toc-text">“Run Time” vs. “Runtime”</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Coming-back-to-the-“this”-keyword"><span class="toc-number">2.</span> <span class="toc-text">Coming back to the “this” keyword</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Static-lexical-vs-Dynamic-Scope"><span class="toc-number">2.1.</span> <span class="toc-text">Static (lexical) vs. Dynamic Scope</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#What-is-“Scope”"><span class="toc-number">2.1.1.</span> <span class="toc-text">What is “Scope”?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Makes-sense-but-why"><span class="toc-number">2.1.2.</span> <span class="toc-text">Makes sense, but why?</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Rewind"><span class="toc-number">2.2.</span> <span class="toc-text">Rewind</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Finally-The-this-keyword-explained"><span class="toc-number">3.</span> <span class="toc-text">Finally.  The this keyword explained</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-new-keyword"><span class="toc-number">3.1.</span> <span class="toc-text">The new keyword</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Explicit-Binding"><span class="toc-number">3.2.</span> <span class="toc-text">Explicit Binding</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Default-Binding"><span class="toc-number">3.3.</span> <span class="toc-text">Default Binding</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Implicit-Binding"><span class="toc-number">3.4.</span> <span class="toc-text">Implicit Binding</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Why-use-this-in-the-first-place"><span class="toc-number">4.</span> <span class="toc-text">Why use this in the first place?</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        How the Javascript `this` Keyword Works
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Zach Gollwitzer</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2019-06-24T23:43:12.000Z" itemprop="datePublished">2019-06-24</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/blog/tags/javascript/">javascript</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>You know those concepts that you learn over and over again, yet they seem to vanish from your memory no matter how many notebooks you fill with detailed notes?</p>
+<p>The <code>this</code> keyword in Javascript was one of those concepts for me, until I finally took an afternoon to understand the inner-workings of the code rather than hopelessly trying to memorize the 4 types of “bindings” (default, implicit, explicit, and “new”) that influence the value of <code>this</code>.</p>
+<p>Grab a coffee, put your focus cap on, and stay with me for the next 15 minutes and you too will finally understand what the <code>this</code> keyword is all about.</p>
+<h2 id="Compile-Time-vs-Run-Time"><a href="#Compile-Time-vs-Run-Time" class="headerlink" title="Compile Time vs. Run Time"></a>Compile Time vs. Run Time</h2><p>Writing code does not require a deep understanding of compilers and runtimes, and if you learned to code in the 21st century, there probably wasn’t someone force-feeding you operating system theory.</p>
+<p>But to understand the <code>this</code> keyword in Javascript, we need at least a basic understanding of the difference between compile time and run time.</p>
+<p>All languages are slightly different in how they compile and execute code, but Javascript is a bit unique in this area.  Since Javascript runs in the browser, it needs to be compiled and executed all at once; and fast!  As opposed to a language like C where we must first compile our code and then run it, this “all in one” magic makes it seem as if the Javascript Engine (usually a browser like Chrome) is one entity that does everything.</p>
+<h3 id="But-hold-on-I’m-not-sure-I-know-what-“compilation”-is"><a href="#But-hold-on-I’m-not-sure-I-know-what-“compilation”-is" class="headerlink" title="But hold on, I’m not sure I know what “compilation” is?"></a>But hold on, I’m not sure I know what “compilation” is?</h3><p>You’ve probably read the word a thousand times, but what does it actually mean?</p>
+<p>Compilation can be understood in two contexts: </p>
+<ol>
+<li>As a <em>process</em></li>
+<li>As a <em>point in time</em></li>
+</ol>
+<p>Let’s throw some code on the screen to understand this better.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">simpleFunction</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"I am a useless function"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">simpleFunction();</span><br></pre></td></tr></table></figure>
+<p>Defined as a <em>process</em>, compilation of this code is the <em>process</em> of getting it from what you see on the screen now to the 1s and 0s (binary code) that a computer can execute.</p>
+<p>The specifics of how this happens is defined by the compiler itself, but it might go something like this: </p>
+<ol>
+<li>Hmmm… I see the word “function” first.  Is this part of the Javascript language syntax?  Yep!  Okay, let’s move on.</li>
+<li>I just saw the keyword “function”, so the next word “simpleFunction” must be the name of it.  Does this name meet my standards?  It doesn’t have any odd characters or spaces, so yep!  Next!</li>
+<li>I see a “{“, which is what I might expect after seeing “function” and “simpleFunction”.  All good here.</li>
+<li>What is this thing called “console”?  Not really sure, but it must be an object.  Let’s see if a “.” comes next.</li>
+<li>Ahh, there it is!  The “.” means some sort of method is coming. </li>
+<li>Yep, “log” is the method being called on “console”.  Don’t know if it actually exists, but that’s not my job!  Moving onward!</li>
+<li>I see a “(“ character.  I expect that because I just saw a method called “log” right before this.  We must be defining parameters to this method now.</li>
+<li>I see a string “I am a useless function”.  Hmmm, don’t know what the point of that is, but it’s valid string syntax, so I’ll accept it.</li>
+<li>And here is the closing parenthesis “)” followed by a “;”.  This method is done and valid!</li>
+<li>And now, I see a “}”.  This means that my function definition is now complete!</li>
+<li>I see “simpleFunction” again with “()”.  This is a valid way to call the function that was declared earlier.</li>
+<li>And that’s it! No more tokens to parse through.  This program is compiled.</li>
+</ol>
+<p>After reading through this imaginary conversation with the compiler, you can see that the compiler’s job is to go through a program, look at the symbols (also called “tokens”), and determine whether they make sense according to the language specifications.  If the compiler saw the code below, it would get mad and throw an error without compiling the code into 1s and 0s: </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">variable myvariable = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p>Here’s how that conversation would go: </p>
+<ol>
+<li>I see a word “variable”.  There is no “const”, “let”, or “var” at the beginning of this line, so this must be an implicitly declared variable.  I don’t love it, but technically it’s valid!</li>
+<li>Whoaaaaaa whoaa whoaa hold on here.  I was fine with the previous line, but now I’m seeing “myvariable”.  This is not valid Javascript syntax.  I’m throwing a SyntaxError! </li>
+</ol>
+<p>As you can glean from the examples above, when we look at compilation in the context of a <em>process</em>, it is all about reading code, validating it, and transforming it into something a computer can then execute.</p>
+<p>But many experienced developers will talk about this thing called “compile time”, which is viewing compilation in the context of a <em>point in time</em>.</p>
+<p>This is much harder to understand because as you saw, compilation is more of a process than a point in time.</p>
+<p>When you hear “compile time”, this is really referring to that moment right before you hit compile, or in our case with Javascript, run the program.</p>
+<p>So really, “compile time” is another way of saying “what our code looks like before the compiler transforms it”.</p>
+<h3 id="Run-Time"><a href="#Run-Time" class="headerlink" title="Run Time"></a>Run Time</h3><p>The Compiler is great at making sure that your code has the correct syntactical structure, but it doesn’t really check to make sure the code works. </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">invalidFunction();</span><br></pre></td></tr></table></figure>
+<p>If you run this in a Javascript console, you’ll get <code>ReferenceError</code> because the compiler compiled the code down, but when the Javascript Engine tried to run it, it couldn’t find a declaration <code>invalidFunction</code> anywhere.</p>
+<p>So the run time is when the program is being executed, which includes things like the call stack, memory locations, etc.</p>
+<h3 id="“Run-Time”-vs-“Runtime”"><a href="#“Run-Time”-vs-“Runtime”" class="headerlink" title="“Run Time” vs. “Runtime”"></a>“Run Time” vs. “Runtime”</h3><p>I think where things get confusing is the lack of distinction online between the phrase “run time” and word “runtime”.</p>
+<p>We know that “run time” is once the program has started executing, but we haven’t yet asked <em>where</em> it is executing.</p>
+<p>I can open up Google Chrome and in the Developer Tools, go to the console.  Once I am there, I can write and execute Javascript code.</p>
+<p>I can also open up the terminal on my computer, type <code>node</code>, and I will enter the NodeJS console where I can write and execute code.</p>
+<p>I’ve written the same code in two different runtimes.</p>
+<p>But why do we need different runtimes?  </p>
+<p>Because a Windows Computer is different than a Mac computer which is different than a Browser.  Specifically, their hardware components and thus their assembly languages that high level code like Javascript needs to be compiled into are different! </p>
+<p>When Javascript is compiled down into the 1s and 0s that the computer can run, it needs to keep in mind the runtime environment that it is in.  If it doesn’t, it may end up with Windows low-level system calls happening on a Mac, which would obviously not work!</p>
+<h2 id="Coming-back-to-the-“this”-keyword"><a href="#Coming-back-to-the-“this”-keyword" class="headerlink" title="Coming back to the “this” keyword"></a>Coming back to the “this” keyword</h2><p>So we chatted about how compilation and runtimes mean different things when viewed in different contexts.  Compilation as a process refers to the transformation of code from what the developer writes to what the computer reads.  What the computer reads happens during the process of runtime and is different depending on the “runtime environment”.</p>
+<p>But to understand the <code>this</code> keyword in Javascript, we have to think about run time and compile time from the context of a <em>point in time</em>.</p>
+<h3 id="Static-lexical-vs-Dynamic-Scope"><a href="#Static-lexical-vs-Dynamic-Scope" class="headerlink" title="Static (lexical) vs. Dynamic Scope"></a>Static (lexical) vs. Dynamic Scope</h3><p>The <em>reason</em> we must look at compile time and run time from the context of a <em>point in time</em> is because the <em>values</em> of your variables and functions are entirely dependent on whether they are being defined at run time or compile time!</p>
+<p>Understanding static (lexical) vs. dynamic scope is the last item you must understand before the <code>this</code> keyword starts making sense!</p>
+<h4 id="What-is-“Scope”"><a href="#What-is-“Scope”" class="headerlink" title="What is “Scope”?"></a>What is “Scope”?</h4><p>If you’re reading this still, you probably have an idea what scope is already.  Take a look at the following code: </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">printA</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    a = <span class="number">2</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(a)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">printA(); <span class="comment">// 2</span></span><br><span class="line"><span class="built_in">console</span>.log(a) <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+<p>When we call <code>printA()</code>, it will first look for the value of <code>a</code> within the scope of the <code>printA</code> function, and since that value exists, it will print that value.</p>
+<p>Since the <code>console.log</code> statement does not have access to the scope of <code>printA</code>, it has to look in the global scope, which is the only scope it has access to.</p>
+<p>In other words, the Javascript Engine will look for the variable in the current scope, and if it cannot find it, it will look up one scope.  If it gets to the <code>global</code> scope and still cannot find the variable, then a <code>ReferenceError</code> will be thrown because that variable does not exist.</p>
+<p>Here is a contrived example of this process: </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> globalVariable = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">outer</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    middle();</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">middle</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        inner();</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">inner</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(globalVariable);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">outer(); <span class="comment">// 2</span></span><br><span class="line">inner(); <span class="comment">// ReferenceError: inner is not defined</span></span><br></pre></td></tr></table></figure>
+<p>When we call the <code>outer</code> function, this function calls the middle function which calls the inner function.  When the inner function is called, it first looks for the value of <code>globalVariable</code> in its own scope.  It doesn’t find it, so it then looks in the scope of <code>middle</code>.  It again doesn’t find it, so it looks in the scope of <code>outer</code>.  It doesn’t find it, so it finally looks in the global scope.  It finds it there and prints a value of 2.</p>
+<p>On the other hand, when we call the <code>inner</code> function from the global scope, a <code>ReferenceError</code> is thrown!  </p>
+<p>This is because scopes in Javascript (and pretty much any language) work in only one way.  In this case, the scope of <code>inner</code> is “encapsulated” and therefore, the global scope does not even know that the <code>inner()</code> function exists.</p>
+<h4 id="Makes-sense-but-why"><a href="#Makes-sense-but-why" class="headerlink" title="Makes sense, but why?"></a>Makes sense, but why?</h4><p>You probably didn’t realize it, but likely, all the programming languages that you have used implement static, or “lexical” scope–Javascript included.  What I just explained are <em>static scoping rules</em>.</p>
+<p>But there is another type of scope called dynamic scope, and it assigns the value of variables <em>at run time</em>!  Let’s take a look at another program keeping in mind what we just learned.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> x;</span><br><span class="line">x = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    x = <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">b</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> x;</span><br><span class="line">    a();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">b();</span><br><span class="line"></span><br><span class="line"><span class="comment">// With Lexical scope, this will print 2</span></span><br><span class="line"><span class="comment">// With dynamic scope, this will print 1</span></span><br><span class="line"><span class="built_in">console</span>.log(x);</span><br><span class="line"></span><br><span class="line">a();</span><br><span class="line"></span><br><span class="line"><span class="comment">// With Lexical scope, this will print 2</span></span><br><span class="line"><span class="comment">// With dynamic scope, this will print 2</span></span><br><span class="line"><span class="built_in">console</span>.log(x);</span><br></pre></td></tr></table></figure>
+<p>If we actually run this in lexically (“statically”) scoped Javascript language, no matter which function we call, we will always print a value of 2 for x.  This is because function <code>a</code> will always reassign the variable x to a value of 2.</p>
+<p>But with dynamic scope, we have to think in terms of call stacks.  I know it is really confusing to do (hence why most languages aren’t dynamically typed and why most people don’t understand the Javascript <code>this</code> keyword), but let’s walk through it.</p>
+<p>In this program, the call stack is first populated with the global scope <code>x</code> variable, which is set to 1.  We then call <code>b()</code>, which will push the variable <code>x</code> from the scope of <code>function b()</code> to the call stack.  Our call stack looks like this: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x (function b scope)</span><br><span class="line">x (global scope)</span><br></pre></td></tr></table></figure>
+<p>Please note that although they are named the same variable, both <code>x</code> variables occupy their own segment of memory and are assigned their own value.</p>
+<p>So at this point, we call <code>a()</code>, which sets <code>x=2</code>.  </p>
+<p>But <em>which</em> x does it set??</p>
+<p>In a lexically scoped language, we get to function <code>a</code> and we don’t see a variable declaration.  Since there is no variable declaration, the compiler looks up one scope and finds x declared in the global scope.  It then assigns this global <code>x</code> variable to a value of 2.</p>
+<p>With dynamic scope, the value of 2 is assigned to the variable <code>x</code> which sits at the <em>top</em> of the call stack.  If you remember, the <code>x</code> in <code>function b</code> scope sits at the top of the stack, which means that value of 2 is going to be assigned to it.</p>
+<p>Therefore, when we print the value of x from the global scope, it is still a value of 1!</p>
+<p>But things change a bit when we call <code>a()</code> from the global scope.  This time, our call stack looks like this: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x (global scope)</span><br></pre></td></tr></table></figure>
+<p>Therefore, the value of 2 will be assigned to the variable <code>x</code> in the global scope, and we will print out a value of 2!</p>
+<h3 id="Rewind"><a href="#Rewind" class="headerlink" title="Rewind"></a>Rewind</h3><p>That was a lot.</p>
+<p>Why again are we here?  Well, in order to understand the Javascript <code>this</code> keyword, you have to get into the mindset of dynamically scoped variables.  In order to understand dynamically scoped variables, you have to understand what statically scoped variables are.  To understand statically scoped variables, you need to know what compilers do.</p>
+<p>Sounds like a pretty big call stack of knowledge to me!</p>
+<p>Anyways, to review: </p>
+<ul>
+<li>Javascript is a statically scoped language, which means variable values evaluate based on their “compile time” condition.  Variables can evaluate “up a scope” but not “down a scope” (i.e. A nested function can use a global variable but a global function cannot use an encapsulated variable)</li>
+<li>The Javascript <code>this</code> keyword acts in a similar manner to dynamic scope, but it is not exactly the same.  Nevertheless, understanding dynamic scope will help you understand the <code>this</code> keyword.</li>
+<li>If you’re completely lost, it may be the case that you are just not ready for this type of discussion yet.  It took me years before I could understand many of these concepts, and it required lots of programming and practice to do so!  If this is the case, you might revisit this article in the future.</li>
+</ul>
+<h2 id="Finally-The-this-keyword-explained"><a href="#Finally-The-this-keyword-explained" class="headerlink" title="Finally.  The this keyword explained"></a>Finally.  The <code>this</code> keyword explained</h2><p>Just like dynamic scope depends on the order of the call stack at run time, the <code>this</code> keyword depends on the call stack to determine which “context” <code>this</code> is a part of.</p>
+<p>There are 4 ways that <code>this</code> can be “bound”.  We will start with the easiest and work our way to the hardest.</p>
+<h3 id="The-new-keyword"><a href="#The-new-keyword" class="headerlink" title="The new keyword"></a>The <code>new</code> keyword</h3><p>This one is simple.  When declaring a new instance of a function using the <code>new</code> keyword, <code>this</code> will always refer to the declared function.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myFunction</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">2</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">this</span>.a = a;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">4</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> functionInstance = <span class="keyword">new</span> myFunction();</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(functionInstance.a) <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+<p>The <code>this</code> keyword above refers to the <code>myFunction</code> object, which assigns a property of <code>a</code> which is equal to 2.  Even though the call site of <code>functionInstance</code> is in the global scope, the <code>new</code> keyword overrides any rules regarding <code>this</code> and explicity binds to the new function instance.</p>
+<p>I consider this the easiest situation to identify what <code>this</code> represents because it is so explicit.</p>
+<h3 id="Explicit-Binding"><a href="#Explicit-Binding" class="headerlink" title="Explicit Binding"></a>Explicit Binding</h3><p>This type of <code>this</code> binding is very similar to the <code>new</code> keyword, but in the case that you try to use both this method and the <code>new</code> keyword at the same time, the <code>new</code> keyword will take precedence.</p>
+<p>There are actually multiple ways to explicitly bind the value of <code>this</code>, but some are more outtdated than others.  For simplicity, we will just look at one of these ways, which is the most common.</p>
+<p>By using the <code>bind()</code> prototype function that exists on all Javascript functions, you can explicity assign an object to represent the value of <code>this</code>.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myFunction</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.a);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> explicitlyBoundObject = &#123;</span><br><span class="line">    a: <span class="number">2</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">4</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> functionInstance = myFunction.bind(explicitlyBoundObject);</span><br><span class="line"></span><br><span class="line">functionInstance(); <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+<p>As with the <code>new</code> keyword, explicit binding allows you to completely eliminate the idea of dynamic scope and call stacks out of your head and know exactly what <code>this</code> represents.</p>
+<p>Later, we will see that there are a few exceptions here, but for simplicity, take the above example at face value.</p>
+<h3 id="Default-Binding"><a href="#Default-Binding" class="headerlink" title="Default Binding"></a>Default Binding</h3><p>Default binding is a little trickier than the <code>new</code> and explicit binding because there are a few nuances that you might not expect.</p>
+<p>A good rule of thumb is this: <strong>If a function has been called in a “normal” fashion, then it has default binding and <code>this</code> refers to the global scope</strong>.</p>
+<p>When I say “normal”, I’m referring to a function call that looks like this:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myFunction</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"does something"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Call function "normally"</span></span><br><span class="line">myFunction();</span><br></pre></td></tr></table></figure>
+<p>There are only three other ways you could call this function, shown below: </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    myFunction: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"does something"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Call function as a method</span></span><br><span class="line">obj.myFunction();</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myFunction</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"does something"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Call function using the call() method</span></span><br><span class="line"><span class="comment">// We have already covered -- `this` is bound to the function itself</span></span><br><span class="line">myFunction.call();</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myFunction</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"does something"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Call function as newly constructed object</span></span><br><span class="line"><span class="comment">// We have already covered -- `this` is bound to the function itself</span></span><br><span class="line"><span class="keyword">var</span> myFunctionObj = <span class="keyword">new</span> myFunction();</span><br><span class="line">myFunctionObj();</span><br></pre></td></tr></table></figure>
+<p>So if you see a function that is called “normally”, you can reasonably assume that <code>this</code> refers to the global object.  The global object will be <code>global</code> if using a NodeJS console, and <code>window</code> if using a browser console.</p>
+<p>In my opinion, there are two things that can throw a programmer off when thinking about default binding. </p>
+<ol>
+<li>“Strict” mode</li>
+<li><code>const</code> keyword</li>
+<li>Nested functions</li>
+</ol>
+<p>Starting with “strict” mode:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myFunction</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"><span class="meta">    'use strict'</span>   </span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.a)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">2</span>;</span><br><span class="line">myFunction(); <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+<p><code>this</code> is undefined because using strict mode in Javascript makes the global scope unavailable.  The purpose of strict mode is to force the developer to be conscious of scopes, security, and other best coding practices, and one of the ways this is implemented is by limiting the use of the global object.</p>
+<p>Now, for the <code>const</code> keyword:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myFunction</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.a);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> a = <span class="number">2</span>;</span><br><span class="line">myFunction(); <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+<p>Using the <code>const</code> keyword does not make the variable available on the global object.  To see this in action, open up Google Chrome and go to the console.  Type the following: </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a1 = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">const</span> a2 = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// In a browser, window is the global object</span></span><br><span class="line"><span class="comment">// In a NodeJS console, you would replace "window" with "global"</span></span><br><span class="line"><span class="built_in">window</span>.a1 <span class="comment">// 2</span></span><br><span class="line"><span class="built_in">window</span>.a2 <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+<p>And finally, nested functions:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">f2</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">var</span> a = <span class="number">6</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">f3</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// Call Stack at this point in the program</span></span><br><span class="line">            <span class="comment">// f3 (top)</span></span><br><span class="line">            <span class="comment">// f2</span></span><br><span class="line">            <span class="comment">// f1</span></span><br><span class="line">            <span class="comment">// global (bottom)</span></span><br><span class="line">            </span><br><span class="line">            <span class="built_in">console</span>.log(<span class="keyword">this</span>.a);</span><br><span class="line">        &#125;</span><br><span class="line">        f3();</span><br><span class="line">    &#125;</span><br><span class="line">    f2();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">f1();</span><br></pre></td></tr></table></figure>
+<p>With all this talk about call stacks and call sites, you might look at the above code and infer that <code>this</code> represents something other than the global object.  When <code>this.a</code> is printed, the call stack has f3() at the top, which means that “call site” of <code>f1()</code> is at <code>f2()</code>.  Said another way, even though <code>f1()</code> is executed in the global scope, that does not mean its call site is in the global scope.  The call site is in the scope of <code>f2()</code>.</p>
+<p>Knowing this, you might guess that the value of <code>this.a</code> would be 6, since that is the value of <code>a</code> at the call site of <code>f1()</code> when <code>this.a</code> is printed.</p>
+<p>But this is not the case.  Since <code>f1()</code> is called as a “normal” function call, its scope will always be global, and therefore <code>this.a</code> is equal to 2 in the above code.</p>
+<h3 id="Implicit-Binding"><a href="#Implicit-Binding" class="headerlink" title="Implicit Binding"></a>Implicit Binding</h3><p>And finally, the part where <code>this</code> gets a little confusing.  If we are calling a function as a property of an object, the value of <code>this</code> is entirely based on the call site of the function.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj1 = &#123;</span><br><span class="line">    color: <span class="string">'green'</span>,</span><br><span class="line">    func: <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.color); <span class="comment">// undefined</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj2 = &#123;</span><br><span class="line">    color: <span class="string">'green'</span>,</span><br><span class="line">    func: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.color); <span class="comment">// green</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">obj1.func(); <span class="comment">// undefined</span></span><br><span class="line">obj2.func(); <span class="comment">// green</span></span><br></pre></td></tr></table></figure>
+<p>In the above example, I have demonstrated the two concepts that you must understand for implicit binding of <code>this</code>.  Obviously, both of these functions are called from the global scope, but if you determine the real call site, it is within the context of each object, and therefore, the value of <code>this</code> is the context object.</p>
+<p>In the second function call, <code>obj2.func()</code>, the results are unsurprising.  We have determined the call site of this function to be the <code>obj2</code> object, which has a property of <code>color</code> equal to green.  </p>
+<p>The first function call is a bit confusing though, and it has to do with the syntax of the function property.  In ES6, the fat arrow function was introduced.  Unlike a normal function declaration, the <code>this</code> keyword within a fat arrow function follows lexical (synonymous to “static”) scoping rules as opposed to dynamic scoping rules where we have to look at call stacks and determine call sites to determine the value of <code>this</code>.</p>
+<p>Therefore, the value of <code>this</code> in the fat arrow function is the global object, which does not have a property of <code>color</code>.</p>
+<p>Fat arrow functions’ treatment of <code>this</code> solves a problem for developers, best demonstrated by example.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myAsyncFunction</span>(<span class="params">callback</span>) </span>&#123;</span><br><span class="line">    callback();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    color: <span class="string">'green'</span>,</span><br><span class="line">    func: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        </span><br><span class="line">        myAsyncFunction(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            </span><br><span class="line">            <span class="built_in">console</span>.log(<span class="keyword">this</span>.color);</span><br><span class="line">            </span><br><span class="line">        &#125;);</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">obj.func(); <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+<p>Based on the previous examples, you might guess that <code>this.color</code> is equal to green.  But if you remember from the section on <a href="#default-binding">default binding</a>, if we call a function “normally” (i.e. <code>myAsyncFunction</code> has been called normally), <code>this</code> will represent the global object.  To solve this problem, Javascript developers have used something like the following: </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myAsyncFunction</span>(<span class="params">callback</span>) </span>&#123;</span><br><span class="line">    callback();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    color: <span class="string">'green'</span>,</span><br><span class="line">    func: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">var</span> self = <span class="keyword">this</span>;</span><br><span class="line">        </span><br><span class="line">        myAsyncFunction(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            </span><br><span class="line">            <span class="built_in">console</span>.log(self.color);</span><br><span class="line">            </span><br><span class="line">        &#125;);</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">obj.func(); <span class="comment">// green</span></span><br></pre></td></tr></table></figure>
+<p>By assigning the value of <code>this</code> to a variable while we have access to it, we can pass it into the callback and use it.</p>
+<p>Obviously, this is a contrived way to use <code>this</code>.  There is a better way, and it involves ES6 fat arrow functions:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myAsyncFunction</span>(<span class="params">callback</span>) </span>&#123;</span><br><span class="line">    callback();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    color: <span class="string">'green'</span>,</span><br><span class="line">    func: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        </span><br><span class="line">        myAsyncFunction(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">            </span><br><span class="line">            <span class="built_in">console</span>.log(<span class="keyword">this</span>.color);</span><br><span class="line">            </span><br><span class="line">        &#125;);</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">obj.func(); <span class="comment">// green</span></span><br></pre></td></tr></table></figure>
+<p>Using this pattern requires a fairly deep understanding of the <code>this</code> keyword, and makes you wonder why anyone would go to the trouble in the first place?</p>
+<h2 id="Why-use-this-in-the-first-place"><a href="#Why-use-this-in-the-first-place" class="headerlink" title="Why use this in the first place?"></a>Why use <code>this</code> in the first place?</h2><p>After all this explanation, you might wonder why anyone would go to the trouble of using <code>this</code> in their code?</p>
+<p>Although entirely a personal opinion, I do not see an overly compelling reason to use the <code>this</code> keyword while writing Javascript.  Even if you become comfortable with the syntax, that doesn’t mean that everyone that reads your code in the future will be comfortable with it.  Sure, using <code>this</code> has marginal benefits like code reuse, but I would much rather have a few extra lines of code that are highly intuitive than a codebase with a bunch of <code>this</code> keywords that don’t always behave as expected.</p>
+<p>That said, there is a compelling reason to learn how <code>this</code> works thoroughly.  No matter how large a crusade you start against the use of <code>this</code> in codebases, there will always be codebases that utilize it.  Therefore, regardless of if you choose to implement <code>this</code> in your codebase, you will certainly need to know how it works.</p>
+<p>And with that, I hope this deep dive into the <code>this</code> keyword has helped your understanding like it did mine.</p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="http://zachgoll.github.io">Home</a></li>
+         
+          <li><a href="/blog/archives/">Writing</a></li>
+         
+          <li><a href="http://zachgoll.github.io/portfolio">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Compile-Time-vs-Run-Time"><span class="toc-number">1.</span> <span class="toc-text">Compile Time vs. Run Time</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#But-hold-on-I’m-not-sure-I-know-what-“compilation”-is"><span class="toc-number">1.1.</span> <span class="toc-text">But hold on, I’m not sure I know what “compilation” is?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-Time"><span class="toc-number">1.2.</span> <span class="toc-text">Run Time</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#“Run-Time”-vs-“Runtime”"><span class="toc-number">1.3.</span> <span class="toc-text">“Run Time” vs. “Runtime”</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Coming-back-to-the-“this”-keyword"><span class="toc-number">2.</span> <span class="toc-text">Coming back to the “this” keyword</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Static-lexical-vs-Dynamic-Scope"><span class="toc-number">2.1.</span> <span class="toc-text">Static (lexical) vs. Dynamic Scope</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#What-is-“Scope”"><span class="toc-number">2.1.1.</span> <span class="toc-text">What is “Scope”?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Makes-sense-but-why"><span class="toc-number">2.1.2.</span> <span class="toc-text">Makes sense, but why?</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Rewind"><span class="toc-number">2.2.</span> <span class="toc-text">Rewind</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Finally-The-this-keyword-explained"><span class="toc-number">3.</span> <span class="toc-text">Finally.  The this keyword explained</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-new-keyword"><span class="toc-number">3.1.</span> <span class="toc-text">The new keyword</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Explicit-Binding"><span class="toc-number">3.2.</span> <span class="toc-text">Explicit Binding</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Default-Binding"><span class="toc-number">3.3.</span> <span class="toc-text">Default Binding</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Implicit-Binding"><span class="toc-number">3.4.</span> <span class="toc-text">Implicit Binding</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Why-use-this-in-the-first-place"><span class="toc-number">4.</span> <span class="toc-text">Why use this in the first place?</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://zachgoll.github.io/blog/2019/javascript-this-keyword/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://zachgoll.github.io/blog/2019/javascript-this-keyword/&text=How the Javascript `this` Keyword Works"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://zachgoll.github.io/blog/2019/javascript-this-keyword/&title=How the Javascript `this` Keyword Works"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://zachgoll.github.io/blog/2019/javascript-this-keyword/&is_video=false&description=How the Javascript `this` Keyword Works"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=How the Javascript `this` Keyword Works&body=Check out this article: http://zachgoll.github.io/blog/2019/javascript-this-keyword/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://zachgoll.github.io/blog/2019/javascript-this-keyword/&title=How the Javascript `this` Keyword Works"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://zachgoll.github.io/blog/2019/javascript-this-keyword/&title=How the Javascript `this` Keyword Works"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://zachgoll.github.io/blog/2019/javascript-this-keyword/&title=How the Javascript `this` Keyword Works"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://zachgoll.github.io/blog/2019/javascript-this-keyword/&title=How the Javascript `this` Keyword Works"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://zachgoll.github.io/blog/2019/javascript-this-keyword/&name=How the Javascript `this` Keyword Works&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 Zach Gollwitzer
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="http://zachgoll.github.io">Home</a></li>
+         
+          <li><a href="/blog/archives/">Writing</a></li>
+         
+          <li><a href="http://zachgoll.github.io/portfolio">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/blog/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/blog/lib/jquery/jquery.min.js"></script>
+<script src="/blog/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/blog/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-149577498-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'zachgoll';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+

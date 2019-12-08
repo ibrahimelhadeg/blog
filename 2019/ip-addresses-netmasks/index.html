@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang=EN>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-62489908-6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-62489908-6');
+    </script>
+
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="For most home users, trying to understand a home network is not of interest due to the perceived complexity of the issue.  In this post, whether you are a seasoned engineer or simply a Dad trying to">
+<meta name="keywords" content="networking">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Understanding IP Addresses and Subnet Masks">
+<meta property="og:url" content="http://zachgoll.github.io/blog/2019/ip-addresses-netmasks/index.html">
+<meta property="og:site_name" content="Zach Gollwitzer">
+<meta property="og:description" content="For most home users, trying to understand a home network is not of interest due to the perceived complexity of the issue.  In this post, whether you are a seasoned engineer or simply a Dad trying to">
+<meta property="og:locale" content="EN">
+<meta property="og:image" content="http://zachgoll.github.io/blog/2019/ip-addresses-netmasks/ipaddresses.PNG">
+<meta property="og:updated_time" content="2019-11-25T15:55:49.514Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Understanding IP Addresses and Subnet Masks">
+<meta name="twitter:description" content="For most home users, trying to understand a home network is not of interest due to the perceived complexity of the issue.  In this post, whether you are a seasoned engineer or simply a Dad trying to">
+<meta name="twitter:image" content="http://zachgoll.github.io/blog/2019/ip-addresses-netmasks/ipaddresses.PNG">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/blog/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/blog/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Understanding IP Addresses and Subnet Masks</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/blog/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="http://zachgoll.github.io">Home</a></li>
+         
+          <li><a href="/blog/archives/">Writing</a></li>
+         
+          <li><a href="http://zachgoll.github.io/portfolio">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/blog/2019/git-crash-course/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/blog/2019/bash-essentials/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://zachgoll.github.io/blog/2019/ip-addresses-netmasks/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://zachgoll.github.io/blog/2019/ip-addresses-netmasks/&text=Understanding IP Addresses and Subnet Masks"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://zachgoll.github.io/blog/2019/ip-addresses-netmasks/&title=Understanding IP Addresses and Subnet Masks"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://zachgoll.github.io/blog/2019/ip-addresses-netmasks/&is_video=false&description=Understanding IP Addresses and Subnet Masks"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Understanding IP Addresses and Subnet Masks&body=Check out this article: http://zachgoll.github.io/blog/2019/ip-addresses-netmasks/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://zachgoll.github.io/blog/2019/ip-addresses-netmasks/&title=Understanding IP Addresses and Subnet Masks"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://zachgoll.github.io/blog/2019/ip-addresses-netmasks/&title=Understanding IP Addresses and Subnet Masks"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://zachgoll.github.io/blog/2019/ip-addresses-netmasks/&title=Understanding IP Addresses and Subnet Masks"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://zachgoll.github.io/blog/2019/ip-addresses-netmasks/&title=Understanding IP Addresses and Subnet Masks"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://zachgoll.github.io/blog/2019/ip-addresses-netmasks/&name=Understanding IP Addresses and Subnet Masks&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Subnetting"><span class="toc-number">1.</span> <span class="toc-text">Subnetting</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Broadcast-Address-vs-Default-Gateway-vs-Network-Address"><span class="toc-number">1.1.</span> <span class="toc-text">Broadcast Address vs. Default Gateway vs. Network Address</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Alternative-Notation"><span class="toc-number">1.2.</span> <span class="toc-text">Alternative Notation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dynamic-Host-Configuration-Protocol"><span class="toc-number">1.3.</span> <span class="toc-text">Dynamic Host Configuration Protocol</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Your-Router’s-IP-Address-is-not-static-after-all"><span class="toc-number">2.</span> <span class="toc-text">Your Router’s IP Address is not static after all</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Understanding IP Addresses and Subnet Masks
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Zach Gollwitzer</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2019-02-25T21:24:42.000Z" itemprop="datePublished">2019-02-25</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/blog/tags/networking/">networking</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/fXJqetmLPo0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<p>For most home users, trying to understand a home network is not of interest due to the perceived complexity of the issue.  In this post, whether you are a seasoned engineer or simply a Dad trying to figure out why the router isn’t working again, I will explain the basics of how your home network works.</p>
+<p>The first thing we need to understand is what an internet service provider actually does.  ISPs are confusing in many cases because they offer more than one service, but in the scope of this post, let’s consider an ISP that offers only internet as a service.  An ISP is simply a company that owns hardware (wires) and makes that hardware available to customers in the form of internet service.  What are these wires we speak of?  Many ISPs own a variety of hardware that all are capable of carrying the analog signals we know as the “internet”.</p>
+<ul>
+<li>Coaxial cables (what you have in your house)</li>
+<li>Unshielded twisted pair (UTP) cables (100 Mhz)</li>
+<li>Shielded twisted pair (STP) cables</li>
+<li>Fiber optic cables (fastest type - many are in the ocean)</li>
+</ul>
+<p>There are multiple ways that internet can reach your home, but the most common is through telephone wires (UTP cables).  Other methods include underground cables and dish satellites.  The method of telephone wires often confuses people because given the name, you would assume that only telephone signals can be sent through telephone wires.  This is not the case.  The internet bootstrapped off of the phone system, and nowadays, there are multiple channels of communication running through each telephone wire.  We call this “broadband” and it is the reason we can talk on the phone, watch Netflix, and search the web all at the same time.  Previously, you had to use “dial up” where you would literally “call in” through the phone line to access the internet.</p>
+<p>Regardless the method your ISP uses to get internet to your home, you will always be faced with the same problem.  The signals traveling through the telephone wires your ISP owns are <em>analog</em> signals (wave frequencies), while your computer runs on <em>digital</em> signals (1s and 0s).  This is where the modem comes in.</p>
+<p>The modem takes that analog signal, converts it to a digital signal, and sends it over to the router.  And this is where the fun begins, because the router has a lot of responsibility for making your home network functional.  Before reading one more word, you need to remember one important fact.</p>
+<p><strong>Your ISP assigns you ONE IP address, and ONE Subnet mask</strong>.</p>
+<p>You will soon understand what this means in full, but for now, just know that your entire home network is represented as a single IP address.</p>
+<p>I am assuming that most people reading have an idea what an IP address is, but as a refresher, an IP address is a 32 bit number that identifies a specific network or computer.  Today, most IP addresses are IPV4 addresses, which means that they are 32 bit rather than 64 bit IPV6 addresses.  The reason we need IPV6 addresses is because we are running out of the former.  If you calculate how many combinations you can have with 32 bits, it is 4.2 billion (2^32).  This seems like a large number, but with a world population between 7 and 8 billion, you can see how this could be constraining.  With IPV6, we have 1.8x10^19 addresses (2^64), which will never pose a capacity issue.</p>
+<p>To find your computer’s IP address, you can type <code>ipconfig</code> into a Windows terminal or <code>ifconfig</code> into a Mac/Linux terminal.  You will want to look for the entry that shows a “inet” address.  Our goal in this post is to understand how each device on your network receives a unique address despite the fact that your ISP only provided you 1 IP address to start with.</p>
+<h2 id="Subnetting"><a href="#Subnetting" class="headerlink" title="Subnetting"></a>Subnetting</h2><p>When IPV4 was invented, it was clear that the IP address space needed to be conserved.  I’m sure the engineers working on it didn’t think we would ever reach 4.2 billion addresses, but they had a suspicion that if they weren’t conservative with the assignments of new addresses, it would not only become a scarce resource, but also a pain in the butt to manage.</p>
+<p>To solve this problem, the concept of subnetting came into existence.  Rather than your ISP assigning a new IP address for each device that is added to your network, they just give you an “address space”.  In other words, your ISP assigns a single IP address for your network which has X number of IP addresses available for new devices.  With just two numbers (network IP and subnet mask), you can calculate the number of available IP addresses for new devices on your network.  This is easiest to explain through an example.  Consider a device with an IP address of <code>192.168.22.187</code> and a subnet mask of <code>255.255.255.0</code>.  Let’s convert these to binary notation (use <a href="https://www.browserling.com/tools/ip-to-bin" target="_blank" rel="noopener">this calculator</a> or teach yourself how to convert from dot notation to binary if you’re that curious).</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 192.168.22.187</span><br><span class="line">11000000 10101000 00010110 10111011</span><br><span class="line"></span><br><span class="line"># 255.255.255.0</span><br><span class="line">11111111.11111111.11111111.00000000</span><br></pre></td></tr></table></figure>
+<p>At first glance, these two numbers are boring and meaningless, but if we do a little transformation on them, you will see the ingenuity of the subnetting system.  To see what I mean, every time the two addresses both have a 1 in the same position, write a 1.  Otherwise, write a 0.  It’s kind of like a math problem.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">11000000 10101000 00010110 10111011</span><br><span class="line">11111111.11111111.11111111.00000000</span><br><span class="line">-----------------------------------</span><br><span class="line">11000000.10101000.00010110.00000000</span><br></pre></td></tr></table></figure>
+<p>Now convert that result into decimal notation.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">11000000.10101000.00010110.00000000</span><br><span class="line">192.168.22.0</span><br></pre></td></tr></table></figure>
+<p>At this point, we have two IP addresses.  The first is <code>192.168.22.187</code>, and the second is <code>192.168.22.0</code>.  But what are these two addresses?  </p>
+<p>To figure that out, let’s return to that subnet mask that our ISP provided to us.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 255.255.255.0</span><br><span class="line">11111111.11111111.11111111.00000000</span><br></pre></td></tr></table></figure>
+<p>Notice how the last 8 bits are zeros.  This means that our ISP has given us all 8 of those bits for new devices on our network.  In other words, we have 256 possible IP addresses to use within our network (2^8).  This also means that the first 24 bits of the IP address that our ISP assigned is the IP address of our <em>network</em>.  In other words, what we calculated when we combined the assigned IP and the subnet mask was the actual IP address of our <em>network</em> (192.168.22.0).  If we plugged in a single device to our modem and skipped the router altogether, this would be the IP address of that device.  The other address <code>192.168.22.187</code> is nothing special.  It is simply one of the 256 possible IP addresses within the address space of 0-255.  If this was a home network, you might see devices lined up one after the other like so: </p>
+<p>Ipad: <code>192.168.22.187</code><br>Iphone: <code>192.168.22.188</code><br>Mac: <code>192.168.22.189</code><br>Printer: <code>192.168.22.190</code></p>
+<p>We could do this all the way to <code>192.168.22.254</code> or as low as <code>192.168.22.1</code>.  Notice that there are two addresses that we cannot assign to devices</p>
+<ol>
+<li><code>192.168.22.255</code></li>
+<li><code>192.168.22.0</code></li>
+</ol>
+<p>The first is the “broadcast” address, which is a special IP that is used for various purposes such as address resolution (ARP) and dynamic host configuration (DHCP).  The second is of course our network address.  Below is a recap visual to illustrate how we come to our IP addresses for a given network.  Remember, the <code>192.168.22.187</code> address is a random address that I created for the purpose of the visual and carries no significance while <code>192.168.22.255</code> and <code>192.168.22.0</code> are significant.</p>
+<img src="/blog/2019/ip-addresses-netmasks/ipaddresses.PNG">
+<h3 id="Broadcast-Address-vs-Default-Gateway-vs-Network-Address"><a href="#Broadcast-Address-vs-Default-Gateway-vs-Network-Address" class="headerlink" title="Broadcast Address vs. Default Gateway vs. Network Address"></a>Broadcast Address vs. Default Gateway vs. Network Address</h3><p>In the above example, we talked about a “broadcast” and “network” IP address; both of which are reserved addresses within every network address space.  I used the word “network” address, but this could also be considered the “default gateway” address, and is where all traffic leaves the network.</p>
+<h3 id="Alternative-Notation"><a href="#Alternative-Notation" class="headerlink" title="Alternative Notation"></a>Alternative Notation</h3><p>IP addresses can be written in a slightly different notation called “CIDR Notation”.  This is where the number of bits in the subnet mask is added as a postfix to the IP address.  For example, the subnet mask <code>255.255.255.0</code> (<code>11111111.11111111.11111111.00000000</code> in binary) has 24 leading bits, and therefore to combine this with our IP address above, we would write <code>192.168.22.187/24</code>.  This indicates that we have an IP address of <code>192.168.22.187</code> with a subnet mask of <code>255.255.255.0</code>.</p>
+<h3 id="Dynamic-Host-Configuration-Protocol"><a href="#Dynamic-Host-Configuration-Protocol" class="headerlink" title="Dynamic Host Configuration Protocol"></a>Dynamic Host Configuration Protocol</h3><p>Many routers nowadays act as a DHCP server to dynamically assign new IP addresses to devices on the network.  While a website server needs to have a static IP address so that people can find the website, your home computing devices don’t need a static IP.</p>
+<p>We could get into a full discussion of DHCP, but to do so, we would need to discuss communication protocols like UDP and the different layers of the internet via the OSI model.  Those topics are out of scope of this post, but it is still important to understand what DHCP is on a high level.</p>
+<p>As stated, the function of a DHCP server (a router in our case) is to dynamically assign an IP address to a new device entering a network (LAN in our case).  The DHCP server has a range of addresses it can assign (as described with subnetting earlier), and sets a specific amount of time that an IP address is valid for a device (“lease time”).  This is the main function of such a server, but the reason it was invented in the first place is to eliminate the need for an administrator to assign a new IP address to each new device manually.  With a DHCP server (remember, this is just a router in our case), the physical device can send out a request to join the network and the DHCP server can validate it and assign it an IP address that will allow it to communicate with other devices on the network.</p>
+<p>Let’s consider a classic example of DHCP in action.  Say you are staying at a friends house for the weekend, but need to get on the internet while there.  You will of course beg your friend for their wifi password and your friend will scramble around the house trying to remember where he wrote it down.  When he finally finds the password, you select the network and type in the password.  When you press enter, a bunch of things happen that you are unaware of.</p>
+<p>First, you must understand that every <em>physical</em> computing device whether it be an iPhone, printer, or PC will have a unique Media Access Control (MAC) address.  This identifier never changes because it was assigned to the device by the manufacturer.  Although it is similar to an IP address, a MAC address identifies each device in what we call the “Data Layer” of the <a href="https://en.wikipedia.org/wiki/OSI_model" target="_blank" rel="noopener">OSI model</a> while an IP address identifies each device in the “Network Layer”.</p>
+<p>When you type in the password to your friend’s wifi, the first thing that happens is your device broadcasts a signal into that network with its MAC address attached to the request.  Within that network, the router (running a DHCP server) will pick up this signal, recognize that it is a request for an IP address, and assuming the password is correct, it will assign that device a unique IP address on the network.</p>
+<p>During this assignment, the router will only be using IP addresses within its range (as defined by the IP address assigned by the ISP and the subnet mask), and will assign it on “leased” terms.  Usually the lease is 120 minutes long, and the reason for leasing IP addresses is so the router’s address space does not become full.  You probably will not be back to your friend’s house for a while, so it wouldn’t make sense for the router to permanently lock up an IP address solely for your device.  By leasing the IP address, when you leave his house, the DHCP server will regain that IP address and will be able to assign it to other devices in the future.</p>
+<p>But if the lease is only 120 minutes, how does your computer stay connected to wifi for hours on end?  By default, most devices will auto-renew their leases and keep the same IP address so long as they continue to auto-renew.</p>
+<p>So next time you visit a friend and use their wifi network, you can be relieved of all guilt knowing that you will be returning the IP address you borrowed upon departure!</p>
+<h2 id="Your-Router’s-IP-Address-is-not-static-after-all"><a href="#Your-Router’s-IP-Address-is-not-static-after-all" class="headerlink" title="Your Router’s IP Address is not static after all"></a>Your Router’s IP Address is not static after all</h2><p>To this point, I have explained that your ISP assigns your home network a single IP address which we call the “default gateway” or “network IP address”.  This is entirely true, but now that we understand DHCP, I can reveal the fact that your router’s IP address is dynamic too.  Most ISPs run DHCP servers and dynamically assign their customers IP addresses just like your router does on the home network.  This makes sense because as customers unsubscribe from internet service, the ISP wants to get that IP address back to assign to a new customer!</p>
+<p>The topic of networking and the internet has many layers (literally… Check out the OSI Model), but most people will never need to think about or troubleshoot outside of their local area network (LAN), hence the brevity of the post.  </p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="http://zachgoll.github.io">Home</a></li>
+         
+          <li><a href="/blog/archives/">Writing</a></li>
+         
+          <li><a href="http://zachgoll.github.io/portfolio">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Subnetting"><span class="toc-number">1.</span> <span class="toc-text">Subnetting</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Broadcast-Address-vs-Default-Gateway-vs-Network-Address"><span class="toc-number">1.1.</span> <span class="toc-text">Broadcast Address vs. Default Gateway vs. Network Address</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Alternative-Notation"><span class="toc-number">1.2.</span> <span class="toc-text">Alternative Notation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dynamic-Host-Configuration-Protocol"><span class="toc-number">1.3.</span> <span class="toc-text">Dynamic Host Configuration Protocol</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Your-Router’s-IP-Address-is-not-static-after-all"><span class="toc-number">2.</span> <span class="toc-text">Your Router’s IP Address is not static after all</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://zachgoll.github.io/blog/2019/ip-addresses-netmasks/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://zachgoll.github.io/blog/2019/ip-addresses-netmasks/&text=Understanding IP Addresses and Subnet Masks"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://zachgoll.github.io/blog/2019/ip-addresses-netmasks/&title=Understanding IP Addresses and Subnet Masks"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://zachgoll.github.io/blog/2019/ip-addresses-netmasks/&is_video=false&description=Understanding IP Addresses and Subnet Masks"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Understanding IP Addresses and Subnet Masks&body=Check out this article: http://zachgoll.github.io/blog/2019/ip-addresses-netmasks/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://zachgoll.github.io/blog/2019/ip-addresses-netmasks/&title=Understanding IP Addresses and Subnet Masks"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://zachgoll.github.io/blog/2019/ip-addresses-netmasks/&title=Understanding IP Addresses and Subnet Masks"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://zachgoll.github.io/blog/2019/ip-addresses-netmasks/&title=Understanding IP Addresses and Subnet Masks"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://zachgoll.github.io/blog/2019/ip-addresses-netmasks/&title=Understanding IP Addresses and Subnet Masks"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://zachgoll.github.io/blog/2019/ip-addresses-netmasks/&name=Understanding IP Addresses and Subnet Masks&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 Zach Gollwitzer
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="http://zachgoll.github.io">Home</a></li>
+         
+          <li><a href="/blog/archives/">Writing</a></li>
+         
+          <li><a href="http://zachgoll.github.io/portfolio">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/blog/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/blog/lib/jquery/jquery.min.js"></script>
+<script src="/blog/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/blog/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-149577498-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'zachgoll';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang=EN>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-62489908-6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-62489908-6');
+    </script>
+
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="If you are coming from part 4 of my series How to Build a Production Web App, you are probably wondering what my thought process was behind the architecture presented in the series.  This post should">
+<meta name="keywords" content="software architecture">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Introduction to Software Architecture (Monolithic vs. Layered vs. Microservices)">
+<meta property="og:url" content="http://zachgoll.github.io/blog/2019/architecture-types/index.html">
+<meta property="og:site_name" content="Zach Gollwitzer">
+<meta property="og:description" content="If you are coming from part 4 of my series How to Build a Production Web App, you are probably wondering what my thought process was behind the architecture presented in the series.  This post should">
+<meta property="og:locale" content="EN">
+<meta property="og:image" content="http://zachgoll.github.io/blog/2019/architecture-types/layered-architecture-with-utils.png">
+<meta property="og:image" content="http://zachgoll.github.io/blog/2019/architecture-types/microservices.png">
+<meta property="og:image" content="http://zachgoll.github.io/blog/2019/architecture-types/register-demonstration.gif">
+<meta property="og:image" content="http://zachgoll.github.io/blog/2019/architecture-types/play-game-demo.gif">
+<meta property="og:image" content="http://zachgoll.github.io/blog/2019/architecture-types/see-score-demo.gif">
+<meta property="og:updated_time" content="2019-11-25T15:55:49.354Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Introduction to Software Architecture (Monolithic vs. Layered vs. Microservices)">
+<meta name="twitter:description" content="If you are coming from part 4 of my series How to Build a Production Web App, you are probably wondering what my thought process was behind the architecture presented in the series.  This post should">
+<meta name="twitter:image" content="http://zachgoll.github.io/blog/2019/architecture-types/layered-architecture-with-utils.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/blog/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/blog/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Introduction to Software Architecture (Monolithic vs. Layered vs. Microservices)</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/blog/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="http://zachgoll.github.io">Home</a></li>
+         
+          <li><a href="/blog/archives/">Writing</a></li>
+         
+          <li><a href="http://zachgoll.github.io/portfolio">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/blog/2019/comments-not-showing-wordpress/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/blog/2019/file-object-block-storage/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://zachgoll.github.io/blog/2019/architecture-types/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://zachgoll.github.io/blog/2019/architecture-types/&text=Introduction to Software Architecture (Monolithic vs. Layered vs. Microservices)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://zachgoll.github.io/blog/2019/architecture-types/&title=Introduction to Software Architecture (Monolithic vs. Layered vs. Microservices)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://zachgoll.github.io/blog/2019/architecture-types/&is_video=false&description=Introduction to Software Architecture (Monolithic vs. Layered vs. Microservices)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Introduction to Software Architecture (Monolithic vs. Layered vs. Microservices)&body=Check out this article: http://zachgoll.github.io/blog/2019/architecture-types/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://zachgoll.github.io/blog/2019/architecture-types/&title=Introduction to Software Architecture (Monolithic vs. Layered vs. Microservices)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://zachgoll.github.io/blog/2019/architecture-types/&title=Introduction to Software Architecture (Monolithic vs. Layered vs. Microservices)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://zachgoll.github.io/blog/2019/architecture-types/&title=Introduction to Software Architecture (Monolithic vs. Layered vs. Microservices)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://zachgoll.github.io/blog/2019/architecture-types/&title=Introduction to Software Architecture (Monolithic vs. Layered vs. Microservices)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://zachgoll.github.io/blog/2019/architecture-types/&name=Introduction to Software Architecture (Monolithic vs. Layered vs. Microservices)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Why-do-we-need-Software-Architecture"><span class="toc-number">2.</span> <span class="toc-text">Why do we need Software Architecture?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Monolithic-Architecture"><span class="toc-number">3.</span> <span class="toc-text">Monolithic Architecture</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Application-Structure"><span class="toc-number">3.1.</span> <span class="toc-text">Application Structure</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Layered-Architecture-also-called-“n-tiered”"><span class="toc-number">4.</span> <span class="toc-text">Layered Architecture (also called “n-tiered”)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Application-Structure-1"><span class="toc-number">4.1.</span> <span class="toc-text">Application Structure</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Microservices-Architecture"><span class="toc-number">5.</span> <span class="toc-text">Microservices Architecture</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Application-Structure-2"><span class="toc-number">5.1.</span> <span class="toc-text">Application Structure</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Other-Architectures"><span class="toc-number">6.</span> <span class="toc-text">Other Architectures</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conclusion"><span class="toc-number">7.</span> <span class="toc-text">Conclusion</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Introduction to Software Architecture (Monolithic vs. Layered vs. Microservices)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Zach Gollwitzer</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2019-04-24T10:21:18.000Z" itemprop="datePublished">2019-04-24</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/blog/tags/software-architecture/">software architecture</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <div class="series-introduction">If you are coming from part 4 of my series <a href="/blog/2019/build-production-web-app-part-3">How to Build a Production Web App</a>, you are probably wondering what my thought process was behind the architecture presented in the series.  This post should clear up any confusion and provide a quick introduction to the world of software architecture.<br></div>
+
+<p><br></p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/_07NtoK-Kns" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>In this post, we will answer the following 3 questions: </p>
+<ol>
+<li><strong>Why do we need a software architecture?</strong></li>
+<li><strong>What is a Monolithic Architecture?</strong></li>
+<li><strong>What is a Layered Architecture?</strong></li>
+<li><strong>What is a Microservices Architecture?</strong></li>
+<li><strong>Other Architectures</strong></li>
+</ol>
+<p>If you are a self-taught developer, new to the industry, or something of the sort, the concept of “software architecture” is intimidating.  Enterprise architects get paid lots of money because architecting a quality software is <strong>difficult and requires experience</strong>.</p>
+<p>You may have the following concerns: </p>
+<ul>
+<li>How am I supposed to architect a solution with little prior experience?</li>
+<li>There are so many architectures and design patterns.  What if I choose the wrong one?</li>
+<li>How can I create an entire architecture without knowing all the details about the code I’m going to write?</li>
+</ul>
+<p>Throughout this post, we’ll work through these concerns and figure out what this architecture thing is all about.</p>
+<h2 id="Why-do-we-need-Software-Architecture"><a href="#Why-do-we-need-Software-Architecture" class="headerlink" title="Why do we need Software Architecture?"></a>Why do we need Software Architecture?</h2><p>“Any intelligent fool can make things bigger, more complex, and more violent. It takes a touch of genius—and a lot of courage to move in the opposite direction”</p>
+<p>From E.F. Schumacher’s book <em>Small is Beautiful</em>, this quote embodies a lot of what architecting software means.  As a developer, it is always more fun to solve a complex problem in a complex way.  It’s more fun to create a Rube Goldberg Machine than walking from point A to point B and dropping the marble in the cup.</p>
+<p>Unfortunately, as a developer and architect, you get no additional bonus points for indirectly solving problems.  You make the real money by solving a complex problem in a simple way.</p>
+<p><strong>Designing software architecture is about arranging components of a system to best fit the desired quality attributes of the system.</strong></p>
+<ul>
+<li>The user cares that your system is fast, reliable, and available</li>
+<li>The project manager cares that the system is delivered on time and on budget</li>
+<li>The CEO cares that the system contributes incremental value to his/her company</li>
+<li>The head of security cares that the system is protected from malicious attacks</li>
+<li>The application support team cares that the system is easy to understand and debug</li>
+</ul>
+<p>There is no way to please everyone without sacrificing the quality of the system.  Therefore, when designing software architecture, you must decide <em>which quality attributes</em> matter most for the given business problem.  Below are a few examples of quality attributes: </p>
+<ul>
+<li>Performance - how long do you have to wait before that spinning “loading” icon goes away?</li>
+<li>Availability - what percentage of the time is the system running?</li>
+<li>Usability - can the users easily figure out the interface of the system?</li>
+<li>Modifiability - if the developers want to add a feature to the system, is it easy to do?</li>
+<li>Interoperability - does the system play nicely with other systems?</li>
+<li>Security - does the system have a secure fortress around it?</li>
+<li>Portability - can the system run on many different platforms (i.e. Windows vs. Mac vs. Linux)? </li>
+<li>Scalability - if you grow your userbase rapidly, can the system easily scale to meet the new traffic?</li>
+<li>Deployability - is it easy to put a new feature in production?</li>
+<li>Safety - if the software controls physical things, is it a hazard to real people?</li>
+</ul>
+<p>Depending on what software you are building or improving, certain attributes may be more critical to success.  If you are a financial services company, the most important quality attribute for your system would probably be <em>security</em> (a breach of security could cause your clients to lose millions of dollars) followed by <em>availability</em> (your clients need to always have access to their assets).  If you are a gaming or video streaming company (i.e. Netflix), your first quality attribute is going to be <em>performance</em> because if your games/movies freeze up all the time, nobody will play/watch them.</p>
+<p>As you can see, the process of building software architecture is not about finding the best tools and the latest technologies.  It’s about <strong>delivering a system that works effectively</strong>.  But why do we need an architecture to do this?</p>
+<p>According to the book <em><a href="https://amzn.to/2X1Uoaq" target="_blank" rel="noopener">Software Architecture in Practice</a></em>, there are 13 reasons why Software Architecture is important for the success of a project.  Of those 13, I pulled out a few that might resonate with a smaller team or individual developer: </p>
+<p><strong>1. Architecture enables quality attributes</strong> - For example, a peer to peer architecture is naturally going to have high <em>availability</em> due to the decentralized nature of the system.  A microservices architecture will have high modifiability due to the segregation of duties.<br><strong>2. Architecture enables communication among stakeholders</strong> - When the architecture closely resembles the structure of your company, everyone knows which part of the software they are responsible for.<br><strong>3. Architecture focuses on the assembly rather than creation of components</strong> - Rather than focusing on how the code is written, architecture forces us to think about how the components in the system talk to one another.<br><strong>4. Architecture restricts design choices, enabling creativity in other areas</strong> - By defining some boundaries in your software project, you know which areas you can get creative in without hurting the progress or quality of the system.</p>
+<p>The book points out that design decisions made at the beginning of a project have a <strong>disproportionate weighting</strong> and restrict the ability to change certain areas of the software later on, so it is important to spend time to understand the requirements of the software and design it to the best of your ability from the start.</p>
+<p>This is where an experienced architect has an advantage over a novice.  They can see much further into the future and anticipate how certain design decisions will impact the system.  </p>
+<p>For those of us (including myself) not so experienced in designing architecture, we must accept that things won’t be perfect and <strong>design it anyway</strong>.  Yes, revisions will have to be made, but what other choice is there?</p>
+<p>There are <a href="https://en.wikipedia.org/wiki/Software_architecture#Architectural_styles_and_patterns" target="_blank" rel="noopener">many architectures to choose from</a>, but not all of them are “beginner friendly” and sometimes require years of experience to implement correctly.  For example, creating an effective peer-to-peer architecture (i.e. Bitcoin, Bittorrent) is no easy undertaking.</p>
+<p>To keep things simple, I will be walking through 3 common architectures that cover a wide variety of use cases.  Unless you have a <em>specific reason and design experience</em> to justify going a different route, one of these three architectures will usually suffice no matter what technology stack you use.</p>
+<p>I chose these three because they are natural progressions of each other.  The monolithic architecture is simpler than the layered architecture which is simpler than the microservices architecture.  There are other useful architectures like Event-Driven, Client-Server, Microkernel, and more, but if you do not understand the 3 below, it would not make sense to attempt any of these advanced architectures anyways.</p>
+<p>I believe the easiest way to learn software architecture is to see it in practice.  You have certainly seen different architectures while reading through codebases, but you probably haven’t recognized them.  My examples below are not meant to demonstrate the proper way to code an application, but rather to explicitly call out the various architectures that you can use within your codebase.  To demonstrate, I will be using NodeJS, ExpressJS, and MongoDB in the context of a web application.</p>
+<h2 id="Monolithic-Architecture"><a href="#Monolithic-Architecture" class="headerlink" title="Monolithic Architecture"></a>Monolithic Architecture</h2><p><em>All code mentioned below is stored in my <a href="https://github.com/zachgoll/monolithic-architecture-example-app" target="_blank" rel="noopener">layered architecture repository on Github</a></em></p>
+<p>If you have ever taken tutorials online that teach you how to build a web application, you have most likely built a monolithic application.  It is by far the easiest to conceptualize starting out.  </p>
+<p>A monolithic architecture describes an architecture where all of the following components are bunched into one codebase:</p>
+<ul>
+<li>Views (i.e. HTML, CSS, Javascript)</li>
+<li>Application/Business Logic (i.e. ExpressJS)</li>
+<li>Data Access/Database (i.e. MongoDB)</li>
+</ul>
+<p>Although this architecture may seem ineffective, not all industry professionals believe it is useless.  For example, Martin Fowler <a href="https://martinfowler.com/bliki/MonolithFirst.html" target="_blank" rel="noopener">advocates for the use of monolithic architectures</a> when starting a new application.  He notes that those who start their applications as microservice architectures usually end up wasting time and energy because you don’t start seeing the benefits of this architecture until the application becomes complex.</p>
+<p>He suggests starting with a monolithic architecture and <em>refactoring it later</em> into a layered or microservice architecture when it becomes too large to handle all in one piece.</p>
+<p>Let’s take a look at the internals of a simple monolithic architecture.</p>
+<h3 id="Application-Structure"><a href="#Application-Structure" class="headerlink" title="Application Structure"></a>Application Structure</h3><p><em>All code mentioned below is stored in my <a href="https://github.com/zachgoll/monolithic-architecture-example-app" target="_blank" rel="noopener">monolithic architecture repository on Github</a></em></p>
+<p>The main thing that you will see with this type of architecture is a lack of distinction between application parts.  For example, in <code>app.js</code>, you will see a connection to the database, the server, and even some API endpoints.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">const</span> app = express();</span><br><span class="line"><span class="keyword">const</span> mongoose = <span class="built_in">require</span>(<span class="string">'mongoose'</span>);</span><br><span class="line"><span class="keyword">const</span> cors = <span class="built_in">require</span>(<span class="string">'cors'</span>);</span><br><span class="line"><span class="keyword">const</span> bodyParser = <span class="built_in">require</span>(<span class="string">"body-parser"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// This will allow our presentation layer to retrieve data from this API without</span></span><br><span class="line"><span class="comment">// running into cross-origin issues (CORS)</span></span><br><span class="line">app.use(cors());</span><br><span class="line">app.use(bodyParser.json());</span><br><span class="line"></span><br><span class="line"><span class="comment">// ============================================</span></span><br><span class="line"><span class="comment">// ==========  DATABASE CONNECTION  ===========</span></span><br><span class="line"><span class="comment">// ============================================</span></span><br><span class="line"><span class="comment">// Connect to running database</span></span><br><span class="line">mongoose.connect(<span class="string">`mongodb://<span class="subst">$&#123;process.env.DB_USER&#125;</span>:<span class="subst">$&#123;process.env.DB_PW&#125;</span>@127.0.0.1:27017/monolithic_app_db`</span>, </span><br><span class="line">    &#123;<span class="attr">useNewUrlParser</span>: <span class="literal">true</span>&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// User schema for mongodb</span></span><br><span class="line"><span class="keyword">const</span> UserSchema = mongoose.Schema(&#123;</span><br><span class="line">	name: &#123; <span class="attr">type</span>: <span class="built_in">String</span> &#125;,</span><br><span class="line">    email: &#123; <span class="attr">type</span>: <span class="built_in">String</span> &#125;</span><br><span class="line">&#125;, &#123; <span class="attr">collection</span>: <span class="string">'users'</span> &#125; );</span><br><span class="line"></span><br><span class="line"><span class="comment">// Define the mongoose model for use below in method</span></span><br><span class="line"><span class="keyword">const</span> User = mongoose.model(<span class="string">'User'</span>, UserSchema);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getUserByEmail</span> (<span class="params">email, callback</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">            User.findOne(&#123; <span class="attr">email</span>: email &#125;, callback);</span><br><span class="line">      &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">            callback(err);</span><br><span class="line">      &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// set the view engine to ejs</span></span><br><span class="line">app.set(<span class="string">'view engine'</span>, <span class="string">'ejs'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// index page </span></span><br><span class="line">app.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    res.render(<span class="string">'home'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// ============================================</span></span><br><span class="line"><span class="comment">// ============  API ENDPOINT  ================</span></span><br><span class="line"><span class="comment">// ============================================</span></span><br><span class="line">app.post(<span class="string">'/register'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">const</span> newUser = <span class="keyword">new</span> User(&#123;</span><br><span class="line">        name: req.body.name,</span><br><span class="line">        email: req.body.email</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    newUser.save(<span class="function">(<span class="params">err, user</span>) =&gt;</span> &#123;</span><br><span class="line">        res.status(<span class="number">200</span>).json(user);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// ============================================</span></span><br><span class="line"><span class="comment">// ==============  SERVER =====================</span></span><br><span class="line"><span class="comment">// ============================================</span></span><br><span class="line">app.listen(<span class="number">8080</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Visit app at http://localhost:8080"</span>)</span><br></pre></td></tr></table></figure>
+<p>If we wanted to add another API endpoint, we would need to edit <code>app.js</code>.  If we wanted to add another database Model, we would need to edit <code>app.js</code>.  Even if we wanted to modify an API call in <code>home.ejs</code>, we would probably need to make changes to <code>app.js</code>.</p>
+<p>This centralization we see is not sustainable into the future, but that doesn’t mean it is all bad.  As mentioned above, you may find it useful to start out with something like this and as the application grows, start refactoring the pieces into a more manageable architecture.  One of the ways we can refactor is through a <em>layered architecture</em>.</p>
+<h2 id="Layered-Architecture-also-called-“n-tiered”"><a href="#Layered-Architecture-also-called-“n-tiered”" class="headerlink" title="Layered Architecture (also called “n-tiered”)"></a>Layered Architecture (also called “n-tiered”)</h2><p>After a while, your monolithic application will start getting big, you will start hiring people, and it will quickly become a mess.  Although many modern architects will turn to a microservices design to solve this problem (covered in the next section), another option to better segregate the duties of the application is to refactor your monolith into a layered architecture.</p>
+<p>Unlike the monolithic architecture where everything is interconnected, the layered architecture splits your application into layers.  Usually, you will find the following layers (in order): </p>
+<ol>
+<li>Presentation Layer</li>
+<li>Business Layer </li>
+<li>Data Access Layer</li>
+</ol>
+<p>You may also stumble upon alternate terminology: </p>
+<ol>
+<li>Presentation Layer</li>
+<li>Application Layer </li>
+<li>Domain Layer</li>
+<li>Persistence Layer</li>
+</ol>
+<p>No matter what you call the layers, the point is to create a “<a href="https://en.wikipedia.org/wiki/Separation_of_concerns" target="_blank" rel="noopener">separation of concerns</a>“ where each layer is only allowed to use the layer directly below it.</p>
+<p>In some cases, you may have a shared layer that has utility functions.  In this case, you could create an additional layer that is considered “open” for all layers to use.  Other layers are considered “closed” which means they can only use the layer below them.</p>
+<div class="clickable-images"><img src="/blog/2019/architecture-types/layered-architecture-with-utils.png"></div>
+
+<h3 id="Application-Structure-1"><a href="#Application-Structure-1" class="headerlink" title="Application Structure"></a>Application Structure</h3><p><em>All code mentioned below is stored in my <a href="https://github.com/zachgoll/layered-architecture-example-app" target="_blank" rel="noopener">layered architecture repository on Github</a></em></p>
+<p>The critical factor in a layered architecture is the rule that each layer can only utilize the layer directly below it.  In the sample app linked above, I have created a basic User Authentication flow that illustrates this concept.  Furthermore, code from each layer is stored in a clearly marked folder (i.e. <code>business-layer</code>).</p>
+<p>In our example, the flow has the following steps: </p>
+<ol>
+<li>Presentation layer makes a call from an HTML user form </li>
+<li>Presentation layer javascript processes the form and executes a call to the business layer</li>
+<li>Business layer processes the form info and makes a call to the data access layer</li>
+<li>Data access layer processes the information and makes a query to the database for the user</li>
+<li>Data access layer returns the information to the business layer</li>
+<li>Business layer returns the information via HTTP to the presentation layer</li>
+<li>Presentation layer renders the view with the new information</li>
+</ol>
+<p>Let’s walk through the steps with code now.</p>
+<p><strong>1. Presentation layer makes a call from an HTML user form</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- File: home.ejs --&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- On form submit, home.ejs executes the getDataFromBusinessLayer() function --&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">id</span>=<span class="string">"emailform"</span> <span class="attr">onsubmit</span>=<span class="string">"getDataFromBusinessLayer()"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"email"</span> <span class="attr">id</span>=<span class="string">"email"</span> <span class="attr">placeholder</span>=<span class="string">"Enter email..."</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"submit"</span>&gt;</span>Load Profile<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>2. Presentation layer javascript processes the form and executes a call to the business layer</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// File: presentation-layer-user.js</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getDataFromBusinessLayer</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    event.preventDefault();</span><br><span class="line">    <span class="keyword">const</span> email = $(<span class="string">'#email'</span>).val();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Perform the GET request to the business layer</span></span><br><span class="line">    <span class="comment">// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span></span><br><span class="line">    $.ajax(&#123; </span><br><span class="line">        url: <span class="string">`http://localhost:8081/get-user/<span class="subst">$&#123;email&#125;</span>`</span>, </span><br><span class="line">        type: <span class="string">"GET"</span>,</span><br><span class="line">        success: <span class="function"><span class="keyword">function</span> (<span class="params">user</span>) </span>&#123;</span><br><span class="line">            <span class="comment">// Render the user object on the page</span></span><br><span class="line">            <span class="comment">// Ommitted for brevity</span></span><br><span class="line">        &#125;,</span><br><span class="line">        error: <span class="function"><span class="keyword">function</span> (<span class="params">jqXHR, textStatus, ex</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(textStatus + <span class="string">","</span> + ex + <span class="string">","</span> + jqXHR.responseText);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>3. Business layer processes the form info and makes a call to the data access layer</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// File: business-layer-user.js</span></span><br><span class="line"></span><br><span class="line">app.get(<span class="string">'/get-user/:useremail'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// Makes a call to the data access layer</span></span><br><span class="line">    <span class="comment">// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span></span><br><span class="line">    <span class="keyword">const</span> user = User.getUserByEmail(req.params.useremail, (error, user) =&gt; &#123;</span><br><span class="line">        res.status(<span class="number">200</span>).json(&#123; <span class="attr">name</span>: user.name, <span class="attr">email</span>: user.email, <span class="attr">profileUrl</span>: user.profileUrl &#125;);</span><br><span class="line">    &#125;);    </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><strong>4. Data access layer processes the information and makes a query to the database for the user</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// File: data-layer-user.js</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports.getUserByEmail = <span class="function">(<span class="params">email, callback</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// Makes a call to the database</span></span><br><span class="line">            <span class="comment">// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span></span><br><span class="line">            User.findOne(&#123; <span class="attr">email</span>: email &#125;, callback);</span><br><span class="line"></span><br><span class="line">      &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">            callback(err);</span><br><span class="line">      &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>5. Data access layer returns the information to the business layer</strong></p>
+<p>No relevant code to show</p>
+<p><strong>6. Business layer returns the information via HTTP to the presentation layer</strong></p>
+<p>No relevant code to show</p>
+<p><strong>7. Presentation layer renders the view with the new information</strong></p>
+<p>No relevant code to show</p>
+<p>As we walked through each of the steps, you may have noticed how each layer is responsible for a very specific duty.  This requires more thought and time to implement, but allows for greater organization as the project grows.  This also allows multiple team members to work on the application at once.  You could have one team implementing all of the database calls in the data layer, another team implementing the REST API in the business layer, and another team creating the front-end user interface!</p>
+<p>This sounds great, but there is one problem that this architecture does not solve.  The layered architecture still operates as a single application.  If you want to make any large changes to a single layer, you will have to re-deploy the entire application to implement the changes.  In other words, you will always have a daily/weekly/monthly “release schedule” where the entire application goes down for a brief moment and the new changes are released to the public.</p>
+<h2 id="Microservices-Architecture"><a href="#Microservices-Architecture" class="headerlink" title="Microservices Architecture"></a>Microservices Architecture</h2><p><em>All code mentioned below is stored in my <a href="https://github.com/zachgoll/microservices-architecture-example" target="_blank" rel="noopener">microservices architecture repository on Github</a></em></p>
+<p>A layered architecture is suitable for many applications, but one of the trends in software as of late is a migration towards microservice architectures.  It solves the “release schedule” problem and allows developers to independently engineer each piece of a larger application.</p>
+<p>If each piece of your architecture is self-sufficient and does not require anything from other pieces of the application, you have a microservices architecture.</p>
+<div class="clickable-images"><br><img src="/blog/2019/architecture-types/microservices.png"><br></div>
+
+<h3 id="Application-Structure-2"><a href="#Application-Structure-2" class="headerlink" title="Application Structure"></a>Application Structure</h3><p>In the code mentioned above, we have three parts to our microservices architecture:</p>
+<ol>
+<li><strong>View Server (localhost:8080)</strong> - This server runs all of the front-end application logic which includes the main <code>index.html</code> file that utilizes <em>multiple</em> microservices.</li>
+<li><strong>User Authentication Server (localhost:8081)</strong> - This server manages all user authentication.</li>
+<li><strong>Game Server (localhost:8082)</strong> - This server controls the game that is played on the screen.</li>
+</ol>
+<p>Notice how each of the servers run independently on different ports.  This means you could host them on completely different servers and still make the application work.  Each piece of the application communicates through HTTP protocol, and therefore can operate independently.</p>
+<p>One thing that you might notice if you look at the code linked above is the presence of a layered architecture within each microservice.  This is where architecture gets a little fuzzy.  You can have a microservices architecture that utilizes a layered architecture within each microservice.  Although there are no strict rules on how you must build your microservices, it is common to utilize something like a layered architecture to structure them.</p>
+<p>As we walk through the pieces of this application, notice how we are not talking about “call chains” anymore.  Instead, we are talking about API endpoints (i.e. the communication between the microservices).</p>
+<p><strong>Microservice #1 - User Authentication (<a href="http://localhost:8081" target="_blank" rel="noopener">http://localhost:8081</a>)</strong></p>
+<p><em>Note: The password authentication is not implemented as you should in a production application; it is solely for demonstration and you should never store your users’ passwords in plain text like I am doing here!</em></p>
+<p>This microservice is solely responsible for creating and authenticating users.    </p>
+<p>In many complex applications, an entire server will be devoted to authenticating and managing users.  After all, without users, you have no application.  Therefore, it is critical to not only implement the user functionality, but maintain proper security and protect the users’ data.</p>
+<p>To understand why a user authentication microservice might be useful, imagine a large company that offers a wide variety of services to their users.  A perfect example is Google because you not only use your login credentials for Gmail and other core Google services; you also use it to log into YouTube and many other applications.  </p>
+<p>Imagine if Google implemented a user authentication scheme in <strong>each individual application</strong>!!  This is highly inefficient, so instead, Google created a “microservice” that functions as user authentication for not only Google applications, but an increasingly large number of 3rd party applications.  This is made possible because the authentication microservice is <em>decoupled</em> from the underlying infrastructure with robust APIs.  <strong>This is the goal of microservices.</strong></p>
+<p>You will see in the application that I have created a much much much much much (did I say much?) simpler authentication microservice than what Google owns.  Nevertheless, it demonstrates how we might implement an “authentication API” for one or more applications.</p>
+<p>Below, you’ll see the three API endpoints that this microservice exposes: </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">app.post(<span class="string">'/register'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">const</span> newUser = <span class="keyword">new</span> User(&#123;</span><br><span class="line">        email: req.body.email,</span><br><span class="line">        password: req.body.password</span><br><span class="line">    &#125;);</span><br><span class="line">    </span><br><span class="line">    User.createUser(newUser, (err, user) =&gt; &#123;</span><br><span class="line">        res.status(<span class="number">200</span>).json(user);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.post(<span class="string">'/authenticate'</span>, (req, res, next) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> email = req.body.email;</span><br><span class="line">    <span class="keyword">const</span> password = req.body.password;</span><br><span class="line"></span><br><span class="line">    User.getUserByEmail(email, (error, user) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (user &amp;&amp; user.password == password) &#123;</span><br><span class="line">            <span class="comment">// User entered the correct password and we should authenticate them!</span></span><br><span class="line">            res.status(<span class="number">200</span>).json(&#123; <span class="attr">authenticated</span>: <span class="literal">true</span> &#125;);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// User entered the wrong password</span></span><br><span class="line">            res.status(<span class="number">200</span>).json(&#123; <span class="attr">authenticated</span>: <span class="literal">false</span> &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">'/get-user/:useremail'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    User.getUserByEmail(req.params.useremail, (error, user) =&gt; &#123;</span><br><span class="line">        res.status(<span class="number">200</span>).json(&#123; <span class="attr">email</span>: user.email, <span class="attr">password</span>: user.password &#125;);</span><br><span class="line">    &#125;);    </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>Our front-end user application can use these three endpoints at <code>localhost:8081</code> to manage users!</p>
+<p><strong>Microservice #2 - Game (<a href="http://localhost:8082" target="_blank" rel="noopener">http://localhost:8082</a>)</strong></p>
+<p><strong>This microservice is solely responsible for managing gameplay results of all the application users registered through the authentication microservice.</strong></p>
+<p>The game microservice is a bit simpler than the user authentication microservice, but demonstrates how we can separate core pieces of functionality of our applications.  Although this is a simple game, you could imagine a much more complex scenario where the game had all sorts of graphic elements and user data.</p>
+<p>Below are the two API endpoints that the Game microservice exposes: </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Register API Call</span></span><br><span class="line">app.post(<span class="string">'/score'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> score = req.body.result;</span><br><span class="line">    <span class="keyword">const</span> winValue = score == <span class="string">"win"</span> ? <span class="number">1</span> : <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">const</span> lossValue = score == <span class="string">"loss"</span> ? <span class="number">1</span> : <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">const</span> email = req.body.email;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// See if user has posted a score already</span></span><br><span class="line">    Game.getUserScoresByEmail(email, (err, user) =&gt; &#123;</span><br><span class="line">        <span class="comment">// If user hasn't posted a score yet, create an entry for their count in the database</span></span><br><span class="line">        <span class="keyword">if</span> (!user) &#123;</span><br><span class="line">            Game.createUserWithScore(<span class="keyword">new</span> Game(&#123;</span><br><span class="line">                email: email,</span><br><span class="line">                wins: winValue,</span><br><span class="line">                losses: lossValue</span><br><span class="line">            &#125;), (err, user) =&gt; &#123;</span><br><span class="line">                res.status(<span class="number">200</span>).json(user);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// If user already has posted a score, update his/her win and loss count based on result</span></span><br><span class="line">            Game.updateUserScores(email, winValue, lossValue, (err, count) =&gt; &#123;</span><br><span class="line">                res.status(<span class="number">200</span>).json(count);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">'/score/:email'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">    </span><br><span class="line">    Game.getUserScoresByEmail(req.params.email, (err, user) =&gt; &#123;</span><br><span class="line">        res.status(<span class="number">200</span>).json(user);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>The user interface will make calls to localhost:8082 to update a user’s gameplay stats.</p>
+<p><strong>Bringing it all together: The User Interface</strong></p>
+<p>We have walked through the API endpoints that each microservice exposes, but these endpoints are useless without a user interface to help the user interact with them!</p>
+<p>In this user interface, <code>index.html</code> has a bunch of click listeners that will execute API calls when certain events happen.  For example, when a user enters information into the register form and clicks the register button, the following function is triggered, and a <code>POST</code> request is sent to the <code>/register</code> endpoint.</p>
+<img src="/blog/2019/architecture-types/register-demonstration.gif">
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">register</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> email = $(<span class="string">"#register-email"</span>).val();</span><br><span class="line">    <span class="keyword">const</span> pw = $(<span class="string">"#register-pw"</span>).val();</span><br><span class="line">    event.preventDefault();</span><br><span class="line">    $.ajax(&#123;</span><br><span class="line">        type: <span class="string">"POST"</span>,</span><br><span class="line">        url: <span class="string">"http://localhost:8081/register"</span>,</span><br><span class="line">        data: <span class="built_in">JSON</span>.stringify(&#123; <span class="attr">email</span>: email, <span class="attr">password</span>: pw &#125;),</span><br><span class="line">        contentType: <span class="string">"application/json; charset=utf-8"</span>,</span><br><span class="line">        dataType: <span class="string">"json"</span>,</span><br><span class="line">        success: <span class="function"><span class="keyword">function</span>(<span class="params">result</span>)</span>&#123; </span><br><span class="line">            setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">                $(<span class="string">"#register-message"</span>).toggleClass(<span class="string">"hide"</span>); </span><br><span class="line">            &#125;, <span class="number">3000</span>);</span><br><span class="line">            $(<span class="string">"#register-message"</span>).toggleClass(<span class="string">"hide"</span>); </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>You can see that the <code>url</code> property is set to our User Authentication microservice.</p>
+<p>There is another click listener on the buttons that start and stop the game.  When the game is stopped, the following function is triggered, and a <code>POST</code> request is sent to the <code>/score</code> endpoint: </p>
+<img src="/blog/2019/architecture-types/play-game-demo.gif">
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">stopSpinner</span>(<span class="params">position</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> coordinatesArray = position.slice(<span class="number">7</span>).split(<span class="string">","</span>);</span><br><span class="line">    <span class="keyword">let</span> c1 = <span class="built_in">Math</span>.abs(<span class="built_in">parseFloat</span>(coordinatesArray[<span class="number">0</span>]));</span><br><span class="line">    <span class="keyword">let</span> c2 = <span class="built_in">Math</span>.abs(<span class="built_in">parseFloat</span>(coordinatesArray[<span class="number">1</span>]));</span><br><span class="line">    <span class="keyword">let</span> result;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> email = localStorage.getItem(<span class="string">"email"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!email) &#123;</span><br><span class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">            $(<span class="string">"#logged-out-warning"</span>).toggleClass(<span class="string">"hide"</span>); </span><br><span class="line">        &#125;, <span class="number">3000</span>);</span><br><span class="line">        $(<span class="string">"#logged-out-warning"</span>).toggleClass(<span class="string">"hide"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (c1 &gt;= <span class="number">0.9935</span> &amp;&amp; c1 &lt;= <span class="number">1</span> &amp;&amp; c2 &gt;= <span class="number">0</span> &amp;&amp; c2 &lt;= <span class="number">0.12</span>) &#123;</span><br><span class="line">        result = <span class="string">"win"</span>;</span><br><span class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">            $(<span class="string">"#winner"</span>).toggleClass(<span class="string">"hide"</span>);</span><br><span class="line">        &#125;, <span class="number">3000</span>);</span><br><span class="line">        $(<span class="string">"#winner"</span>).toggleClass(<span class="string">"hide"</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        result = <span class="string">"loss"</span>;</span><br><span class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">            $(<span class="string">"#loser"</span>).toggleClass(<span class="string">"hide"</span>);</span><br><span class="line">        &#125;, <span class="number">3000</span>);</span><br><span class="line">        $(<span class="string">"#loser"</span>).toggleClass(<span class="string">"hide"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (email) &#123;</span><br><span class="line">        $.ajax(&#123;</span><br><span class="line">            type: <span class="string">"POST"</span>,</span><br><span class="line">            url: <span class="string">"http://localhost:8082/score"</span>,</span><br><span class="line">            data: <span class="built_in">JSON</span>.stringify(&#123; <span class="attr">email</span>: email, <span class="attr">result</span>: result &#125;),</span><br><span class="line">            contentType: <span class="string">"application/json; charset=utf-8"</span>,</span><br><span class="line">            dataType: <span class="string">"json"</span>,</span><br><span class="line">            success: <span class="function"><span class="keyword">function</span>(<span class="params">result</span>)</span>&#123; <span class="built_in">console</span>.log(result) &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Finally, when you click the button to see your scores, the following function is invoked, and a <code>GET</code> request is sent to the <code>/score/:email</code> endpoint. </p>
+<img src="/blog/2019/architecture-types/see-score-demo.gif">
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">seeScores</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> email = localStorage.getItem(<span class="string">"email"</span>);</span><br><span class="line">    $.ajax(&#123;</span><br><span class="line">        url: <span class="string">`http://localhost:8082/score/<span class="subst">$&#123;email&#125;</span>`</span>,</span><br><span class="line">        type: <span class="string">"GET"</span>,</span><br><span class="line">        success: <span class="function"><span class="keyword">function</span> (<span class="params">user</span>) </span>&#123;</span><br><span class="line">            $(<span class="string">"#wins"</span>).text(user.wins);</span><br><span class="line">            $(<span class="string">"#losses"</span>).text(user.losses);</span><br><span class="line">        &#125;,</span><br><span class="line">        error: <span class="function"><span class="keyword">function</span> (<span class="params">jqXHR, textStatus, ex</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(textStatus + <span class="string">","</span> + ex + <span class="string">","</span> + jqXHR.responseText);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Other-Architectures"><a href="#Other-Architectures" class="headerlink" title="Other Architectures"></a>Other Architectures</h2><p>Although I only talked about monolithic, layered, and microservice architectures, there are many others to choose from.  As you become more experienced, you may begin to see the usefulness of other architectural patterns.</p>
+<p>For example, if you were trying to build a platform like Wordpress that has a core system which can be extended via plugins, you might opt for a <a href="https://www.oreilly.com/library/view/software-architecture-patterns/9781491971437/ch03.html" target="_blank" rel="noopener">microkernel architecture</a>.  If you were trying to build Bitcoin, you might look at a peer-to-peer architecture.  If you<br>wanted to build an instant messaging system or chat application, you might look towards and Event-Driven Architecture.</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>Whatever your situation, there is an architecture out there for you.  Remember, the ultimate goal with architecting software solutions is twofold: </p>
+<ol>
+<li>Solve your problems in the <em>simplest</em> way possible</li>
+<li>Design your architecture to address the <em>quality attributes</em> you desire in your system</li>
+</ol>
+<p>If you can meet these two requirements, you have succeeded.  Don’t fall into the <a href="https://www.joelonsoftware.com/2001/04/21/dont-let-architecture-astronauts-scare-you/" target="_blank" rel="noopener">architecture astronaut</a> trap. Don’t fall into analysis paralysis.  Build something that works and call it a day.</p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="http://zachgoll.github.io">Home</a></li>
+         
+          <li><a href="/blog/archives/">Writing</a></li>
+         
+          <li><a href="http://zachgoll.github.io/portfolio">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Why-do-we-need-Software-Architecture"><span class="toc-number">2.</span> <span class="toc-text">Why do we need Software Architecture?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Monolithic-Architecture"><span class="toc-number">3.</span> <span class="toc-text">Monolithic Architecture</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Application-Structure"><span class="toc-number">3.1.</span> <span class="toc-text">Application Structure</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Layered-Architecture-also-called-“n-tiered”"><span class="toc-number">4.</span> <span class="toc-text">Layered Architecture (also called “n-tiered”)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Application-Structure-1"><span class="toc-number">4.1.</span> <span class="toc-text">Application Structure</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Microservices-Architecture"><span class="toc-number">5.</span> <span class="toc-text">Microservices Architecture</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Application-Structure-2"><span class="toc-number">5.1.</span> <span class="toc-text">Application Structure</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Other-Architectures"><span class="toc-number">6.</span> <span class="toc-text">Other Architectures</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conclusion"><span class="toc-number">7.</span> <span class="toc-text">Conclusion</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://zachgoll.github.io/blog/2019/architecture-types/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://zachgoll.github.io/blog/2019/architecture-types/&text=Introduction to Software Architecture (Monolithic vs. Layered vs. Microservices)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://zachgoll.github.io/blog/2019/architecture-types/&title=Introduction to Software Architecture (Monolithic vs. Layered vs. Microservices)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://zachgoll.github.io/blog/2019/architecture-types/&is_video=false&description=Introduction to Software Architecture (Monolithic vs. Layered vs. Microservices)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Introduction to Software Architecture (Monolithic vs. Layered vs. Microservices)&body=Check out this article: http://zachgoll.github.io/blog/2019/architecture-types/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://zachgoll.github.io/blog/2019/architecture-types/&title=Introduction to Software Architecture (Monolithic vs. Layered vs. Microservices)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://zachgoll.github.io/blog/2019/architecture-types/&title=Introduction to Software Architecture (Monolithic vs. Layered vs. Microservices)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://zachgoll.github.io/blog/2019/architecture-types/&title=Introduction to Software Architecture (Monolithic vs. Layered vs. Microservices)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://zachgoll.github.io/blog/2019/architecture-types/&title=Introduction to Software Architecture (Monolithic vs. Layered vs. Microservices)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://zachgoll.github.io/blog/2019/architecture-types/&name=Introduction to Software Architecture (Monolithic vs. Layered vs. Microservices)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 Zach Gollwitzer
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="http://zachgoll.github.io">Home</a></li>
+         
+          <li><a href="/blog/archives/">Writing</a></li>
+         
+          <li><a href="http://zachgoll.github.io/portfolio">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/blog/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/blog/lib/jquery/jquery.min.js"></script>
+<script src="/blog/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/blog/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-149577498-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'zachgoll';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+
