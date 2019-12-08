@@ -1,9 +1,10 @@
 ---
-title: How the Javascript "this" Keyword Works
-date: 2019-06-24 18:43:12
+title: How the Javascript `this` Keyword Works
 tags:
-    - javascript
+  - javascript
+date: 2019-06-24 18:43:12
 ---
+
 
 You know those concepts that you learn over and over again, yet they seem to vanish from your memory no matter how many notebooks you fill with detailed notes?
 

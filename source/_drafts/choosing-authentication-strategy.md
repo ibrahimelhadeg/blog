@@ -14,6 +14,11 @@ Since this post is long and detailed, if you are already familiar with a topic d
 * [Session Based Authentication Implementation]()
 * [JWT Based Authentication Implementation]()
 
+Also, I created sample applications utilizing both authentication methods in the following repositories:
+
+* [Session Based Auth Repo](https://github.com/zachgoll/express-session-authentication-starter)
+* [JWT Auth Repo](https://github.com/zachgoll/express-jwt-authentication-starter)
+
 ## Authentication Choices
 
 {% asset_img auth-types.PNG %}
@@ -896,7 +901,7 @@ Got all that?
 
 The hard part is over.
 
-Putting everything together, below is your full functional Session Based authentication Express app.  I suggest re-factoring it (i.e. `passport.use()` goes to a config folder, all routes go to routes folders, etc.), but it is fully ready for production otherwise!
+Putting everything together, below is your full functional Session Based authentication Express app.  Below is the app contained within a single file, but I have also refactored this application closer to what you would use in the real world in [this repository](https://github.com/zachgoll/express-session-authentication-starter).
 
 ```javascript
 const express = require('express');
