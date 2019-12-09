@@ -1233,10 +1233,370 @@ Before I start getting lost in the details, I must mention that if you read all 
 
 Additionally, as we walk through the basics of JWT authentication, we will start to understand why JWT auth is far better for Angular front-end applications (hint: stateless auth!).
 
+### Review and Preview
+
+As we transition from talking about session-based authentication to JWT based authentication, it is important to keep our authentication flows clear.  To do a quick review, the basic auth flow of a session-based authentication app is like so:
+
+1. User visits your Express application and signs in using his username and password
+2. The username and password are sent via POST request to the `/login` route on the Express application server
+3. The Express application server will retrieve the user from the database (a hash and salt are stored on the user profile), take a hash of the password that the user provided a few seconds ago using the salt attached to the database user object, and verify that the hash taken matches the hash stored on the database user object.
+4. If the hashes match, we conclude that the user provided the correct credentials, and our `passport-local` middleware will attach the user to the current session.
+5. For every new request that the user makes on the front-end, their session Cookie will be attached to the request, which will be subsequently verified by the Passport middleware.  If the Passport middleware verifies the session cookie successfully, the server will return the requested route data, and our authentication flow is complete.
+
+What I want you to notice about this flow is the fact that the user only had to type in his username and password **one time**, and for the remainder of the session, he can visit protected routes.  The session cookie is **automatically** attached to all of his requests because this is the default behavior of a web browser and how cookies work!  In addition, each time a request is made, the Passport middleware and Express Session middleware will be making a query to our database to retrieve session information.  In other words, **to authenticate a user, a database is required**.
+
+Now skipping forward, you'll begin to notice that with JWTs, there is absolutely no database required on **each request** to authenticate users.  Yes, we will need to make one database request to initially authenticate a user and generate a JWT, but after that, the JWT will be attached in the `Authorization` HTTP header (as opposed to `Cookie` header), and no database is required.
+
+If this doesn't make sense, that is okay.  We will cover all of the logic in the remaining sections.
+
 ### Components of a JSON Web Token (JWT)
 
-### Differences and why JWT Auth is better than Session Auth for Angular Apps 
+At the most basic level, a JSON Web Token (JWT) is just a small piece of data that contains information about a user.  It contains three parts:
 
-* In session auth, the cookie was simply used to maintain a session in the browser.  The session then stored info such as the passport objects on the server.
-* In JWT, the JWT IS the password 
+1. Header
+2. Payload
+3. Signature
 
+Each part is encoded in Base64url format (easier to transport over HTTP protocol than JSON objects).
+
+Here is an example JWT:
+
+```
+eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.POstGetfAytaZS82wHcjoTyoqhMyxXiWdR7Nn7A29DNSl0EiXLdwJ6xC6AfgZWF1bOsS_TuYI3OG85AmiExREkrS6tDfTQ2B3WXlrr-wp5AokiRbz3_oB4OxG-W9KcEEbDRcZc0nH3L7LzYptiy1PtAylQGxHTWZXtGz4ht0bAecBgmpdgXMguEIcoqPJ1n3pIWk_dUZegpqx0Lka21H6XxUTxiy8OcaarA8zdnPUnV6AmNP3ecFawIFYdvJB_cm-GvpCSbr8G8y_Mllj8f4x9nBH8pQux89_6gUY618iYv7tuPWBFfEbLxtF2pZS6YC1aSfLQxeNe8djT9YjpvRZA
+```
+
+Notice how there are periods `.` within this text.  These periods separate the header from the payload from the signature.  Let's isolate the header:
+
+```
+eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9
+```
+
+Now, let's install the NodeJS `base64url` library and decode this.
+
+```
+npm install --save base64url
+```
+
+```javascript
+# I am running this from Node console
+
+const base64 = require('base64url');
+
+const headerInBase64UrlFormat = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9';
+
+const decoded = base64.decode(headerInBase64UrlFormat);
+
+console.log(decoded);
+```
+
+If we decode the header as shown above, it will give us the following **JSON** object (hence the name, "JSON" Web Token):
+
+```JSON
+{
+    "alg":"RS256",
+    "typ":"JWT"
+}
+```
+
+We will get to what this means later, but for now, let's decode the payload and the signature using the same method.
+
+```javascript
+# I am running this from Node console
+
+const base64 = require('base64url');
+
+const JWT_BASE64_URL = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.POstGetfAytaZS82wHcjoTyoqhMyxXiWdR7Nn7A29DNSl0EiXLdwJ6xC6AfgZWF1bOsS_TuYI3OG85AmiExREkrS6tDfTQ2B3WXlrr-wp5AokiRbz3_oB4OxG-W9KcEEbDRcZc0nH3L7LzYptiy1PtAylQGxHTWZXtGz4ht0bAecBgmpdgXMguEIcoqPJ1n3pIWk_dUZegpqx0Lka21H6XxUTxiy8OcaarA8zdnPUnV6AmNP3ecFawIFYdvJB_cm-GvpCSbr8G8y_Mllj8f4x9nBH8pQux89_6gUY618iYv7tuPWBFfEbLxtF2pZS6YC1aSfLQxeNe8djT9YjpvRZA';
+
+// Returns an array of strings separated by the period
+const jwtParts = JWT_BASE64_URL.split('.');
+
+const headerInBase64UrlFormat = jwtParts[0];
+const payloadInBase64UrlFormat = jwtParts[1];
+const signatureInBase64UrlFormat = jwtParts[2];
+
+const decodedHeader = base64.decode(headerInBase64UrlFormat);
+const decodedPayload = base64.decode(payloadInBase64UrlFormat);
+const decodedSignature = base64.decode(signatureInBase64UrlFormat);
+
+console.log(decodedHeader);
+console.log(decodedPayload);
+console.log(decodedSignature);
+```
+
+The result of the above code will be:
+
+```JSON
+# Header
+{
+    "alg":"RS256",
+    "typ":"JWT"
+}
+
+# Payload
+{
+    "sub":"1234567890",
+    "name":"John Doe",
+    "admin":true,
+    "iat":1516239022
+}
+
+# Signature
+Lots of gibberish like - ��e宿���(�$[����4\e�'
+```
+
+For now, ignore the signature part of the JWT.  The reason it cannot be decoded into a meaningful JSON object is because it is a bit more complex than the header and payload.  We will be exploring this further soon.
+
+Let's walk through the header and payload.
+
+The header has both an `alg` and `typ` property.  These are both in the JWT because they represent "instructions" for interpreting that messy signature.
+
+The payload is the simplest part, and is just information about the user that we are authenticating.
+
+* `sub` - An abbreviation for "subject", and usually represents the user ID in the database
+* `name` - Just some arbitrary metadata about the user
+* `admin` - Some more arbitrary metadata about the user
+* `iat` - An abbreviation for "issued at", and represents when this JWT was issued
+
+With JWTs, you might also see the following information in a payload: 
+
+* `exp` - An abbreviation for "expiration time", which indicates the time at which this JWT expires
+* `iss` - An abbreviation for "issuer", which is often used when a central login server is issuing many JWT tokens (also used heavily in the OAuth protocol)
+
+You can see all of the "standard claims" for the JWT specification [at this link](https://tools.ietf.org/html/rfc7519#section-4.1).
+
+### Creating the signature step by step
+
+Although I told you not to worry about that gibberish we received when we tried to decode the `signature` portion of the JWT, I'm sure it is still bothersome.  In this section, we will learn how that works, but **first**, you're going to need to read [this article I wrote which explains how Public Key Cryptography works](/blog/2019/making-sense-of-public-key-cryptography/) (should take you 10-20 min depending on how familiar you are with the topic).  Even if you are familiar with the topic, you should skim the article.  This section will make absolutely zero sense if you don't have a solid understanding of public key cryptography.
+
+Anyways...
+
+The signature of a JWT is actually a combination of the `header` and the `payload`.  It is created like so (below is pseudocode):
+
+```javascript
+// NOTE: This is pseudocode!!
+
+// Copied from the original JWT we are using as an example above
+const base64UrlHeader = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9';
+const base64UrlPayload = 'eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0';
+
+// We take a one-way hash of the header and payload using the SHA256 hashing
+// algorithm.  We know to use this algorithm because it was specified in the 
+// JWT header
+const hashedData = sha256hashFunction(base64UrlHeader + '.' + base64UrlPayload);
+
+// The issuer (in our case, it will be the Express server) will sign the hashed
+// data with its private key
+const encryptedData = encryptFunction(issuer_priv_key, hashedData);
+
+const finalSignature = convertToBase64UrlFunction(encryptedData);
+```
+
+Even though `sha256hashFunction`, `encryptFunction`, and `convertToBase64UrlFunction` are made up pseudocode, hopefully the above example explains the process of creating the signature adequately.
+
+Now, let's use the NodeJS `crypto` library to actually implement the above pseudocode.  Below are the public and private keys that I used to generate this example JWT (which we will need to create and decode the signature of the JWT).
+
+```
+-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnzyis1ZjfNB0bBgKFMSv
+vkTtwlvBsaJq7S5wA+kzeVOVpVWwkWdVha4s38XM/pa/yr47av7+z3VTmvDRyAHc
+aT92whREFpLv9cj5lTeJSibyr/Mrm/YtjCZVWgaOYIhwrXwKLqPr/11inWsAkfIy
+tvHWTxZYEcXLgAXFuUuaS3uF9gEiNQwzGTU1v0FqkqTBr4B8nW3HCN47XUu0t8Y0
+e+lf4s4OxQawWD79J9/5d3Ry0vbV3Am1FtGJiJvOwRsIfVChDpYStTcHTCMqtvWb
+V6L11BWkpzGXSW4Hv43qa+GSYOD2QU68Mb59oSk2OB+BtOLpJofmbGEGgvmwyCI9
+MwIDAQAB
+-----END PUBLIC KEY-----
+```
+
+```
+-----BEGIN RSA PRIVATE KEY-----
+MIIEogIBAAKCAQEAnzyis1ZjfNB0bBgKFMSvvkTtwlvBsaJq7S5wA+kzeVOVpVWw
+kWdVha4s38XM/pa/yr47av7+z3VTmvDRyAHcaT92whREFpLv9cj5lTeJSibyr/Mr
+m/YtjCZVWgaOYIhwrXwKLqPr/11inWsAkfIytvHWTxZYEcXLgAXFuUuaS3uF9gEi
+NQwzGTU1v0FqkqTBr4B8nW3HCN47XUu0t8Y0e+lf4s4OxQawWD79J9/5d3Ry0vbV
+3Am1FtGJiJvOwRsIfVChDpYStTcHTCMqtvWbV6L11BWkpzGXSW4Hv43qa+GSYOD2
+QU68Mb59oSk2OB+BtOLpJofmbGEGgvmwyCI9MwIDAQABAoIBACiARq2wkltjtcjs
+kFvZ7w1JAORHbEufEO1Eu27zOIlqbgyAcAl7q+/1bip4Z/x1IVES84/yTaM8p0go
+amMhvgry/mS8vNi1BN2SAZEnb/7xSxbflb70bX9RHLJqKnp5GZe2jexw+wyXlwaM
++bclUCrh9e1ltH7IvUrRrQnFJfh+is1fRon9Co9Li0GwoN0x0byrrngU8Ak3Y6D9
+D8GjQA4Elm94ST3izJv8iCOLSDBmzsPsXfcCUZfmTfZ5DbUDMbMxRnSo3nQeoKGC
+0Lj9FkWcfmLcpGlSXTO+Ww1L7EGq+PT3NtRae1FZPwjddQ1/4V905kyQFLamAA5Y
+lSpE2wkCgYEAy1OPLQcZt4NQnQzPz2SBJqQN2P5u3vXl+zNVKP8w4eBv0vWuJJF+
+hkGNnSxXQrTkvDOIUddSKOzHHgSg4nY6K02ecyT0PPm/UZvtRpWrnBjcEVtHEJNp
+bU9pLD5iZ0J9sbzPU/LxPmuAP2Bs8JmTn6aFRspFrP7W0s1Nmk2jsm0CgYEAyH0X
++jpoqxj4efZfkUrg5GbSEhf+dZglf0tTOA5bVg8IYwtmNk/pniLG/zI7c+GlTc9B
+BwfMr59EzBq/eFMI7+LgXaVUsM/sS4Ry+yeK6SJx/otIMWtDfqxsLD8CPMCRvecC
+2Pip4uSgrl0MOebl9XKp57GoaUWRWRHqwV4Y6h8CgYAZhI4mh4qZtnhKjY4TKDjx
+QYufXSdLAi9v3FxmvchDwOgn4L+PRVdMwDNms2bsL0m5uPn104EzM6w1vzz1zwKz
+5pTpPI0OjgWN13Tq8+PKvm/4Ga2MjgOgPWQkslulO/oMcXbPwWC3hcRdr9tcQtn9
+Imf9n2spL/6EDFId+Hp/7QKBgAqlWdiXsWckdE1Fn91/NGHsc8syKvjjk1onDcw0
+NvVi5vcba9oGdElJX3e9mxqUKMrw7msJJv1MX8LWyMQC5L6YNYHDfbPF1q5L4i8j
+8mRex97UVokJQRRA452V2vCO6S5ETgpnad36de3MUxHgCOX3qL382Qx9/THVmbma
+3YfRAoGAUxL/Eu5yvMK8SAt/dJK6FedngcM3JEFNplmtLYVLWhkIlNRGDwkg3I5K
+y18Ae9n7dHVueyslrb6weq7dTkYDi3iOYRW8HRkIQh06wEdbxt0shTzAJvvCQfrB
+jg/3747WSsf/zBTcHihTRBdAv6OmdhV4/dD5YBfLAkLrd+mX7iE=
+-----END RSA PRIVATE KEY-----
+```
+
+First up, let's create both our header and payload.  I will be using the `base64url` library for this, so make sure you have it installed.
+
+```javascript
+const base64 = require('base64url');
+
+const headerObj = {
+    alg: 'RS256',
+    typ: 'JWT'
+};
+
+const payloadObj = {
+    sub: '1234567890',
+    name: 'John Doe',
+    admin: true,
+    iat: 1516239022
+};
+
+const headerObjString = JSON.stringify(headerObj);
+const payloadObjString = JSON.stringify(payloadObj);
+
+const base64UrlHeader = base64(headerObjString);
+const base64UrlPayload = base64(payloadObjString);
+
+console.log(base64UrlHeader); // eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9
+console.log(base64UrlPayload); // eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0
+```
+
+Boom! You just created the first two parts of the JWT.  Now, let's add the creation of the signature to this script.  We will need the built in NodeJS `crypto` library and the private key to do this.
+
+```javascript
+const base64 = require('base64url');
+const crypto = require('crypto');
+const signatureFunction = crypto.createSign('RSA-SHA256');
+const fs = require('fs');
+
+const headerObj = {
+    alg: 'RS256',
+    typ: 'JWT'
+};
+
+const payloadObj = {
+    sub: '1234567890',
+    name: 'John Doe',
+    admin: true,
+    iat: 1516239022
+};
+
+const headerObjString = JSON.stringify(headerObj);
+const payloadObjString = JSON.stringify(payloadObj);
+
+const base64UrlHeader = base64(headerObjString);
+const base64UrlPayload = base64(payloadObjString);
+
+signatureFunction.write(base64UrlHeader + '.' + base64UrlPayload);
+signatureFunction.end();
+
+// The private key without line breaks
+const PRIV_KEY = fs.readFileSync(__dirname + '/id_rsa_priv.pem', 'utf8');
+
+// Will sign our data and return Base64 signature (not the same as Base64Url!)
+const signatureBase64 = signatureFunction.sign(PRIV_KEY, 'base64');
+
+const signatureBase64Url = base64.fromBase64(signatureBase64);
+
+console.log(signatureBase64Url); // POstGetfAytaZS82wHcjoTyoqhMyxXiWdR7Nn7A29DNSl0EiXLdwJ6xC6AfgZWF1bOsS_TuYI3OG85AmiExREkrS6tDfTQ2B3WXlrr-wp5AokiRbz3_oB4OxG-W9KcEEbDRcZc0nH3L7LzYptiy1PtAylQGxHTWZXtGz4ht0bAecBgmpdgXMguEIcoqPJ1n3pIWk_dUZegpqx0Lka21H6XxUTxiy8OcaarA8zdnPUnV6AmNP3ecFawIFYdvJB_cm-GvpCSbr8G8y_Mllj8f4x9nBH8pQux89_6gUY618iYv7tuPWBFfEbLxtF2pZS6YC1aSfLQxeNe8djT9YjpvRZA
+```
+
+In the above code, I have repeated the previous script that we ran with the logic for creating the signature appended.  In this code, we first append the header and the payload (base64url encoded) together by a `.`.  We then write those contents into our signature function, which is the built-in NodeJS crypto library's `RSA-SHA256` signature class.  Although it sounds complicated, all this tells us is to
+
+1. Use an RSA, standard 4096 bit Public/Private keypair
+2. For hashing the `base64Url(header) + '.' + base64Url(payload)`, use the `SHA256` hashing algorithm.
+
+In the JWT header, you will notice that this is indicated by `RS256`, which is just an abbreviated way of saying `RSA-SHA256`.
+
+Once we have written the contents into this function, we need to read the private key we will be signing with from a file.  I have stored the private key shown earlier in this post in a file called `id_rsa_priv.pem`, which is located in the current working directory and stored in `.pem` format (pretty standard).
+
+Next, I will "sign" the data, which will first hash the data with the `SHA256` hashing function, and then encrypt the result with the private key.
+
+Finally, since the NodeJS crypto library returns our value in `Base64` format, we need to use the `base64Url` library to convert that from Base64->Base64Url.
+
+Once that's done, you will have a JWT header, payload, and signature that match our original JWT perfectly!
+
+### Verifying the signature step by step
+
+In the previous section, we looked at how you would create a JWT signature.  In user authentication, the flow looks like this:
+
+1. Server receives login credentials (username, password)
+2. Server performs some logic to verify that these credentials are valid
+3. If the credentials are valid, the server issues and _signs_ a JWT and returns it to the user
+4. The user uses the issued JWT to authenticate future requests in the browser
+
+But what happens when the user makes another request to a protected route of your application or a protected API endpoint?
+
+Your user presents the server with a JWT token, but how does your server interpret that token and decide whether the user is valid?  Below are the basic steps.
+
+1. Server receives a JWT token
+2. Server first checks if the JWT token has an expiry, and if that expiration date has been passed.  If so, the server denies access.
+3. If the JWT is not expired, the server will first convert the `header` and `payload` from Base64Url->JSON format.
+4. Server looks in the `header` of the JWT to find which hashing function and encryption algorithm it needs to decrypt the signature (we will assume that in this example, the JWT uses `RSA-SHA256` as the algorithm.
+5. Server uses a `SHA256` hashing function to hash `base64Url(header) + '.' + base64Url(payload)`, which leaves the server with a hash value.
+6. Server uses the `Public Key` stored in its filesystem to decrypt the `base64Url(signature)` (remember, private key encrypts, public key decrypts).  Since the server is both creating the signatures and verifying them, it should have both the Public and Private key stored in its filesystem.  For larger use cases, it would be common to have these duties separated to entirely separate machines.
+7. Server compares the values from step 5 and step 6.  If they match, this JWT is valid.
+8. If the JWT is valid, the server uses the `payload` data to get more information about the user and authenticate that user.
+
+Using the **same JWT** that we have been using throughout this post, here is how this process looks in code:
+
+```javascript
+const base64 = require('base64url');
+const crypto = require('crypto');
+const verifyFunction = crypto.createVerify('RSA-SHA256');
+const fs = require('fs');
+
+const JWT = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.POstGetfAytaZS82wHcjoTyoqhMyxXiWdR7Nn7A29DNSl0EiXLdwJ6xC6AfgZWF1bOsS_TuYI3OG85AmiExREkrS6tDfTQ2B3WXlrr-wp5AokiRbz3_oB4OxG-W9KcEEbDRcZc0nH3L7LzYptiy1PtAylQGxHTWZXtGz4ht0bAecBgmpdgXMguEIcoqPJ1n3pIWk_dUZegpqx0Lka21H6XxUTxiy8OcaarA8zdnPUnV6AmNP3ecFawIFYdvJB_cm-GvpCSbr8G8y_Mllj8f4x9nBH8pQux89_6gUY618iYv7tuPWBFfEbLxtF2pZS6YC1aSfLQxeNe8djT9YjpvRZA';
+const PUB_KEY = fs.readFileSync(__dirname + '/id_rsa_pub.pem', 'utf8');
+
+const jwtHeader = JWT.split('.')[0];
+const jwtPayload = JWT.split('.')[1];
+const jwtSignature = JWT.split('.')[2];
+
+verifyFunction.write(jwtHeader + '.' + jwtPayload);
+verifyFunction.end();
+
+const jwtSignatureBase64 = base64.toBase64(jwtSignature);
+
+const signatureIsValid = verifyFunction.verify(PUB_KEY, jwtSignatureBase64, 'base64');
+
+console.log(signatureIsValid); // true
+```
+
+There are several items worthy of note in this code.  First, we take the Base64Url encoded JWT and split it into its 3 parts.  We then use the built-in NodeJS `createVerify` function to create a new `Verify` class.  Just like the process of creating the signature, we need to pass in the `base64url(header) + '.' + base64url(payload)` into the stream used by the `Verify` crypto class.
+
+The next step is critical--you need to convert the `jwtSignature` from its default encoding Base64Url->Base64.  You then need to pass the public key, the Base64 version of the signature, and indicate to NodeJS that you are using Base64.  If you do not specify the encoding, it will default to a Buffer and you will always get a false return value.
+
+If all goes well, you should get a true return value, which means this signature is valid!
+
+### Zoom Out: What JWT Signatures
+
+If you read the above two sections, you know how to create and verify a JWT signature using the `RSA-SHA256` JWT algorithm (other algorithms work very similarly, but this algorithm is considered one of the more secure and "production-ready" algorithms).
+
+But what does it all mean?
+
+I know we have gone in all sorts of directions in this post about user authentication, but all of this knowledge comes together here.  If you think about authenticating a user with Cookies and Sessions, you know that in order to do so, your application server must have a database keeping track of the sessions, and this database must be called each time a user wants to visit a protected resource on the server.
+
+With JWT authentication, the only thing needed to verify that a user is authenticated is a public key!!
+
+Once a JWT token has been issued (by either your application server, an authentication server, or even a 3rd party authentication server), that JWT can be stored in the browser securely and can be used to verify any request without using a database at all.  The application server just needs the public key of the issuer!
+
+If you extrapolate this concept and think about the widespread implications of JWT, it becomes clear how powerful it is.  You no longer need a local database.  You can transport authentication all over the web!  
+
+Let's say I log in to a popular service like Google and I receive a JWT token from Google's authentication server.  The only thing that is needed to verify the JWT that I am browsing with is the public key that matches the private key Google signed with.  Usually, this public key is _publicly_ available, which means that anyone on the internet can verify my JWT!  If they trust Google and they trust that Google is providing the correct public key, then there is no reason that I cannot just use the JWT issued by Google to authenticate users into **my application**.
+
+I know I said that we wouldn't be getting into all the OAuth stuff in this post, but this is the essence of delegated authentication (i.e. the OAuth2.0 protocol)!
+
+### JWT Based Authentication Implementation
+
+It is finally time to jump into the actual implementation of JWT Authentication with an Express/Angular application.  Since we have already covered a lot of the ExpressJS basics (middleware, cookies, sessions, etc.), I will not be devoting sections here to them.  If anything in this application doesn't make sense, be sure to read the first half of this post.
+
+All of the code below can be found in [this example repository on Github](https://github.com/zachgoll/express-jwt-authentication-starter.git).
+
+Here is our starter code with all the basic setup you need for an Express app:
+
+```javascript
+```

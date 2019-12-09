@@ -1,7 +1,8 @@
 ---
-title: making-sense-of-public-key-cryptography
+title: Making Sense of Public Key Cryptography
 date: 2019-12-08 18:10:22
 tags:
+    - cryptography
 ---
 
 
@@ -40,6 +41,7 @@ So now that you understand how this works, let's generate a keypair.  For this t
 
 ```javascript
 // file: createKey.js
+// https://github.com/zachgoll/making-sense-of-public-key-cryptography/blob/master/createKey.js
 
 const crypto = require('crypto');
 const fs = require('fs');
@@ -115,7 +117,7 @@ Lets take a quick look at how this is implemented in the real world.  Below is t
 
 ```javascript
 // file: encrypt.js
-// https://nodejs.org/api/crypto.html#crypto_crypto_publicencrypt_key_buffer
+// https://github.com/zachgoll/making-sense-of-public-key-cryptography/blob/master/encrypt.js
 
 const crypto = require('crypto');
 
@@ -134,6 +136,7 @@ The `crypto.publicEncrypt()` method takes the Buffer version of our message, enc
 
 ```javascript
 // file: main.js
+// https://github.com/zachgoll/making-sense-of-public-key-cryptography/blob/master/main.js
 
 const fs = require('fs');
 const encrypt = require('./encrypt');
@@ -159,6 +162,7 @@ Since we have the private key, we can decrypt it!  Let's do that below:
 
 ```javascript
 // file: decrypt.js
+// https://github.com/zachgoll/making-sense-of-public-key-cryptography/blob/master/decrypt.js
 
 const crypto = require('crypto');
 
@@ -174,6 +178,9 @@ module.exports.decryptWithPrivateKey = decryptWithPrivateKey;
 Remember, since we encrypted with the public key, we must decrypt with the corresponding private key.  The above function decrypts the encrypted Buffer using the private key.
 
 ```javascript
+// file: main.js
+// https://github.com/zachgoll/making-sense-of-public-key-cryptography/blob/master/main.js
+
 const fs = require('fs');
 const encrypt = require('./encrypt');
 const decrypt = require('./decrypt');
@@ -269,6 +276,7 @@ Let's take a look at a practical example.  First, we have a module that signs a 
 
 ```javascript
 // file: signMessage.js
+// https://github.com/zachgoll/making-sense-of-public-key-cryptography/blob/master/signMessage.js
 
 const crypto = require('crypto');
 const hash = crypto.createHash('sha256');
@@ -308,6 +316,7 @@ You can see that this module returns the entire "package" of data that we will s
 
 ```javascript
 // file: verifyIdentity.js
+// https://github.com/zachgoll/making-sense-of-public-key-cryptography/blob/master/verifyIdentity.js
 
 const crypto = require('crypto');
 const fs = require('fs');
@@ -358,6 +367,42 @@ if (hashOfOriginalHex === decryptedMessageHex) {
 ```
 
 If you run this file, you should get the success message, because we are using the correct keypair!
+
+### Seems like a lot of data to send over a network...
+
+In our above example, you might have wondered why we are sending such a large piece of data over a network:
+
+```javascript
+const dataToSend = {
+    algorithm: 'sha256',
+    originalData: myData,
+    signedAndEncryptedData: signedMessage
+};
+```
+
+Isn't there a more efficient way to do this?
+
+The answer is yes, and you have just discovered the power of JWTs (JSON Web Tokens).
+
+JWTs are becoming the de-facto method of authenticating users in web applications, and many JWTs use the method described above to transfer user data in a verifiable way.  Since the purpose of this post is not to explain JWTs, I'll spare you the details, but take a quick look at the structure of a JWT:
+
+```
+eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.POstGetfAytaZS82wHcjoTyoqhMyxXiWdR7Nn7A29DNSl0EiXLdwJ6xC6AfgZWF1bOsS_TuYI3OG85AmiExREkrS6tDfTQ2B3WXlrr-wp5AokiRbz3_oB4OxG-W9KcEEbDRcZc0nH3L7LzYptiy1PtAylQGxHTWZXtGz4ht0bAecBgmpdgXMguEIcoqPJ1n3pIWk_dUZegpqx0Lka21H6XxUTxiy8OcaarA8zdnPUnV6AmNP3ecFawIFYdvJB_cm-GvpCSbr8G8y_Mllj8f4x9nBH8pQux89_6gUY618iYv7tuPWBFfEbLxtF2pZS6YC1aSfLQxeNe8djT9YjpvRZA
+```
+
+You'll notice that a JWT has 3 parts (separated by periods).  The first part is the header, the second part is the payload, and the third part is the digital signature.  If you pasted the above JWT into [this tool](https://jwt.io/) and select the `RS256` algorithm, you would get the following data back:
+
+{% asset_img jwt-example.PNG %}
+
+Notice anything similar to our example??
+
+I think so!  Within this JWT, we have a header that specifies which JWT algorithm was used (which also inherently indicates which hashing function to use on the data), a body that carries our data, and a signature that represents the following (pseudocode below): 
+
+```
+var signature = encrypt(priv_key, hash(header + payload))
+```
+
+Again, this is not a definitive tutorial on JWTs, but I wanted to show the basics of them to demonstrate one of the many common use cases of public key cryptography!!
 
 ## What is a Certificate Authority?
 
