@@ -1590,13 +1590,289 @@ Let's say I log in to a popular service like Google and I receive a JWT token fr
 
 I know I said that we wouldn't be getting into all the OAuth stuff in this post, but this is the essence of delegated authentication (i.e. the OAuth2.0 protocol)!
 
+### How do I use the `passport-jwt` Strategy??
+
+Before we get into the implementation of the `passport-jwt` strategy, I wanted to make a few notes about implementing JWTs in an authentication strategy.  
+
+Unfortunately and fortunately, there are many ways that you can successfully implement JWTs into your application.  Because of this, if you search Google for "how to implement JWT in an Express App", you'll get a variety of implementations.  Let's take a look at our options from most complex to least complex.
+
+**Most Complex:**  If we wanted to make this process as complicated (but also as transparent) as possible, we could use the signing and verifying process that we used earlier in this post using the built-in Node `crypto` library.  This would require us to write a lot of Express middleware and a lot of custom logic, but it could certainly be done.
+
+**Somewhat Complex:**  If we wanted to simplify things a little bit, we could do everything on our own, but instead of using the built-in Node `crypto` library, we could abstract away a lot of complexity and use the popular package `jsonwebtoken`.  This is not a terrible idea, and there are actually a large amount of tutorials online that show you how to implement JWT authentication using just this library.
+
+**Simple (if used correctly):**  Last but not least, we could abstract away even more complexity and use the `passport-jwt` strategy.  Or wait... Don't we need the `passport-local` strategy too since we are authenticating with usernames and passwords?  And how do we generate a JWT in the first place?  Clearly we will need the `jsonwebtoken` library to do this...
+
+And here lies the problem.
+
+The `passport-jwt` strategy does not have much documentation, and I personally believe that because of this, the questions I just raised create a world of confusion in the development community.  This results in thousands of different implementations of `passport-jwt` combined with external libraries, custom middlewares, and much more.  This could be considered a good thing, but for someone looking to implement `passport-jwt` the "correct way", it can be frustrating.
+
+Like any software package, if you use it correctly, it will add value to your development.  If you use it incorrectly, it could introduce more complexity to your project than if you never used it in the first place.
+
+In this section, I will do my best to explain what the `passport-jwt` strategy aims to achieve and how we can use it in a way that actually adds _value_ to our codebase rather than _complexity_.
+https://blog.jscrambler.com/implementing-jwt-using-passport/
+https://www.npmjs.com/package/jsonwebtoken
 ### JWT Based Authentication Implementation
 
 It is finally time to jump into the actual implementation of JWT Authentication with an Express/Angular application.  Since we have already covered a lot of the ExpressJS basics (middleware, cookies, sessions, etc.), I will not be devoting sections here to them.  If anything in this application doesn't make sense, be sure to read the first half of this post.
 
 All of the code below can be found in [this example repository on Github](https://github.com/zachgoll/express-jwt-authentication-starter.git).
 
-Here is our starter code with all the basic setup you need for an Express app:
+**Initial Setup (skim this section)**
+
+Let's first take a very quick glance at the starting code (file names commented at top of each code snippet):
 
 ```javascript
+// File: app.js
+
+const express = require('express');
+const cors = require('cors');
+const path = require('path');
+
+/**
+ * -------------- GENERAL SETUP ----------------
+ */
+
+// Gives us access to variables set in the .env file via `process.env.VARIABLE_NAME` syntax
+require('dotenv').config();
+
+// Create the Express application
+var app = express();
+
+// Configures the database and opens a global connection that can be used in any module with `mongoose.connection`
+require('./config/database');
+
+// Instead of using body-parser middleware, use the new Express implementation of the same thing
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
+// Allows our Angular application to make HTTP requests to Express application
+app.use(cors());
+
+// Where Angular builds to - In the ./angular/angular.json file, you will find this configuration
+// at the property: projects.angular.architect.build.options.outputPath
+// When you run `ng build`, the output will go to the ./public directory
+app.use(express.static(path.join(__dirname, 'public')));
+
+/**
+ * -------------- ROUTES ----------------
+ */
+
+// Must first load the models
+require('./models/user');
+
+// Imports all of the routes from ./routes/index.js
+app.use(require('./routes'));
+
+
+/**
+ * -------------- SERVER ----------------
+ */
+
+// Server listens on http://localhost:3000
+app.listen(3000);
+```
+
+The only slightly irregular thing above is the database connection.  Many times, you will see the connection being made from within `app.js`, but I did this to highlight that the `mongoose.connection` object is global.  You can configure it in one module and use it freely in another.  By calling `require('./config/database');`, we are creating that global object.  The file that defines the `User` model for the database is `./models/user.js`.
+
+```javascript
+// File: ./models/user.js
+
+const mongoose = require('mongoose');
+
+const UserSchema = new mongoose.Schema({
+    username: String,
+    hash: String,
+    salt: String
+});
+
+mongoose.model('User', UserSchema);
+```
+
+Next, we have the routes.
+
+```javascript
+// File: ./routes/index.js
+
+const router = require('express').Router();
+
+// Use the routes defined in `./users.js` for all activity to http://localhost:3000/users/
+router.use('/users', require('./users'));
+
+module.exports = router;
+```
+
+```javascript
+// File: ./routes/users.js
+
+const mongoose = require('mongoose');
+const router = require('express').Router();   
+const User = mongoose.model('User');
+
+// http://localhost:3000/users/login
+router.post('/login', function(req, res, next){
+
+});
+
+// http://localhost:3000/users/register
+router.post('/register', function(req, res, next){
+
+});
+
+module.exports = router;
+```
+
+Finally, we have an entire Angular app in the `angular/` directory.  I generated this using the `ng new` command.  The only tweaks made to this so far are in `./angular/angular.json` and `./angular/src/app/app-routing.module.ts` (auto generated by the generator).
+
+```typescript
+// File: ./angular/angular.json
+...
+
+"outputPath": "../public", // Line 16
+
+...
+```
+
+```typescript
+// File: ./angular/src/app/app-routing.module.ts
+...
+
+imports: [RouterModule.forRoot(routes, { useHash: true })], // line 8
+
+...
+```
+
+In the first file, we need to set the output directory so that the `ng build` command builds our Angular application to the `./public/` directory that our Express app serves static content from.
+
+The second file adds the `{ useHash: true }` configuration option to the router.  This is important in preventing conflicts between our API routes in the Express app and the dynamic, front-end routes in the Angular app.
+
+**API Routes**
+
+Our first step is to write the logic around password validation.  To keep things consistent, I will be using the _exact same logic_ as I did with the Sesion Based Authentication example in the first half of this post.
+
+Let's make a folder `./lib` and place a `utils.js` file in it.
+
+```javascript
+// File: ./lib/util.js
+
+const crypto = require('crypto');
+
+/**
+ * -------------- HELPER FUNCTIONS ----------------
+ */
+
+/**
+ * 
+ * @param {*} password - The plain text password
+ * @param {*} hash - The hash stored in the database
+ * @param {*} salt - The salt stored in the database
+ * 
+ * This function uses the crypto library to decrypt the hash using the salt and then compares
+ * the decrypted hash/salt with the password that the user provided at login
+ */
+function validPassword(password, hash, salt) {
+    var hashVerify = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
+    return hash === hashVerify;
+}
+
+/**
+ * 
+ * @param {*} password - The password string that the user inputs to the password field in the register form
+ * 
+ * This function takes a plain text password and creates a salt and hash out of it.  Instead of storing the plaintext
+ * password in the database, the salt and hash are stored for security
+ * 
+ * ALTERNATIVE: It would also be acceptable to just use a hashing algorithm to make a hash of the plain text password.
+ * You would then store the hashed password in the database and then re-hash it to verify later (similar to what we do here)
+ */
+function genPassword(password) {
+    var salt = crypto.randomBytes(32).toString('hex');
+    var genHash = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
+    
+    return {
+      salt: salt,
+      hash: genHash
+    };
+}
+
+module.exports.validPassword = validPassword;
+module.exports.genPassword = genPassword;
+```
+
+The above is the same exact module that we used before.  Now, let's create routes that will allow us to register a user and login.
+
+```javascript
+// File: ./routes/users.js
+
+const mongoose = require('mongoose');
+const router = require('express').Router();   
+const User = mongoose.model('User');
+const utils = require('../lib/utils');
+
+// http://localhost:3000/users/login
+router.post('/login', function(req, res, next){
+
+});
+
+router.post('/register', function(req, res, next){
+    const saltHash = utils.genPassword(req.body.password);
+    
+    const salt = saltHash.salt;
+    const hash = saltHash.hash;
+
+    const newUser = new User({
+        username: req.body.username,
+        hash: hash,
+        salt: salt
+    });
+
+    try {
+    
+        newUser.save()
+            .then((user) => {
+                res.json({ success: true, user: user });
+            });
+
+    } catch (err) {
+        
+        res.json({ success: false, msg: err });
+    
+    }
+
+});
+
+module.exports = router;
+```
+
+Using Postman (or another HTTP request utility), test the route and create a user.  Here is my post request and results:
+
+```JSON
+{
+	"username": "zach",
+	"password": "123"
+}
+```
+
+```JSON
+{
+    "success": true,
+    "user": {
+        "_id": "5def83773d50a20d27887032",
+        "username": "zach",
+        "hash": "9aa8c8999e4c25880aa0f3b1b1ae6fbcfdfdedb9fd96295e370a4ecb4e9d30f83d5d91e86d840cc5323e7c4ed15097db5c2262ac95c0c11268d9a90a7755c281",
+        "salt": "d63bb43fc411a55f0ac6ff8c145c58f70c8c10e18915b5c6d9578b997d637143",
+        "__v": 0
+    }
+}
+```
+
+We now have a user in the database that we can test our authentication on, but we currently do not have any logic to use for the `/login` route.  This is where Passport comes in.
+
+This time, we are using the `passport-jwt` strategy, but it still requires a callback that will be run when `passport.authenticate()` is called, just like before!
+
+Add `passport.js` to the `./config/` directory and put the following in it.
+
+```javascript
+// File: ./config/passport
+
+
 ```
