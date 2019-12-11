@@ -1461,6 +1461,9 @@ EVERYTHING BELOW IS CUSTOMIZATIONS TO THE THEME
 =======================================================================================================
 =======================================================================================================
 */
+.highlight {
+  -webkit-overflow-scrolling: touch;
+}
 .content {
   position: relative;
 }
@@ -1613,4 +1616,8 @@ EVERYTHING BELOW IS CUSTOMIZATIONS TO THE THEME
   border: dashed 0.2px #808080;
   margin-top: 50px;
   padding: 20px;
+}
+/* Make links in code blocks white */
+.vglnk {
+  color: #fff !important;
 }
