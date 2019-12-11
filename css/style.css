@@ -1401,7 +1401,7 @@ code {
   -webkit-border-radius: 2px;
 }
 .highlight {
-  overflow-x: auto;
+  overflow-x: scroll;
   margin: 1rem 0;
   padding: 10px 15px;
   border-radius: 4px;
@@ -1461,9 +1461,6 @@ EVERYTHING BELOW IS CUSTOMIZATIONS TO THE THEME
 =======================================================================================================
 =======================================================================================================
 */
-.highlight {
-  -webkit-overflow-scrolling: touch;
-}
 .content {
   position: relative;
 }
