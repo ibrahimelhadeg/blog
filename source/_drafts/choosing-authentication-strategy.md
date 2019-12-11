@@ -1572,7 +1572,7 @@ The next step is critical--you need to convert the `jwtSignature` from its defau
 
 If all goes well, you should get a true return value, which means this signature is valid!
 
-### Zoom Out: What JWT Signatures
+### Zoom Out: The true value of JWT signatures
 
 If you read the above two sections, you know how to create and verify a JWT signature using the `RSA-SHA256` JWT algorithm (other algorithms work very similarly, but this algorithm is considered one of the more secure and "production-ready" algorithms).
 
@@ -1596,9 +1596,9 @@ Before we get into the implementation of the `passport-jwt` strategy, I wanted t
 
 Unfortunately and fortunately, there are many ways that you can successfully implement JWTs into your application.  Because of this, if you search Google for "how to implement JWT in an Express App", you'll get a variety of implementations.  Let's take a look at our options from most complex to least complex.
 
-**Most Complex:**  If we wanted to make this process as complicated (but also as transparent) as possible, we could use the signing and verifying process that we used earlier in this post using the built-in Node `crypto` library.  This would require us to write a lot of Express middleware and a lot of custom logic, but it could certainly be done.
+**Most Complex:**  If we wanted to make this process as complicated (but also as transparent) as possible, we could use the signing and verifying process that we used earlier in this post using the built-in Node `crypto` library.  This would require us to write a lot of Express middleware, a lot of custom logic, and a lot of error handling, but it could certainly be done.
 
-**Somewhat Complex:**  If we wanted to simplify things a little bit, we could do everything on our own, but instead of using the built-in Node `crypto` library, we could abstract away a lot of complexity and use the popular package `jsonwebtoken`.  This is not a terrible idea, and there are actually a large amount of tutorials online that show you how to implement JWT authentication using just this library.
+**Somewhat Complex:**  If we wanted to simplify things a little bit, we could do everything on our own, but instead of using the built-in Node `crypto` library, we could abstract away a lot of complexity and use the popular package `jsonwebtoken`.  This is not a terrible idea, and there are actually many tutorials online that show you how to implement JWT authentication using just this library.
 
 **Simple (if used correctly):**  Last but not least, we could abstract away even more complexity and use the `passport-jwt` strategy.  Or wait... Don't we need the `passport-local` strategy too since we are authenticating with usernames and passwords?  And how do we generate a JWT in the first place?  Clearly we will need the `jsonwebtoken` library to do this...
 
@@ -1609,8 +1609,321 @@ The `passport-jwt` strategy does not have much documentation, and I personally b
 Like any software package, if you use it correctly, it will add value to your development.  If you use it incorrectly, it could introduce more complexity to your project than if you never used it in the first place.
 
 In this section, I will do my best to explain what the `passport-jwt` strategy aims to achieve and how we can use it in a way that actually adds _value_ to our codebase rather than _complexity_.
-https://blog.jscrambler.com/implementing-jwt-using-passport/
-https://www.npmjs.com/package/jsonwebtoken
+
+So let me start by conveying one very important fact about `passport-jwt`.
+
+**The Passport JWT strategy uses the `jsonwebtoken` library**.
+
+Why is this important??
+
+Remember--JWTs need to first be _signed_ and then _verified_.  Passport takes care of the _verification_ for us, so we just need to sign our JWTs and send them off to the `passport-jwt` middleware to be verified.  Since `passport-jwt` uses the `jsonwebtoken` library to verify tokens, then we should probably be using the same library to _generate_ the tokens!
+
+In other words, we need to get familiar with the `jsonwebtoken` library, which begs the question... Why do we even need Passport in the first place??
+
+With the `passport-local` strategy, Passport was useful to us because it connected seamlessly with `express-session` and helped manage our user session.  If we wanted to authenticate a user, we use the `passport.authenticate()` method on the `/login` POST route.
+
+```javascript
+router.post('/login', passport.authenticate('local', {}), (req, res, next) => {
+    // If we make it here, our user has been authenticate and has been attached
+    // to the current session
+});
+```
+
+If we wanted to authenticate a route (after the user had logged in), all we needed to do was this:
+
+```javascript
+router.get('/protected', (req, res, next) => {
+    if (req.isAuthenticated()) {
+        // Send the route data 
+        res.status(200).send('Web page data');
+    } else {
+        // Not authorized
+        res.status(401).send('You are not authorized to view this');
+    }
+});
+```
+
+We were able to do this (after the user had logged in) because the `passport-local` middleware stored our user in the Express Session.  To me, this is a bit odd, because you are only using the `passport.authenticate()` method one time (for login). 
+
+Now that we are using JWTs, we need to authenticate **every single request**, and thus, we will be using the `passport.authenticate()` method a lot more.
+
+The basic flow looks like this: 
+
+1. User logs in with username and password
+2. Express server validates the username and password, signs a JWT, and sends that JWT back to the user.
+3. The user will store the JWT in the browser (this is where our Angular app comes in) via `localStorage`.
+4. For every request, Angular will add the JWT stored in `localStorage` to the `Authorization` HTTP Header (similar to how we stored our session in the `Cookie` header)
+5. For every request, the Express app will run the `passport.authenticate()` middleware, which will extract the JWT from the `Authorization` header, verify it with a Public Key, and based on the result, either allow or disallow a user from visiting a route or making an API call.
+
+In summary, to authenticate using the `passport-jwt` strategy, our routes will look like so: 
+
+```javascript
+/**
+ * Session is set to false because we are using JWTs, and don't need a session! * If you do not set this to false, the Passport framework will try and 
+ * implement a session
+ */
+router.get('/protected', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+    res.status(200).send('If you get this data, you have been authenticated via JWT!');
+});
+```
+
+All we need to do is configure Passport with our public/private keys, desired JWT algorithm (RSA256 in our case), and a verify function.
+
+Yes, we could implement our own `passport.authenticate()` middleware, but if we did, we would need to write functions (and error handling... ughhh) to do the following:
+
+* Parse the HTTP header
+* Extract the JWT from the HTTP header
+* Verify the JWT with `jsonwebtoken`
+
+I would much rather delegate that work (and error handling) to a trusted framework like Passport!
+
+### Intro to `jsonwebtoken` and `passport-jwt` configuration
+
+This section will highlight the basic methods and setup of both the `jsonwebtoken` and `passport-jwt` modules irrespective of our Express app.  The next section will show how these integrate into the Express and Angular applications.
+
+First, let's see how we could use `jsonwebtoken` to sign and verify a JWT.  For this, we will use the same JWT that we used to demonstrate how JWTs worked (below).
+
+```
+eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.POstGetfAytaZS82wHcjoTyoqhMyxXiWdR7Nn7A29DNSl0EiXLdwJ6xC6AfgZWF1bOsS_TuYI3OG85AmiExREkrS6tDfTQ2B3WXlrr-wp5AokiRbz3_oB4OxG-W9KcEEbDRcZc0nH3L7LzYptiy1PtAylQGxHTWZXtGz4ht0bAecBgmpdgXMguEIcoqPJ1n3pIWk_dUZegpqx0Lka21H6XxUTxiy8OcaarA8zdnPUnV6AmNP3ecFawIFYdvJB_cm-GvpCSbr8G8y_Mllj8f4x9nBH8pQux89_6gUY618iYv7tuPWBFfEbLxtF2pZS6YC1aSfLQxeNe8djT9YjpvRZA
+```
+
+And here is a basic script that demonstrates how we would sign this JWT and verify it.
+
+```javascript
+const jwt = require('jsonwebtoken');
+const fs = require('fs');
+
+const PUB_KEY = fs.readFileSync(__dirname + '/id_rsa_pub.pem', 'utf8');
+const PRIV_KEY = fs.readFileSync(__dirname + '/id_rsa_priv.pem', 'utf8');
+
+// ============================================================
+// -------------------  SIGN ----------------------------------
+// ============================================================
+
+const payloadObj = {
+    sub: '1234567890',
+    name: 'John Doe',
+    admin: true,
+    iat: 1516239022
+};
+
+/**
+ * Couple things here:
+ * 
+ * First, we do not need to pass in the `header` to the function, because the 
+ * jsonwebtoken module will automatically generate the header based on the algorithm specified
+ * 
+ * Second, we can pass in a plain Javascript object because the jsonwebtoken library will automatically
+ * pass it into JSON.stringify()
+ */
+const signedJWT = jwt.sign(payloadObj, PRIV_KEY, { algorithm: 'RS256'});
+
+
+console.log(signedJWT); // Should get the same exact token that we had in our example
+
+
+// ============================================================
+// -------------------  VERIFY --------------------------------
+// ============================================================
+
+
+// Verify the token we just signed using the public key.  Also validates our algorithm RS256 
+jwt.verify(signedJWT, PUB_KEY, { algorithms: ['RS256'] }, (err, payload) => {
+    
+    if (err.name === 'TokenExpiredError') {
+        console.log('Whoops, your token has expired!');
+    }
+    
+    if (err.name === 'JsonWebTokenError') {
+        console.log('That JWT is malformed!');
+    }
+    
+    if (err === null) {
+        console.log('Your JWT was successfully validated!');
+    }
+    
+    // Both should be the same
+    console.log(payload);
+    console.log(payloadObj);
+});
+```
+
+So how does `jsonwebtoken` and `passport-jwt` work together?  Let's take a look at the configuration for Passport below.
+
+```javascript
+const JwtStrategy = require('passport-jwt').Strategy
+const ExtractJwt = require('passport-jwt').ExtractJwt;
+
+const PUB_KEY = fs.readFileSync(__dirname + '/id_rsa_pub.pem', 'utf8');
+
+// At a minimum, you must pass the `jwtFromRequest` and `secretOrKey` properties
+const options = {
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: PUB_KEY,
+  jsonWebTokenOptions: {
+      //audience: 'urn:foo',
+      //issuer: 'urn:issuer', 
+      //jwtid: 'jwtid', 
+      //subject: 'subject'
+      algorithms: ['RS256']
+  }
+};
+
+// The JWT payload is passed into the verify callback
+passport.use(new JwtStrategy(options, function(jwt_payload, done) {
+    
+    // We will assign the `sub` property on the JWT to the database ID of user
+    User.findOne({id: jwt_payload.sub}, function(err, user) {
+        
+        // This flow look familiar?  It is the same as when we implemented
+        // the `passport-local` strategy
+        if (err) {
+            return done(err, false);
+        }
+        if (user) {
+            return done(null, user);
+        } else {
+            return done(null, false);
+        }
+        
+    });
+    
+}));
+```
+
+The above code does the following:
+
+1. When a user visits a protected route, they will attach their JWT to the HTTP `Authorization` header
+2. `passport-jwt` will grab that value and parse it using the `ExtractJwt.fromAuthHeaderAsBearerToken()` method.
+3. `passport-jwt` will take the extracted JWT along with the options we set and call the `jsonwebtoken` library's `verify()` method.
+4. If the verification is successful, `passport-jwt` will find the user in the database, attach it to the `req` object, and allow the user to visit the given resource.
+
+If you are unsure of the `jsonWebTokenOptions`, you can see [all the possible options here](https://www.npmjs.com/package/jsonwebtoken#jwtverifytoken-secretorpublickey-options-callback).  The `passport-jwt` library will simply take your options and pass them on to `jsonwebtoken` library.
+
+### What about Angular?  How does that handle JWTs?
+
+If you remember from part 1 of this post, HTTP `Cookies` are automatically sent with every HTTP request (until they expire) after the `Set-Cookie` HTTP header has set the value of them.  With JWTs, this is not the case!
+
+We have two options: 
+
+1. We can "intercept" each HTTP request from our Angular application and append the `Authorization` HTTP Header with our JWT token
+2. We can manually add our JWT token to each request
+
+Yes, the first option is a little bit of up-front work, but I think we can manage it.
+
+In addition to the problem of the JWT not being added to each request automatically, we also have the problem of Angular routing.  Since Angular runs in the browser and is a Single Page Application, it is not making an HTTP request every time it loads a new view/route.  Unlike a standard Express application where you actually get the HTML from the Express app itself, Angular delivers the HTML all at once, and then the client-side logic determines how the routing works.
+
+Because of this, we are going to need to build an Authentication Service in our Angular application that will keep track of our user's authentication state.  We will then allow the user to visit protected Angular routes based on this state.
+
+So if we back up for a second, there are really two layers of authentication going on right now.  On one hand, we have the authentication that happens on the Express server, which determines what HTTP requests our user can make.  Since we are using Angular as a front-end, all of the HTTP requests that we make to our Express app will be data retrieval.  On the other hand, we have authentication within our Angular app.  We could just ignore this authentication completely, but what if we had an Angular component view that loaded data from the database?
+
+If the user is logged out on the Express side of things, this component view will try to load data to display, but since the user is not authenticated on the backend, the data request will fail, and our view will look weird since there is no data to display.
+
+A better way to handle this is by synchronizing the two authentication states.  If the user is not authorized to make a particular GET request for data, then we should probably not let them visit the Angular route that displays that data.  They won't be able to see the data no matter what, but this behaviour creates a much more seamless and friendly user experience.
+
+Below is the code that we will use for our AuthService and Interceptor.  I found this code in [a blog post at Angular University](https://blog.angular-university.io/angular-jwt-authentication/) and thought it was extremely simple and clean, so we will use it here.  For now, don't worry about how this integrates into the Angular application as I will show that later in the implementation section.
+
+```javascript
+// https://momentjs.com/
+import * as moment from "moment";
+
+@Injectable()
+export class AuthService {
+
+    /**
+     * Gives us access to the Angular HTTP client so we can make requests to 
+     * our Express app
+     */
+    constructor(private http: HttpClient) {}
+
+    /**
+     * Passes the username and password that the user typed into the application
+     * and sends a POST request to our Express server login route, which will
+     * authenticate the credentials and return a JWT token if they are valid
+     * 
+     * The `res` object (has our JWT in it) is passed to the setLocalStorage
+     * method below
+     * 
+     * shareReplay() documentation - https://www.learnrxjs.io/operators/multicasting/sharereplay.html
+     */
+    login(email:string, password:string ) {
+        return this.http.post<User>('/users/login', {email, password})
+            .do(res => this.setLocalStorage) 
+            .shareReplay();
+    }
+    
+    /**
+     * 
+     */
+    private setLocalStorage(authResult) {
+        
+        // Takes the JWT expiresIn value and add that number of seconds
+        // to the current "moment" in time to get an expiry date
+        const expiresAt = moment().add(authResult.expiresIn,'second');
+
+        // Stores our JWT token and its expiry date in localStorage
+        localStorage.setItem('id_token', authResult.idToken);
+        localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()) );
+    }          
+
+    // By removing the token from localStorage, we have essentially "lost" our
+    // JWT in space and will need to re-authenticate with the Express app to get
+    // another one.
+    logout() {
+        localStorage.removeItem("id_token");
+        localStorage.removeItem("expires_at");
+    }
+
+    // Returns true as long as the current time is less than the expiry date
+    public isLoggedIn() {
+        return moment().isBefore(this.getExpiration());
+    }
+
+    isLoggedOut() {
+        return !this.isLoggedIn();
+    }
+
+    getExpiration() {
+        const expiration = localStorage.getItem("expires_at");
+        const expiresAt = JSON.parse(expiration);
+        return moment(expiresAt);
+    }    
+}
+```
+
+```javascript
+// Note: We will eventually incorporate this into our app.module.ts so that it
+// automatically works on all HTTP requests
+
+@Injectable()
+export class AuthInterceptor implements HttpInterceptor {
+
+    intercept(req: HttpRequest<any>,
+              next: HttpHandler): Observable<HttpEvent<any>> {
+
+        const idToken = localStorage.getItem("id_token");
+
+        if (idToken) {
+            const cloned = req.clone({
+                headers: req.headers.set("Authorization",
+                    "Bearer " + idToken)
+            });
+
+            return next.handle(cloned);
+        }
+        else {
+            return next.handle(req);
+        }
+    }
+}
+```
+
+I suggest reading through all the comments to better understand how each service is working.
+
+You can think of the HTTP Interceptor as "middleware" for Angular.  It will take the existing HTTP request, add the `Authorization` HTTP header with the JWT stored in `localStorage`, and call the `next()` "middleware" in the chain.
+
+And that's it.  We are ready to build this thing.
+
 ### JWT Based Authentication Implementation
 
 It is finally time to jump into the actual implementation of JWT Authentication with an Express/Angular application.  Since we have already covered a lot of the ExpressJS basics (middleware, cookies, sessions, etc.), I will not be devoting sections here to them.  If anything in this application doesn't make sense, be sure to read the first half of this post.
