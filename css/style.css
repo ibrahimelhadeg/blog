@@ -1381,7 +1381,7 @@ article .content .caption {
   font-weight: bold;
 }
 pre {
-  overflow-x: auto;
+  overflow-x: scroll;
   padding: 10px 15px;
   padding-bottom: 0;
   border: 1px dotted #666;
@@ -1403,7 +1403,7 @@ code {
   -webkit-border-radius: 2px;
 }
 .highlight {
-  overflow-x: auto;
+  overflow-x: scroll;
   margin: 1rem 0;
   padding: 10px 15px;
   border-radius: 4px;
@@ -1618,5 +1618,5 @@ EVERYTHING BELOW IS CUSTOMIZATIONS TO THE THEME
 }
 /* Make links in code blocks white */
 .vglnk {
-  color: #fff !important;
+  color: #ddd !important;
 }
