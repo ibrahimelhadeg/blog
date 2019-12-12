@@ -1,9 +1,13 @@
 ---
-title: A Simple Authentication Strategy for Small Organizations (NodeJS, Express, Angular)
+title: >-
+  A Simple Authentication Strategy for Small Organizations (NodeJS, Express,
+  Angular)
 tags:
-    - Session Based Authentication
-    - JWT Authentication
+  - Session Based Authentication
+  - JWT Authentication
+date: 2019-12-12 03:21:11
 ---
+
 
 In this post, I am going to walk through why the `Passport-JWT` authentication strategy is a simple, secure solution for small teams and startups implementing a Node/Express + Angular web app. 
 
