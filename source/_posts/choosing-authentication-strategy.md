@@ -15,8 +15,8 @@ To understand why a JWT authentication flow is the best choice for this situatio
 
 Since this post is long and detailed, if you are already familiar with a topic discussed, just skip it.  Likewise, if you are just looking for instructions on how to implemement a particular authentication method, you can jump to those sections below: 
 
-* [Session Based Authentication Implementation]()
-* [JWT Based Authentication Implementation]()
+* [Session Based Authentication Implementation](#Session-Based-Authentication-Implementation)
+* [JWT Based Authentication Implementation](#JWT-Based-Authentication-Implementation)
 
 Also, I created sample applications utilizing both authentication methods in the following repositories:
 
