@@ -1756,17 +1756,10 @@ const ExtractJwt = require('passport-jwt').ExtractJwt;
 
 const PUB_KEY = fs.readFileSync(__dirname + '/id_rsa_pub.pem', 'utf8');
 
-// At a minimum, you must pass the `jwtFromRequest` and `secretOrKey` properties
+// At a minimum, you must pass these options (see note after this code snippet for more)
 const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: PUB_KEY,
-  jsonWebTokenOptions: {
-      //audience: 'urn:foo',
-      //issuer: 'urn:issuer', 
-      //jwtid: 'jwtid', 
-      //subject: 'subject'
-      algorithms: ['RS256']
-  }
+  secretOrKey: PUB_KEY
 };
 
 // The JWT payload is passed into the verify callback
@@ -1791,14 +1784,33 @@ passport.use(new JwtStrategy(options, function(jwt_payload, done) {
 }));
 ```
 
-The above code does the following:
+**Note on options:**  The way that options are assigned in the `passport-jwt` library can be a bit confusing.  You can pass `jsonwebtoken` options, but they must be passed in a specific way.  Below is an object with ALL possible options you can use for your `passport-jwt` object.  I left out the `secretOrKeyProvider` option because it is the alternative to the `secretOrKey` option, which is more common.  The `secretOrKeyProvider` is a callback function used to retrieve a asymmetric key from a `jwks` key provider.  For explanation of any of these options, you can see the [passport-jwt docs](http://www.passportjs.org/packages/passport-jwt/), [this rfc](https://tools.ietf.org/html/rfc7519#section-4.1) and the [jsonwebtoken documentation](https://www.npmjs.com/package/jsonwebtoken).
+
+```javascript
+const passportJWTOptions = {
+    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+    secretOrKey: PUB_KEY || secret phrase,
+    issuer: 'enter issuer here',
+    audience: 'enter audience here',
+    algorithms: ['RS256'],
+    ignoreExpiration: false,
+    passReqToCallback: false,
+    jsonWebTokenOptions: {
+        complete: false,
+        clockTolerance: '',
+        maxAge: '2d', // 2 days
+        clockTimestamp: '100',
+        nonce: 'string here for OpenID'
+    }
+}
+```
+
+The above code (before the options) does the following:
 
 1. When a user visits a protected route, they will attach their JWT to the HTTP `Authorization` header
 2. `passport-jwt` will grab that value and parse it using the `ExtractJwt.fromAuthHeaderAsBearerToken()` method.
 3. `passport-jwt` will take the extracted JWT along with the options we set and call the `jsonwebtoken` library's `verify()` method.
 4. If the verification is successful, `passport-jwt` will find the user in the database, attach it to the `req` object, and allow the user to visit the given resource.
-
-If you are unsure of the `jsonWebTokenOptions`, you can see [all the possible options here](https://www.npmjs.com/package/jsonwebtoken#jwtverifytoken-secretorpublickey-options-callback).  The `passport-jwt` library will simply take your options and pass them on to `jsonwebtoken` library.
 
 ### What about Angular?  How does that handle JWTs?
 
@@ -1926,7 +1938,7 @@ And that's it.  We are ready to build this thing.
 
 ### JWT Based Authentication Implementation
 
-It is finally time to jump into the actual implementation of JWT Authentication with an Express/Angular application.  Since we have already covered a lot of the ExpressJS basics (middleware, cookies, sessions, etc.), I will not be devoting sections here to them.  If anything in this application doesn't make sense, be sure to read the first half of this post.
+It is finally time to jump into the actual implementation of JWT Authentication with an Express/Angular application.  Since we have already covered a lot of the ExpressJS basics (middleware, cookies, sessions, etc.), I will not be devoting sections here to them, but I will briefly walk through some of the Angular concepts.  If anything in this application doesn't make sense, be sure to read the first half of this post.
 
 All of the code below can be found in [this example repository on Github](https://github.com/zachgoll/express-jwt-authentication-starter.git).
 
@@ -1954,6 +1966,9 @@ var app = express();
 // Configures the database and opens a global connection that can be used in any module with `mongoose.connection`
 require('./config/database');
 
+// Must first load the models
+require('./models/user');
+
 // Instead of using body-parser middleware, use the new Express implementation of the same thing
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -1969,9 +1984,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 /**
  * -------------- ROUTES ----------------
  */
-
-// Must first load the models
-require('./models/user');
 
 // Imports all of the routes from ./routes/index.js
 app.use(require('./routes'));
@@ -2034,7 +2046,7 @@ router.post('/register', function(req, res, next){
 module.exports = router;
 ```
 
-Finally, we have an entire Angular app in the `angular/` directory.  I generated this using the `ng new` command.  The only tweaks made to this so far are in `./angular/angular.json` and `./angular/src/app/app-routing.module.ts` (auto generated by the generator).
+Finally, we have an entire Angular app in the `angular/` directory.  I generated this using the `ng new` command.  The only tweaks made to this so far are in `./angular/angular.json`.
 
 ```typescript
 // File: ./angular/angular.json
@@ -2045,22 +2057,11 @@ Finally, we have an entire Angular app in the `angular/` directory.  I generated
 ...
 ```
 
-```typescript
-// File: ./angular/src/app/app-routing.module.ts
-...
-
-imports: [RouterModule.forRoot(routes, { useHash: true })], // line 8
-
-...
-```
-
 In the first file, we need to set the output directory so that the `ng build` command builds our Angular application to the `./public/` directory that our Express app serves static content from.
-
-The second file adds the `{ useHash: true }` configuration option to the router.  This is important in preventing conflicts between our API routes in the Express app and the dynamic, front-end routes in the Angular app.
 
 **API Routes**
 
-Our first step is to write the logic around password validation.  To keep things consistent, I will be using the _exact same logic_ as I did with the Sesion Based Authentication example in the first half of this post.
+Our first step is to write the logic around password validation.  To keep things consistent, I will be using the _exact same logic_ as I did with the Session Based Authentication example in the first half of this post.
 
 Let's make a folder `./lib` and place a `utils.js` file in it.
 
@@ -2180,12 +2181,679 @@ Using Postman (or another HTTP request utility), test the route and create a use
 
 We now have a user in the database that we can test our authentication on, but we currently do not have any logic to use for the `/login` route.  This is where Passport comes in.
 
-This time, we are using the `passport-jwt` strategy, but it still requires a callback that will be run when `passport.authenticate()` is called, just like before!
-
 Add `passport.js` to the `./config/` directory and put the following in it.
 
 ```javascript
 // File: ./config/passport
 
+const JwtStrategy = require('passport-jwt').Strategy
+const ExtractJwt = require('passport-jwt').ExtractJwt;
+const fs = require('fs');
+const path = require('path');
+const User = require('mongoose').model('User');
+
+// Go up one directory, then look for file name
+const pathToKey = path.join(__dirname, '..', 'id_rsa_pub.pem');
+
+// The verifying public key
+const PUB_KEY = fs.readFileSync(pathToKey, 'utf8');
+
+// At a minimum, you must pass the `jwtFromRequest` and `secretOrKey` properties
+const options = {
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: PUB_KEY,
+  algorithms: ['RS256']
+};
+
+// app.js will pass the global passport object here, and this function will configure it
+module.exports = (passport) => {
+    // The JWT payload is passed into the verify callback
+    passport.use(new JwtStrategy(options, function(jwt_payload, done) {
+
+        // Since we are here, the JWT is valid!
+        
+        // We will assign the `sub` property on the JWT to the database ID of user
+        User.findOne({_id: jwt_payload.sub}, function(err, user) {
+            
+            // This flow look familiar?  It is the same as when we implemented
+            // the `passport-local` strategy
+            if (err) {
+                return done(err, false);
+            }
+            if (user) {
+                
+                // Since we are here, the JWT is valid and our user is valid, so we are authorized!
+                return done(null, user);
+            } else {
+                return done(null, false);
+            }
+            
+        });
+        
+    }));
+}
+```
+
+This is the function that will run on every route that we use the `passport.authenticate()` middleware.  Internally, Passport will verify the supplied JWT with the `jsonwebtoken` verify method.
+
+Next, let's create a utility function that will generate a JWT for our user, and put it in the `utils.js` file.
+
+```javascript
+// File: ./lib/utils.js
+
+const jsonwebtoken = require('jsonwebtoken');
+
+/**
+ * @param {*} user - The user object.  We need this to set the JWT `sub` payload property to the MongoDB user ID
+ */
+function issueJWT(user) {
+  const _id = user._id;
+
+  const expiresIn = '1d';
+
+  const payload = {
+    sub: _id,
+    iat: Date.now()
+  };
+
+  const signedToken = jsonwebtoken.sign(payload, PRIV_KEY, { expiresIn: expiresIn, algorithm: 'RS256' });
+
+  return {
+    token: "Bearer " + signedToken,
+    expires: expiresIn
+  }
+}
+```
+
+Finally, let's implement the `/users/login/` route so that if the user logs in successfully, they will receive a JWT token in the response.
+
+```javascript
+// File: ./routes/users.js
+const mongoose = require('mongoose');
+const router = require('express').Router();   
+const User = mongoose.model('User');
+const passport = require('passport');
+const utils = require('../lib/utils');
+
+// Validate an existing user and issue a JWT
+router.post('/login', function(req, res, next){
+
+    User.findOne({ username: req.body.username })
+        .then((user) => {
+
+            if (!user) {
+                res.status(401).json({ success: false, msg: "could not find user" });
+            }
+            
+            // Function defined at bottom of app.js
+            const isValid = utils.validPassword(req.body.password, user.hash, user.salt);
+            
+            if (isValid) {
+
+                const tokenObject = utils.issueJWT(user);
+
+                res.status(200).json({ success: true, token: tokenObject.token, expiresIn: tokenObject.expires });
+
+            } else {
+
+                res.status(401).json({ success: false, msg: "you entered the wrong password" });
+
+            }
+
+        })
+        .catch((err) => {   
+            next(err);
+        });
+});
+```
+
+Time to try it out!  In Postman, make send a POST request to `/users/login/` with the following data (remember, we already created a user):
+
+```javascript
+{
+	"username": "zach",
+	"password": "123"
+}
+```
+
+When you send that request, you should get the following result (your JWT will be different because you are using a different private key to sign it):
+
+```javascript
+{
+    "success": true,
+    "token": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZGVmODM3NzNkNTBhMjBkMjc4ODcwMzIiLCJpYXQiOjE1NzYxMTc4NDAxNzIsImV4cCI6MTU3NjExNzkyNjU3Mn0.NAIbpeukGmDOCMG5uuoFBn4GFjT6tQOpztxw7c1qiWHBSG8LQ0Sf1deKoLDOqS5Dk2N9JzXFmdni0-wt7etD94qH_C_rxL745reGMOrtJNy2SffAlAmhcphs4xlbGRjtBoABxHfiL0Hhht2fbGCwf79s5gDlTC9WqWMq8gcXZkLYXnRQZcHCOvgx-yar_c6cNVxFJBU6ah2sK1mUPTR6ReXUWt_A1lu2aOtgUG-9wXVp9h3Lh3LrdHuTqF4oV2vbTSMGCzAs33C1wwjdCGqCj3dkqfMSE43f7SSAy2-m6TgPAPm0QEUV8PiEpS1GlUCsBKVeVYC5hbUyUDS3PaJYQxklIHVNGNqlyj_1IdNaCuquGvyQDDyflZpJKnUPg1WZVgkDa5hVZerrb8hfG_MLC3vzy-rt3cWUlVItmJsT30sUInDRsfAevDX83gEtD2QR4ZkZA8ppb9s7Yi6V2_L7JUz5aBPUYT4YQo0iNj4_jpaZByqdp03GFGbfv4tmk-oeYnJHwgntoBWk_hfE3h5GbCmtfmlTO5A4CWAMu5W5pNanjNsVzogXrUZCfNaY42HC24blpO507-Vo-GwdIpFCMnrgCLa6DAW3XH-ePlRL-cbIv0-QFiSCge2RerWx5d3qlD9yintqmXf1TyzB3X7IM_JbVYqVB0sGAPrFBZqk0q0",
+    "expiresIn": "1d"
+}
+```
+
+We will now try this out using a brand new route.  In the `./routes/users.js` file, add the following route:
+
+```javascript
+router.get('/protected', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+    res.status(200).json({ success: true, msg: "You are successfully authenticated to this route!"});
+});
+```
+
+Now in Postman, copy the JWT token you received into the `Authorization` HTTP header.
+
+{% asset_img jwt-postman.PNG %}
+
+When you send this request, you should get the expected response of "Your JWT is valid".  If you don't get this request, check your files with mine stored at [this Github repo](https://github.com/zachgoll/express-jwt-authentication-starter).
+
+Now that your backend is working correctly, it is time to implement the Angular side of things.  First, generate the following components:
 
 ```
+ng generate component register
+ng generate component login
+ng generate component protected-component
+```
+
+Let's get these components and the Angular router setup.  Below are the files you will need to update with comments in them explaining some of the logic.
+
+```javascript
+// File: ./angular/src/app/app.module.ts
+
+import { BrowserModule } from '@angular/platform-browser';
+
+// These two modules will help us with Angular forms and submitting data to 
+// our Express backend
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
+// This will allow us to navigate between our components
+import { Routes, RouterModule } from '@angular/router';
+
+// These are the four components in our app so far
+import { AppComponent } from './app.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { ProtectedComponentComponent } from './protected-component/protected-component.component';
+
+// Define which route will load which component
+const appRoutes: Routes = [
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'protected', component: ProtectedComponentComponent }
+];
+
+// Your standard Angular setup
+@NgModule({
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    RegisterComponent,
+    ProtectedComponentComponent
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    RouterModule.forRoot(appRoutes, {useHash: true})
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+
+```html
+<!-- File: ./angular/src/app/app.component.html -->
+
+<h1>JWT Authentication</h1>
+
+<!-- By clicking these, the component assigned to each route will load below -->
+<p><a routerLink="/login">Login</a></p>
+<p><a routerLink="/register">Register</a></p>
+<p><a routerLink="/protected">Visit Protected Route</a></p>
+
+<hr>
+<p>Selected route displays below:</p>
+<hr>
+
+<!-- This will load the current route -->
+<router-outlet></router-outlet>
+```
+
+And now for each component:
+
+```html
+<!-- File: ./angular/src/app/login/login.component.html -->
+
+<h2>Login</h2>
+
+<form (ngSubmit)="onLoginSubmit()" #loginform="ngForm">
+  <div>
+    <p>Enter a username</p>
+    <input type="text" name="username" ngModel>
+    <p>Enter a password</p>
+    <input type="password" name="password" ngModel>
+  </div>
+  <button style="margin-top: 20px;" type="submit">Register</button>
+</form>
+```
+
+```javascript
+// File: ./angular/src/app/login/login.component.ts
+
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
+})
+export class LoginComponent implements OnInit {
+
+    // This will give us access to the form
+  @ViewChild('loginform', { static: false }) loginForm: NgForm;
+
+  constructor() { }
+
+    // When you submit the form, the username and password values will print to the screen (we will replace this later with an HTTP request)
+  onLoginSubmit() {
+    console.log(this.loginForm.value.username);
+    console.log(this.loginForm.value.password);
+  }
+
+  ngOnInit() {
+  }
+
+}
+```
+
+```html
+<!-- File: ./angular/src/app/register/register.component.html -->
+
+<h2>Register</h2>
+
+<form (ngSubmit)="onRegisterSubmit()" #registerform="ngForm">
+  <div>
+    <p>Enter a username</p>
+    <input type="text" name="username" ngModel>
+    <p>Enter a password</p>
+    <input type="password" name="password" ngModel>
+  </div>
+  <button style="margin-top: 20px;" type="submit">Register</button>
+</form>
+```
+
+```javascript
+// File: ./angular/src/app/register/register.component.ts
+
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
+
+@Component({
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css']
+})
+export class RegisterComponent implements OnInit {
+
+  @ViewChild('registerform', { static: false }) registerForm: NgForm;
+
+  constructor() { }
+
+  ngOnInit() {
+  }
+
+  onRegisterSubmit() {
+    console.log(this.registerForm.value.username);
+    console.log(this.registerForm.value.password);
+  }
+
+}
+```
+
+If all goes well, your app should look something like this:
+
+{% asset_img ang-app-1.gif %}
+
+Now comes the part where we actually implement our JWT authentication.  The first thing we need to wire up is the ability to send POST requests from our login and register routes.
+
+First, we need to add the `HttpClientModule` to our app.  In `./angular/src/app/app.module.ts`, add the following import.
+
+```javascript
+import { HttpClientModule } from '@angular/common/http';
+
+...
+
+imports: [
+    BrowserModule,
+    FormsModule,
+    RouterModule.forRoot(appRoutes, {useHash: true}),
+    HttpClientModule
+],
+
+...
+```
+
+Now, we can use this in our other components.  Update `./angular/src/app/register/register.component.ts` with the following:
+
+```javascript
+// File: ./angular/src/app/register/register.component.ts
+
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+@Component({
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css']
+})
+export class RegisterComponent implements OnInit {
+
+  @ViewChild('registerform', { static: false }) registerForm: NgForm;
+
+  constructor(private http: HttpClient) { }
+
+  ngOnInit() {
+  }
+
+  // Submits a post request to the /users/register route of our Express app
+  onRegisterSubmit() {
+    const username = this.registerForm.value.username;
+    const password = this.registerForm.value.password;
+
+    const headers = new HttpHeaders({'Content-type': 'application/json'});
+
+    const reqObject = {
+      username: username,
+      password: password
+    };
+
+    this.http.post('http://localhost:3000/users/register', reqObject, { headers: headers }).subscribe(
+      
+      // The response data
+      (response) => {
+        console.log(response);
+      },
+
+      // If there is an error
+      (error) => {
+        console.log(error);
+      },
+      
+      // When observable completes
+      () => {
+        console.log('done!');
+      }
+
+    );
+  }
+
+}
+```
+
+You can now visit the register component and register yourself on the Express application.  Add the same logic to the login component.
+
+```javascript
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
+})
+export class LoginComponent implements OnInit {
+
+  @ViewChild('loginform', { static: false }) loginForm: NgForm;
+
+  constructor(private http: HttpClient) { }
+
+  onLoginSubmit() {
+    const username = this.loginForm.value.username;
+    const password = this.loginForm.value.password;
+
+    const headers = new HttpHeaders({'Content-type': 'application/json'});
+
+    const reqObject = {
+      username: username,
+      password: password
+    };
+
+    this.http.post('http://localhost:3000/users/login', reqObject, { headers: headers }).subscribe(
+      
+      // The response data
+      (response) => {
+        console.log(response);
+      },
+
+      // If there is an error
+      (error) => {
+        console.log(error);
+      },
+      
+      // When observable completes
+      () => {
+        console.log('done!');
+      }
+
+    );
+  }
+
+  ngOnInit() {
+  }
+
+}
+```
+
+Finally, let's add some logic to the protected route.  In this route, we will make a GET request to our `/users/protected` route, which should return a `401 Unauthorized` error if our JWT is not valid.  Since we haven't written the logic to attach the JWT to each request yet, we should get the error.
+
+In the HTML file of the component, add this one line.
+
+```html
+<!-- ./angular/src/app/protected-component/protected-component.html -->
+
+<!-- This will print the value of the `message` variable in protected-component.component.ts -->
+<p>Message: {{ message }}</p>
+```
+
+And in `./angular/src/app/protected-component.component.ts`, add the logic to handle the HTTP request.
+
+```javascript
+// File: ./angular/src/app/protected-component.component.ts
+
+import { Component, OnInit } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+@Component({
+  selector: 'app-protected-component',
+  templateUrl: './protected-component.component.html',
+  styleUrls: ['./protected-component.component.css']
+})
+export class ProtectedComponentComponent implements OnInit {
+
+  constructor(private http: HttpClient) { }
+
+  message: String
+
+  // Execute this HTTP request when the route loads
+  ngOnInit() {
+    this.http.get('http://localhost:3000/users/protected').subscribe(
+      (response) => {
+        if (response) {
+          this.message = 'You are authenticated!';
+        }
+      },
+
+      (error) => {
+        if (error.status === 401) {
+          this.message = 'You are not authorized to visit this route.  No data is displayed.';
+        }
+      }, 
+
+      () => {
+        console.log('HTTP request done');
+      }
+    );
+  }
+
+}
+```
+
+If you visit the protected route right now, you should get the unauthorized error.  But wouldn't it be nice if we were able to successfully get data from this GET request?  Let's set up our AuthService.  Create the following folder and file, and install the `moment` module:
+
+```
+mkdir ./angular/src/app/services
+touch ./angular/src/app/services/auth.service.ts
+npm install --save moment
+```
+
+Now add the following code to your service.
+
+```javascript
+// File: ./angular/src/app/services/auth.service.ts
+
+import { Injectable } from '@angular/core';
+import * as moment from "moment";
+
+@Injectable()
+export class AuthService {
+
+    constructor() {}
+          
+    setLocalStorage(responseObj) {
+        const expiresAt = moment().add(responseObj.expiresIn);
+
+        localStorage.setItem('id_token', responseObj.token);
+        localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()) );
+    }          
+
+    logout() {
+        localStorage.removeItem("id_token");
+        localStorage.removeItem("expires_at");
+    }
+
+    public isLoggedIn() {
+        return moment().isBefore(this.getExpiration());
+    }
+
+    isLoggedOut() {
+        return !this.isLoggedIn();
+    }
+
+    getExpiration() {
+        const expiration = localStorage.getItem("expires_at");
+        const expiresAt = JSON.parse(expiration);
+        return moment(expiresAt);
+    }
+}
+```
+
+In this service, we have methods that will create, read, update, and destroy JWT information stored in the browser's `localStorage` module.  The last thing you need to do is add this service to `app.module.ts`.
+
+```javascript
+// File: ./angular/src/app/app.module.ts
+
+import { AuthService } from './services/auth.service';
+
+...
+
+providers: [
+    AuthService
+],
+
+...
+```
+
+We now need to add some functionality to the `login.component.ts` to set the JWT that we receive after logging in to `localStorage`.  
+
+```javascript
+// File: ./angular/src/app/login/login.component.ts
+
+// Import auth service
+import { AuthService } from '../services/auth.service';
+
+...
+
+// Add service to module
+constructor(private http: HttpClient, private authService: AuthService) { }
+
+...
+
+// In post request, when you receive the JWT, use the service to add it to storage
+this.http.post('http://localhost:3000/users/login', reqObject, { headers: headers }).subscribe(
+  
+  // The response data
+  (response) => {
+  
+    // If the user authenticates successfully, we need to store the JWT returned in localStorage
+    this.authService.setLocalStorage(response);
+
+  },
+  
+...
+```
+
+After adding this, you should be able to login and have the JWT saved to `localStorage`.
+
+{% asset_img ang-app-2.gif %}
+
+Now that we are saving the JWT to `localStorage` after logging in, the only step left is to implement our HTTP interceptor that will retrieve the JWT sitting in `localStorage` and attach it to the HTTP `Authorization` header on every request!
+
+Make the following folder and file.
+
+```
+mkdir ./angular/src/app/interceptors
+touch ./angular/src/app/interceptors/auth-interceptor.ts
+```
+
+Add the following to this file:
+
+```javascript
+import { Injectable } from '@angular/core';
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+@Injectable()
+export class AuthInterceptor implements HttpInterceptor {
+
+    intercept(req: HttpRequest<any>,
+              next: HttpHandler): Observable<HttpEvent<any>> {
+
+        const idToken = localStorage.getItem("id_token");
+
+        if (idToken) {
+            const cloned = req.clone({
+                headers: req.headers.set("Authorization", idToken)
+            });
+
+            return next.handle(cloned);
+        }
+        else {
+            return next.handle(req);
+        }
+    }
+}
+```
+
+And finally, you will need to import it to `app.module.ts`.
+
+```javascript
+import { AuthInterceptor } from './interceptors/auth-interceptor';
+
+...
+
+providers: [
+    AuthService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+],
+```
+
+And with that, all of your HTTP requests should get the `Authorization` HTTP header populated with a JWT (if it exists in localStorage) on every request!
+
+{% asset_img ang-app-3.gif %}
+
+## Conclusion
+
+You now have a skeleton application to work with and implement in whatever way you like!  I recommend adding additional features like an AuthGuard to handle route authentication even further, but what I have shown you here should get you more than started!
+
+If you have any questions or notice any errors in this massive post, please let me know in the comments below.
